@@ -1,0 +1,60 @@
+option java_package="com.roje.game.message.common";
+import "Mid.proto";
+//心跳
+message HeartBeatRequest{
+    optional MID mid                   =1 [default = HeartReq];
+}
+message HeartBeatResponse{
+    optional MID mid                   =1 [default = HeartRes];
+    optional int64 serverTime   =2; //服务器时间
+}
+//系统错误消息返回
+message ErrorResponse{
+    optional MID mid					= 1 [default = SystemErrorRes]; 	//消息id
+    optional SystemErroCode errorCode	= 2; //错误码
+    optional string msg					= 3; //错误信息
+}
+//向集群服务器注册
+message ServerRegisterRequest{
+    optional MID mid				= 1 [default = ServerRegisterReq];
+    required ServerInfo serverInfo	= 2;	//服务器信息
+}
+message ServerRegisterResponse{
+    optional MID mid            = 1 [default = ServerRegisterRes];
+    optional int32 serverId   = 2;
+}
+//向集群服务器更新
+message ServerUpdateRequest{
+    optional MID mid				= 1 [default = ServerUpdateReq];
+    required ServerInfo serverInfo	= 2;	//服务器信息
+}
+message ServerUpdateResponse{
+    optional MID mid            = 1 [default = ServerUpdateRes];
+    optional bool sucess     = 2;
+    optional string msg       =3;
+}
+
+//服务器信息
+message ServerInfo {
+    required int32 id = 1; // 服务器ID
+    optional string ip = 2; // 内网地址
+    optional int32 type = 3; // 类型
+    optional int32 port = 4; // 端口
+    optional int32 state = 5; //状态 -1表示维护；0表示准备开启；1表示正常，2表示不显示，3表示内部开启
+    optional int32 online = 6; // 在线人数
+    optional int32 maxUserCount = 7; // 在线人数
+    optional int32 httpport = 8; // http端口
+    optional string name = 9; //名字
+    optional string wwwip = 10; // 外网地址
+    optional int32 freeMemory = 11; //空闲内存
+    optional int32 totalMemory = 12; //可用内存
+    optional int32 version = 13; //版本号
+    optional int32 requireClientVersion = 14;//要求的客户端版本
+}
+
+//系统错误码
+enum SystemErroCode{
+    HallNotFind							= 1;	//没有可用大厅服
+    GameNotFind							= 2;	//没有可用游戏服
+    ConectReset							= 3;	//连接已重置，失效
+}

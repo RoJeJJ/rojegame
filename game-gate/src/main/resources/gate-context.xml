@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+    <context:property-placeholder location="classpath:gate.properties"/>
+    <import resource="server-config.xml"/>
+    <bean id="serverManager" class="com.roje.game.gate.mannager.ServerManager"/>
+    <bean id="userSessionManager" class="com.roje.game.gate.mannager.UserSessionManager"/>
+    <bean id="messageDispatcher" class="com.roje.game.core.dispatcher.MessageDispatcher"/>
+    <bean id="serverChannelInitializer" class="com.roje.game.core.netty.channel.initializer.DefaultTcpServerChannelInitializer">
+        <constructor-arg ref="gateUserServerConfig"/>
+        <property name="handlers">
+            <list>
+                <bean class="com.roje.game.gate.netty.handler.GateUserServerChannelInBoundHandler">
+                    <property name="sessionManager" ref="userSessionManager"/>
+                    <property name="dispatcher" ref="messageDispatcher"/>
+                    <property name="service" ref="gateUserTcpServer"/>
+                </bean>
+            </list>
+        </property>
+    </bean>
+    <bean class="com.roje.game.core.netty.channel.initializer.DefaultClientChannelInitializer" id="clientChannelInitializer">
+        <constructor-arg ref="gateClusterClientConfig"/>
+        <property name="handlers">
+            <list>
+                <bean class="com.roje.game.gate.netty.handler.GateClusterClientChannelInBoundHandler">
+                    <property name="dispatcher" ref="messageDispatcher"/>
+                    <property name="service" ref="gateClusterTcpClient"/>
+                    <property name="serverConfig" ref="gateUserServerConfig"/>
+                    <property name="sessionManager" ref="userSessionManager"/>
+                    <property name="clientService" ref="gateClusterTcpClient"/>
+                </bean>
+            </list>
+        </property>
+    </bean>
+    <!--netty服务器-->
+    <bean id="userTcpNettyServer" class="com.roje.game.core.netty.NettyTcpServer">
+        <constructor-arg index="0" ref="serverChannelInitializer"/>
+        <constructor-arg index="1" ref="gateUserServerConfig"/>
+    </bean>
+    <!--netty服务器-->
+    <bean id="gameTcpNettyServer" class="com.roje.game.core.netty.NettyTcpServer">
+        <constructor-arg index="0" ref="serverChannelInitializer"/>
+        <constructor-arg index="1" ref="gateGameServerConfig"/>
+    </bean>
+    <!--netty客户端-->
+    <bean id="gateClusterTcpNettyClient" class="com.roje.game.core.netty.NettyTcpClient">
+        <constructor-arg index="0" name="clientConfig" ref="gateClusterClientConfig"/>
+        <constructor-arg index="1" name="initializer" ref="clientChannelInitializer"/>
+    </bean>
+    <bean id="userQuitEventHandler" class="com.roje.game.gate.eventhandler.UserQuitEventHandler"/>
+
+    <!--连接用户的服务器-->
+    <bean id="gateUserTcpServer" class="com.roje.game.gate.server.GateUserTcpTcpServer">
+        <constructor-arg index="0" ref="threadConfig"/>
+        <constructor-arg index="1" ref="userTcpNettyServer"/>
+        <property name="sessionManager" ref="userSessionManager"/>
+    </bean>
+    <!--连接其他服务器的服务器-->
+    <bean id="gateGameTcpServer" class="com.roje.game.gate.server.GateGameTcpServer">
+        <constructor-arg ref="gameTcpNettyServer"/>
+    </bean>
+    <!---->
+    <!--连接集群服务器的client-->
+    <bean id="gateClusterTcpClient" class="com.roje.game.gate.client.GateClusterTcpClient">
+        <constructor-arg index="0" name="tcpClient" ref="gateClusterTcpNettyClient"/>
+    </bean>
+    <!--消息处理-->
+    <bean class="com.roje.game.gate.processor.impl.user.HeartBeatProcessor">
+        <property name="dispatcher" ref="messageDispatcher"/>
+    </bean>
+    <bean class="com.roje.game.gate.processor.impl.user.LoginReqProcessor">
+        <property name="dispatcher" ref="messageDispatcher"/>
+    </bean>
+    <bean class="com.roje.game.gate.processor.impl.cluster.ServerRegProcessor" init-method="register">
+        <property name="dispatcher" ref="messageDispatcher"/>
+        <property name="gateGameServerConfig" ref="gateGameServerConfig"/>
+        <property name="gateUserServerConfig" ref="gateUserServerConfig"/>
+    </bean>
+    <bean class="com.roje.game.gate.processor.impl.cluster.ServerUpdateProcessor" init-method="register">
+        <property name="dispatcher" ref="messageDispatcher"/>
+    </bean>
+</beans>
