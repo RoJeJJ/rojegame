@@ -99,13 +99,25 @@ public final class Mid {
      */
     ServerUpdateRes(9, 1010),
     /**
+     * <code>IdleServerReq = 1011;</code>
+     *
+     * <pre>
+     *获取空闲服务器
+     * </pre>
+     */
+    IdleServerReq(10, 1011),
+    /**
+     * <code>IdleServerRes = 1012;</code>
+     */
+    IdleServerRes(11, 1012),
+    /**
      * <code>LoginReq = 10001;</code>
      *
      * <pre>
      *大厅
      * </pre>
      */
-    LoginReq(10, 10001),
+    LoginReq(12, 10001),
     /**
      * <code>LoginRes = 10002;</code>
      *
@@ -113,7 +125,7 @@ public final class Mid {
      *登录
      * </pre>
      */
-    LoginRes(11, 10002),
+    LoginRes(13, 10002),
     /**
      * <code>LoginSubGameReq = 10003;</code>
      *
@@ -121,7 +133,7 @@ public final class Mid {
      *登录子游戏
      * </pre>
      */
-    LoginSubGameReq(12, 10003),
+    LoginSubGameReq(14, 10003),
     /**
      * <code>LoginSubGameRes = 10004;</code>
      *
@@ -129,7 +141,7 @@ public final class Mid {
      *登录子游戏
      * </pre>
      */
-    LoginSubGameRes(13, 10004),
+    LoginSubGameRes(15, 10004),
     /**
      * <code>SystemErrorRes = 10006;</code>
      *
@@ -137,7 +149,7 @@ public final class Mid {
      *系统错误消息返回
      * </pre>
      */
-    SystemErrorRes(14, 10006),
+    SystemErrorRes(16, 10006),
     /**
      * <code>QuitReq = 10007;</code>
      *
@@ -145,7 +157,7 @@ public final class Mid {
      *退出游戏
      * </pre>
      */
-    QuitReq(15, 10007),
+    QuitReq(17, 10007),
     /**
      * <code>QuitRes = 10008;</code>
      *
@@ -153,7 +165,7 @@ public final class Mid {
      *退出游戏
      * </pre>
      */
-    QuitRes(16, 10008),
+    QuitRes(18, 10008),
     /**
      * <code>QuitSubGameReq = 10009;</code>
      *
@@ -161,7 +173,7 @@ public final class Mid {
      *退出子游戏
      * </pre>
      */
-    QuitSubGameReq(17, 10009),
+    QuitSubGameReq(19, 10009),
     /**
      * <code>QuitSubGameRes = 10010;</code>
      *
@@ -169,7 +181,7 @@ public final class Mid {
      *退出子游戏
      * </pre>
      */
-    QuitSubGameRes(18, 10010),
+    QuitSubGameRes(20, 10010),
     /**
      * <code>HeartReq = 10011;</code>
      *
@@ -177,7 +189,7 @@ public final class Mid {
      *心跳
      * </pre>
      */
-    HeartReq(19, 10011),
+    HeartReq(21, 10011),
     /**
      * <code>HeartRes = 10012;</code>
      *
@@ -185,7 +197,7 @@ public final class Mid {
      *心跳
      * </pre>
      */
-    HeartRes(20, 10012),
+    HeartRes(22, 10012),
     /**
      * <code>UdpConnectReq = 10013;</code>
      *
@@ -193,7 +205,7 @@ public final class Mid {
      *udp连接请求
      * </pre>
      */
-    UdpConnectReq(21, 10013),
+    UdpConnectReq(23, 10013),
     /**
      * <code>UdpConnectRes = 10014;</code>
      *
@@ -201,7 +213,7 @@ public final class Mid {
      *udp连接请求
      * </pre>
      */
-    UdpConnectRes(22, 10014),
+    UdpConnectRes(24, 10014),
     /**
      * <code>ChatReq = 10015;</code>
      *
@@ -209,7 +221,7 @@ public final class Mid {
      *聊天
      * </pre>
      */
-    ChatReq(23, 10015),
+    ChatReq(25, 10015),
     /**
      * <code>ChatRes = 10016;</code>
      *
@@ -217,7 +229,7 @@ public final class Mid {
      *聊天
      * </pre>
      */
-    ChatRes(24, 10016),
+    ChatRes(26, 10016),
     /**
      * <code>PacketItemsReq = 10017;</code>
      *
@@ -225,7 +237,7 @@ public final class Mid {
      *背包列表
      * </pre>
      */
-    PacketItemsReq(25, 10017),
+    PacketItemsReq(27, 10017),
     /**
      * <code>PacketItemsRes = 10018;</code>
      *
@@ -233,7 +245,7 @@ public final class Mid {
      *背包列表
      * </pre>
      */
-    PacketItemsRes(26, 10018),
+    PacketItemsRes(28, 10018),
     /**
      * <code>UseItemReq = 10019;</code>
      *
@@ -241,7 +253,7 @@ public final class Mid {
      *使用道具
      * </pre>
      */
-    UseItemReq(27, 10019),
+    UseItemReq(29, 10019),
     /**
      * <code>UseItemRes = 10020;</code>
      *
@@ -249,7 +261,7 @@ public final class Mid {
      *使用道具
      * </pre>
      */
-    UseItemRes(28, 10020),
+    UseItemRes(30, 10020),
     /**
      * <code>MailListReq = 10021;</code>
      *
@@ -257,7 +269,7 @@ public final class Mid {
      *邮件列表
      * </pre>
      */
-    MailListReq(29, 10021),
+    MailListReq(31, 10021),
     /**
      * <code>MailListRes = 10022;</code>
      *
@@ -265,7 +277,7 @@ public final class Mid {
      *邮件列表
      * </pre>
      */
-    MailListRes(30, 10022),
+    MailListRes(32, 10022),
     /**
      * <code>ModifyMailReq = 10023;</code>
      *
@@ -273,7 +285,7 @@ public final class Mid {
      *修改邮件状态
      * </pre>
      */
-    ModifyMailReq(31, 10023),
+    ModifyMailReq(33, 10023),
     /**
      * <code>ModifyMailRes = 10024;</code>
      *
@@ -281,7 +293,7 @@ public final class Mid {
      *修改邮件状态
      * </pre>
      */
-    ModifyMailRes(32, 10024),
+    ModifyMailRes(34, 10024),
     /**
      * <code>GuildInfoReq = 10025;</code>
      *
@@ -289,7 +301,7 @@ public final class Mid {
      *公会详细信息
      * </pre>
      */
-    GuildInfoReq(33, 10025),
+    GuildInfoReq(35, 10025),
     /**
      * <code>GuildInfoRes = 10026;</code>
      *
@@ -297,7 +309,7 @@ public final class Mid {
      *公会详细信息
      * </pre>
      */
-    GuildInfoRes(34, 10026),
+    GuildInfoRes(36, 10026),
     /**
      * <code>GuildListReq = 10027;</code>
      *
@@ -305,7 +317,7 @@ public final class Mid {
      *公会列表
      * </pre>
      */
-    GuildListReq(35, 10027),
+    GuildListReq(37, 10027),
     /**
      * <code>GuildListRes = 10028;</code>
      *
@@ -313,7 +325,7 @@ public final class Mid {
      *公会列表
      * </pre>
      */
-    GuildListRes(36, 10028),
+    GuildListRes(38, 10028),
     /**
      * <code>ApplyGuildReq = 10029;</code>
      *
@@ -321,7 +333,7 @@ public final class Mid {
      *申请加入公会
      * </pre>
      */
-    ApplyGuildReq(37, 10029),
+    ApplyGuildReq(39, 10029),
     /**
      * <code>ApplyGuildRes = 10030;</code>
      *
@@ -329,7 +341,7 @@ public final class Mid {
      *申请加入公会
      * </pre>
      */
-    ApplyGuildRes(38, 10030),
+    ApplyGuildRes(40, 10030),
     /**
      * <code>GuildApprovalReq = 10031;</code>
      *
@@ -337,7 +349,7 @@ public final class Mid {
      *公会审批
      * </pre>
      */
-    GuildApprovalReq(39, 10031),
+    GuildApprovalReq(41, 10031),
     /**
      * <code>GuildApprovalRes = 10032;</code>
      *
@@ -345,7 +357,7 @@ public final class Mid {
      *公会审批
      * </pre>
      */
-    GuildApprovalRes(40, 10032),
+    GuildApprovalRes(42, 10032),
     /**
      * <code>CreateGuildReq = 10033;</code>
      *
@@ -353,7 +365,7 @@ public final class Mid {
      *创建公会
      * </pre>
      */
-    CreateGuildReq(41, 10033),
+    CreateGuildReq(43, 10033),
     /**
      * <code>CreateGuildRes = 10034;</code>
      *
@@ -361,7 +373,23 @@ public final class Mid {
      *创建公会
      * </pre>
      */
-    CreateGuildRes(42, 10034),
+    CreateGuildRes(44, 10034),
+    /**
+     * <code>LoseConntionReq = 10035;</code>
+     *
+     * <pre>
+     *连接断开
+     * </pre>
+     */
+    LoseConntionReq(45, 10035),
+    /**
+     * <code>LoseConntionRes = 10036;</code>
+     *
+     * <pre>
+     *连接断开
+     * </pre>
+     */
+    LoseConntionRes(46, 10036),
     /**
      * <code>EnterRoomReq = 20001;</code>
      *
@@ -369,7 +397,7 @@ public final class Mid {
      *捕鱼达人
      * </pre>
      */
-    EnterRoomReq(43, 20001),
+    EnterRoomReq(47, 20001),
     /**
      * <code>EnterRoomRes = 20002;</code>
      *
@@ -377,7 +405,7 @@ public final class Mid {
      *进入房间
      * </pre>
      */
-    EnterRoomRes(44, 20002),
+    EnterRoomRes(48, 20002),
     /**
      * <code>ApplyAthleticsReq = 20003;</code>
      *
@@ -385,7 +413,7 @@ public final class Mid {
      *报名竞技赛
      * </pre>
      */
-    ApplyAthleticsReq(45, 20003),
+    ApplyAthleticsReq(49, 20003),
     /**
      * <code>ApplyAthleticsRes = 20004;</code>
      *
@@ -393,7 +421,7 @@ public final class Mid {
      *报名竞技赛
      * </pre>
      */
-    ApplyAthleticsRes(46, 20004),
+    ApplyAthleticsRes(50, 20004),
     /**
      * <code>QuitRoomReq = 20005;</code>
      *
@@ -401,7 +429,7 @@ public final class Mid {
      *退出房间
      * </pre>
      */
-    QuitRoomReq(47, 20005),
+    QuitRoomReq(51, 20005),
     /**
      * <code>QuitRoomRes = 20006;</code>
      *
@@ -409,7 +437,7 @@ public final class Mid {
      *退出房间
      * </pre>
      */
-    QuitRoomRes(48, 20006),
+    QuitRoomRes(52, 20006),
     /**
      * <code>FishEnterRoomRes = 20008;</code>
      *
@@ -417,7 +445,7 @@ public final class Mid {
      *鱼进入房间
      * </pre>
      */
-    FishEnterRoomRes(49, 20008),
+    FishEnterRoomRes(53, 20008),
     /**
      * <code>RoomInfoRes = 20010;</code>
      *
@@ -425,7 +453,7 @@ public final class Mid {
      *房间信息
      * </pre>
      */
-    RoomInfoRes(50, 20010),
+    RoomInfoRes(54, 20010),
     /**
      * <code>RoomChangeRes = 20012;</code>
      *
@@ -433,7 +461,7 @@ public final class Mid {
      *房间改变
      * </pre>
      */
-    RoomChangeRes(51, 20012),
+    RoomChangeRes(55, 20012),
     /**
      * <code>UseSkillReq = 20013;</code>
      *
@@ -441,7 +469,7 @@ public final class Mid {
      *使用技能
      * </pre>
      */
-    UseSkillReq(52, 20013),
+    UseSkillReq(56, 20013),
     /**
      * <code>UseSkillRes = 20014;</code>
      *
@@ -449,7 +477,7 @@ public final class Mid {
      *使用技能
      * </pre>
      */
-    UseSkillRes(53, 20014),
+    UseSkillRes(57, 20014),
     /**
      * <code>FireReq = 20015;</code>
      *
@@ -457,7 +485,7 @@ public final class Mid {
      *开炮
      * </pre>
      */
-    FireReq(54, 20015),
+    FireReq(58, 20015),
     /**
      * <code>FireRes = 20016;</code>
      *
@@ -465,7 +493,7 @@ public final class Mid {
      *开炮
      * </pre>
      */
-    FireRes(55, 20016),
+    FireRes(59, 20016),
     /**
      * <code>FireResultReq = 20017;</code>
      *
@@ -473,7 +501,7 @@ public final class Mid {
      *伤害结果
      * </pre>
      */
-    FireResultReq(56, 20017),
+    FireResultReq(60, 20017),
     /**
      * <code>FireResultRes = 20018;</code>
      *
@@ -481,7 +509,7 @@ public final class Mid {
      *伤害结果
      * </pre>
      */
-    FireResultRes(57, 20018),
+    FireResultRes(61, 20018),
     /**
      * <code>GunLeveUpReq = 20019;</code>
      *
@@ -489,7 +517,7 @@ public final class Mid {
      *升级炮台
      * </pre>
      */
-    GunLeveUpReq(58, 20019),
+    GunLeveUpReq(62, 20019),
     /**
      * <code>GunLeveUpRes = 20020;</code>
      *
@@ -497,7 +525,7 @@ public final class Mid {
      *升级炮台
      * </pre>
      */
-    GunLeveUpRes(59, 20020),
+    GunLeveUpRes(63, 20020),
     /**
      * <code>ErrorMessageResp = 30001;</code>
      *
@@ -505,7 +533,7 @@ public final class Mid {
      *错误消息
      * </pre>
      */
-    ErrorMessageResp(60, 30001),
+    ErrorMessageResp(64, 30001),
     ;
 
     /**
@@ -587,6 +615,18 @@ public final class Mid {
      * </pre>
      */
     public static final int ServerUpdateRes_VALUE = 1010;
+    /**
+     * <code>IdleServerReq = 1011;</code>
+     *
+     * <pre>
+     *获取空闲服务器
+     * </pre>
+     */
+    public static final int IdleServerReq_VALUE = 1011;
+    /**
+     * <code>IdleServerRes = 1012;</code>
+     */
+    public static final int IdleServerRes_VALUE = 1012;
     /**
      * <code>LoginReq = 10001;</code>
      *
@@ -852,6 +892,22 @@ public final class Mid {
      */
     public static final int CreateGuildRes_VALUE = 10034;
     /**
+     * <code>LoseConntionReq = 10035;</code>
+     *
+     * <pre>
+     *连接断开
+     * </pre>
+     */
+    public static final int LoseConntionReq_VALUE = 10035;
+    /**
+     * <code>LoseConntionRes = 10036;</code>
+     *
+     * <pre>
+     *连接断开
+     * </pre>
+     */
+    public static final int LoseConntionRes_VALUE = 10036;
+    /**
      * <code>EnterRoomReq = 20001;</code>
      *
      * <pre>
@@ -1011,6 +1067,8 @@ public final class Mid {
         case 1008: return ServerEventRes;
         case 1009: return ServerUpdateReq;
         case 1010: return ServerUpdateRes;
+        case 1011: return IdleServerReq;
+        case 1012: return IdleServerRes;
         case 10001: return LoginReq;
         case 10002: return LoginRes;
         case 10003: return LoginSubGameReq;
@@ -1044,6 +1102,8 @@ public final class Mid {
         case 10032: return GuildApprovalRes;
         case 10033: return CreateGuildReq;
         case 10034: return CreateGuildRes;
+        case 10035: return LoseConntionReq;
+        case 10036: return LoseConntionRes;
         case 20001: return EnterRoomReq;
         case 20002: return EnterRoomRes;
         case 20003: return ApplyAthleticsReq;
@@ -1122,16 +1182,17 @@ public final class Mid {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\tMid.proto*\300\t\n\003MID\022\026\n\021ServerRegisterReq" +
+      "\n\tMid.proto*\224\n\n\003MID\022\026\n\021ServerRegisterReq" +
       "\020\351\007\022\026\n\021ServerRegisterRes\020\352\007\022\022\n\rServerLis" +
       "tReq\020\353\007\022\022\n\rServerListRes\020\354\007\022\030\n\023ChangeRol" +
       "eServerReq\020\355\007\022\030\n\023ChangeRoleServerRes\020\356\007\022" +
       "\023\n\016ServerEventReq\020\357\007\022\023\n\016ServerEventRes\020\360" +
       "\007\022\024\n\017ServerUpdateReq\020\361\007\022\024\n\017ServerUpdateR" +
-      "es\020\362\007\022\r\n\010LoginReq\020\221N\022\r\n\010LoginRes\020\222N\022\024\n\017L" +
+      "es\020\362\007\022\022\n\rIdleServerReq\020\363\007\022\022\n\rIdleServerR" +
+      "es\020\364\007\022\r\n\010LoginReq\020\221N\022\r\n\010LoginRes\020\222N\022\024\n\017L" +
       "oginSubGameReq\020\223N\022\024\n\017LoginSubGameRes\020\224N\022" +
-      "\023\n\016SystemErrorRes\020\226N\022\014\n\007QuitReq\020\227N\022\014\n\007Qu" +
-      "itRes\020\230N\022\023\n\016QuitSubGameReq\020\231N\022\023\n\016QuitSub",
+      "\023\n\016SystemErrorRes\020\226N\022\014\n\007QuitReq\020\227N\022\014\n\007Qu",
+      "itRes\020\230N\022\023\n\016QuitSubGameReq\020\231N\022\023\n\016QuitSub" +
       "GameRes\020\232N\022\r\n\010HeartReq\020\233N\022\r\n\010HeartRes\020\234N" +
       "\022\022\n\rUdpConnectReq\020\235N\022\022\n\rUdpConnectRes\020\236N" +
       "\022\014\n\007ChatReq\020\237N\022\014\n\007ChatRes\020\240N\022\023\n\016PacketIt" +
@@ -1140,20 +1201,21 @@ public final class Mid {
       "\245N\022\020\n\013MailListRes\020\246N\022\022\n\rModifyMailReq\020\247N" +
       "\022\022\n\rModifyMailRes\020\250N\022\021\n\014GuildInfoReq\020\251N\022" +
       "\021\n\014GuildInfoRes\020\252N\022\021\n\014GuildListReq\020\253N\022\021\n" +
-      "\014GuildListRes\020\254N\022\022\n\rApplyGuildReq\020\255N\022\022\n\r" +
-      "ApplyGuildRes\020\256N\022\025\n\020GuildApprovalReq\020\257N\022",
+      "\014GuildListRes\020\254N\022\022\n\rApplyGuildReq\020\255N\022\022\n\r",
+      "ApplyGuildRes\020\256N\022\025\n\020GuildApprovalReq\020\257N\022" +
       "\025\n\020GuildApprovalRes\020\260N\022\023\n\016CreateGuildReq" +
-      "\020\261N\022\023\n\016CreateGuildRes\020\262N\022\022\n\014EnterRoomReq" +
-      "\020\241\234\001\022\022\n\014EnterRoomRes\020\242\234\001\022\027\n\021ApplyAthleti" +
-      "csReq\020\243\234\001\022\027\n\021ApplyAthleticsRes\020\244\234\001\022\021\n\013Qu" +
-      "itRoomReq\020\245\234\001\022\021\n\013QuitRoomRes\020\246\234\001\022\026\n\020Fish" +
-      "EnterRoomRes\020\250\234\001\022\021\n\013RoomInfoRes\020\252\234\001\022\023\n\rR" +
-      "oomChangeRes\020\254\234\001\022\021\n\013UseSkillReq\020\255\234\001\022\021\n\013U" +
-      "seSkillRes\020\256\234\001\022\r\n\007FireReq\020\257\234\001\022\r\n\007FireRes" +
-      "\020\260\234\001\022\023\n\rFireResultReq\020\261\234\001\022\023\n\rFireResultR" +
-      "es\020\262\234\001\022\022\n\014GunLeveUpReq\020\263\234\001\022\022\n\014GunLeveUpR",
-      "es\020\264\234\001\022\026\n\020ErrorMessageResp\020\261\352\001B\027\n\025com.ro" +
-      "je.game.message"
+      "\020\261N\022\023\n\016CreateGuildRes\020\262N\022\024\n\017LoseConntion" +
+      "Req\020\263N\022\024\n\017LoseConntionRes\020\264N\022\022\n\014EnterRoo" +
+      "mReq\020\241\234\001\022\022\n\014EnterRoomRes\020\242\234\001\022\027\n\021ApplyAth" +
+      "leticsReq\020\243\234\001\022\027\n\021ApplyAthleticsRes\020\244\234\001\022\021" +
+      "\n\013QuitRoomReq\020\245\234\001\022\021\n\013QuitRoomRes\020\246\234\001\022\026\n\020" +
+      "FishEnterRoomRes\020\250\234\001\022\021\n\013RoomInfoRes\020\252\234\001\022" +
+      "\023\n\rRoomChangeRes\020\254\234\001\022\021\n\013UseSkillReq\020\255\234\001\022" +
+      "\021\n\013UseSkillRes\020\256\234\001\022\r\n\007FireReq\020\257\234\001\022\r\n\007Fir",
+      "eRes\020\260\234\001\022\023\n\rFireResultReq\020\261\234\001\022\023\n\rFireRes" +
+      "ultRes\020\262\234\001\022\022\n\014GunLeveUpReq\020\263\234\001\022\022\n\014GunLev" +
+      "eUpRes\020\264\234\001\022\026\n\020ErrorMessageResp\020\261\352\001B\027\n\025co" +
+      "m.roje.game.message"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {

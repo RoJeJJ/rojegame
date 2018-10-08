@@ -33,6 +33,13 @@ message ServerUpdateResponse{
     optional bool sucess     = 2;
     optional string msg       =3;
 }
+message IdleServerRequest{
+    optional MID mid            =1 [default = IdleServerReq];
+    optional int32 type       =2;
+}
+message IdleServerResponse{
+    optional MID mid            =1 [default = IdleServerRes];
+}
 
 //服务器信息
 message ServerInfo {
@@ -50,6 +57,7 @@ message ServerInfo {
     optional int32 totalMemory = 12; //可用内存
     optional int32 version = 13; //版本号
     optional int32 requireClientVersion = 14;//要求的客户端版本
+    optional int32 connectedCount = 15;
 }
 
 //系统错误码
@@ -57,4 +65,5 @@ enum SystemErroCode{
     HallNotFind							= 1;	//没有可用大厅服
     GameNotFind							= 2;	//没有可用游戏服
     ConectReset							= 3;	//连接已重置，失效
+    GateNotFind                        = 4;//没有可用大厅服务器
 }

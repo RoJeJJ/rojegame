@@ -16,7 +16,15 @@ import java.util.concurrent.Executor;
 public class DefaultInBoundHandler extends SimpleChannelInboundHandler<byte[]> {
     private MessageDispatcher dispatcher;
     protected Service service;
+    private boolean containUid;
     private static final Logger LOG = LoggerFactory.getLogger(DefaultInBoundHandler.class);
+
+    public DefaultInBoundHandler(boolean containUid,Service service,MessageDispatcher dispatcher){
+        this.containUid = containUid;
+        this.service = service;
+        this.dispatcher = dispatcher;
+    }
+
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, byte[] bytes) throws Exception {
         if (bytes.length < MessageConfig.MidLen){
@@ -24,34 +32,30 @@ public class DefaultInBoundHandler extends SimpleChannelInboundHandler<byte[]> {
             channelHandlerContext.close();
             return;
         }
-        int mid = MessageUtil.getMid(bytes,0,MessageConfig.MidLen);
+        int mid = MessageUtil.getInt(bytes,0,MessageConfig.MidLen);
+        long uid = containUid?MessageUtil.getLong(bytes,MessageConfig.MidLen,MessageConfig.UidLen):0;
         MessageProcessor handler = dispatcher.getMessageHandler(mid);
-        byte[] msg = MessageUtil.getMessage(bytes,MessageConfig.MidLen,bytes.length - MessageConfig.MidLen);
+        byte[] msg = MessageUtil.getMessage(bytes,MessageConfig.MidLen+(containUid?MessageConfig.UidLen:0),bytes.length - MessageConfig.MidLen);
+        boolean forward = true;
         if (handler != null){
-            Processor annotationProcessor = handler.getClass().getAnnotation(Processor.class);
-            if (annotationProcessor != null){
-                Executor executor = service.getExecutor(annotationProcessor.thread());
+            Processor processor = handler.getClass().getAnnotation(Processor.class);
+            if (processor != null){
+                Executor executor = service.getExecutor(processor.thread());
                 if (executor != null){
                     executor.execute(() -> {
                         try {
-                            handler.handler(channelHandlerContext,msg);
+                            handler.handler(channelHandlerContext.channel(),msg);
                         } catch (Exception e) {
-                            e.printStackTrace();
+                            LOG.warn("处理消息异常",e);
                         }
                     });
                 }else
-                    handler.handler(channelHandlerContext,msg);
+                    handler.handler(channelHandlerContext.channel(),msg);
+                forward = processor.forward();
             }
-            forward(channelHandlerContext,mid,bytes);
         }
+        if (forward)
+            forward(channelHandlerContext,mid,uid,msg);
     }
-    public void forward(ChannelHandlerContext ctx,int mid,byte[] bytes){}
-
-    public void setDispatcher(MessageDispatcher dispatcher) {
-        this.dispatcher = dispatcher;
-    }
-
-    public void setService(Service service) {
-        this.service = service;
-    }
+    public void forward(ChannelHandlerContext ctx,int mid,long uid,byte[] bytes){}
 }

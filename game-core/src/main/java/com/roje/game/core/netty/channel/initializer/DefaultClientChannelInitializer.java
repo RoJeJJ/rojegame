@@ -12,14 +12,14 @@ import java.util.List;
 
 public class DefaultClientChannelInitializer extends ChannelInitializer<SocketChannel> {
     private List<ChannelHandler> handlers;
-    private ClientConfig gateConfig;
-    public DefaultClientChannelInitializer(ClientConfig gateConfig){
-        this.gateConfig = gateConfig;
+    private ClientConfig clientConfig;
+    public DefaultClientChannelInitializer(ClientConfig clientConfig){
+        this.clientConfig = clientConfig;
     }
     @Override
     protected void initChannel(SocketChannel socketChannel) {
         ChannelPipeline pipeline = socketChannel.pipeline();
-        pipeline.addLast(new IdleStateHandler(gateConfig.getReaderIdleTime(),gateConfig.getWriterIdleTime(),gateConfig.getAllIdleTime()));
+        pipeline.addLast(new IdleStateHandler(clientConfig.getReaderIdleTime(),clientConfig.getWriterIdleTime(),clientConfig.getAllIdleTime()));
         pipeline.addLast(new DefaultMessageCodec());
         for (ChannelHandler handler:handlers){
             pipeline.addLast(handler);

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean class="com.roje.game.core.server.BaseInfo" id="gateInfo">
+        <property name="type">
+            <value type="com.roje.game.core.server.ServerType">Gate</value>
+        </property>
+        <property name="ip" value="${gate.server.ip}"/>
+        <property name="name" value="${gate.server.name}"/>
+        <property name="port" value="${gate.server.port}"/>
+        <property name="httpPort" value="${gate.server.httpPort}"/>
+        <property name="url" value="${gate.server.url}"/>
+        <property name="state">
+            <value type="com.roje.game.core.server.ServerState">NORMAL</value>
+        </property>
+        <property name="versionCode" value="${gate.server.version.code}"/>
+        <property name="maxUserCount" value="${gate.server.maxUserCount}"/>
+        <property name="clientVersionCode" value="${gate.server.client.version.code}"/>
+    </bean>
+    <!--线程配置-->
+    <bean class="com.roje.game.core.config.ThreadConfig" id="threadConfig">
+        <property name="ioCapacity" value="${io.capacity}"/>
+        <property name="ioCorePoolSize" value="${io.corePoolSize}"/>
+        <property name="ioKeepAliveTime" value="${io.keepAliveTime}"/>
+        <property name="ioMaximumPoolSize" value="${io.maximumPoolSize}"/>
+        <property name="syncName" value="${sync.name}"/>
+        <property name="syncTimeInterval" value="${sync.timeInterval}"/>
+        <property name="syncCommandSize" value="${sync.commandSize}"/>
+    </bean>
+    <!--gate.user.服务器配置参数-->
+    <bean id="gateUserServerConfig" class="com.roje.game.core.config.ServerConfig">
+        <property name="port" value="${gate.server.port}"/>
+        <property name="reuseAddress" value="${gate.user.server.reuseAddress}"/>
+        <property name="soBackLog" value="${gate.user.server.soBackLog}"/>
+        <property name="soKeepAlive" value="${gate.user.server.soKeepAlive}"/>
+        <property name="tcpNoDelay" value="${gate.user.server.tcpNoDelay}"/>
+        <property name="readerIdleTime" value="${gate.user.server.readerIdleTime}"/>
+        <property name="writerIdleTime" value="${gate.user.server.writerIdleTime}"/>
+        <property name="allIdleTime" value="${gate.user.server.allIdleTime}"/>
+        <property name="soLinger" value="${gate.user.server.soLinger}"/>
+        <property name="netSpeed" value="${gate.user.server.netSpeed}"/>
+        <property name="maxCountPerSecond" value="${gate.user.server.maxCountPerSecond}"/>
+        <property name="clientVersionCode" value="${gate.server.client.version.code}"/>
+    </bean>
+    <!--gate.game.内部服务器配置-->
+    <bean id="gateGameServerConfig" class="com.roje.game.core.config.ServerConfig">
+        <property name="port" value="${gate.game.server.port}"/>
+        <property name="reuseAddress" value="${gate.game.server.reuseAddress}"/>
+        <property name="soBackLog" value="${gate.game.server.soBackLog}"/>
+        <property name="soKeepAlive" value="${gate.game.server.soKeepAlive}"/>
+        <property name="tcpNoDelay" value="${gate.game.server.tcpNoDelay}"/>
+        <property name="readerIdleTime" value="${gate.game.server.readerIdleTime}"/>
+        <property name="writerIdleTime" value="${gate.game.server.writerIdleTime}"/>
+        <property name="allIdleTime" value="${gate.game.server.allIdleTime}"/>
+        <property name="soLinger" value="${gate.game.server.soLinger}"/>
+        <property name="netSpeed" value="${gate.game.server.netSpeed}"/>
+        <property name="maxCountPerSecond" value="${gate.game.server.maxCountPerSecond}"/>
+        <property name="clientVersionCode" value="${gate.game.client.version.code}"/>
+    </bean>
+    <!--gateClusterClientConfig-->
+    <bean id="gateClusterClientConfig" class="com.roje.game.core.config.ClientConfig">
+        <property name="host" value="${gate.cluster.client.connect.ip}"/>
+        <property name="port" value="${gate.cluster.client.connect.port}"/>
+        <property name="soLinger" value="${gate.cluster.client.soLinger}"/>
+        <property name="connToType">
+            <value type="com.roje.game.core.server.ServerType">Cluster</value>
+        </property>
+        <property name="readerIdleTime" value="${gate.cluster.client.readerIdleTime}"/>
+        <property name="writerIdleTime" value="${gate.cluster.client.writerIdleTime}"/>
+        <property name="allIdleTime" value="${gate.cluster.client.allIdleTime}"/>
+        <property name="tcpNoDelay" value="${gate.cluster.client.tcpNoDelay}"/>
+        <property name="reconnectTime" value="${gate.cluster.client.reconnectTime}"/>
+
+        <property name="connectTimeout" value="${gate.cluster.client.connectTimeout}"/>
+        <property name="type">
+            <value type="com.roje.game.core.server.ServerType">Gate</value>
+        </property>
+    </bean>
+</beans>

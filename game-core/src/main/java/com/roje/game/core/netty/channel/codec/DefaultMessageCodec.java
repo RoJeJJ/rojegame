@@ -12,19 +12,26 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.util.function.Predicate;
 
-public class DefaultMessageCodec extends ByteToMessageCodec<Message> {
+public class DefaultMessageCodec extends ByteToMessageCodec<Object> {
     private static final Logger LOG = LoggerFactory.getLogger(DefaultMessageCodec.class);
     private Predicate<ChannelHandlerContext> channelHandlerContextPredicate;
 
     @Override
-    protected void encode(ChannelHandlerContext channelHandlerContext, Message message, ByteBuf byteBuf) {
-        Descriptors.EnumValueDescriptor enumDescriptor = (Descriptors.EnumValueDescriptor) message.getField(message.getDescriptorForType().findFieldByNumber(1));
-        int mid = enumDescriptor.getNumber();
-        byte[] contentBytes = message.toByteArray();
-        int contentLen = contentBytes.length + MessageConfig.MidLen;
-        byteBuf.writeInt(contentLen);
-        byteBuf.writeInt(mid);
-        byteBuf.writeBytes(contentBytes);
+    protected void encode(ChannelHandlerContext channelHandlerContext, Object message, ByteBuf byteBuf) {
+        if (message instanceof Message){
+            Message msg = (Message) message;
+            Descriptors.EnumValueDescriptor enumDescriptor = (Descriptors.EnumValueDescriptor) msg.getField(msg.getDescriptorForType().findFieldByNumber(1));
+            int mid = enumDescriptor.getNumber();
+            byte[] contentBytes = msg.toByteArray();
+            int contentLen = contentBytes.length + MessageConfig.MidLen;
+            byteBuf.writeInt(contentLen);
+            byteBuf.writeInt(mid);
+            byteBuf.writeBytes(contentBytes);
+        }else if (message instanceof byte[]){
+            byte[] content = (byte[]) message;
+            byteBuf.writeInt(content.length);
+            byteBuf.writeBytes(content);
+        }
     }
 
     @Override

@@ -5,6 +5,7 @@
     <file url="file://$PROJECT_DIR$/game-cluster" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/game-core" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/game-gate" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/game-hall" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/game-message" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/game-message/src/main/resources/proto/gen_proto.bat" charset="GBK" />
     <file url="file://$PROJECT_DIR$/game-model" charset="UTF-8" />

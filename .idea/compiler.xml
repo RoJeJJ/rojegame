@@ -9,6 +9,7 @@
         <module name="game-cluster" />
         <module name="game-core" />
         <module name="game-gate" />
+        <module name="game-hall" />
         <module name="game-message" />
         <module name="game-model" />
         <module name="game-test" />

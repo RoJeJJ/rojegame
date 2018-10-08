@@ -41,6 +41,14 @@ public final class CommonMessage {
      * </pre>
      */
     ConectReset(2, 3),
+    /**
+     * <code>GateNotFind = 4;</code>
+     *
+     * <pre>
+     *没有可用大厅服务器
+     * </pre>
+     */
+    GateNotFind(3, 4),
     ;
 
     /**
@@ -67,6 +75,14 @@ public final class CommonMessage {
      * </pre>
      */
     public static final int ConectReset_VALUE = 3;
+    /**
+     * <code>GateNotFind = 4;</code>
+     *
+     * <pre>
+     *没有可用大厅服务器
+     * </pre>
+     */
+    public static final int GateNotFind_VALUE = 4;
 
 
     public final int getNumber() { return value; }
@@ -76,6 +92,7 @@ public final class CommonMessage {
         case 1: return HallNotFind;
         case 2: return GameNotFind;
         case 3: return ConectReset;
+        case 4: return GateNotFind;
         default: return null;
       }
     }
@@ -4319,6 +4336,897 @@ public final class CommonMessage {
     // @@protoc_insertion_point(class_scope:ServerUpdateResponse)
   }
 
+  public interface IdleServerRequestOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
+
+    // optional .MID mid = 1 [default = IdleServerReq];
+    /**
+     * <code>optional .MID mid = 1 [default = IdleServerReq];</code>
+     */
+    boolean hasMid();
+    /**
+     * <code>optional .MID mid = 1 [default = IdleServerReq];</code>
+     */
+    com.roje.game.message.Mid.MID getMid();
+
+    // optional int32 type = 2;
+    /**
+     * <code>optional int32 type = 2;</code>
+     */
+    boolean hasType();
+    /**
+     * <code>optional int32 type = 2;</code>
+     */
+    int getType();
+  }
+  /**
+   * Protobuf type {@code IdleServerRequest}
+   */
+  public static final class IdleServerRequest extends
+      com.google.protobuf.GeneratedMessage
+      implements IdleServerRequestOrBuilder {
+    // Use IdleServerRequest.newBuilder() to construct.
+    private IdleServerRequest(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+      super(builder);
+      this.unknownFields = builder.getUnknownFields();
+    }
+    private IdleServerRequest(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final IdleServerRequest defaultInstance;
+    public static IdleServerRequest getDefaultInstance() {
+      return defaultInstance;
+    }
+
+    public IdleServerRequest getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+        getUnknownFields() {
+      return this.unknownFields;
+    }
+    private IdleServerRequest(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      initFields();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 8: {
+              int rawValue = input.readEnum();
+              com.roje.game.message.Mid.MID value = com.roje.game.message.Mid.MID.valueOf(rawValue);
+              if (value == null) {
+                unknownFields.mergeVarintField(1, rawValue);
+              } else {
+                bitField0_ |= 0x00000001;
+                mid_ = value;
+              }
+              break;
+            }
+            case 16: {
+              bitField0_ |= 0x00000002;
+              type_ = input.readInt32();
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e.getMessage()).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.roje.game.message.common.CommonMessage.internal_static_IdleServerRequest_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.roje.game.message.common.CommonMessage.internal_static_IdleServerRequest_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.roje.game.message.common.CommonMessage.IdleServerRequest.class, com.roje.game.message.common.CommonMessage.IdleServerRequest.Builder.class);
+    }
+
+    public static com.google.protobuf.Parser<IdleServerRequest> PARSER =
+        new com.google.protobuf.AbstractParser<IdleServerRequest>() {
+      public IdleServerRequest parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new IdleServerRequest(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<IdleServerRequest> getParserForType() {
+      return PARSER;
+    }
+
+    private int bitField0_;
+    // optional .MID mid = 1 [default = IdleServerReq];
+    public static final int MID_FIELD_NUMBER = 1;
+    private com.roje.game.message.Mid.MID mid_;
+    /**
+     * <code>optional .MID mid = 1 [default = IdleServerReq];</code>
+     */
+    public boolean hasMid() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    /**
+     * <code>optional .MID mid = 1 [default = IdleServerReq];</code>
+     */
+    public com.roje.game.message.Mid.MID getMid() {
+      return mid_;
+    }
+
+    // optional int32 type = 2;
+    public static final int TYPE_FIELD_NUMBER = 2;
+    private int type_;
+    /**
+     * <code>optional int32 type = 2;</code>
+     */
+    public boolean hasType() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    /**
+     * <code>optional int32 type = 2;</code>
+     */
+    public int getType() {
+      return type_;
+    }
+
+    private void initFields() {
+      mid_ = com.roje.game.message.Mid.MID.IdleServerReq;
+      type_ = 0;
+    }
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized != -1) return isInitialized == 1;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeEnum(1, mid_.getNumber());
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeInt32(2, type_);
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeEnumSize(1, mid_.getNumber());
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(2, type_);
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
+    }
+
+    public static com.roje.game.message.common.CommonMessage.IdleServerRequest parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.roje.game.message.common.CommonMessage.IdleServerRequest parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.roje.game.message.common.CommonMessage.IdleServerRequest parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.roje.game.message.common.CommonMessage.IdleServerRequest parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.roje.game.message.common.CommonMessage.IdleServerRequest parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static com.roje.game.message.common.CommonMessage.IdleServerRequest parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+    public static com.roje.game.message.common.CommonMessage.IdleServerRequest parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input);
+    }
+    public static com.roje.game.message.common.CommonMessage.IdleServerRequest parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
+    }
+    public static com.roje.game.message.common.CommonMessage.IdleServerRequest parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static com.roje.game.message.common.CommonMessage.IdleServerRequest parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(com.roje.game.message.common.CommonMessage.IdleServerRequest prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code IdleServerRequest}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.roje.game.message.common.CommonMessage.IdleServerRequestOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.roje.game.message.common.CommonMessage.internal_static_IdleServerRequest_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.roje.game.message.common.CommonMessage.internal_static_IdleServerRequest_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.roje.game.message.common.CommonMessage.IdleServerRequest.class, com.roje.game.message.common.CommonMessage.IdleServerRequest.Builder.class);
+      }
+
+      // Construct using com.roje.game.message.common.CommonMessage.IdleServerRequest.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+        }
+      }
+      private static Builder create() {
+        return new Builder();
+      }
+
+      public Builder clear() {
+        super.clear();
+        mid_ = com.roje.game.message.Mid.MID.IdleServerReq;
+        bitField0_ = (bitField0_ & ~0x00000001);
+        type_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000002);
+        return this;
+      }
+
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.roje.game.message.common.CommonMessage.internal_static_IdleServerRequest_descriptor;
+      }
+
+      public com.roje.game.message.common.CommonMessage.IdleServerRequest getDefaultInstanceForType() {
+        return com.roje.game.message.common.CommonMessage.IdleServerRequest.getDefaultInstance();
+      }
+
+      public com.roje.game.message.common.CommonMessage.IdleServerRequest build() {
+        com.roje.game.message.common.CommonMessage.IdleServerRequest result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public com.roje.game.message.common.CommonMessage.IdleServerRequest buildPartial() {
+        com.roje.game.message.common.CommonMessage.IdleServerRequest result = new com.roje.game.message.common.CommonMessage.IdleServerRequest(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
+        }
+        result.mid_ = mid_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        result.type_ = type_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.roje.game.message.common.CommonMessage.IdleServerRequest) {
+          return mergeFrom((com.roje.game.message.common.CommonMessage.IdleServerRequest)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.roje.game.message.common.CommonMessage.IdleServerRequest other) {
+        if (other == com.roje.game.message.common.CommonMessage.IdleServerRequest.getDefaultInstance()) return this;
+        if (other.hasMid()) {
+          setMid(other.getMid());
+        }
+        if (other.hasType()) {
+          setType(other.getType());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.roje.game.message.common.CommonMessage.IdleServerRequest parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.roje.game.message.common.CommonMessage.IdleServerRequest) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      // optional .MID mid = 1 [default = IdleServerReq];
+      private com.roje.game.message.Mid.MID mid_ = com.roje.game.message.Mid.MID.IdleServerReq;
+      /**
+       * <code>optional .MID mid = 1 [default = IdleServerReq];</code>
+       */
+      public boolean hasMid() {
+        return ((bitField0_ & 0x00000001) == 0x00000001);
+      }
+      /**
+       * <code>optional .MID mid = 1 [default = IdleServerReq];</code>
+       */
+      public com.roje.game.message.Mid.MID getMid() {
+        return mid_;
+      }
+      /**
+       * <code>optional .MID mid = 1 [default = IdleServerReq];</code>
+       */
+      public Builder setMid(com.roje.game.message.Mid.MID value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        bitField0_ |= 0x00000001;
+        mid_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional .MID mid = 1 [default = IdleServerReq];</code>
+       */
+      public Builder clearMid() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        mid_ = com.roje.game.message.Mid.MID.IdleServerReq;
+        onChanged();
+        return this;
+      }
+
+      // optional int32 type = 2;
+      private int type_ ;
+      /**
+       * <code>optional int32 type = 2;</code>
+       */
+      public boolean hasType() {
+        return ((bitField0_ & 0x00000002) == 0x00000002);
+      }
+      /**
+       * <code>optional int32 type = 2;</code>
+       */
+      public int getType() {
+        return type_;
+      }
+      /**
+       * <code>optional int32 type = 2;</code>
+       */
+      public Builder setType(int value) {
+        bitField0_ |= 0x00000002;
+        type_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional int32 type = 2;</code>
+       */
+      public Builder clearType() {
+        bitField0_ = (bitField0_ & ~0x00000002);
+        type_ = 0;
+        onChanged();
+        return this;
+      }
+
+      // @@protoc_insertion_point(builder_scope:IdleServerRequest)
+    }
+
+    static {
+      defaultInstance = new IdleServerRequest(true);
+      defaultInstance.initFields();
+    }
+
+    // @@protoc_insertion_point(class_scope:IdleServerRequest)
+  }
+
+  public interface IdleServerResponseOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
+
+    // optional .MID mid = 1 [default = IdleServerRes];
+    /**
+     * <code>optional .MID mid = 1 [default = IdleServerRes];</code>
+     */
+    boolean hasMid();
+    /**
+     * <code>optional .MID mid = 1 [default = IdleServerRes];</code>
+     */
+    com.roje.game.message.Mid.MID getMid();
+  }
+  /**
+   * Protobuf type {@code IdleServerResponse}
+   */
+  public static final class IdleServerResponse extends
+      com.google.protobuf.GeneratedMessage
+      implements IdleServerResponseOrBuilder {
+    // Use IdleServerResponse.newBuilder() to construct.
+    private IdleServerResponse(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+      super(builder);
+      this.unknownFields = builder.getUnknownFields();
+    }
+    private IdleServerResponse(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final IdleServerResponse defaultInstance;
+    public static IdleServerResponse getDefaultInstance() {
+      return defaultInstance;
+    }
+
+    public IdleServerResponse getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+        getUnknownFields() {
+      return this.unknownFields;
+    }
+    private IdleServerResponse(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      initFields();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 8: {
+              int rawValue = input.readEnum();
+              com.roje.game.message.Mid.MID value = com.roje.game.message.Mid.MID.valueOf(rawValue);
+              if (value == null) {
+                unknownFields.mergeVarintField(1, rawValue);
+              } else {
+                bitField0_ |= 0x00000001;
+                mid_ = value;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e.getMessage()).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.roje.game.message.common.CommonMessage.internal_static_IdleServerResponse_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.roje.game.message.common.CommonMessage.internal_static_IdleServerResponse_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.roje.game.message.common.CommonMessage.IdleServerResponse.class, com.roje.game.message.common.CommonMessage.IdleServerResponse.Builder.class);
+    }
+
+    public static com.google.protobuf.Parser<IdleServerResponse> PARSER =
+        new com.google.protobuf.AbstractParser<IdleServerResponse>() {
+      public IdleServerResponse parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new IdleServerResponse(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<IdleServerResponse> getParserForType() {
+      return PARSER;
+    }
+
+    private int bitField0_;
+    // optional .MID mid = 1 [default = IdleServerRes];
+    public static final int MID_FIELD_NUMBER = 1;
+    private com.roje.game.message.Mid.MID mid_;
+    /**
+     * <code>optional .MID mid = 1 [default = IdleServerRes];</code>
+     */
+    public boolean hasMid() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    /**
+     * <code>optional .MID mid = 1 [default = IdleServerRes];</code>
+     */
+    public com.roje.game.message.Mid.MID getMid() {
+      return mid_;
+    }
+
+    private void initFields() {
+      mid_ = com.roje.game.message.Mid.MID.IdleServerRes;
+    }
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized != -1) return isInitialized == 1;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeEnum(1, mid_.getNumber());
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeEnumSize(1, mid_.getNumber());
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
+    }
+
+    public static com.roje.game.message.common.CommonMessage.IdleServerResponse parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.roje.game.message.common.CommonMessage.IdleServerResponse parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.roje.game.message.common.CommonMessage.IdleServerResponse parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.roje.game.message.common.CommonMessage.IdleServerResponse parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.roje.game.message.common.CommonMessage.IdleServerResponse parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static com.roje.game.message.common.CommonMessage.IdleServerResponse parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+    public static com.roje.game.message.common.CommonMessage.IdleServerResponse parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input);
+    }
+    public static com.roje.game.message.common.CommonMessage.IdleServerResponse parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
+    }
+    public static com.roje.game.message.common.CommonMessage.IdleServerResponse parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static com.roje.game.message.common.CommonMessage.IdleServerResponse parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(com.roje.game.message.common.CommonMessage.IdleServerResponse prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code IdleServerResponse}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.roje.game.message.common.CommonMessage.IdleServerResponseOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.roje.game.message.common.CommonMessage.internal_static_IdleServerResponse_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.roje.game.message.common.CommonMessage.internal_static_IdleServerResponse_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.roje.game.message.common.CommonMessage.IdleServerResponse.class, com.roje.game.message.common.CommonMessage.IdleServerResponse.Builder.class);
+      }
+
+      // Construct using com.roje.game.message.common.CommonMessage.IdleServerResponse.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+        }
+      }
+      private static Builder create() {
+        return new Builder();
+      }
+
+      public Builder clear() {
+        super.clear();
+        mid_ = com.roje.game.message.Mid.MID.IdleServerRes;
+        bitField0_ = (bitField0_ & ~0x00000001);
+        return this;
+      }
+
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.roje.game.message.common.CommonMessage.internal_static_IdleServerResponse_descriptor;
+      }
+
+      public com.roje.game.message.common.CommonMessage.IdleServerResponse getDefaultInstanceForType() {
+        return com.roje.game.message.common.CommonMessage.IdleServerResponse.getDefaultInstance();
+      }
+
+      public com.roje.game.message.common.CommonMessage.IdleServerResponse build() {
+        com.roje.game.message.common.CommonMessage.IdleServerResponse result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public com.roje.game.message.common.CommonMessage.IdleServerResponse buildPartial() {
+        com.roje.game.message.common.CommonMessage.IdleServerResponse result = new com.roje.game.message.common.CommonMessage.IdleServerResponse(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
+        }
+        result.mid_ = mid_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.roje.game.message.common.CommonMessage.IdleServerResponse) {
+          return mergeFrom((com.roje.game.message.common.CommonMessage.IdleServerResponse)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.roje.game.message.common.CommonMessage.IdleServerResponse other) {
+        if (other == com.roje.game.message.common.CommonMessage.IdleServerResponse.getDefaultInstance()) return this;
+        if (other.hasMid()) {
+          setMid(other.getMid());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.roje.game.message.common.CommonMessage.IdleServerResponse parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.roje.game.message.common.CommonMessage.IdleServerResponse) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      // optional .MID mid = 1 [default = IdleServerRes];
+      private com.roje.game.message.Mid.MID mid_ = com.roje.game.message.Mid.MID.IdleServerRes;
+      /**
+       * <code>optional .MID mid = 1 [default = IdleServerRes];</code>
+       */
+      public boolean hasMid() {
+        return ((bitField0_ & 0x00000001) == 0x00000001);
+      }
+      /**
+       * <code>optional .MID mid = 1 [default = IdleServerRes];</code>
+       */
+      public com.roje.game.message.Mid.MID getMid() {
+        return mid_;
+      }
+      /**
+       * <code>optional .MID mid = 1 [default = IdleServerRes];</code>
+       */
+      public Builder setMid(com.roje.game.message.Mid.MID value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        bitField0_ |= 0x00000001;
+        mid_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional .MID mid = 1 [default = IdleServerRes];</code>
+       */
+      public Builder clearMid() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        mid_ = com.roje.game.message.Mid.MID.IdleServerRes;
+        onChanged();
+        return this;
+      }
+
+      // @@protoc_insertion_point(builder_scope:IdleServerResponse)
+    }
+
+    static {
+      defaultInstance = new IdleServerResponse(true);
+      defaultInstance.initFields();
+    }
+
+    // @@protoc_insertion_point(class_scope:IdleServerResponse)
+  }
+
   public interface ServerInfoOrBuilder
       extends com.google.protobuf.MessageOrBuilder {
 
@@ -4600,6 +5508,16 @@ public final class CommonMessage {
      * </pre>
      */
     int getRequireClientVersion();
+
+    // optional int32 connectedCount = 15;
+    /**
+     * <code>optional int32 connectedCount = 15;</code>
+     */
+    boolean hasConnectedCount();
+    /**
+     * <code>optional int32 connectedCount = 15;</code>
+     */
+    int getConnectedCount();
   }
   /**
    * Protobuf type {@code ServerInfo}
@@ -4724,6 +5642,11 @@ public final class CommonMessage {
             case 112: {
               bitField0_ |= 0x00002000;
               requireClientVersion_ = input.readInt32();
+              break;
+            }
+            case 120: {
+              bitField0_ |= 0x00004000;
+              connectedCount_ = input.readInt32();
               break;
             }
           }
@@ -5195,6 +6118,22 @@ public final class CommonMessage {
       return requireClientVersion_;
     }
 
+    // optional int32 connectedCount = 15;
+    public static final int CONNECTEDCOUNT_FIELD_NUMBER = 15;
+    private int connectedCount_;
+    /**
+     * <code>optional int32 connectedCount = 15;</code>
+     */
+    public boolean hasConnectedCount() {
+      return ((bitField0_ & 0x00004000) == 0x00004000);
+    }
+    /**
+     * <code>optional int32 connectedCount = 15;</code>
+     */
+    public int getConnectedCount() {
+      return connectedCount_;
+    }
+
     private void initFields() {
       id_ = 0;
       ip_ = "";
@@ -5210,6 +6149,7 @@ public final class CommonMessage {
       totalMemory_ = 0;
       version_ = 0;
       requireClientVersion_ = 0;
+      connectedCount_ = 0;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -5268,6 +6208,9 @@ public final class CommonMessage {
       }
       if (((bitField0_ & 0x00002000) == 0x00002000)) {
         output.writeInt32(14, requireClientVersion_);
+      }
+      if (((bitField0_ & 0x00004000) == 0x00004000)) {
+        output.writeInt32(15, connectedCount_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -5333,6 +6276,10 @@ public final class CommonMessage {
       if (((bitField0_ & 0x00002000) == 0x00002000)) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(14, requireClientVersion_);
+      }
+      if (((bitField0_ & 0x00004000) == 0x00004000)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(15, connectedCount_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -5482,6 +6429,8 @@ public final class CommonMessage {
         bitField0_ = (bitField0_ & ~0x00001000);
         requireClientVersion_ = 0;
         bitField0_ = (bitField0_ & ~0x00002000);
+        connectedCount_ = 0;
+        bitField0_ = (bitField0_ & ~0x00004000);
         return this;
       }
 
@@ -5566,6 +6515,10 @@ public final class CommonMessage {
           to_bitField0_ |= 0x00002000;
         }
         result.requireClientVersion_ = requireClientVersion_;
+        if (((from_bitField0_ & 0x00004000) == 0x00004000)) {
+          to_bitField0_ |= 0x00004000;
+        }
+        result.connectedCount_ = connectedCount_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -5629,6 +6582,9 @@ public final class CommonMessage {
         }
         if (other.hasRequireClientVersion()) {
           setRequireClientVersion(other.getRequireClientVersion());
+        }
+        if (other.hasConnectedCount()) {
+          setConnectedCount(other.getConnectedCount());
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
@@ -6494,6 +7450,39 @@ public final class CommonMessage {
         return this;
       }
 
+      // optional int32 connectedCount = 15;
+      private int connectedCount_ ;
+      /**
+       * <code>optional int32 connectedCount = 15;</code>
+       */
+      public boolean hasConnectedCount() {
+        return ((bitField0_ & 0x00004000) == 0x00004000);
+      }
+      /**
+       * <code>optional int32 connectedCount = 15;</code>
+       */
+      public int getConnectedCount() {
+        return connectedCount_;
+      }
+      /**
+       * <code>optional int32 connectedCount = 15;</code>
+       */
+      public Builder setConnectedCount(int value) {
+        bitField0_ |= 0x00004000;
+        connectedCount_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional int32 connectedCount = 15;</code>
+       */
+      public Builder clearConnectedCount() {
+        bitField0_ = (bitField0_ & ~0x00004000);
+        connectedCount_ = 0;
+        onChanged();
+        return this;
+      }
+
       // @@protoc_insertion_point(builder_scope:ServerInfo)
     }
 
@@ -6541,6 +7530,16 @@ public final class CommonMessage {
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_ServerUpdateResponse_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_IdleServerRequest_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_IdleServerRequest_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_IdleServerResponse_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_IdleServerResponse_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_ServerInfo_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
@@ -6569,16 +7568,20 @@ public final class CommonMessage {
       "UpdateReq\022\037\n\nserverInfo\030\002 \002(\0132\013.ServerIn" +
       "fo\"W\n\024ServerUpdateResponse\022\"\n\003mid\030\001 \001(\0162" +
       "\004.MID:\017ServerUpdateRes\022\016\n\006sucess\030\002 \001(\010\022\013" +
-      "\n\003msg\030\003 \001(\t\"\374\001\n\nServerInfo\022\n\n\002id\030\001 \002(\005\022\n" +
-      "\n\002ip\030\002 \001(\t\022\014\n\004type\030\003 \001(\005\022\014\n\004port\030\004 \001(\005\022\r" +
-      "\n\005state\030\005 \001(\005\022\016\n\006online\030\006 \001(\005\022\024\n\014maxUser" +
-      "Count\030\007 \001(\005\022\020\n\010httpport\030\010 \001(\005\022\014\n\004name\030\t " +
-      "\001(\t\022\r\n\005wwwip\030\n \001(\t\022\022\n\nfreeMemory\030\013 \001(\005\022\023",
-      "\n\013totalMemory\030\014 \001(\005\022\017\n\007version\030\r \001(\005\022\034\n\024" +
-      "requireClientVersion\030\016 \001(\005*C\n\016SystemErro" +
-      "Code\022\017\n\013HallNotFind\020\001\022\017\n\013GameNotFind\020\002\022\017" +
-      "\n\013ConectReset\020\003B\036\n\034com.roje.game.message" +
-      ".common"
+      "\n\003msg\030\003 \001(\t\"C\n\021IdleServerRequest\022 \n\003mid\030" +
+      "\001 \001(\0162\004.MID:\rIdleServerReq\022\014\n\004type\030\002 \001(\005" +
+      "\"6\n\022IdleServerResponse\022 \n\003mid\030\001 \001(\0162\004.MI" +
+      "D:\rIdleServerRes\"\224\002\n\nServerInfo\022\n\n\002id\030\001 " +
+      "\002(\005\022\n\n\002ip\030\002 \001(\t\022\014\n\004type\030\003 \001(\005\022\014\n\004port\030\004 ",
+      "\001(\005\022\r\n\005state\030\005 \001(\005\022\016\n\006online\030\006 \001(\005\022\024\n\014ma" +
+      "xUserCount\030\007 \001(\005\022\020\n\010httpport\030\010 \001(\005\022\014\n\004na" +
+      "me\030\t \001(\t\022\r\n\005wwwip\030\n \001(\t\022\022\n\nfreeMemory\030\013 " +
+      "\001(\005\022\023\n\013totalMemory\030\014 \001(\005\022\017\n\007version\030\r \001(" +
+      "\005\022\034\n\024requireClientVersion\030\016 \001(\005\022\026\n\016conne" +
+      "ctedCount\030\017 \001(\005*T\n\016SystemErroCode\022\017\n\013Hal" +
+      "lNotFind\020\001\022\017\n\013GameNotFind\020\002\022\017\n\013ConectRes" +
+      "et\020\003\022\017\n\013GateNotFind\020\004B\036\n\034com.roje.game.m" +
+      "essage.common"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -6627,12 +7630,24 @@ public final class CommonMessage {
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_ServerUpdateResponse_descriptor,
               new java.lang.String[] { "Mid", "Sucess", "Msg", });
-          internal_static_ServerInfo_descriptor =
+          internal_static_IdleServerRequest_descriptor =
             getDescriptor().getMessageTypes().get(7);
+          internal_static_IdleServerRequest_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_IdleServerRequest_descriptor,
+              new java.lang.String[] { "Mid", "Type", });
+          internal_static_IdleServerResponse_descriptor =
+            getDescriptor().getMessageTypes().get(8);
+          internal_static_IdleServerResponse_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_IdleServerResponse_descriptor,
+              new java.lang.String[] { "Mid", });
+          internal_static_ServerInfo_descriptor =
+            getDescriptor().getMessageTypes().get(9);
           internal_static_ServerInfo_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_ServerInfo_descriptor,
-              new java.lang.String[] { "Id", "Ip", "Type", "Port", "State", "Online", "MaxUserCount", "Httpport", "Name", "Wwwip", "FreeMemory", "TotalMemory", "Version", "RequireClientVersion", });
+              new java.lang.String[] { "Id", "Ip", "Type", "Port", "State", "Online", "MaxUserCount", "Httpport", "Name", "Wwwip", "FreeMemory", "TotalMemory", "Version", "RequireClientVersion", "ConnectedCount", });
           return null;
         }
       };

@@ -10,7 +10,6 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.concurrent.TimeUnit;
 
 
 public class NettyTcpClient implements Runnable{
@@ -62,7 +61,7 @@ public class NettyTcpClient implements Runnable{
     public void run() {
         try {
             ChannelFuture future = bootstrap.connect().sync();
-//            channel = future.channel();
+            channel = future.channel();
             future.addListener(channelFuture -> {
                 if (channelFuture.isSuccess())
                     LOG.info("成功连接{}服务器[{}:{}]", clientConfig.getConnToType().name(), clientConfig.getHost(), clientConfig.getPort());

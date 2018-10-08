@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+   <bean class="com.roje.game.core.server.BaseInfo" id="clusterInfo">
+       <property name="type">
+           <value type="com.roje.game.core.server.ServerType">Cluster</value>
+       </property>
+       <property name="ip" value="${cluster.server.ip}"/>
+       <property name="name" value="${cluster.server.name}"/>
+       <property name="port" value="${cluster.server.port}"/>
+       <property name="httpPort" value="${cluster.server.httpPort}"/>
+       <property name="url" value="${cluster.server.url}"/>
+       <property name="versionCode" value="${cluster.server.version.code}"/>
+       <property name="maxUserCount" value="${cluster.server.maxUserCount}"/>
+       <property name="clientVersionCode" value="${cluster.server.client.version.code}"/>
+   </bean>
+    <!--线程配置-->
+    <bean class="com.roje.game.core.config.ThreadConfig" id="threadConfig">
+        <property name="ioCapacity" value="${io.capacity}"/>
+        <property name="ioCorePoolSize" value="${io.corePoolSize}"/>
+        <property name="ioKeepAliveTime" value="${io.keepAliveTime}"/>
+        <property name="ioMaximumPoolSize" value="${io.maximumPoolSize}"/>
+        <property name="syncName" value="${sync.name}"/>
+        <property name="syncTimeInterval" value="${sync.timeInterval}"/>
+        <property name="syncCommandSize" value="${sync.commandSize}"/>
+    </bean>
+
+    <!--cluster.tcp服务器配置参数-->
+    <bean id="clusterTcpServerConfig" class="com.roje.game.core.config.ServerConfig">
+        <property name="port" value="${cluster.server.port}"/>
+        <property name="reuseAddress" value="${cluster.game.server.reuseAddress}"/>
+        <property name="soBackLog" value="${cluster.game.server.soBackLog}"/>
+        <property name="soKeepAlive" value="${cluster.game.server.soKeepAlive}"/>
+        <property name="tcpNoDelay" value="${cluster.game.server.tcpNoDelay}"/>
+        <property name="readerIdleTime" value="${cluster.game.server.readerIdleTime}"/>
+        <property name="writerIdleTime" value="${cluster.game.server.writerIdleTime}"/>
+        <property name="allIdleTime" value="${cluster.game.server.allIdleTime}"/>
+        <property name="soLinger" value="${cluster.game.server.soLinger}"/>
+        <property name="netSpeed" value="${cluster.game.server.netSpeed}"/>
+        <property name="maxCountPerSecond" value="${cluster.game.server.maxCountPerSecond}"/>
+        <property name="clientVersionCode" value="${cluster.game.client.version.code}"/>
+    </bean>
+    <!--cluster.http服务器配置参数-->
+    <bean id="clusterHttpServerConfig" class="com.roje.game.core.config.ServerConfig">
+        <property name="port" value="${cluster.server.httpPort}"/>
+        <property name="reuseAddress" value="${cluster.http.server.reuseAddress}"/>
+        <property name="soBackLog" value="${cluster.http.server.soBackLog}"/>
+        <property name="soKeepAlive" value="${cluster.http.server.soKeepAlive}"/>
+        <property name="tcpNoDelay" value="${cluster.http.server.tcpNoDelay}"/>
+        <property name="readerIdleTime" value="${cluster.http.server.readerIdleTime}"/>
+        <property name="writerIdleTime" value="${cluster.http.server.writerIdleTime}"/>
+        <property name="allIdleTime" value="${cluster.http.server.allIdleTime}"/>
+        <property name="soLinger" value="${cluster.http.server.soLinger}"/>
+        <property name="netSpeed" value="${cluster.http.server.netSpeed}"/>
+        <property name="maxCountPerSecond" value="${cluster.http.server.maxCountPerSecond}"/>
+        <property name="clientVersionCode" value="${cluster.http.client.version.code}"/>
+    </bean>
+</beans>

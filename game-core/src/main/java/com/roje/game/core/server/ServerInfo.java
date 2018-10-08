@@ -1,11 +1,14 @@
 package com.roje.game.core.server;
 
+import com.google.protobuf.Message;
+import com.roje.game.message.login.LoginMessage;
 import io.netty.channel.Channel;
-import io.netty.channel.ChannelHandlerContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Optional;
 import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class ServerInfo {
     private static final Logger LOG = LoggerFactory.getLogger(ServerInfo.class);
@@ -31,6 +34,8 @@ public class ServerInfo {
     private int maxUserCount;
     // 在线人数
     private int online;
+    //连接人数
+    private int connectedCount;
     // 服务器类型
     private int type;
     // 空闲内存
@@ -40,16 +45,32 @@ public class ServerInfo {
     // 版本号,用于判断客户端连接那个服务器
     private int clientVersionCode;
 
-    private transient ChannelHandlerContext channel;
+    private transient Channel channel;
 
     /** 客户端多连接管理 */
-    protected transient Queue<Channel> channels;
+    private transient Queue<Channel> channels;
 
-    public ChannelHandlerContext getChannelHandlerContext() {
+    public ServerInfo(){
+        channels = new ConcurrentLinkedQueue<>();
+    }
+
+    public void setConnectedCount(int connectedCount) {
+        this.connectedCount = connectedCount;
+    }
+
+    public int getConnectedCount() {
+        return connectedCount;
+    }
+
+    public Queue<Channel> channels(){
+        return channels;
+    }
+
+    public Channel getChannel() {
         return channel;
     }
 
-    public void setChannel(ChannelHandlerContext channel) {
+    public void setChannel(Channel channel) {
         this.channel = channel;
     }
 
@@ -163,5 +184,15 @@ public class ServerInfo {
 
     public void setVersionCode(int versionCode) {
         this.versionCode = versionCode;
+    }
+
+    public Channel getIdleChannel(){
+        Optional<Channel> optional = channels.stream().min((o1, o2) -> (int) (o1.bytesBeforeUnwritable() - o2.bytesBeforeUnwritable()));
+        return optional.orElse(null);
+    }
+
+    public void send(Message message) {
+        if (channel != null && channel.isActive())
+            channel.writeAndFlush(message);
     }
 }

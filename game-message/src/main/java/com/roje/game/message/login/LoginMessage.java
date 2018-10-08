@@ -203,9 +203,9 @@ public final class LoginMessage {
      */
     com.roje.game.message.login.LoginMessage.LoginType getLoginType();
 
-    // optional int64 sessionId = 5;
+    // optional string sessionId = 5;
     /**
-     * <code>optional int64 sessionId = 5;</code>
+     * <code>optional string sessionId = 5;</code>
      *
      * <pre>
      *会话ID（服务器内部使用）
@@ -213,13 +213,22 @@ public final class LoginMessage {
      */
     boolean hasSessionId();
     /**
-     * <code>optional int64 sessionId = 5;</code>
+     * <code>optional string sessionId = 5;</code>
      *
      * <pre>
      *会话ID（服务器内部使用）
      * </pre>
      */
-    long getSessionId();
+    java.lang.String getSessionId();
+    /**
+     * <code>optional string sessionId = 5;</code>
+     *
+     * <pre>
+     *会话ID（服务器内部使用）
+     * </pre>
+     */
+    com.google.protobuf.ByteString
+        getSessionIdBytes();
 
     // optional int32 gateId = 6;
     /**
@@ -266,9 +275,9 @@ public final class LoginMessage {
     com.google.protobuf.ByteString
         getIpBytes();
 
-    // optional string version = 8;
+    // optional int32 version = 8;
     /**
-     * <code>optional string version = 8;</code>
+     * <code>optional int32 version = 8;</code>
      *
      * <pre>
      *版本号
@@ -276,22 +285,13 @@ public final class LoginMessage {
      */
     boolean hasVersion();
     /**
-     * <code>optional string version = 8;</code>
+     * <code>optional int32 version = 8;</code>
      *
      * <pre>
      *版本号
      * </pre>
      */
-    java.lang.String getVersion();
-    /**
-     * <code>optional string version = 8;</code>
-     *
-     * <pre>
-     *版本号
-     * </pre>
-     */
-    com.google.protobuf.ByteString
-        getVersionBytes();
+    int getVersion();
   }
   /**
    * Protobuf type {@code LoginRequest}
@@ -376,9 +376,9 @@ public final class LoginMessage {
               }
               break;
             }
-            case 40: {
+            case 42: {
               bitField0_ |= 0x00000010;
-              sessionId_ = input.readInt64();
+              sessionId_ = input.readBytes();
               break;
             }
             case 48: {
@@ -391,9 +391,9 @@ public final class LoginMessage {
               ip_ = input.readBytes();
               break;
             }
-            case 66: {
+            case 64: {
               bitField0_ |= 0x00000080;
-              version_ = input.readBytes();
+              version_ = input.readInt32();
               break;
             }
           }
@@ -594,11 +594,11 @@ public final class LoginMessage {
       return loginType_;
     }
 
-    // optional int64 sessionId = 5;
+    // optional string sessionId = 5;
     public static final int SESSIONID_FIELD_NUMBER = 5;
-    private long sessionId_;
+    private java.lang.Object sessionId_;
     /**
-     * <code>optional int64 sessionId = 5;</code>
+     * <code>optional string sessionId = 5;</code>
      *
      * <pre>
      *会话ID（服务器内部使用）
@@ -608,14 +608,45 @@ public final class LoginMessage {
       return ((bitField0_ & 0x00000010) == 0x00000010);
     }
     /**
-     * <code>optional int64 sessionId = 5;</code>
+     * <code>optional string sessionId = 5;</code>
      *
      * <pre>
      *会话ID（服务器内部使用）
      * </pre>
      */
-    public long getSessionId() {
-      return sessionId_;
+    public java.lang.String getSessionId() {
+      java.lang.Object ref = sessionId_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          sessionId_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>optional string sessionId = 5;</code>
+     *
+     * <pre>
+     *会话ID（服务器内部使用）
+     * </pre>
+     */
+    public com.google.protobuf.ByteString
+        getSessionIdBytes() {
+      java.lang.Object ref = sessionId_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        sessionId_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
     }
 
     // optional int32 gateId = 6;
@@ -697,11 +728,11 @@ public final class LoginMessage {
       }
     }
 
-    // optional string version = 8;
+    // optional int32 version = 8;
     public static final int VERSION_FIELD_NUMBER = 8;
-    private java.lang.Object version_;
+    private int version_;
     /**
-     * <code>optional string version = 8;</code>
+     * <code>optional int32 version = 8;</code>
      *
      * <pre>
      *版本号
@@ -711,45 +742,14 @@ public final class LoginMessage {
       return ((bitField0_ & 0x00000080) == 0x00000080);
     }
     /**
-     * <code>optional string version = 8;</code>
+     * <code>optional int32 version = 8;</code>
      *
      * <pre>
      *版本号
      * </pre>
      */
-    public java.lang.String getVersion() {
-      java.lang.Object ref = version_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        if (bs.isValidUtf8()) {
-          version_ = s;
-        }
-        return s;
-      }
-    }
-    /**
-     * <code>optional string version = 8;</code>
-     *
-     * <pre>
-     *版本号
-     * </pre>
-     */
-    public com.google.protobuf.ByteString
-        getVersionBytes() {
-      java.lang.Object ref = version_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        version_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+    public int getVersion() {
+      return version_;
     }
 
     private void initFields() {
@@ -757,10 +757,10 @@ public final class LoginMessage {
       account_ = "";
       password_ = "";
       loginType_ = com.roje.game.message.login.LoginMessage.LoginType.ACCOUNT;
-      sessionId_ = 0L;
+      sessionId_ = "";
       gateId_ = 0;
       ip_ = "";
-      version_ = "";
+      version_ = 0;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -787,7 +787,7 @@ public final class LoginMessage {
         output.writeEnum(4, loginType_.getNumber());
       }
       if (((bitField0_ & 0x00000010) == 0x00000010)) {
-        output.writeInt64(5, sessionId_);
+        output.writeBytes(5, getSessionIdBytes());
       }
       if (((bitField0_ & 0x00000020) == 0x00000020)) {
         output.writeInt32(6, gateId_);
@@ -796,7 +796,7 @@ public final class LoginMessage {
         output.writeBytes(7, getIpBytes());
       }
       if (((bitField0_ & 0x00000080) == 0x00000080)) {
-        output.writeBytes(8, getVersionBytes());
+        output.writeInt32(8, version_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -825,7 +825,7 @@ public final class LoginMessage {
       }
       if (((bitField0_ & 0x00000010) == 0x00000010)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(5, sessionId_);
+          .computeBytesSize(5, getSessionIdBytes());
       }
       if (((bitField0_ & 0x00000020) == 0x00000020)) {
         size += com.google.protobuf.CodedOutputStream
@@ -837,7 +837,7 @@ public final class LoginMessage {
       }
       if (((bitField0_ & 0x00000080) == 0x00000080)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(8, getVersionBytes());
+          .computeInt32Size(8, version_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -963,13 +963,13 @@ public final class LoginMessage {
         bitField0_ = (bitField0_ & ~0x00000004);
         loginType_ = com.roje.game.message.login.LoginMessage.LoginType.ACCOUNT;
         bitField0_ = (bitField0_ & ~0x00000008);
-        sessionId_ = 0L;
+        sessionId_ = "";
         bitField0_ = (bitField0_ & ~0x00000010);
         gateId_ = 0;
         bitField0_ = (bitField0_ & ~0x00000020);
         ip_ = "";
         bitField0_ = (bitField0_ & ~0x00000040);
-        version_ = "";
+        version_ = 0;
         bitField0_ = (bitField0_ & ~0x00000080);
         return this;
       }
@@ -1064,7 +1064,9 @@ public final class LoginMessage {
           setLoginType(other.getLoginType());
         }
         if (other.hasSessionId()) {
-          setSessionId(other.getSessionId());
+          bitField0_ |= 0x00000010;
+          sessionId_ = other.sessionId_;
+          onChanged();
         }
         if (other.hasGateId()) {
           setGateId(other.getGateId());
@@ -1075,9 +1077,7 @@ public final class LoginMessage {
           onChanged();
         }
         if (other.hasVersion()) {
-          bitField0_ |= 0x00000080;
-          version_ = other.version_;
-          onChanged();
+          setVersion(other.getVersion());
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
@@ -1406,10 +1406,10 @@ public final class LoginMessage {
         return this;
       }
 
-      // optional int64 sessionId = 5;
-      private long sessionId_ ;
+      // optional string sessionId = 5;
+      private java.lang.Object sessionId_ = "";
       /**
-       * <code>optional int64 sessionId = 5;</code>
+       * <code>optional string sessionId = 5;</code>
        *
        * <pre>
        *会话ID（服务器内部使用）
@@ -1419,30 +1419,62 @@ public final class LoginMessage {
         return ((bitField0_ & 0x00000010) == 0x00000010);
       }
       /**
-       * <code>optional int64 sessionId = 5;</code>
+       * <code>optional string sessionId = 5;</code>
        *
        * <pre>
        *会话ID（服务器内部使用）
        * </pre>
        */
-      public long getSessionId() {
-        return sessionId_;
+      public java.lang.String getSessionId() {
+        java.lang.Object ref = sessionId_;
+        if (!(ref instanceof java.lang.String)) {
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          sessionId_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
       }
       /**
-       * <code>optional int64 sessionId = 5;</code>
+       * <code>optional string sessionId = 5;</code>
        *
        * <pre>
        *会话ID（服务器内部使用）
        * </pre>
        */
-      public Builder setSessionId(long value) {
-        bitField0_ |= 0x00000010;
+      public com.google.protobuf.ByteString
+          getSessionIdBytes() {
+        java.lang.Object ref = sessionId_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          sessionId_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string sessionId = 5;</code>
+       *
+       * <pre>
+       *会话ID（服务器内部使用）
+       * </pre>
+       */
+      public Builder setSessionId(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000010;
         sessionId_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>optional int64 sessionId = 5;</code>
+       * <code>optional string sessionId = 5;</code>
        *
        * <pre>
        *会话ID（服务器内部使用）
@@ -1450,7 +1482,24 @@ public final class LoginMessage {
        */
       public Builder clearSessionId() {
         bitField0_ = (bitField0_ & ~0x00000010);
-        sessionId_ = 0L;
+        sessionId_ = getDefaultInstance().getSessionId();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string sessionId = 5;</code>
+       *
+       * <pre>
+       *会话ID（服务器内部使用）
+       * </pre>
+       */
+      public Builder setSessionIdBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000010;
+        sessionId_ = value;
         onChanged();
         return this;
       }
@@ -1602,10 +1651,10 @@ public final class LoginMessage {
         return this;
       }
 
-      // optional string version = 8;
-      private java.lang.Object version_ = "";
+      // optional int32 version = 8;
+      private int version_ ;
       /**
-       * <code>optional string version = 8;</code>
+       * <code>optional int32 version = 8;</code>
        *
        * <pre>
        *版本号
@@ -1615,62 +1664,30 @@ public final class LoginMessage {
         return ((bitField0_ & 0x00000080) == 0x00000080);
       }
       /**
-       * <code>optional string version = 8;</code>
+       * <code>optional int32 version = 8;</code>
        *
        * <pre>
        *版本号
        * </pre>
        */
-      public java.lang.String getVersion() {
-        java.lang.Object ref = version_;
-        if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          version_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+      public int getVersion() {
+        return version_;
       }
       /**
-       * <code>optional string version = 8;</code>
+       * <code>optional int32 version = 8;</code>
        *
        * <pre>
        *版本号
        * </pre>
        */
-      public com.google.protobuf.ByteString
-          getVersionBytes() {
-        java.lang.Object ref = version_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          version_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>optional string version = 8;</code>
-       *
-       * <pre>
-       *版本号
-       * </pre>
-       */
-      public Builder setVersion(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000080;
+      public Builder setVersion(int value) {
+        bitField0_ |= 0x00000080;
         version_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>optional string version = 8;</code>
+       * <code>optional int32 version = 8;</code>
        *
        * <pre>
        *版本号
@@ -1678,24 +1695,7 @@ public final class LoginMessage {
        */
       public Builder clearVersion() {
         bitField0_ = (bitField0_ & ~0x00000080);
-        version_ = getDefaultInstance().getVersion();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>optional string version = 8;</code>
-       *
-       * <pre>
-       *版本号
-       * </pre>
-       */
-      public Builder setVersionBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000080;
-        version_ = value;
+        version_ = 0;
         onChanged();
         return this;
       }
@@ -1711,11 +1711,1568 @@ public final class LoginMessage {
     // @@protoc_insertion_point(class_scope:LoginRequest)
   }
 
+  public interface LoginResponseOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
+
+    // optional .MID mid = 1 [default = LoginRes];
+    /**
+     * <code>optional .MID mid = 1 [default = LoginRes];</code>
+     *
+     * <pre>
+     *消息id
+     * </pre>
+     */
+    boolean hasMid();
+    /**
+     * <code>optional .MID mid = 1 [default = LoginRes];</code>
+     *
+     * <pre>
+     *消息id
+     * </pre>
+     */
+    com.roje.game.message.Mid.MID getMid();
+
+    // optional bool ok = 2;
+    /**
+     * <code>optional bool ok = 2;</code>
+     *
+     * <pre>
+     *请求是否发送成功
+     * </pre>
+     */
+    boolean hasOk();
+    /**
+     * <code>optional bool ok = 2;</code>
+     *
+     * <pre>
+     *请求是否发送成功
+     * </pre>
+     */
+    boolean getOk();
+
+    // optional int64 uid = 3;
+    /**
+     * <code>optional int64 uid = 3;</code>
+     *
+     * <pre>
+     *用户id
+     * </pre>
+     */
+    boolean hasUid();
+    /**
+     * <code>optional int64 uid = 3;</code>
+     *
+     * <pre>
+     *用户id
+     * </pre>
+     */
+    long getUid();
+
+    // optional int64 rid = 4;
+    /**
+     * <code>optional int64 rid = 4;</code>
+     *
+     * <pre>
+     *角色ID
+     * </pre>
+     */
+    boolean hasRid();
+    /**
+     * <code>optional int64 rid = 4;</code>
+     *
+     * <pre>
+     *角色ID
+     * </pre>
+     */
+    long getRid();
+
+    // optional string sessionId = 5;
+    /**
+     * <code>optional string sessionId = 5;</code>
+     *
+     * <pre>
+     *会话ID
+     * </pre>
+     */
+    boolean hasSessionId();
+    /**
+     * <code>optional string sessionId = 5;</code>
+     *
+     * <pre>
+     *会话ID
+     * </pre>
+     */
+    java.lang.String getSessionId();
+    /**
+     * <code>optional string sessionId = 5;</code>
+     *
+     * <pre>
+     *会话ID
+     * </pre>
+     */
+    com.google.protobuf.ByteString
+        getSessionIdBytes();
+  }
+  /**
+   * Protobuf type {@code LoginResponse}
+   */
+  public static final class LoginResponse extends
+      com.google.protobuf.GeneratedMessage
+      implements LoginResponseOrBuilder {
+    // Use LoginResponse.newBuilder() to construct.
+    private LoginResponse(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+      super(builder);
+      this.unknownFields = builder.getUnknownFields();
+    }
+    private LoginResponse(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final LoginResponse defaultInstance;
+    public static LoginResponse getDefaultInstance() {
+      return defaultInstance;
+    }
+
+    public LoginResponse getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+        getUnknownFields() {
+      return this.unknownFields;
+    }
+    private LoginResponse(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      initFields();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 8: {
+              int rawValue = input.readEnum();
+              com.roje.game.message.Mid.MID value = com.roje.game.message.Mid.MID.valueOf(rawValue);
+              if (value == null) {
+                unknownFields.mergeVarintField(1, rawValue);
+              } else {
+                bitField0_ |= 0x00000001;
+                mid_ = value;
+              }
+              break;
+            }
+            case 16: {
+              bitField0_ |= 0x00000002;
+              ok_ = input.readBool();
+              break;
+            }
+            case 24: {
+              bitField0_ |= 0x00000004;
+              uid_ = input.readInt64();
+              break;
+            }
+            case 32: {
+              bitField0_ |= 0x00000008;
+              rid_ = input.readInt64();
+              break;
+            }
+            case 42: {
+              bitField0_ |= 0x00000010;
+              sessionId_ = input.readBytes();
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e.getMessage()).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.roje.game.message.login.LoginMessage.internal_static_LoginResponse_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.roje.game.message.login.LoginMessage.internal_static_LoginResponse_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.roje.game.message.login.LoginMessage.LoginResponse.class, com.roje.game.message.login.LoginMessage.LoginResponse.Builder.class);
+    }
+
+    public static com.google.protobuf.Parser<LoginResponse> PARSER =
+        new com.google.protobuf.AbstractParser<LoginResponse>() {
+      public LoginResponse parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new LoginResponse(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<LoginResponse> getParserForType() {
+      return PARSER;
+    }
+
+    private int bitField0_;
+    // optional .MID mid = 1 [default = LoginRes];
+    public static final int MID_FIELD_NUMBER = 1;
+    private com.roje.game.message.Mid.MID mid_;
+    /**
+     * <code>optional .MID mid = 1 [default = LoginRes];</code>
+     *
+     * <pre>
+     *消息id
+     * </pre>
+     */
+    public boolean hasMid() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    /**
+     * <code>optional .MID mid = 1 [default = LoginRes];</code>
+     *
+     * <pre>
+     *消息id
+     * </pre>
+     */
+    public com.roje.game.message.Mid.MID getMid() {
+      return mid_;
+    }
+
+    // optional bool ok = 2;
+    public static final int OK_FIELD_NUMBER = 2;
+    private boolean ok_;
+    /**
+     * <code>optional bool ok = 2;</code>
+     *
+     * <pre>
+     *请求是否发送成功
+     * </pre>
+     */
+    public boolean hasOk() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    /**
+     * <code>optional bool ok = 2;</code>
+     *
+     * <pre>
+     *请求是否发送成功
+     * </pre>
+     */
+    public boolean getOk() {
+      return ok_;
+    }
+
+    // optional int64 uid = 3;
+    public static final int UID_FIELD_NUMBER = 3;
+    private long uid_;
+    /**
+     * <code>optional int64 uid = 3;</code>
+     *
+     * <pre>
+     *用户id
+     * </pre>
+     */
+    public boolean hasUid() {
+      return ((bitField0_ & 0x00000004) == 0x00000004);
+    }
+    /**
+     * <code>optional int64 uid = 3;</code>
+     *
+     * <pre>
+     *用户id
+     * </pre>
+     */
+    public long getUid() {
+      return uid_;
+    }
+
+    // optional int64 rid = 4;
+    public static final int RID_FIELD_NUMBER = 4;
+    private long rid_;
+    /**
+     * <code>optional int64 rid = 4;</code>
+     *
+     * <pre>
+     *角色ID
+     * </pre>
+     */
+    public boolean hasRid() {
+      return ((bitField0_ & 0x00000008) == 0x00000008);
+    }
+    /**
+     * <code>optional int64 rid = 4;</code>
+     *
+     * <pre>
+     *角色ID
+     * </pre>
+     */
+    public long getRid() {
+      return rid_;
+    }
+
+    // optional string sessionId = 5;
+    public static final int SESSIONID_FIELD_NUMBER = 5;
+    private java.lang.Object sessionId_;
+    /**
+     * <code>optional string sessionId = 5;</code>
+     *
+     * <pre>
+     *会话ID
+     * </pre>
+     */
+    public boolean hasSessionId() {
+      return ((bitField0_ & 0x00000010) == 0x00000010);
+    }
+    /**
+     * <code>optional string sessionId = 5;</code>
+     *
+     * <pre>
+     *会话ID
+     * </pre>
+     */
+    public java.lang.String getSessionId() {
+      java.lang.Object ref = sessionId_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          sessionId_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>optional string sessionId = 5;</code>
+     *
+     * <pre>
+     *会话ID
+     * </pre>
+     */
+    public com.google.protobuf.ByteString
+        getSessionIdBytes() {
+      java.lang.Object ref = sessionId_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        sessionId_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private void initFields() {
+      mid_ = com.roje.game.message.Mid.MID.LoginRes;
+      ok_ = false;
+      uid_ = 0L;
+      rid_ = 0L;
+      sessionId_ = "";
+    }
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized != -1) return isInitialized == 1;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeEnum(1, mid_.getNumber());
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeBool(2, ok_);
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        output.writeInt64(3, uid_);
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        output.writeInt64(4, rid_);
+      }
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+        output.writeBytes(5, getSessionIdBytes());
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeEnumSize(1, mid_.getNumber());
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(2, ok_);
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(3, uid_);
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(4, rid_);
+      }
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(5, getSessionIdBytes());
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
+    }
+
+    public static com.roje.game.message.login.LoginMessage.LoginResponse parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.roje.game.message.login.LoginMessage.LoginResponse parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.roje.game.message.login.LoginMessage.LoginResponse parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.roje.game.message.login.LoginMessage.LoginResponse parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.roje.game.message.login.LoginMessage.LoginResponse parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static com.roje.game.message.login.LoginMessage.LoginResponse parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+    public static com.roje.game.message.login.LoginMessage.LoginResponse parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input);
+    }
+    public static com.roje.game.message.login.LoginMessage.LoginResponse parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
+    }
+    public static com.roje.game.message.login.LoginMessage.LoginResponse parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static com.roje.game.message.login.LoginMessage.LoginResponse parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(com.roje.game.message.login.LoginMessage.LoginResponse prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code LoginResponse}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.roje.game.message.login.LoginMessage.LoginResponseOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.roje.game.message.login.LoginMessage.internal_static_LoginResponse_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.roje.game.message.login.LoginMessage.internal_static_LoginResponse_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.roje.game.message.login.LoginMessage.LoginResponse.class, com.roje.game.message.login.LoginMessage.LoginResponse.Builder.class);
+      }
+
+      // Construct using com.roje.game.message.login.LoginMessage.LoginResponse.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+        }
+      }
+      private static Builder create() {
+        return new Builder();
+      }
+
+      public Builder clear() {
+        super.clear();
+        mid_ = com.roje.game.message.Mid.MID.LoginRes;
+        bitField0_ = (bitField0_ & ~0x00000001);
+        ok_ = false;
+        bitField0_ = (bitField0_ & ~0x00000002);
+        uid_ = 0L;
+        bitField0_ = (bitField0_ & ~0x00000004);
+        rid_ = 0L;
+        bitField0_ = (bitField0_ & ~0x00000008);
+        sessionId_ = "";
+        bitField0_ = (bitField0_ & ~0x00000010);
+        return this;
+      }
+
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.roje.game.message.login.LoginMessage.internal_static_LoginResponse_descriptor;
+      }
+
+      public com.roje.game.message.login.LoginMessage.LoginResponse getDefaultInstanceForType() {
+        return com.roje.game.message.login.LoginMessage.LoginResponse.getDefaultInstance();
+      }
+
+      public com.roje.game.message.login.LoginMessage.LoginResponse build() {
+        com.roje.game.message.login.LoginMessage.LoginResponse result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public com.roje.game.message.login.LoginMessage.LoginResponse buildPartial() {
+        com.roje.game.message.login.LoginMessage.LoginResponse result = new com.roje.game.message.login.LoginMessage.LoginResponse(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
+        }
+        result.mid_ = mid_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        result.ok_ = ok_;
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+          to_bitField0_ |= 0x00000004;
+        }
+        result.uid_ = uid_;
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+          to_bitField0_ |= 0x00000008;
+        }
+        result.rid_ = rid_;
+        if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
+          to_bitField0_ |= 0x00000010;
+        }
+        result.sessionId_ = sessionId_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.roje.game.message.login.LoginMessage.LoginResponse) {
+          return mergeFrom((com.roje.game.message.login.LoginMessage.LoginResponse)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.roje.game.message.login.LoginMessage.LoginResponse other) {
+        if (other == com.roje.game.message.login.LoginMessage.LoginResponse.getDefaultInstance()) return this;
+        if (other.hasMid()) {
+          setMid(other.getMid());
+        }
+        if (other.hasOk()) {
+          setOk(other.getOk());
+        }
+        if (other.hasUid()) {
+          setUid(other.getUid());
+        }
+        if (other.hasRid()) {
+          setRid(other.getRid());
+        }
+        if (other.hasSessionId()) {
+          bitField0_ |= 0x00000010;
+          sessionId_ = other.sessionId_;
+          onChanged();
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.roje.game.message.login.LoginMessage.LoginResponse parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.roje.game.message.login.LoginMessage.LoginResponse) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      // optional .MID mid = 1 [default = LoginRes];
+      private com.roje.game.message.Mid.MID mid_ = com.roje.game.message.Mid.MID.LoginRes;
+      /**
+       * <code>optional .MID mid = 1 [default = LoginRes];</code>
+       *
+       * <pre>
+       *消息id
+       * </pre>
+       */
+      public boolean hasMid() {
+        return ((bitField0_ & 0x00000001) == 0x00000001);
+      }
+      /**
+       * <code>optional .MID mid = 1 [default = LoginRes];</code>
+       *
+       * <pre>
+       *消息id
+       * </pre>
+       */
+      public com.roje.game.message.Mid.MID getMid() {
+        return mid_;
+      }
+      /**
+       * <code>optional .MID mid = 1 [default = LoginRes];</code>
+       *
+       * <pre>
+       *消息id
+       * </pre>
+       */
+      public Builder setMid(com.roje.game.message.Mid.MID value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        bitField0_ |= 0x00000001;
+        mid_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional .MID mid = 1 [default = LoginRes];</code>
+       *
+       * <pre>
+       *消息id
+       * </pre>
+       */
+      public Builder clearMid() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        mid_ = com.roje.game.message.Mid.MID.LoginRes;
+        onChanged();
+        return this;
+      }
+
+      // optional bool ok = 2;
+      private boolean ok_ ;
+      /**
+       * <code>optional bool ok = 2;</code>
+       *
+       * <pre>
+       *请求是否发送成功
+       * </pre>
+       */
+      public boolean hasOk() {
+        return ((bitField0_ & 0x00000002) == 0x00000002);
+      }
+      /**
+       * <code>optional bool ok = 2;</code>
+       *
+       * <pre>
+       *请求是否发送成功
+       * </pre>
+       */
+      public boolean getOk() {
+        return ok_;
+      }
+      /**
+       * <code>optional bool ok = 2;</code>
+       *
+       * <pre>
+       *请求是否发送成功
+       * </pre>
+       */
+      public Builder setOk(boolean value) {
+        bitField0_ |= 0x00000002;
+        ok_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional bool ok = 2;</code>
+       *
+       * <pre>
+       *请求是否发送成功
+       * </pre>
+       */
+      public Builder clearOk() {
+        bitField0_ = (bitField0_ & ~0x00000002);
+        ok_ = false;
+        onChanged();
+        return this;
+      }
+
+      // optional int64 uid = 3;
+      private long uid_ ;
+      /**
+       * <code>optional int64 uid = 3;</code>
+       *
+       * <pre>
+       *用户id
+       * </pre>
+       */
+      public boolean hasUid() {
+        return ((bitField0_ & 0x00000004) == 0x00000004);
+      }
+      /**
+       * <code>optional int64 uid = 3;</code>
+       *
+       * <pre>
+       *用户id
+       * </pre>
+       */
+      public long getUid() {
+        return uid_;
+      }
+      /**
+       * <code>optional int64 uid = 3;</code>
+       *
+       * <pre>
+       *用户id
+       * </pre>
+       */
+      public Builder setUid(long value) {
+        bitField0_ |= 0x00000004;
+        uid_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional int64 uid = 3;</code>
+       *
+       * <pre>
+       *用户id
+       * </pre>
+       */
+      public Builder clearUid() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        uid_ = 0L;
+        onChanged();
+        return this;
+      }
+
+      // optional int64 rid = 4;
+      private long rid_ ;
+      /**
+       * <code>optional int64 rid = 4;</code>
+       *
+       * <pre>
+       *角色ID
+       * </pre>
+       */
+      public boolean hasRid() {
+        return ((bitField0_ & 0x00000008) == 0x00000008);
+      }
+      /**
+       * <code>optional int64 rid = 4;</code>
+       *
+       * <pre>
+       *角色ID
+       * </pre>
+       */
+      public long getRid() {
+        return rid_;
+      }
+      /**
+       * <code>optional int64 rid = 4;</code>
+       *
+       * <pre>
+       *角色ID
+       * </pre>
+       */
+      public Builder setRid(long value) {
+        bitField0_ |= 0x00000008;
+        rid_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional int64 rid = 4;</code>
+       *
+       * <pre>
+       *角色ID
+       * </pre>
+       */
+      public Builder clearRid() {
+        bitField0_ = (bitField0_ & ~0x00000008);
+        rid_ = 0L;
+        onChanged();
+        return this;
+      }
+
+      // optional string sessionId = 5;
+      private java.lang.Object sessionId_ = "";
+      /**
+       * <code>optional string sessionId = 5;</code>
+       *
+       * <pre>
+       *会话ID
+       * </pre>
+       */
+      public boolean hasSessionId() {
+        return ((bitField0_ & 0x00000010) == 0x00000010);
+      }
+      /**
+       * <code>optional string sessionId = 5;</code>
+       *
+       * <pre>
+       *会话ID
+       * </pre>
+       */
+      public java.lang.String getSessionId() {
+        java.lang.Object ref = sessionId_;
+        if (!(ref instanceof java.lang.String)) {
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          sessionId_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string sessionId = 5;</code>
+       *
+       * <pre>
+       *会话ID
+       * </pre>
+       */
+      public com.google.protobuf.ByteString
+          getSessionIdBytes() {
+        java.lang.Object ref = sessionId_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          sessionId_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string sessionId = 5;</code>
+       *
+       * <pre>
+       *会话ID
+       * </pre>
+       */
+      public Builder setSessionId(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000010;
+        sessionId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string sessionId = 5;</code>
+       *
+       * <pre>
+       *会话ID
+       * </pre>
+       */
+      public Builder clearSessionId() {
+        bitField0_ = (bitField0_ & ~0x00000010);
+        sessionId_ = getDefaultInstance().getSessionId();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string sessionId = 5;</code>
+       *
+       * <pre>
+       *会话ID
+       * </pre>
+       */
+      public Builder setSessionIdBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000010;
+        sessionId_ = value;
+        onChanged();
+        return this;
+      }
+
+      // @@protoc_insertion_point(builder_scope:LoginResponse)
+    }
+
+    static {
+      defaultInstance = new LoginResponse(true);
+      defaultInstance.initFields();
+    }
+
+    // @@protoc_insertion_point(class_scope:LoginResponse)
+  }
+
+  public interface LoseConnectionOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
+
+    // optional .MID mid = 1 [default = LoseConntionReq];
+    /**
+     * <code>optional .MID mid = 1 [default = LoseConntionReq];</code>
+     */
+    boolean hasMid();
+    /**
+     * <code>optional .MID mid = 1 [default = LoseConntionReq];</code>
+     */
+    com.roje.game.message.Mid.MID getMid();
+
+    // optional int64 uid = 2;
+    /**
+     * <code>optional int64 uid = 2;</code>
+     */
+    boolean hasUid();
+    /**
+     * <code>optional int64 uid = 2;</code>
+     */
+    long getUid();
+
+    // optional int64 rid = 3;
+    /**
+     * <code>optional int64 rid = 3;</code>
+     */
+    boolean hasRid();
+    /**
+     * <code>optional int64 rid = 3;</code>
+     */
+    long getRid();
+  }
+  /**
+   * Protobuf type {@code LoseConnection}
+   */
+  public static final class LoseConnection extends
+      com.google.protobuf.GeneratedMessage
+      implements LoseConnectionOrBuilder {
+    // Use LoseConnection.newBuilder() to construct.
+    private LoseConnection(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+      super(builder);
+      this.unknownFields = builder.getUnknownFields();
+    }
+    private LoseConnection(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final LoseConnection defaultInstance;
+    public static LoseConnection getDefaultInstance() {
+      return defaultInstance;
+    }
+
+    public LoseConnection getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+        getUnknownFields() {
+      return this.unknownFields;
+    }
+    private LoseConnection(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      initFields();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 8: {
+              int rawValue = input.readEnum();
+              com.roje.game.message.Mid.MID value = com.roje.game.message.Mid.MID.valueOf(rawValue);
+              if (value == null) {
+                unknownFields.mergeVarintField(1, rawValue);
+              } else {
+                bitField0_ |= 0x00000001;
+                mid_ = value;
+              }
+              break;
+            }
+            case 16: {
+              bitField0_ |= 0x00000002;
+              uid_ = input.readInt64();
+              break;
+            }
+            case 24: {
+              bitField0_ |= 0x00000004;
+              rid_ = input.readInt64();
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e.getMessage()).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.roje.game.message.login.LoginMessage.internal_static_LoseConnection_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.roje.game.message.login.LoginMessage.internal_static_LoseConnection_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.roje.game.message.login.LoginMessage.LoseConnection.class, com.roje.game.message.login.LoginMessage.LoseConnection.Builder.class);
+    }
+
+    public static com.google.protobuf.Parser<LoseConnection> PARSER =
+        new com.google.protobuf.AbstractParser<LoseConnection>() {
+      public LoseConnection parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new LoseConnection(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<LoseConnection> getParserForType() {
+      return PARSER;
+    }
+
+    private int bitField0_;
+    // optional .MID mid = 1 [default = LoseConntionReq];
+    public static final int MID_FIELD_NUMBER = 1;
+    private com.roje.game.message.Mid.MID mid_;
+    /**
+     * <code>optional .MID mid = 1 [default = LoseConntionReq];</code>
+     */
+    public boolean hasMid() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    /**
+     * <code>optional .MID mid = 1 [default = LoseConntionReq];</code>
+     */
+    public com.roje.game.message.Mid.MID getMid() {
+      return mid_;
+    }
+
+    // optional int64 uid = 2;
+    public static final int UID_FIELD_NUMBER = 2;
+    private long uid_;
+    /**
+     * <code>optional int64 uid = 2;</code>
+     */
+    public boolean hasUid() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    /**
+     * <code>optional int64 uid = 2;</code>
+     */
+    public long getUid() {
+      return uid_;
+    }
+
+    // optional int64 rid = 3;
+    public static final int RID_FIELD_NUMBER = 3;
+    private long rid_;
+    /**
+     * <code>optional int64 rid = 3;</code>
+     */
+    public boolean hasRid() {
+      return ((bitField0_ & 0x00000004) == 0x00000004);
+    }
+    /**
+     * <code>optional int64 rid = 3;</code>
+     */
+    public long getRid() {
+      return rid_;
+    }
+
+    private void initFields() {
+      mid_ = com.roje.game.message.Mid.MID.LoseConntionReq;
+      uid_ = 0L;
+      rid_ = 0L;
+    }
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized != -1) return isInitialized == 1;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeEnum(1, mid_.getNumber());
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeInt64(2, uid_);
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        output.writeInt64(3, rid_);
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeEnumSize(1, mid_.getNumber());
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(2, uid_);
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(3, rid_);
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
+    }
+
+    public static com.roje.game.message.login.LoginMessage.LoseConnection parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.roje.game.message.login.LoginMessage.LoseConnection parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.roje.game.message.login.LoginMessage.LoseConnection parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.roje.game.message.login.LoginMessage.LoseConnection parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.roje.game.message.login.LoginMessage.LoseConnection parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static com.roje.game.message.login.LoginMessage.LoseConnection parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+    public static com.roje.game.message.login.LoginMessage.LoseConnection parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input);
+    }
+    public static com.roje.game.message.login.LoginMessage.LoseConnection parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
+    }
+    public static com.roje.game.message.login.LoginMessage.LoseConnection parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static com.roje.game.message.login.LoginMessage.LoseConnection parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(com.roje.game.message.login.LoginMessage.LoseConnection prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code LoseConnection}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.roje.game.message.login.LoginMessage.LoseConnectionOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.roje.game.message.login.LoginMessage.internal_static_LoseConnection_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.roje.game.message.login.LoginMessage.internal_static_LoseConnection_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.roje.game.message.login.LoginMessage.LoseConnection.class, com.roje.game.message.login.LoginMessage.LoseConnection.Builder.class);
+      }
+
+      // Construct using com.roje.game.message.login.LoginMessage.LoseConnection.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+        }
+      }
+      private static Builder create() {
+        return new Builder();
+      }
+
+      public Builder clear() {
+        super.clear();
+        mid_ = com.roje.game.message.Mid.MID.LoseConntionReq;
+        bitField0_ = (bitField0_ & ~0x00000001);
+        uid_ = 0L;
+        bitField0_ = (bitField0_ & ~0x00000002);
+        rid_ = 0L;
+        bitField0_ = (bitField0_ & ~0x00000004);
+        return this;
+      }
+
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.roje.game.message.login.LoginMessage.internal_static_LoseConnection_descriptor;
+      }
+
+      public com.roje.game.message.login.LoginMessage.LoseConnection getDefaultInstanceForType() {
+        return com.roje.game.message.login.LoginMessage.LoseConnection.getDefaultInstance();
+      }
+
+      public com.roje.game.message.login.LoginMessage.LoseConnection build() {
+        com.roje.game.message.login.LoginMessage.LoseConnection result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public com.roje.game.message.login.LoginMessage.LoseConnection buildPartial() {
+        com.roje.game.message.login.LoginMessage.LoseConnection result = new com.roje.game.message.login.LoginMessage.LoseConnection(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
+        }
+        result.mid_ = mid_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        result.uid_ = uid_;
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+          to_bitField0_ |= 0x00000004;
+        }
+        result.rid_ = rid_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.roje.game.message.login.LoginMessage.LoseConnection) {
+          return mergeFrom((com.roje.game.message.login.LoginMessage.LoseConnection)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.roje.game.message.login.LoginMessage.LoseConnection other) {
+        if (other == com.roje.game.message.login.LoginMessage.LoseConnection.getDefaultInstance()) return this;
+        if (other.hasMid()) {
+          setMid(other.getMid());
+        }
+        if (other.hasUid()) {
+          setUid(other.getUid());
+        }
+        if (other.hasRid()) {
+          setRid(other.getRid());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.roje.game.message.login.LoginMessage.LoseConnection parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.roje.game.message.login.LoginMessage.LoseConnection) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      // optional .MID mid = 1 [default = LoseConntionReq];
+      private com.roje.game.message.Mid.MID mid_ = com.roje.game.message.Mid.MID.LoseConntionReq;
+      /**
+       * <code>optional .MID mid = 1 [default = LoseConntionReq];</code>
+       */
+      public boolean hasMid() {
+        return ((bitField0_ & 0x00000001) == 0x00000001);
+      }
+      /**
+       * <code>optional .MID mid = 1 [default = LoseConntionReq];</code>
+       */
+      public com.roje.game.message.Mid.MID getMid() {
+        return mid_;
+      }
+      /**
+       * <code>optional .MID mid = 1 [default = LoseConntionReq];</code>
+       */
+      public Builder setMid(com.roje.game.message.Mid.MID value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        bitField0_ |= 0x00000001;
+        mid_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional .MID mid = 1 [default = LoseConntionReq];</code>
+       */
+      public Builder clearMid() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        mid_ = com.roje.game.message.Mid.MID.LoseConntionReq;
+        onChanged();
+        return this;
+      }
+
+      // optional int64 uid = 2;
+      private long uid_ ;
+      /**
+       * <code>optional int64 uid = 2;</code>
+       */
+      public boolean hasUid() {
+        return ((bitField0_ & 0x00000002) == 0x00000002);
+      }
+      /**
+       * <code>optional int64 uid = 2;</code>
+       */
+      public long getUid() {
+        return uid_;
+      }
+      /**
+       * <code>optional int64 uid = 2;</code>
+       */
+      public Builder setUid(long value) {
+        bitField0_ |= 0x00000002;
+        uid_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional int64 uid = 2;</code>
+       */
+      public Builder clearUid() {
+        bitField0_ = (bitField0_ & ~0x00000002);
+        uid_ = 0L;
+        onChanged();
+        return this;
+      }
+
+      // optional int64 rid = 3;
+      private long rid_ ;
+      /**
+       * <code>optional int64 rid = 3;</code>
+       */
+      public boolean hasRid() {
+        return ((bitField0_ & 0x00000004) == 0x00000004);
+      }
+      /**
+       * <code>optional int64 rid = 3;</code>
+       */
+      public long getRid() {
+        return rid_;
+      }
+      /**
+       * <code>optional int64 rid = 3;</code>
+       */
+      public Builder setRid(long value) {
+        bitField0_ |= 0x00000004;
+        rid_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional int64 rid = 3;</code>
+       */
+      public Builder clearRid() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        rid_ = 0L;
+        onChanged();
+        return this;
+      }
+
+      // @@protoc_insertion_point(builder_scope:LoseConnection)
+    }
+
+    static {
+      defaultInstance = new LoseConnection(true);
+      defaultInstance.initFields();
+    }
+
+    // @@protoc_insertion_point(class_scope:LoseConnection)
+  }
+
   private static com.google.protobuf.Descriptors.Descriptor
     internal_static_LoginRequest_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_LoginRequest_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_LoginResponse_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_LoginResponse_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_LoseConnection_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_LoseConnection_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -1729,9 +3286,14 @@ public final class LoginMessage {
       "nRequest\022\033\n\003mid\030\001 \001(\0162\004.MID:\010LoginReq\022\017\n" +
       "\007account\030\002 \001(\t\022\020\n\010password\030\003 \001(\t\022\035\n\tlogi" +
       "nType\030\004 \001(\0162\n.LoginType\022\021\n\tsessionId\030\005 \001" +
-      "(\003\022\016\n\006gateId\030\006 \001(\005\022\n\n\002ip\030\007 \001(\t\022\017\n\007versio" +
-      "n\030\010 \001(\t*$\n\tLoginType\022\013\n\007ACCOUNT\020\001\022\n\n\006WEC" +
-      "HAT\020\002B\035\n\033com.roje.game.message.login"
+      "(\t\022\016\n\006gateId\030\006 \001(\005\022\n\n\002ip\030\007 \001(\t\022\017\n\007versio" +
+      "n\030\010 \001(\005\"e\n\rLoginResponse\022\033\n\003mid\030\001 \001(\0162\004." +
+      "MID:\010LoginRes\022\n\n\002ok\030\002 \001(\010\022\013\n\003uid\030\003 \001(\003\022\013" +
+      "\n\003rid\030\004 \001(\003\022\021\n\tsessionId\030\005 \001(\t\"N\n\016LoseCo" +
+      "nnection\022\"\n\003mid\030\001 \001(\0162\004.MID:\017LoseConntio" +
+      "nReq\022\013\n\003uid\030\002 \001(\003\022\013\n\003rid\030\003 \001(\003*$\n\tLoginT",
+      "ype\022\013\n\007ACCOUNT\020\001\022\n\n\006WECHAT\020\002B\035\n\033com.roje" +
+      ".game.message.login"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -1744,6 +3306,18 @@ public final class LoginMessage {
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_LoginRequest_descriptor,
               new java.lang.String[] { "Mid", "Account", "Password", "LoginType", "SessionId", "GateId", "Ip", "Version", });
+          internal_static_LoginResponse_descriptor =
+            getDescriptor().getMessageTypes().get(1);
+          internal_static_LoginResponse_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_LoginResponse_descriptor,
+              new java.lang.String[] { "Mid", "Ok", "Uid", "Rid", "SessionId", });
+          internal_static_LoseConnection_descriptor =
+            getDescriptor().getMessageTypes().get(2);
+          internal_static_LoseConnection_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_LoseConnection_descriptor,
+              new java.lang.String[] { "Mid", "Uid", "Rid", });
           return null;
         }
       };

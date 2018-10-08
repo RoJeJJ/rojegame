@@ -4,22 +4,24 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
     <context:property-placeholder location="classpath:cluster*.*properties"/>
-    <import resource="classpath:server-config.xml"/>
+    <import resource="classpath:cluster-config.xml"/>
     <bean class="com.roje.game.core.dispatcher.MessageDispatcher" id="messageDispatcher"/>
-    <bean class="com.roje.game.cluster.manager.ServerManager" id="serverManager"/>
+    <bean class="com.roje.game.core.manager.ServerManager" id="serverManager"/>
     <bean id="tcpServerChannelInitializer" class="com.roje.game.core.netty.channel.initializer.DefaultTcpServerChannelInitializer">
-        <constructor-arg ref="clusterServerConfig"/>
+        <constructor-arg ref="clusterTcpServerConfig"/>
         <property name="handlers">
             <list>
                 <bean class="com.roje.game.cluster.netty.handler.ClusterGameServerChannelInBoundHandler">
-                    <property name="dispatcher" ref="messageDispatcher"/>
-                    <property name="service" ref="clusterTcpServer"/>
+                    <constructor-arg name="containUid" value="false"/>
+                    <constructor-arg name="service" ref="clusterTcpServer"/>
+                    <constructor-arg name="dispatcher" ref="messageDispatcher"/>
                     <property name="serverManager" ref="serverManager"/>
                 </bean>
             </list>
         </property>
     </bean>
     <bean class="com.roje.game.core.netty.channel.initializer.DefaultHttpServerChannelInitializer" id="httpServerChannelInitializer">
+        <constructor-arg name="httpServerConfig" ref="clusterHttpServerConfig"/>
         <property name="handlers">
             <list>
                 <bean class="com.roje.game.core.netty.channel.handler.DefaultHttpInBoundHandler">
@@ -31,11 +33,11 @@
     </bean>
     <bean id="nettyTcpServer" class="com.roje.game.core.netty.NettyTcpServer">
         <constructor-arg index="0" ref="tcpServerChannelInitializer"/>
-        <constructor-arg index="1" ref="clusterServerConfig"/>
+        <constructor-arg index="1" ref="clusterTcpServerConfig"/>
     </bean>
     <bean class="com.roje.game.core.netty.NettyHttpServer" id="nettyHttpServer">
         <constructor-arg index="0" name="initializer" ref="httpServerChannelInitializer"/>
-        <constructor-arg index="1" name="serverConfig" ref="clusterServerConfig"/>
+        <constructor-arg index="1" name="serverConfig" ref="clusterHttpServerConfig"/>
     </bean>
     <!--集群tcp服务器-->
     <bean id="clusterTcpServer" class="com.roje.game.cluster.server.ClusterTcpTcpServer">
@@ -57,7 +59,7 @@
         <property name="dispatcher" ref="messageDispatcher"/>
         <property name="serverManager" ref="serverManager"/>
     </bean>
-    <bean class="com.roje.game.cluster.processor.http.GetIdleGateHandler" init-method="register">
+    <bean class="com.roje.game.cluster.processor.http.GetIdleGateProcessor" init-method="register">
         <property name="serverManager" ref="serverManager"/>
         <property name="dispatcher" ref="messageDispatcher"/>
     </bean>

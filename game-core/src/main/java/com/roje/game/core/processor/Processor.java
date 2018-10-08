@@ -10,4 +10,5 @@ import java.lang.annotation.RetentionPolicy;
 public @interface Processor {
     int mid();
     ThreadType thread() default ThreadType.io;
+    boolean forward() default false;
 }

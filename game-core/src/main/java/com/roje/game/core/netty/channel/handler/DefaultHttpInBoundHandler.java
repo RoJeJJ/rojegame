@@ -4,23 +4,18 @@ import com.roje.game.core.dispatcher.MessageDispatcher;
 import com.roje.game.core.processor.HttpProcessor;
 import com.roje.game.core.processor.HttpRequestProcessor;
 import com.roje.game.core.service.Service;
-import io.netty.buffer.Unpooled;
-import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-import io.netty.handler.codec.http.*;
-import io.netty.util.CharsetUtil;
+import io.netty.handler.codec.http.DefaultHttpRequest;
+import io.netty.handler.codec.http.HttpMethod;
+import io.netty.handler.codec.http.HttpResponseStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.Executor;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.roje.game.core.util.HttpUtils.sendError;
-import static io.netty.handler.codec.http.HttpHeaderNames.CONTENT_LENGTH;
-import static io.netty.handler.codec.http.HttpHeaderNames.CONTENT_TYPE;
-import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
 
 @ChannelHandler.Sharable
 public class DefaultHttpInBoundHandler extends SimpleChannelInboundHandler<DefaultHttpRequest> {

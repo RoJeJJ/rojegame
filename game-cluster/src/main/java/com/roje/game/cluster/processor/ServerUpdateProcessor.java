@@ -1,11 +1,11 @@
 package com.roje.game.cluster.processor;
 
-import com.roje.game.cluster.manager.ServerManager;
+import com.roje.game.core.manager.ServerManager;
 import com.roje.game.core.processor.MessageProcessor;
 import com.roje.game.core.processor.Processor;
 import com.roje.game.message.Mid;
 import com.roje.game.message.common.CommonMessage;
-import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.Channel;
 
 @Processor(mid = Mid.MID.ServerUpdateReq_VALUE)
 public class ServerUpdateProcessor extends MessageProcessor {
@@ -16,9 +16,9 @@ public class ServerUpdateProcessor extends MessageProcessor {
     }
 
     @Override
-    public void handler(ChannelHandlerContext ctx, byte[] bytes) throws Exception {
+    public void handler(Channel channel, byte[] bytes) throws Exception {
         CommonMessage.ServerUpdateRequest request = CommonMessage.ServerUpdateRequest.parseFrom(bytes);
         CommonMessage.ServerInfo info = request.getServerInfo();
-        ctx.writeAndFlush(serverManager.updateServer(info));
+        channel.writeAndFlush(serverManager.updateServer(info));
     }
 }

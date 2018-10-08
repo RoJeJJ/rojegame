@@ -30,9 +30,6 @@ public class ClientConfig {
     //连接配置
 
 
-    // 当前服务器的类型,如当前服务器是gameserver.那么对应ServerType.GameServer = 10
-    private ServerType type;
-
     // 其他配置,如配置服务器允许开启的地图
     private String info;
 
@@ -76,13 +73,6 @@ public class ClientConfig {
         this.maxConnectCount = maxConnectCount;
     }
 
-    public ServerType getType() {
-        return type;
-    }
-
-    public void setType(ServerType type) {
-        this.type = type;
-    }
 
     public String getInfo() {
         return info;
@@ -142,7 +132,7 @@ public class ClientConfig {
 
     @Override
     public String toString() {
-        return "ClientConfig:{type:"+type.name()+",host:"+host+",port:"+port+",connType:"+connToType.name()+",connTimeout:"+connectTimeout+"}";
+        return "ClientConfig:{host:"+host+",port:"+port+",connType:"+connToType.name()+",connTimeout:"+connectTimeout+"}";
     }
 
     public boolean isTcpNoDelay() {

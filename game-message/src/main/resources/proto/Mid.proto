@@ -16,6 +16,8 @@ enum MID{
 	ServerEventRes				= 1008; //服务器事件
 	ServerUpdateReq             = 1009;//更新服务器信息
 	ServerUpdateRes             = 1010;//
+	IdleServerReq					=1011;//获取空闲服务器
+	IdleServerRes					=1012;
 	
 	//大厅
 	LoginReq					= 10001; //登录
@@ -51,6 +53,8 @@ enum MID{
 	GuildApprovalRes			= 10032; //公会审批
 	CreateGuildReq				= 10033; //创建公会
 	CreateGuildRes				= 10034; //创建公会
+	LoseConntionReq				= 10035;//连接断开
+	LoseConntionRes				= 10036;//连接断开
 	
 	
 	//捕鱼达人

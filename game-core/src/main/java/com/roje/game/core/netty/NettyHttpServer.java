@@ -1,6 +1,7 @@
 package com.roje.game.core.netty;
 
 import com.roje.game.core.config.ServerConfig;
+import com.roje.game.core.server.BaseInfo;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -31,9 +32,9 @@ public class NettyHttpServer implements Runnable {
                     .childOption(ChannelOption.TCP_NODELAY,serverConfig.isTcpNoDelay())
                     .childOption(ChannelOption.SO_KEEPALIVE,serverConfig.isSoKeepAlive())
                     .childOption(ChannelOption.SO_LINGER,serverConfig.getSoLinger());
-            ChannelFuture channelFuture = bootstrap.bind(serverConfig.getHttpPort()).sync().addListener(channelFuture1 -> {
+            ChannelFuture channelFuture = bootstrap.bind(serverConfig.getPort()).sync().addListener(channelFuture1 -> {
                 if (channelFuture1.isSuccess())
-                    LOG.info("HTTP服务器已启动,监听端口:" + serverConfig.getHttpPort());
+                    LOG.info("HTTP服务器已启动,监听端口:" + serverConfig.getPort());
                 else
                     LOG.error("HTTP服务器启动失败");
             });
