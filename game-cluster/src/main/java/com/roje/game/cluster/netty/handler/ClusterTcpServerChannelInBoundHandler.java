@@ -1,38 +1,26 @@
 package com.roje.game.cluster.netty.handler;
 
-import com.roje.game.cluster.server.ClusterTcpTcpServer;
 import com.roje.game.core.dispatcher.MessageDispatcher;
 import com.roje.game.core.manager.ServerManager;
 import com.roje.game.core.netty.channel.handler.DefaultInBoundHandler;
-import com.roje.game.core.server.ServerInfo;
 import com.roje.game.core.service.Service;
-import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.timeout.IdleStateEvent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
-@ChannelHandler.Sharable
-public class ClusterGameServerChannelInBoundHandler extends DefaultInBoundHandler {
-    private static final Logger LOG = LoggerFactory.getLogger(ClusterGameServerChannelInBoundHandler.class);
+
+@Slf4j
+public class ClusterTcpServerChannelInBoundHandler extends DefaultInBoundHandler {
     private ServerManager serverManager;
 
-    public ClusterGameServerChannelInBoundHandler(boolean containUid, Service service, MessageDispatcher dispatcher) {
+    public ClusterTcpServerChannelInBoundHandler(boolean containUid, Service service, MessageDispatcher dispatcher,ServerManager serverManager) {
         super(containUid,service,dispatcher);
-    }
-
-    public void setServerManager(ServerManager serverManager) {
         this.serverManager = serverManager;
     }
 
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-        ServerInfo serverInfo = ctx.channel().attr(ClusterTcpTcpServer.SERVER_INFO_ATTRIBUTE_KEY).get();
-        if (serverInfo != null) {
-            LOG.warn("服务器:{}断开连接", serverInfo.getName());
-            serverManager.unRegister(serverInfo,ctx.channel());
-        }else
-            LOG.warn("未知连接断开");
+        serverManager.channelInactive(ctx.channel());
         super.channelInactive(ctx);
     }
 
@@ -43,14 +31,14 @@ public class ClusterGameServerChannelInBoundHandler extends DefaultInBoundHandle
             IdleStateEvent event = (IdleStateEvent) evt;
             switch (event.state()){
                 case READER_IDLE:
-                    LOG.warn("{} reader timeout --- close it");
+                    log.warn("{} reader timeout --- close it");
                     ctx.close();
                     break;
                 case WRITER_IDLE:
-                    LOG.warn("{} writer timeout");
+                    log.warn("{} writer timeout");
                     break;
                 case ALL_IDLE:
-                    LOG.warn("{} all timeout");
+                    log.warn("{} all timeout");
                     break;
             }
         }
@@ -59,7 +47,7 @@ public class ClusterGameServerChannelInBoundHandler extends DefaultInBoundHandle
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
         super.exceptionCaught(ctx, cause);
-        LOG.warn("{}连接异常,关闭连接");
+        log.warn("{}连接异常,关闭连接");
         ctx.close();
     }
 }

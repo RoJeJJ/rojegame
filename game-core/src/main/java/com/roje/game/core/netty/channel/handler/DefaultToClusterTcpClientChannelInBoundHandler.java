@@ -3,33 +3,26 @@ package com.roje.game.core.netty.channel.handler;
 import com.roje.game.core.dispatcher.MessageDispatcher;
 import com.roje.game.core.manager.UserManager;
 import com.roje.game.core.server.BaseInfo;
-import com.roje.game.core.service.Service;
 import com.roje.game.core.util.ServerUtil;
 import com.roje.game.message.common.CommonMessage;
-import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.timeout.IdleStateEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@ChannelHandler.Sharable
 public class DefaultToClusterTcpClientChannelInBoundHandler extends DefaultInBoundHandler {
     private static final Logger LOG = LoggerFactory.getLogger(DefaultToClusterTcpClientChannelInBoundHandler.class);
     private BaseInfo baseInfo;
     private UserManager userManager;
 
-    public DefaultToClusterTcpClientChannelInBoundHandler(boolean containUid, Service service, MessageDispatcher dispatcher) {
-        super(containUid,service,dispatcher);
-    }
-
-
-    public void setBaseInfo(BaseInfo baseInfo) {
+    public DefaultToClusterTcpClientChannelInBoundHandler( MessageDispatcher dispatcher,
+                                                           UserManager userManager,
+                                                           BaseInfo baseInfo) {
+        super(false,null,dispatcher);
+        this.userManager = userManager;
         this.baseInfo = baseInfo;
     }
 
-    public void setUserManager(UserManager userManager) {
-        this.userManager = userManager;
-    }
 
 
     @Override

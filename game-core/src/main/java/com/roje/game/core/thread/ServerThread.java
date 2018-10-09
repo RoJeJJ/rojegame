@@ -2,17 +2,15 @@ package com.roje.game.core.thread;
 
 import com.roje.game.core.thread.timer.TimerEvent;
 import com.roje.game.core.thread.timer.TimerThread;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import lombok.extern.slf4j.Slf4j;
 import java.util.concurrent.Executor;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * 服务器线程模型
  */
+@Slf4j
 public class ServerThread extends Thread implements Executor {
-    private static final Logger LOG = LoggerFactory.getLogger(ServerThread.class);
     /**
      * 线程名称
      */
@@ -46,7 +44,7 @@ public class ServerThread extends Thread implements Executor {
             timer = new TimerThread(this);
         queue = new LinkedBlockingQueue<>(commandSize);
         setUncaughtExceptionHandler((t, e) -> {
-            LOG.error("ServerThread.setUncaughtExceptionHandler",e);
+            log.error("ServerThread.setUncaughtExceptionHandler",e);
             if (timer != null)
                 timer.stop(true);
         });
@@ -79,6 +77,7 @@ public class ServerThread extends Thread implements Executor {
     @Override
     public void run() {
         stop = false;
+        log.info(name+"线程已经开始运行");
         if (timeInterval > 0 && timer != null)
             timer.start();
         int loop = 0;
@@ -90,7 +89,7 @@ public class ServerThread extends Thread implements Executor {
                     try {
                         wait();
                     } catch (InterruptedException e) {
-                        LOG.error("ServerThread",e);
+                        log.error("ServerThread",e);
                     }
                 }
             }else {
@@ -99,22 +98,22 @@ public class ServerThread extends Thread implements Executor {
                 try {
                     command.run();
                 }catch (Exception e){
-                    LOG.error("执行"+name+"任务出现异常",e);
+                    log.error("执行"+name+"任务出现异常",e);
                 }
                 long cost = System.currentTimeMillis() - lastExecuteTime;
                 if (cost > 30L)
-                    LOG.warn("线程：{} 执行 {} 消耗时间过长 {}毫秒,当前命令数 {} 条", name, command.getClass().getSimpleName(), cost,
+                    log.warn("线程：{} 执行 {} 消耗时间过长 {}毫秒,当前命令数 {} 条", name, command.getClass().getSimpleName(), cost,
                             queue.size());
                 if (loop > 300){
                     loop = 0;
-                    LOG.warn("线程：{} 已循环执行{} 次,当前命令数{}", name, loop, queue.size());
+                    log.warn("线程：{} 已循环执行{} 次,当前命令数{}", name, loop, queue.size());
                 }
             }
         }
     }
     public void stop(boolean flag){
         stop = false;
-        LOG.warn("线程{}停止",name);
+        log.warn("线程{}停止",name);
         if (timer != null)
             timer.stop(flag);
         queue.clear();

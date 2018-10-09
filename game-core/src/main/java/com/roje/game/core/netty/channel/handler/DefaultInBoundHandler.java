@@ -8,16 +8,16 @@ import com.roje.game.core.service.Service;
 import com.roje.game.core.util.MessageUtil;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.Executor;
 
+
+@Slf4j
 public class DefaultInBoundHandler extends SimpleChannelInboundHandler<byte[]> {
     private MessageDispatcher dispatcher;
     protected Service service;
     private boolean containUid;
-    private static final Logger LOG = LoggerFactory.getLogger(DefaultInBoundHandler.class);
 
     public DefaultInBoundHandler(boolean containUid,Service service,MessageDispatcher dispatcher){
         this.containUid = containUid;
@@ -28,7 +28,7 @@ public class DefaultInBoundHandler extends SimpleChannelInboundHandler<byte[]> {
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, byte[] bytes) throws Exception {
         if (bytes.length < MessageConfig.MidLen){
-            LOG.error("消息长度{}小于消息号长度{}",bytes.length,MessageConfig.MidLen);
+            log.error("消息长度{}小于消息号长度{}",bytes.length,MessageConfig.MidLen);
             channelHandlerContext.close();
             return;
         }
@@ -40,17 +40,21 @@ public class DefaultInBoundHandler extends SimpleChannelInboundHandler<byte[]> {
         if (handler != null){
             Processor processor = handler.getClass().getAnnotation(Processor.class);
             if (processor != null){
-                Executor executor = service.getExecutor(processor.thread());
-                if (executor != null){
-                    executor.execute(() -> {
-                        try {
-                            handler.handler(channelHandlerContext.channel(),msg);
-                        } catch (Exception e) {
-                            LOG.warn("处理消息异常",e);
-                        }
-                    });
-                }else
+                if (service == null){ //如果没有执行服务,默认当前线程执行任务
                     handler.handler(channelHandlerContext.channel(),msg);
+                }else {
+                    Executor executor = service.getExecutor(processor.thread());
+                    if (executor != null){
+                        executor.execute(() -> {
+                            try {
+                                handler.handler(channelHandlerContext.channel(),msg);
+                            } catch (Exception e) {
+                                log.warn("处理消息异常",e);
+                            }
+                        });
+                    }else //没有找到执行线程或线程池,当前线程执行
+                        handler.handler(channelHandlerContext.channel(),msg);
+                }
                 forward = processor.forward();
             }
         }

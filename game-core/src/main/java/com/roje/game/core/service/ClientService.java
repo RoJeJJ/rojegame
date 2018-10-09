@@ -18,20 +18,4 @@ public class ClientService extends Service{
         this.tcpClient = tcpClient;
     }
 
-    @Override
-    protected void onRun() {
-        tcpClient.start();
-    }
-
-    @Override
-    protected void doShutDown() {
-        tcpClient.shutDown();
-    }
-
-    public NettyTcpClient getTcpClient() {
-        return tcpClient;
-    }
-    public ClientConfig getClientConfig(){
-        return tcpClient == null ? null:tcpClient.getClientConfig();
-    }
 }

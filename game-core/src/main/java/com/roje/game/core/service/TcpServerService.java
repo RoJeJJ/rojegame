@@ -1,6 +1,5 @@
 package com.roje.game.core.service;
 
-import com.roje.game.core.config.ServerConfig;
 import com.roje.game.core.config.ThreadConfig;
 import com.roje.game.core.netty.NettyTcpServer;
 import org.slf4j.Logger;
@@ -20,26 +19,4 @@ public class TcpServerService extends Service {
         this(null,tcpServer);
     }
     public void onShutDown(){}
-    @Override
-    protected void doShutDown() {
-        if (tcpServer != null)
-            tcpServer.stop();
-        onShutDown();
-    }
-
-    @Override
-    protected void onRun() {
-//        ServerThread serverThread = getExecutor(ThreadType.sync);
-//        if (timerEvent != null && serverThread != null && serverThread.getTimeInterval() > 0)
-//            serverThread.addTimerEvent(timerEvent);
-        if (tcpServer != null)
-            tcpServer.start();
-    }
-    public ServerConfig serverConfig(){
-        return tcpServer == null ? null:tcpServer.getServerConfig();
-    }
-
-    public NettyTcpServer tcpServer() {
-        return tcpServer;
-    }
 }

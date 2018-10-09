@@ -2,18 +2,18 @@ package com.roje.game.gate.netty.handler;
 
 import com.roje.game.core.dispatcher.MessageDispatcher;
 import com.roje.game.core.netty.channel.handler.DefaultInBoundHandler;
-import com.roje.game.core.service.Service;
 import com.roje.game.gate.manager.GateUserSessionManager;
 import com.roje.game.gate.session.GateUserSession;
 import io.netty.channel.ChannelHandlerContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class GateGameServerChannelInBoundHandler extends DefaultInBoundHandler {
+    private static final Logger LOG = LoggerFactory.getLogger(GateGameServerChannelInBoundHandler.class);
     private GateUserSessionManager sessionManager;
-    public GateGameServerChannelInBoundHandler(boolean containUid, Service service, MessageDispatcher dispatcher) {
-        super(containUid,service,dispatcher);
-    }
-
-    public void setSessionManager(GateUserSessionManager sessionManager) {
+    //内部服务器消息处理不使用线程容器执行
+    public GateGameServerChannelInBoundHandler(boolean containUid, MessageDispatcher dispatcher,GateUserSessionManager sessionManager) {
+        super(containUid,null,dispatcher);
         this.sessionManager = sessionManager;
     }
 

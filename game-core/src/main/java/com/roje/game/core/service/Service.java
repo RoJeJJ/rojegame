@@ -5,14 +5,13 @@ import com.roje.game.core.thread.ExecutorPool;
 import com.roje.game.core.thread.IoThreadFactory;
 import com.roje.game.core.thread.ServerThread;
 import com.roje.game.core.thread.ThreadType;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;
 import java.util.concurrent.*;
 
-public abstract class Service implements Runnable {
-    private static final Logger LOG = LoggerFactory.getLogger(Service.class);
+@Slf4j
+public class Service {
     /**
      * 线程容器
      */
@@ -26,8 +25,10 @@ public abstract class Service implements Runnable {
             executorMap.put(ThreadType.io,ioExecutor);
             ServerThread syncThread = new ServerThread(new ThreadGroup(config.getSyncName()),config.getSyncName(),
                     config.getSyncTimeInterval(),config.getSyncCommandSize());
+            syncThread.start();
             executorMap.put(ThreadType.sync,syncThread);
         }
+        Runtime.getRuntime().addShutdownHook(new Thread(this::shutDown));
     }
 
     private void shutDown(){
@@ -40,35 +41,21 @@ public abstract class Service implements Runnable {
                     if (!((ThreadPoolExecutor) executor).isShutdown()) {
                         ((ThreadPoolExecutor) executor).shutdown();
                         while (!((ThreadPoolExecutor) executor).awaitTermination(5, TimeUnit.SECONDS))
-                            LOG.error("线程池剩余线程:" + ((ThreadPoolExecutor) executor).getActiveCount());
+                            log.error("线程池剩余线程:" + ((ThreadPoolExecutor) executor).getActiveCount());
                     }
                 } else if (executor instanceof ExecutorPool)
                     ((ExecutorPool) executor).stop();
             }catch (Exception e){
-                LOG.error("关闭线程异常",e);
+                log.error("关闭线程异常",e);
             }
         });
-        doShutDown();
     }
-
     /**
-     * 关闭
-     */
-    protected abstract void doShutDown();
+     * 添加线程池
 
-    protected abstract void onRun();
-    /**
-     * 添加房间线程池
-     * @param executor 房间线程池
      */
-    public void addRoomExecutor(Executor executor){
-        executorMap.put(ThreadType.room,executor);
-    }
-
-    @Override
-    public void run() {
-        Runtime.getRuntime().addShutdownHook(new Thread(this::shutDown));
-        onRun();
+    public void addExecutorPool(ThreadType type,Executor executor){
+        executorMap.put(type,executor);
     }
 
     @SuppressWarnings("unchecked")

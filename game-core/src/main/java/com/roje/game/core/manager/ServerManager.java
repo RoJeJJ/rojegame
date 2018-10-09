@@ -6,9 +6,8 @@ import com.roje.game.core.server.ServerType;
 import com.roje.game.message.common.CommonMessage;
 import io.netty.channel.Channel;
 import io.netty.util.AttributeKey;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Comparator;
 import java.util.Map;
@@ -16,8 +15,8 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
+@Slf4j
 public class ServerManager {
-    private static final Logger LOG = LoggerFactory.getLogger(ServerManager.class);
     private static AtomicInteger idGenerator = new AtomicInteger(1);
     private Map<Integer, ServerInfo> serverMap = new ConcurrentHashMap<>();
     private static final AttributeKey<ServerInfo> SERVER_INFO_ATTRIBUTE_KEY = AttributeKey.newInstance("netty.server_info");
@@ -73,12 +72,12 @@ public class ServerManager {
 
     private boolean invalidIpAndPort(String ip, int port) {
         if (StringUtils.isBlank(ip)) {
-            LOG.warn("ip不能为空");
+            log.warn("ip不能为空");
             return true;
         }
         for (ServerInfo i : serverMap.values()) {
             if (StringUtils.equals(ip, i.getIp()) && port == i.getPort()) {
-                LOG.info("{}/{},该地址的端口已经存在", ip, port);
+                log.info("{}/{},该地址的端口已经存在", ip, port);
                 return true;
             }
         }
@@ -90,7 +89,7 @@ public class ServerManager {
         int id = info.getId();
         ServerInfo serverInfo = serverMap.get(id);
         if (serverInfo == null) {
-            LOG.info("未找到该服务器的信息,是不是没有注册");
+            log.info("未找到该服务器的信息,是不是没有注册");
             builder.setSucess(false);
             builder.setMsg("未找到该服务器的信息,是不是没有注册");
             return builder.build();
@@ -125,5 +124,14 @@ public class ServerManager {
                 /*&& serverInfo.getChannel() != null && serverInfo.getChannel().isActive()*/)
                 .min(Comparator.comparingInt(ServerInfo::getOnline));
         return optional.orElse(null);
+    }
+
+    public void channelInactive(Channel channel) {
+        ServerInfo serverInfo = channel.attr(SERVER_INFO_ATTRIBUTE_KEY).get();
+        if (serverInfo != null) {
+            log.warn("服务器:{}断开连接", serverInfo.getName());
+            unRegister(serverInfo,channel);
+        }else
+            log.warn("未知连接断开");
     }
 }

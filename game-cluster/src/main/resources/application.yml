@@ -1,0 +1,34 @@
+thread-config:
+  io-corePoolSize: 10
+  io-maximumPoolSize: 100
+  io-keepAliveTime: 30
+  io-capacity: 100000
+  sync-name: sync
+  sync-timeInterval: 0
+  sync-commandSize: 100000
+netty:
+  config:
+    cluster-tcp:
+      port: 7000
+      soBackLog: 2048
+      soKeepAlive: true
+      tcpNoDelay: true
+      readerIdleTime: 20
+      writerIdleTime: 0
+      allIdleTime: 0
+      soLinger: 0
+    cluster-http:
+      port: 7001
+      soBackLog: 2048
+      soKeepAlive: true
+      tcpNoDelay: true
+      readerIdleTime: 20
+      writerIdleTime: 0
+      allIdleTime: 0
+      soLinger: 0
+game:
+  cluster:
+    id: 1
+    name: cluster
+    ok: true
+    type: one

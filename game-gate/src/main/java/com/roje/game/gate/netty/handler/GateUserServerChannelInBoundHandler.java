@@ -5,25 +5,20 @@ import com.roje.game.core.netty.channel.handler.DefaultInBoundHandler;
 import com.roje.game.core.service.Service;
 import com.roje.game.gate.manager.GateUserSessionManager;
 import com.roje.game.gate.session.GateUserSession;
-import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.timeout.IdleStateEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@ChannelHandler.Sharable
 public class GateUserServerChannelInBoundHandler extends DefaultInBoundHandler {
     private static final Logger LOG = LoggerFactory.getLogger(GateUserServerChannelInBoundHandler.class);
     private GateUserSessionManager sessionManager;
 
-    public GateUserServerChannelInBoundHandler(boolean containUid, Service service, MessageDispatcher dispatcher) {
+    public GateUserServerChannelInBoundHandler(boolean containUid, Service service, MessageDispatcher dispatcher,GateUserSessionManager sessionManager) {
         super(containUid,service,dispatcher);
-    }
-
-
-    public void setSessionManager(GateUserSessionManager sessionManager) {
         this.sessionManager = sessionManager;
     }
+
 
     @Override
     public void forward(ChannelHandlerContext ctx,int mid,long uid, byte[] bytes) {

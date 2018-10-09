@@ -1,0 +1,30 @@
+thread-config:
+  io-corePoolSize: 10
+  io-maximumPoolSize: 100
+  io-keepAliveTime: 30
+  io-capacity: 100000
+  sync-name: sync
+  sync-timeInterval: 0
+  sync-commandSize: 100000
+netty:
+  config:
+    gate-game-tcp:
+      port: 8000
+      soBackLog: 2048
+      soKeepAlive: true
+      tcpNoDelay: true
+      readerIdleTime: 20
+      writerIdleTime: 0
+      allIdleTime: 0
+      soLinger: 0
+    gate-client:
+      soLinger: 0
+      readerIdleTime: 0
+      writerIdleTime: 0
+      allIdleTime: 0
+      tcpNoDelay: true
+      reconnectTime: 5
+      connectTimeout: 10
+      toCluster:
+        ip: 127.0.0.1
+        port: 8000

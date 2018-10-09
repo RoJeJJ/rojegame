@@ -2,7 +2,7 @@ package com.roje.game.core.server;
 
 public class BaseInfo {
     // 服务器ID
-    private int id;
+    private int id = 0;
 
     //服务器版本号
     private int versionCode;
@@ -16,7 +16,7 @@ public class BaseInfo {
     // 端口
     private int port;
     // 当前状态 1表示维护；0表示正常
-    private ServerState state;
+    private ServerState state = ServerState.NORMAL;
     // http端口
     private int httpPort;
     // 最大用户人数

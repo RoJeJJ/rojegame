@@ -4,7 +4,6 @@ import com.roje.game.core.dispatcher.MessageDispatcher;
 import com.roje.game.core.processor.HttpProcessor;
 import com.roje.game.core.processor.HttpRequestProcessor;
 import com.roje.game.core.service.Service;
-import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.DefaultHttpRequest;
@@ -17,7 +16,6 @@ import java.util.concurrent.Executor;
 
 import static com.roje.game.core.util.HttpUtils.sendError;
 
-@ChannelHandler.Sharable
 public class DefaultHttpInBoundHandler extends SimpleChannelInboundHandler<DefaultHttpRequest> {
     private static Logger LOG = LoggerFactory.getLogger(DefaultHttpInBoundHandler.class);
     private MessageDispatcher dispatcher;
@@ -32,7 +30,7 @@ public class DefaultHttpInBoundHandler extends SimpleChannelInboundHandler<Defau
     }
 
     @Override
-    protected void channelRead0(ChannelHandlerContext channelHandlerContext, DefaultHttpRequest request) throws Exception {
+    protected void channelRead0(ChannelHandlerContext channelHandlerContext, DefaultHttpRequest request) {
         //400
         //405
         LOG.info("接收请求:"+request.uri());
