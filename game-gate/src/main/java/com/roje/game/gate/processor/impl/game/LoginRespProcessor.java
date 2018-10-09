@@ -6,19 +6,25 @@ import com.roje.game.gate.manager.GateUserSessionManager;
 import com.roje.game.gate.session.GateUserSession;
 import com.roje.game.message.login.LoginMessage;
 import io.netty.channel.Channel;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import static com.roje.game.message.Mid.MID.LoginRes_VALUE;
 
+@Slf4j
+@Component
 @Processor(mid = LoginRes_VALUE)
 public class LoginRespProcessor extends MessageProcessor {
-    private static final Logger LOG = LoggerFactory.getLogger(LoginRespProcessor.class);
-    private GateUserSessionManager sessionManager;
+    private final GateUserSessionManager sessionManager;
 
-    public void setSessionManager(GateUserSessionManager sessionManager) {
+    @Autowired
+    public LoginRespProcessor(GateUserSessionManager sessionManager) {
         this.sessionManager = sessionManager;
     }
+
 
     @Override
     public void handler(Channel channel, byte[] bytes) throws Exception {
@@ -26,7 +32,7 @@ public class LoginRespProcessor extends MessageProcessor {
         String sessionId = response.getSessionId();
         GateUserSession session = sessionManager.getAnonymousSession(sessionId);
         if (session == null){
-            LOG.warn("连接会话已重置或已登录");
+            log.warn("连接会话已重置或已登录");
             return;
         }
         if (response.getOk()){

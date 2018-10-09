@@ -41,7 +41,7 @@ public class DefaultMessageCodec extends ByteToMessageCodec<Object> {
         }
         byteBuf.markReaderIndex();
         int len = byteBuf.readInt();
-        if (len < 0 || len > MessageConfig.maxSize){
+        if (len < 0 || len > MessageConfig.headLen){
             LOG.warn("消息解析异常,长度:{},MAX_READ_SIZE:{}",len,MessageConfig.maxSize);
             byteBuf.clear();
             channelHandlerContext.close();

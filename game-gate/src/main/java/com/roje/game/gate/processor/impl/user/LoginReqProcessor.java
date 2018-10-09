@@ -10,23 +10,27 @@ import com.roje.game.message.Mid.MID;
 import com.roje.game.message.common.CommonMessage;
 import com.roje.game.message.login.LoginMessage.LoginRequest;
 import io.netty.channel.Channel;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.net.InetSocketAddress;
 
+@Component
+@Slf4j
 @Processor(mid = MID.LoginReq_VALUE)
 public class LoginReqProcessor extends MessageProcessor {
     private static final Logger LOG = LoggerFactory.getLogger(LoginReqProcessor.class);
-    private GateUserSessionManager sessionManager;
-    private BaseInfo gateInfo;
+    private final GateUserSessionManager sessionManager;
+    private final BaseInfo gateInfo;
 
-    public void setGateInfo(BaseInfo gateInfo) {
-        this.gateInfo = gateInfo;
-    }
-
-    public void setSessionManager(GateUserSessionManager sessionManager) {
+    @Autowired
+    public LoginReqProcessor(GateUserSessionManager sessionManager,
+                             BaseInfo gateInfo) {
         this.sessionManager = sessionManager;
+        this.gateInfo = gateInfo;
     }
 
 

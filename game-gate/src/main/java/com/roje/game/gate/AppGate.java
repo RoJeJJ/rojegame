@@ -46,9 +46,9 @@ public class AppGate {
         return new NettyClientConfig();
     }
 
-    @Bean
+    @Bean("gateInfo")
     @ConfigurationProperties(prefix = "gate-server.info")
-    public BaseInfo baseInfo(){
+    public BaseInfo gateInfo(){
         return new BaseInfo();
     }
 

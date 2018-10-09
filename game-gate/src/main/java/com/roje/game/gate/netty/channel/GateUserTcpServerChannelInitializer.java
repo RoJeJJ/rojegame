@@ -37,6 +37,6 @@ public class GateUserTcpServerChannelInitializer extends ChannelInitializer<Sock
         ChannelPipeline pipeline = socketChannel.pipeline();
         pipeline.addLast(new IdleStateHandler(nettyServerConfig.getReaderIdleTime(), nettyServerConfig.getWriterIdleTime(), nettyServerConfig.getAllIdleTime()));
         pipeline.addLast(new DefaultMessageCodec());
-        pipeline.addLast(new GateUserServerChannelInBoundHandler(false,gateUserExecutorService,dispatcher,sessionManager));
+        pipeline.addLast(new GateUserServerChannelInBoundHandler(false, gateUserExecutorService, dispatcher, sessionManager));
     }
 }

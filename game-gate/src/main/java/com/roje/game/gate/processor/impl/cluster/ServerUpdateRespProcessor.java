@@ -6,7 +6,9 @@ import com.roje.game.message.Mid;
 import io.netty.channel.Channel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
+@Component
 @Processor(mid = Mid.MID.ServerUpdateRes_VALUE)
 public class ServerUpdateRespProcessor extends MessageProcessor {
     private static final Logger LOG = LoggerFactory.getLogger(ServerUpdateRespProcessor.class);
