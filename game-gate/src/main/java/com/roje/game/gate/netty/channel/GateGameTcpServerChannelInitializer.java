@@ -1,6 +1,6 @@
 package com.roje.game.gate.netty.channel;
 
-import com.roje.game.core.config.NettyServerConfig;
+import com.roje.game.core.config.NettyTcpServerConfig;
 import com.roje.game.core.dispatcher.MessageDispatcher;
 import com.roje.game.core.netty.channel.codec.DefaultMessageCodec;
 import com.roje.game.gate.manager.GateUserSessionManager;
@@ -16,17 +16,17 @@ import org.springframework.stereotype.Component;
 @Component("gateGameTcpServerChannelInitializer")
 public class GateGameTcpServerChannelInitializer extends ChannelInitializer<SocketChannel> {
 
-    private final NettyServerConfig nettyServerConfig;
+    private final NettyTcpServerConfig nettyTcpServerConfig;
 
     private final MessageDispatcher dispatcher;
 
     private final GateUserSessionManager sessionManager;
 
     @Autowired
-    public GateGameTcpServerChannelInitializer(@Qualifier("gateGameTcpConfig") NettyServerConfig nettyServerConfig,
+    public GateGameTcpServerChannelInitializer(@Qualifier("gateGameTcpConfig") NettyTcpServerConfig nettyTcpServerConfig,
                                                MessageDispatcher dispatcher,
                                                GateUserSessionManager sessionManager) {
-        this.nettyServerConfig = nettyServerConfig;
+        this.nettyTcpServerConfig = nettyTcpServerConfig;
         this.dispatcher = dispatcher;
         this.sessionManager = sessionManager;
     }
@@ -34,8 +34,8 @@ public class GateGameTcpServerChannelInitializer extends ChannelInitializer<Sock
     @Override
     protected void initChannel(SocketChannel socketChannel) throws Exception {
         ChannelPipeline pipeline = socketChannel.pipeline();
-        pipeline.addLast(new IdleStateHandler(nettyServerConfig.getReaderIdleTime(), nettyServerConfig.getWriterIdleTime(), nettyServerConfig.getAllIdleTime()));
+        pipeline.addLast(new IdleStateHandler(nettyTcpServerConfig.getReaderIdleTime(), nettyTcpServerConfig.getWriterIdleTime(), nettyTcpServerConfig.getAllIdleTime()));
         pipeline.addLast(new DefaultMessageCodec());
-        pipeline.addLast(new GateGameServerChannelInBoundHandler(true,dispatcher,sessionManager));
+        pipeline.addLast(new GateGameServerChannelInBoundHandler(dispatcher,sessionManager));
     }
 }

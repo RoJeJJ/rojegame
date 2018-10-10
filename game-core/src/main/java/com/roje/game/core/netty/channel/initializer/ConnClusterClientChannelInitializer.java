@@ -1,6 +1,6 @@
-package com.roje.game.gate.netty.channel;
+package com.roje.game.core.netty.channel.initializer;
 
-import com.roje.game.core.config.NettyClientConfig;
+import com.roje.game.core.config.NettyConnClusterClientConfig;
 import com.roje.game.core.dispatcher.MessageDispatcher;
 import com.roje.game.core.manager.UserManager;
 import com.roje.game.core.netty.channel.codec.DefaultMessageCodec;
@@ -10,12 +10,10 @@ import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.timeout.IdleStateHandler;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
-@Component("gateClusterClientChannelInitializer")
-public class GateClusterClientChannelInitializer extends ChannelInitializer<SocketChannel> {
-    private final NettyClientConfig clientConfig;
+
+public class ConnClusterClientChannelInitializer extends ChannelInitializer<SocketChannel> {
+    private final NettyConnClusterClientConfig clientConfig;
 
     private final UserManager userManager;
 
@@ -23,8 +21,7 @@ public class GateClusterClientChannelInitializer extends ChannelInitializer<Sock
 
     private final BaseInfo baseInfo;
 
-    @Autowired
-    public GateClusterClientChannelInitializer(NettyClientConfig clientConfig,
+    public ConnClusterClientChannelInitializer(NettyConnClusterClientConfig clientConfig,
                                                MessageDispatcher dispatcher,
                                                UserManager userManager,
                                                BaseInfo baseInfo) {

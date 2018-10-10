@@ -46,8 +46,8 @@ public class ClusterTcpServerChannelInBoundHandler extends DefaultInBoundHandler
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-        super.exceptionCaught(ctx, cause);
-        log.warn("{}连接异常,关闭连接");
+//        super.exceptionCaught(ctx, cause);
+        log.warn("{}连接异常,关闭连接",ctx);
         ctx.close();
     }
 }

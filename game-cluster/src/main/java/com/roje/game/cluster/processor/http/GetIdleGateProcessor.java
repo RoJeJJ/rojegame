@@ -46,7 +46,7 @@ public class GetIdleGateProcessor extends HttpRequestProcessor {
             object.addProperty("code",0);
             JsonObject data = new JsonObject();
             data.addProperty("ip",serverInfo.getIp());
-            data.addProperty("port",serverInfo.getPort());
+            data.addProperty("port",serverInfo.getUserPort());
             object.add("data",data);
             HttpUtils.send(ctx,HttpResponseStatus.OK,object.toString());
         }

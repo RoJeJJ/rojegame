@@ -6,11 +6,13 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @Getter
 @Setter
-@ConfigurationProperties
-public class NettyServerConfig {
-    private int soBackLog = 2048;
-    private boolean soKeepAlive = true;
-    private boolean tcpNoDelay = true;
+@ConfigurationProperties(prefix = "netty-conn-gate-client")
+public class NettyConnGateClientConfig {
+
     private int soLinger = 0;
-    private int port = 0;
+
+    private boolean tcpNoDelay = true;
+
+    //连接超时
+    private int connectTimeout = 5;
 }

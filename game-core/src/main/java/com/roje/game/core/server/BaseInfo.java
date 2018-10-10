@@ -1,5 +1,12 @@
 package com.roje.game.core.server;
 
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+
+@Getter
+@Setter
+@ConfigurationProperties(prefix = "server.info")
 public class BaseInfo {
     // 服务器ID
     private int id = 0;
@@ -14,7 +21,9 @@ public class BaseInfo {
     // 外网地址
     private String url;
     // 端口
-    private int port;
+    private int innerPort;
+
+    private int userPort;
     // 当前状态 1表示维护；0表示正常
     private ServerState state = ServerState.NORMAL;
     // http端口
@@ -25,93 +34,4 @@ public class BaseInfo {
     private ServerType type;
 
     private int clientVersionCode;
-
-    public void setClientVersionCode(int clientVersionCode) {
-        this.clientVersionCode = clientVersionCode;
-    }
-
-    public int getClientVersionCode() {
-        return clientVersionCode;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getVersionCode() {
-        return versionCode;
-    }
-
-    public void setVersionCode(int versionCode) {
-        this.versionCode = versionCode;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getIp() {
-        return ip;
-    }
-
-    public void setIp(String ip) {
-        this.ip = ip;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public int getPort() {
-        return port;
-    }
-
-    public void setPort(int port) {
-        this.port = port;
-    }
-
-    public ServerState getState() {
-        return state;
-    }
-
-    public void setState(ServerState state) {
-        this.state = state;
-    }
-
-    public int getHttpPort() {
-        return httpPort;
-    }
-
-    public void setHttpPort(int httpPort) {
-        this.httpPort = httpPort;
-    }
-
-    public int getMaxUserCount() {
-        return maxUserCount;
-    }
-
-    public void setMaxUserCount(int maxUserCount) {
-        this.maxUserCount = maxUserCount;
-    }
-
-
-    public ServerType getType() {
-        return type;
-    }
-
-    public void setType(ServerType type) {
-        this.type = type;
-    }
 }

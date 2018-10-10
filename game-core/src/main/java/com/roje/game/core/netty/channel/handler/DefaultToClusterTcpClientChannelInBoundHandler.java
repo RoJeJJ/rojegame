@@ -51,7 +51,6 @@ public class DefaultToClusterTcpClientChannelInBoundHandler extends DefaultInBou
                     if (baseInfo.getId() != 0)
                         ctx.writeAndFlush(updateRequest());
                     break;
-
             }
         }
     }
@@ -68,7 +67,8 @@ public class DefaultToClusterTcpClientChannelInBoundHandler extends DefaultInBou
         serverInfoBuilder.setId(baseInfo.getId());
         serverInfoBuilder.setIp(baseInfo.getIp());
         serverInfoBuilder.setType(baseInfo.getType().getType());
-        serverInfoBuilder.setPort(baseInfo.getPort());
+        serverInfoBuilder.setUserPort(baseInfo.getUserPort());
+        serverInfoBuilder.setInnerPort(baseInfo.getInnerPort());
         serverInfoBuilder.setHttpport(baseInfo.getHttpPort());
         serverInfoBuilder.setMaxUserCount(baseInfo.getMaxUserCount());
         serverInfoBuilder.setOnline(userManager.getOnlineCount());
@@ -88,7 +88,8 @@ public class DefaultToClusterTcpClientChannelInBoundHandler extends DefaultInBou
         serverInfoBuilder.setId(baseInfo.getId());
         serverInfoBuilder.setIp(baseInfo.getIp());
         serverInfoBuilder.setType(baseInfo.getType().getType());
-        serverInfoBuilder.setPort(baseInfo.getPort());
+        serverInfoBuilder.setUserPort(baseInfo.getUserPort());
+        serverInfoBuilder.setInnerPort(baseInfo.getInnerPort());
         serverInfoBuilder.setHttpport(baseInfo.getHttpPort());
         serverInfoBuilder.setMaxUserCount(baseInfo.getMaxUserCount());
         serverInfoBuilder.setOnline(userManager.getOnlineCount());

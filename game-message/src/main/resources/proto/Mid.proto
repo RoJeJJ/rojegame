@@ -18,6 +18,7 @@ enum MID{
 	ServerUpdateRes             = 1010;//
 	IdleServerReq					=1011;//获取空闲服务器
 	IdleServerRes					=1012;
+
 	
 	//大厅
 	LoginReq					= 10001; //登录

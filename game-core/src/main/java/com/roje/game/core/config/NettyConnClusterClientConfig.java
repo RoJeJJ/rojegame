@@ -1,12 +1,13 @@
 package com.roje.game.core.config;
 
-import com.roje.game.core.server.ServerType;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @Getter
 @Setter
-public class NettyClientConfig {
+@ConfigurationProperties(prefix = "netty-conn-cluster-client")
+public class NettyConnClusterClientConfig {
 
     private int soLinger = 0;
 
@@ -22,13 +23,7 @@ public class NettyClientConfig {
     //连接超时
     private int connectTimeout;
 
-    private ConnTo toCluster;
+    private String clusterIp;
 
-    @Getter
-    @Setter
-    public class ConnTo{
-        private ServerType type;
-        private String ip;
-        private int port;
-    }
+    private int clusterPort;
 }

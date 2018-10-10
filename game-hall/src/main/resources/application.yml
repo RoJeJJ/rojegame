@@ -6,17 +6,6 @@ thread-config:
   sync-name: sync
   sync-timeInterval: 0
   sync-commandSize: 100000
-netty:
-  config:
-    gate-game-tcp:
-      port: 8089
-      soBackLog: 2048
-      soKeepAlive: true
-      tcpNoDelay: true
-      readerIdleTime: 20
-      writerIdleTime: 0
-      allIdleTime: 0
-      soLinger: 0
 netty-conn-cluster-client:
   so-linger: 0
   reader-idle-time: 20
@@ -29,13 +18,16 @@ netty-conn-cluster-client:
   cluster-port: 7000
 server:
   info:
-    name: gate-server
+    name: hall-server
     ip: 127.0.0.1
-    user-port: 8088
-    inner-port: 8089
     http-port: 8087
     state: normal
     max-user-count: 1000
-    type: gate
+    type: hall
     version-code: 1
     client-version-code: 0
+netty-conn-gate-client:
+  so-linger: 0
+  tcp-no-delay: true
+  connect-timeout: 5
+

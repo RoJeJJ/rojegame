@@ -23,6 +23,6 @@ public class ServerUpdateProcessor extends MessageProcessor {
     public void handler(Channel channel, byte[] bytes) throws Exception {
         CommonMessage.ServerUpdateRequest request = CommonMessage.ServerUpdateRequest.parseFrom(bytes);
         CommonMessage.ServerInfo info = request.getServerInfo();
-        channel.writeAndFlush(serverManager.updateServer(info));
+        serverManager.updateServer(channel,info);
     }
 }

@@ -27,7 +27,7 @@ public class ServerRegRespProcessor extends MessageProcessor {
     public void handler(Channel channel, byte[] bytes) throws Exception {
         CommonMessage.ServerRegisterResponse response = CommonMessage.ServerRegisterResponse.parseFrom(bytes);
         int id = response.getServerId();
-        if (id > 0) {
+        if (id > 0 && response.getIsMe()) {
             LOG.info("注册成功,id:{}",id);
             gateInfo.setId(id);
         }

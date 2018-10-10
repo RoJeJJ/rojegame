@@ -1,6 +1,6 @@
 package com.roje.game.core.netty;
 
-import com.roje.game.core.config.NettyClientConfig;
+import com.roje.game.core.config.NettyConnClusterClientConfig;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -11,16 +11,19 @@ import lombok.extern.slf4j.Slf4j;
 
 import javax.annotation.PostConstruct;
 
+/**
+ * 连接集群服务器的客户端
+ */
 @Slf4j
-public class NettyTcpClient implements Runnable{
+public class NettyClusterTcpClient implements Runnable{
     private EventLoopGroup group;
-    private NettyClientConfig clientConfig;
+    private NettyConnClusterClientConfig clientConfig;
     private Bootstrap bootstrap;
     private Channel channel;
     private ChannelInitializer<SocketChannel> initializer;
     private int reconnectTime;
 
-    public NettyTcpClient(NettyClientConfig clientConfig, ChannelInitializer<SocketChannel> initializer) {
+    public NettyClusterTcpClient(NettyConnClusterClientConfig clientConfig, ChannelInitializer<SocketChannel> initializer) {
         this.clientConfig = clientConfig;
         this.initializer = initializer;
         initClient();
@@ -28,13 +31,12 @@ public class NettyTcpClient implements Runnable{
     }
 
     private void initClient() {
-        log.info("初始化连接{}服务器的客户端",clientConfig.getToCluster().getType().name());
         group = new NioEventLoopGroup();
         bootstrap = new Bootstrap();
         bootstrap.group(group)
                 .channel(NioSocketChannel.class)
                 .handler(initializer)
-                .remoteAddress(clientConfig.getToCluster().getIp(), clientConfig.getToCluster().getPort())
+                .remoteAddress(clientConfig.getClusterIp(), clientConfig.getClusterPort())
                 .option(ChannelOption.SO_LINGER, clientConfig.getSoLinger())
                 .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, clientConfig.getConnectTimeout())
                 .option(ChannelOption.TCP_NODELAY, clientConfig.isTcpNoDelay());
@@ -59,16 +61,16 @@ public class NettyTcpClient implements Runnable{
             channel = future.channel();
             future.addListener(channelFuture -> {
                 if (channelFuture.isSuccess())
-                    log.info("成功连接{}服务器[{}:{}]", clientConfig.getToCluster().getType().name(), clientConfig.getToCluster().getIp(), clientConfig.getToCluster().getPort());
+                    log.info("成功连接Cluster服务器[{}:{}]", clientConfig.getClusterIp(), clientConfig.getClusterPort());
                 else {
-                    log.warn(String.format("连接%s服务器[%s:%d]失败",  clientConfig.getToCluster().getType().name(), clientConfig.getToCluster().getIp(), clientConfig.getToCluster().getPort()));
+                    log.warn(String.format("连接Cluster服务器[%s:%d]失败", clientConfig.getClusterIp(), clientConfig.getClusterPort()));
                 }
             });
             future.channel().closeFuture().sync();
-            log.warn("TCP 客户端已停止");
+            log.warn("连接Cluster的TCP 客户端已停止");
         }catch (Exception e){
 //            reconnectTime = 0;
-            log.warn("TCP 客户端启动异常",e);
+            log.warn("连接Cluster的TCP 客户端启动异常",e);
         }finally {
             if (reconnectTime > 0){
                 log.info("{}秒后重新连接", reconnectTime);

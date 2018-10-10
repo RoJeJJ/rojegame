@@ -1,6 +1,6 @@
 package com.roje.game.gate.netty.channel;
 
-import com.roje.game.core.config.NettyServerConfig;
+import com.roje.game.core.config.NettyTcpServerConfig;
 import com.roje.game.core.dispatcher.MessageDispatcher;
 import com.roje.game.core.netty.channel.codec.DefaultMessageCodec;
 import com.roje.game.core.service.Service;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 @Component("gateUserTcpServerChannelInitializer")
 public class GateUserTcpServerChannelInitializer extends ChannelInitializer<SocketChannel> {
-    private final NettyServerConfig nettyServerConfig;
+    private final NettyTcpServerConfig nettyTcpServerConfig;
 
     private final MessageDispatcher dispatcher;
 
@@ -22,11 +22,11 @@ public class GateUserTcpServerChannelInitializer extends ChannelInitializer<Sock
 
     private final Service gateUserExecutorService;
 
-    public GateUserTcpServerChannelInitializer(NettyServerConfig nettyServerConfig,
+    public GateUserTcpServerChannelInitializer(NettyTcpServerConfig nettyTcpServerConfig,
                                                MessageDispatcher dispatcher,
                                                GateUserSessionManager sessionManager,
                                                Service service) {
-        this.nettyServerConfig = nettyServerConfig;
+        this.nettyTcpServerConfig = nettyTcpServerConfig;
         this.dispatcher = dispatcher;
         this.sessionManager = sessionManager;
         this.gateUserExecutorService = service;
@@ -35,7 +35,7 @@ public class GateUserTcpServerChannelInitializer extends ChannelInitializer<Sock
     @Override
     protected void initChannel(SocketChannel socketChannel) throws Exception {
         ChannelPipeline pipeline = socketChannel.pipeline();
-        pipeline.addLast(new IdleStateHandler(nettyServerConfig.getReaderIdleTime(), nettyServerConfig.getWriterIdleTime(), nettyServerConfig.getAllIdleTime()));
+        pipeline.addLast(new IdleStateHandler(nettyTcpServerConfig.getReaderIdleTime(), nettyTcpServerConfig.getWriterIdleTime(), nettyTcpServerConfig.getAllIdleTime()));
         pipeline.addLast(new DefaultMessageCodec());
         pipeline.addLast(new GateUserServerChannelInBoundHandler(false, gateUserExecutorService, dispatcher, sessionManager));
     }

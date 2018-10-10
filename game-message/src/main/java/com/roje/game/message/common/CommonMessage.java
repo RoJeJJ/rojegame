@@ -2549,6 +2549,76 @@ public final class CommonMessage {
      * <code>optional int32 serverId = 2;</code>
      */
     int getServerId();
+
+    // repeated .ConnInfo connInfo = 3;
+    /**
+     * <code>repeated .ConnInfo connInfo = 3;</code>
+     */
+    java.util.List<com.roje.game.message.common.CommonMessage.ConnInfo> 
+        getConnInfoList();
+    /**
+     * <code>repeated .ConnInfo connInfo = 3;</code>
+     */
+    com.roje.game.message.common.CommonMessage.ConnInfo getConnInfo(int index);
+    /**
+     * <code>repeated .ConnInfo connInfo = 3;</code>
+     */
+    int getConnInfoCount();
+    /**
+     * <code>repeated .ConnInfo connInfo = 3;</code>
+     */
+    java.util.List<? extends com.roje.game.message.common.CommonMessage.ConnInfoOrBuilder> 
+        getConnInfoOrBuilderList();
+    /**
+     * <code>repeated .ConnInfo connInfo = 3;</code>
+     */
+    com.roje.game.message.common.CommonMessage.ConnInfoOrBuilder getConnInfoOrBuilder(
+        int index);
+
+    // optional string ip = 4;
+    /**
+     * <code>optional string ip = 4;</code>
+     */
+    boolean hasIp();
+    /**
+     * <code>optional string ip = 4;</code>
+     */
+    java.lang.String getIp();
+    /**
+     * <code>optional string ip = 4;</code>
+     */
+    com.google.protobuf.ByteString
+        getIpBytes();
+
+    // optional int32 port = 5;
+    /**
+     * <code>optional int32 port = 5;</code>
+     */
+    boolean hasPort();
+    /**
+     * <code>optional int32 port = 5;</code>
+     */
+    int getPort();
+
+    // optional int32 type = 6;
+    /**
+     * <code>optional int32 type = 6;</code>
+     */
+    boolean hasType();
+    /**
+     * <code>optional int32 type = 6;</code>
+     */
+    int getType();
+
+    // optional bool isMe = 7;
+    /**
+     * <code>optional bool isMe = 7;</code>
+     */
+    boolean hasIsMe();
+    /**
+     * <code>optional bool isMe = 7;</code>
+     */
+    boolean getIsMe();
   }
   /**
    * Protobuf type {@code ServerRegisterResponse}
@@ -2617,6 +2687,34 @@ public final class CommonMessage {
               serverId_ = input.readInt32();
               break;
             }
+            case 26: {
+              if (!((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
+                connInfo_ = new java.util.ArrayList<com.roje.game.message.common.CommonMessage.ConnInfo>();
+                mutable_bitField0_ |= 0x00000004;
+              }
+              connInfo_.add(input.readMessage(com.roje.game.message.common.CommonMessage.ConnInfo.PARSER, extensionRegistry));
+              break;
+            }
+            case 34: {
+              bitField0_ |= 0x00000004;
+              ip_ = input.readBytes();
+              break;
+            }
+            case 40: {
+              bitField0_ |= 0x00000008;
+              port_ = input.readInt32();
+              break;
+            }
+            case 48: {
+              bitField0_ |= 0x00000010;
+              type_ = input.readInt32();
+              break;
+            }
+            case 56: {
+              bitField0_ |= 0x00000020;
+              isMe_ = input.readBool();
+              break;
+            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -2625,6 +2723,9 @@ public final class CommonMessage {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e.getMessage()).setUnfinishedMessage(this);
       } finally {
+        if (((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
+          connInfo_ = java.util.Collections.unmodifiableList(connInfo_);
+        }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
@@ -2689,9 +2790,141 @@ public final class CommonMessage {
       return serverId_;
     }
 
+    // repeated .ConnInfo connInfo = 3;
+    public static final int CONNINFO_FIELD_NUMBER = 3;
+    private java.util.List<com.roje.game.message.common.CommonMessage.ConnInfo> connInfo_;
+    /**
+     * <code>repeated .ConnInfo connInfo = 3;</code>
+     */
+    public java.util.List<com.roje.game.message.common.CommonMessage.ConnInfo> getConnInfoList() {
+      return connInfo_;
+    }
+    /**
+     * <code>repeated .ConnInfo connInfo = 3;</code>
+     */
+    public java.util.List<? extends com.roje.game.message.common.CommonMessage.ConnInfoOrBuilder> 
+        getConnInfoOrBuilderList() {
+      return connInfo_;
+    }
+    /**
+     * <code>repeated .ConnInfo connInfo = 3;</code>
+     */
+    public int getConnInfoCount() {
+      return connInfo_.size();
+    }
+    /**
+     * <code>repeated .ConnInfo connInfo = 3;</code>
+     */
+    public com.roje.game.message.common.CommonMessage.ConnInfo getConnInfo(int index) {
+      return connInfo_.get(index);
+    }
+    /**
+     * <code>repeated .ConnInfo connInfo = 3;</code>
+     */
+    public com.roje.game.message.common.CommonMessage.ConnInfoOrBuilder getConnInfoOrBuilder(
+        int index) {
+      return connInfo_.get(index);
+    }
+
+    // optional string ip = 4;
+    public static final int IP_FIELD_NUMBER = 4;
+    private java.lang.Object ip_;
+    /**
+     * <code>optional string ip = 4;</code>
+     */
+    public boolean hasIp() {
+      return ((bitField0_ & 0x00000004) == 0x00000004);
+    }
+    /**
+     * <code>optional string ip = 4;</code>
+     */
+    public java.lang.String getIp() {
+      java.lang.Object ref = ip_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          ip_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>optional string ip = 4;</code>
+     */
+    public com.google.protobuf.ByteString
+        getIpBytes() {
+      java.lang.Object ref = ip_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        ip_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    // optional int32 port = 5;
+    public static final int PORT_FIELD_NUMBER = 5;
+    private int port_;
+    /**
+     * <code>optional int32 port = 5;</code>
+     */
+    public boolean hasPort() {
+      return ((bitField0_ & 0x00000008) == 0x00000008);
+    }
+    /**
+     * <code>optional int32 port = 5;</code>
+     */
+    public int getPort() {
+      return port_;
+    }
+
+    // optional int32 type = 6;
+    public static final int TYPE_FIELD_NUMBER = 6;
+    private int type_;
+    /**
+     * <code>optional int32 type = 6;</code>
+     */
+    public boolean hasType() {
+      return ((bitField0_ & 0x00000010) == 0x00000010);
+    }
+    /**
+     * <code>optional int32 type = 6;</code>
+     */
+    public int getType() {
+      return type_;
+    }
+
+    // optional bool isMe = 7;
+    public static final int ISME_FIELD_NUMBER = 7;
+    private boolean isMe_;
+    /**
+     * <code>optional bool isMe = 7;</code>
+     */
+    public boolean hasIsMe() {
+      return ((bitField0_ & 0x00000020) == 0x00000020);
+    }
+    /**
+     * <code>optional bool isMe = 7;</code>
+     */
+    public boolean getIsMe() {
+      return isMe_;
+    }
+
     private void initFields() {
       mid_ = com.roje.game.message.Mid.MID.ServerRegisterRes;
       serverId_ = 0;
+      connInfo_ = java.util.Collections.emptyList();
+      ip_ = "";
+      port_ = 0;
+      type_ = 0;
+      isMe_ = false;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -2711,6 +2944,21 @@ public final class CommonMessage {
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         output.writeInt32(2, serverId_);
       }
+      for (int i = 0; i < connInfo_.size(); i++) {
+        output.writeMessage(3, connInfo_.get(i));
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        output.writeBytes(4, getIpBytes());
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        output.writeInt32(5, port_);
+      }
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+        output.writeInt32(6, type_);
+      }
+      if (((bitField0_ & 0x00000020) == 0x00000020)) {
+        output.writeBool(7, isMe_);
+      }
       getUnknownFields().writeTo(output);
     }
 
@@ -2727,6 +2975,26 @@ public final class CommonMessage {
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(2, serverId_);
+      }
+      for (int i = 0; i < connInfo_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(3, connInfo_.get(i));
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(4, getIpBytes());
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(5, port_);
+      }
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(6, type_);
+      }
+      if (((bitField0_ & 0x00000020) == 0x00000020)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(7, isMe_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -2836,6 +3104,7 @@ public final class CommonMessage {
       }
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+          getConnInfoFieldBuilder();
         }
       }
       private static Builder create() {
@@ -2848,6 +3117,20 @@ public final class CommonMessage {
         bitField0_ = (bitField0_ & ~0x00000001);
         serverId_ = 0;
         bitField0_ = (bitField0_ & ~0x00000002);
+        if (connInfoBuilder_ == null) {
+          connInfo_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000004);
+        } else {
+          connInfoBuilder_.clear();
+        }
+        ip_ = "";
+        bitField0_ = (bitField0_ & ~0x00000008);
+        port_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000010);
+        type_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000020);
+        isMe_ = false;
+        bitField0_ = (bitField0_ & ~0x00000040);
         return this;
       }
 
@@ -2884,6 +3167,31 @@ public final class CommonMessage {
           to_bitField0_ |= 0x00000002;
         }
         result.serverId_ = serverId_;
+        if (connInfoBuilder_ == null) {
+          if (((bitField0_ & 0x00000004) == 0x00000004)) {
+            connInfo_ = java.util.Collections.unmodifiableList(connInfo_);
+            bitField0_ = (bitField0_ & ~0x00000004);
+          }
+          result.connInfo_ = connInfo_;
+        } else {
+          result.connInfo_ = connInfoBuilder_.build();
+        }
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+          to_bitField0_ |= 0x00000004;
+        }
+        result.ip_ = ip_;
+        if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
+          to_bitField0_ |= 0x00000008;
+        }
+        result.port_ = port_;
+        if (((from_bitField0_ & 0x00000020) == 0x00000020)) {
+          to_bitField0_ |= 0x00000010;
+        }
+        result.type_ = type_;
+        if (((from_bitField0_ & 0x00000040) == 0x00000040)) {
+          to_bitField0_ |= 0x00000020;
+        }
+        result.isMe_ = isMe_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -2905,6 +3213,46 @@ public final class CommonMessage {
         }
         if (other.hasServerId()) {
           setServerId(other.getServerId());
+        }
+        if (connInfoBuilder_ == null) {
+          if (!other.connInfo_.isEmpty()) {
+            if (connInfo_.isEmpty()) {
+              connInfo_ = other.connInfo_;
+              bitField0_ = (bitField0_ & ~0x00000004);
+            } else {
+              ensureConnInfoIsMutable();
+              connInfo_.addAll(other.connInfo_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.connInfo_.isEmpty()) {
+            if (connInfoBuilder_.isEmpty()) {
+              connInfoBuilder_.dispose();
+              connInfoBuilder_ = null;
+              connInfo_ = other.connInfo_;
+              bitField0_ = (bitField0_ & ~0x00000004);
+              connInfoBuilder_ = 
+                com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
+                   getConnInfoFieldBuilder() : null;
+            } else {
+              connInfoBuilder_.addAllMessages(other.connInfo_);
+            }
+          }
+        }
+        if (other.hasIp()) {
+          bitField0_ |= 0x00000008;
+          ip_ = other.ip_;
+          onChanged();
+        }
+        if (other.hasPort()) {
+          setPort(other.getPort());
+        }
+        if (other.hasType()) {
+          setType(other.getType());
+        }
+        if (other.hasIsMe()) {
+          setIsMe(other.getIsMe());
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
@@ -2998,6 +3346,419 @@ public final class CommonMessage {
       public Builder clearServerId() {
         bitField0_ = (bitField0_ & ~0x00000002);
         serverId_ = 0;
+        onChanged();
+        return this;
+      }
+
+      // repeated .ConnInfo connInfo = 3;
+      private java.util.List<com.roje.game.message.common.CommonMessage.ConnInfo> connInfo_ =
+        java.util.Collections.emptyList();
+      private void ensureConnInfoIsMutable() {
+        if (!((bitField0_ & 0x00000004) == 0x00000004)) {
+          connInfo_ = new java.util.ArrayList<com.roje.game.message.common.CommonMessage.ConnInfo>(connInfo_);
+          bitField0_ |= 0x00000004;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilder<
+          com.roje.game.message.common.CommonMessage.ConnInfo, com.roje.game.message.common.CommonMessage.ConnInfo.Builder, com.roje.game.message.common.CommonMessage.ConnInfoOrBuilder> connInfoBuilder_;
+
+      /**
+       * <code>repeated .ConnInfo connInfo = 3;</code>
+       */
+      public java.util.List<com.roje.game.message.common.CommonMessage.ConnInfo> getConnInfoList() {
+        if (connInfoBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(connInfo_);
+        } else {
+          return connInfoBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <code>repeated .ConnInfo connInfo = 3;</code>
+       */
+      public int getConnInfoCount() {
+        if (connInfoBuilder_ == null) {
+          return connInfo_.size();
+        } else {
+          return connInfoBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .ConnInfo connInfo = 3;</code>
+       */
+      public com.roje.game.message.common.CommonMessage.ConnInfo getConnInfo(int index) {
+        if (connInfoBuilder_ == null) {
+          return connInfo_.get(index);
+        } else {
+          return connInfoBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .ConnInfo connInfo = 3;</code>
+       */
+      public Builder setConnInfo(
+          int index, com.roje.game.message.common.CommonMessage.ConnInfo value) {
+        if (connInfoBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureConnInfoIsMutable();
+          connInfo_.set(index, value);
+          onChanged();
+        } else {
+          connInfoBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .ConnInfo connInfo = 3;</code>
+       */
+      public Builder setConnInfo(
+          int index, com.roje.game.message.common.CommonMessage.ConnInfo.Builder builderForValue) {
+        if (connInfoBuilder_ == null) {
+          ensureConnInfoIsMutable();
+          connInfo_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          connInfoBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .ConnInfo connInfo = 3;</code>
+       */
+      public Builder addConnInfo(com.roje.game.message.common.CommonMessage.ConnInfo value) {
+        if (connInfoBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureConnInfoIsMutable();
+          connInfo_.add(value);
+          onChanged();
+        } else {
+          connInfoBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .ConnInfo connInfo = 3;</code>
+       */
+      public Builder addConnInfo(
+          int index, com.roje.game.message.common.CommonMessage.ConnInfo value) {
+        if (connInfoBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureConnInfoIsMutable();
+          connInfo_.add(index, value);
+          onChanged();
+        } else {
+          connInfoBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .ConnInfo connInfo = 3;</code>
+       */
+      public Builder addConnInfo(
+          com.roje.game.message.common.CommonMessage.ConnInfo.Builder builderForValue) {
+        if (connInfoBuilder_ == null) {
+          ensureConnInfoIsMutable();
+          connInfo_.add(builderForValue.build());
+          onChanged();
+        } else {
+          connInfoBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .ConnInfo connInfo = 3;</code>
+       */
+      public Builder addConnInfo(
+          int index, com.roje.game.message.common.CommonMessage.ConnInfo.Builder builderForValue) {
+        if (connInfoBuilder_ == null) {
+          ensureConnInfoIsMutable();
+          connInfo_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          connInfoBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .ConnInfo connInfo = 3;</code>
+       */
+      public Builder addAllConnInfo(
+          java.lang.Iterable<? extends com.roje.game.message.common.CommonMessage.ConnInfo> values) {
+        if (connInfoBuilder_ == null) {
+          ensureConnInfoIsMutable();
+          super.addAll(values, connInfo_);
+          onChanged();
+        } else {
+          connInfoBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .ConnInfo connInfo = 3;</code>
+       */
+      public Builder clearConnInfo() {
+        if (connInfoBuilder_ == null) {
+          connInfo_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000004);
+          onChanged();
+        } else {
+          connInfoBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .ConnInfo connInfo = 3;</code>
+       */
+      public Builder removeConnInfo(int index) {
+        if (connInfoBuilder_ == null) {
+          ensureConnInfoIsMutable();
+          connInfo_.remove(index);
+          onChanged();
+        } else {
+          connInfoBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .ConnInfo connInfo = 3;</code>
+       */
+      public com.roje.game.message.common.CommonMessage.ConnInfo.Builder getConnInfoBuilder(
+          int index) {
+        return getConnInfoFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .ConnInfo connInfo = 3;</code>
+       */
+      public com.roje.game.message.common.CommonMessage.ConnInfoOrBuilder getConnInfoOrBuilder(
+          int index) {
+        if (connInfoBuilder_ == null) {
+          return connInfo_.get(index);  } else {
+          return connInfoBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <code>repeated .ConnInfo connInfo = 3;</code>
+       */
+      public java.util.List<? extends com.roje.game.message.common.CommonMessage.ConnInfoOrBuilder> 
+           getConnInfoOrBuilderList() {
+        if (connInfoBuilder_ != null) {
+          return connInfoBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(connInfo_);
+        }
+      }
+      /**
+       * <code>repeated .ConnInfo connInfo = 3;</code>
+       */
+      public com.roje.game.message.common.CommonMessage.ConnInfo.Builder addConnInfoBuilder() {
+        return getConnInfoFieldBuilder().addBuilder(
+            com.roje.game.message.common.CommonMessage.ConnInfo.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .ConnInfo connInfo = 3;</code>
+       */
+      public com.roje.game.message.common.CommonMessage.ConnInfo.Builder addConnInfoBuilder(
+          int index) {
+        return getConnInfoFieldBuilder().addBuilder(
+            index, com.roje.game.message.common.CommonMessage.ConnInfo.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .ConnInfo connInfo = 3;</code>
+       */
+      public java.util.List<com.roje.game.message.common.CommonMessage.ConnInfo.Builder> 
+           getConnInfoBuilderList() {
+        return getConnInfoFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilder<
+          com.roje.game.message.common.CommonMessage.ConnInfo, com.roje.game.message.common.CommonMessage.ConnInfo.Builder, com.roje.game.message.common.CommonMessage.ConnInfoOrBuilder> 
+          getConnInfoFieldBuilder() {
+        if (connInfoBuilder_ == null) {
+          connInfoBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
+              com.roje.game.message.common.CommonMessage.ConnInfo, com.roje.game.message.common.CommonMessage.ConnInfo.Builder, com.roje.game.message.common.CommonMessage.ConnInfoOrBuilder>(
+                  connInfo_,
+                  ((bitField0_ & 0x00000004) == 0x00000004),
+                  getParentForChildren(),
+                  isClean());
+          connInfo_ = null;
+        }
+        return connInfoBuilder_;
+      }
+
+      // optional string ip = 4;
+      private java.lang.Object ip_ = "";
+      /**
+       * <code>optional string ip = 4;</code>
+       */
+      public boolean hasIp() {
+        return ((bitField0_ & 0x00000008) == 0x00000008);
+      }
+      /**
+       * <code>optional string ip = 4;</code>
+       */
+      public java.lang.String getIp() {
+        java.lang.Object ref = ip_;
+        if (!(ref instanceof java.lang.String)) {
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          ip_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string ip = 4;</code>
+       */
+      public com.google.protobuf.ByteString
+          getIpBytes() {
+        java.lang.Object ref = ip_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          ip_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string ip = 4;</code>
+       */
+      public Builder setIp(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000008;
+        ip_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string ip = 4;</code>
+       */
+      public Builder clearIp() {
+        bitField0_ = (bitField0_ & ~0x00000008);
+        ip_ = getDefaultInstance().getIp();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string ip = 4;</code>
+       */
+      public Builder setIpBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000008;
+        ip_ = value;
+        onChanged();
+        return this;
+      }
+
+      // optional int32 port = 5;
+      private int port_ ;
+      /**
+       * <code>optional int32 port = 5;</code>
+       */
+      public boolean hasPort() {
+        return ((bitField0_ & 0x00000010) == 0x00000010);
+      }
+      /**
+       * <code>optional int32 port = 5;</code>
+       */
+      public int getPort() {
+        return port_;
+      }
+      /**
+       * <code>optional int32 port = 5;</code>
+       */
+      public Builder setPort(int value) {
+        bitField0_ |= 0x00000010;
+        port_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional int32 port = 5;</code>
+       */
+      public Builder clearPort() {
+        bitField0_ = (bitField0_ & ~0x00000010);
+        port_ = 0;
+        onChanged();
+        return this;
+      }
+
+      // optional int32 type = 6;
+      private int type_ ;
+      /**
+       * <code>optional int32 type = 6;</code>
+       */
+      public boolean hasType() {
+        return ((bitField0_ & 0x00000020) == 0x00000020);
+      }
+      /**
+       * <code>optional int32 type = 6;</code>
+       */
+      public int getType() {
+        return type_;
+      }
+      /**
+       * <code>optional int32 type = 6;</code>
+       */
+      public Builder setType(int value) {
+        bitField0_ |= 0x00000020;
+        type_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional int32 type = 6;</code>
+       */
+      public Builder clearType() {
+        bitField0_ = (bitField0_ & ~0x00000020);
+        type_ = 0;
+        onChanged();
+        return this;
+      }
+
+      // optional bool isMe = 7;
+      private boolean isMe_ ;
+      /**
+       * <code>optional bool isMe = 7;</code>
+       */
+      public boolean hasIsMe() {
+        return ((bitField0_ & 0x00000040) == 0x00000040);
+      }
+      /**
+       * <code>optional bool isMe = 7;</code>
+       */
+      public boolean getIsMe() {
+        return isMe_;
+      }
+      /**
+       * <code>optional bool isMe = 7;</code>
+       */
+      public Builder setIsMe(boolean value) {
+        bitField0_ |= 0x00000040;
+        isMe_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional bool isMe = 7;</code>
+       */
+      public Builder clearIsMe() {
+        bitField0_ = (bitField0_ & ~0x00000040);
+        isMe_ = false;
         onChanged();
         return this;
       }
@@ -5227,6 +5988,720 @@ public final class CommonMessage {
     // @@protoc_insertion_point(class_scope:IdleServerResponse)
   }
 
+  public interface ConnInfoOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
+
+    // optional int32 id = 1;
+    /**
+     * <code>optional int32 id = 1;</code>
+     */
+    boolean hasId();
+    /**
+     * <code>optional int32 id = 1;</code>
+     */
+    int getId();
+
+    // optional string ip = 2;
+    /**
+     * <code>optional string ip = 2;</code>
+     */
+    boolean hasIp();
+    /**
+     * <code>optional string ip = 2;</code>
+     */
+    java.lang.String getIp();
+    /**
+     * <code>optional string ip = 2;</code>
+     */
+    com.google.protobuf.ByteString
+        getIpBytes();
+
+    // optional int32 port = 3;
+    /**
+     * <code>optional int32 port = 3;</code>
+     */
+    boolean hasPort();
+    /**
+     * <code>optional int32 port = 3;</code>
+     */
+    int getPort();
+
+    // optional int32 type = 4;
+    /**
+     * <code>optional int32 type = 4;</code>
+     */
+    boolean hasType();
+    /**
+     * <code>optional int32 type = 4;</code>
+     */
+    int getType();
+  }
+  /**
+   * Protobuf type {@code ConnInfo}
+   */
+  public static final class ConnInfo extends
+      com.google.protobuf.GeneratedMessage
+      implements ConnInfoOrBuilder {
+    // Use ConnInfo.newBuilder() to construct.
+    private ConnInfo(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+      super(builder);
+      this.unknownFields = builder.getUnknownFields();
+    }
+    private ConnInfo(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final ConnInfo defaultInstance;
+    public static ConnInfo getDefaultInstance() {
+      return defaultInstance;
+    }
+
+    public ConnInfo getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+        getUnknownFields() {
+      return this.unknownFields;
+    }
+    private ConnInfo(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      initFields();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 8: {
+              bitField0_ |= 0x00000001;
+              id_ = input.readInt32();
+              break;
+            }
+            case 18: {
+              bitField0_ |= 0x00000002;
+              ip_ = input.readBytes();
+              break;
+            }
+            case 24: {
+              bitField0_ |= 0x00000004;
+              port_ = input.readInt32();
+              break;
+            }
+            case 32: {
+              bitField0_ |= 0x00000008;
+              type_ = input.readInt32();
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e.getMessage()).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.roje.game.message.common.CommonMessage.internal_static_ConnInfo_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.roje.game.message.common.CommonMessage.internal_static_ConnInfo_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.roje.game.message.common.CommonMessage.ConnInfo.class, com.roje.game.message.common.CommonMessage.ConnInfo.Builder.class);
+    }
+
+    public static com.google.protobuf.Parser<ConnInfo> PARSER =
+        new com.google.protobuf.AbstractParser<ConnInfo>() {
+      public ConnInfo parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new ConnInfo(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<ConnInfo> getParserForType() {
+      return PARSER;
+    }
+
+    private int bitField0_;
+    // optional int32 id = 1;
+    public static final int ID_FIELD_NUMBER = 1;
+    private int id_;
+    /**
+     * <code>optional int32 id = 1;</code>
+     */
+    public boolean hasId() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    /**
+     * <code>optional int32 id = 1;</code>
+     */
+    public int getId() {
+      return id_;
+    }
+
+    // optional string ip = 2;
+    public static final int IP_FIELD_NUMBER = 2;
+    private java.lang.Object ip_;
+    /**
+     * <code>optional string ip = 2;</code>
+     */
+    public boolean hasIp() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    /**
+     * <code>optional string ip = 2;</code>
+     */
+    public java.lang.String getIp() {
+      java.lang.Object ref = ip_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          ip_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>optional string ip = 2;</code>
+     */
+    public com.google.protobuf.ByteString
+        getIpBytes() {
+      java.lang.Object ref = ip_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        ip_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    // optional int32 port = 3;
+    public static final int PORT_FIELD_NUMBER = 3;
+    private int port_;
+    /**
+     * <code>optional int32 port = 3;</code>
+     */
+    public boolean hasPort() {
+      return ((bitField0_ & 0x00000004) == 0x00000004);
+    }
+    /**
+     * <code>optional int32 port = 3;</code>
+     */
+    public int getPort() {
+      return port_;
+    }
+
+    // optional int32 type = 4;
+    public static final int TYPE_FIELD_NUMBER = 4;
+    private int type_;
+    /**
+     * <code>optional int32 type = 4;</code>
+     */
+    public boolean hasType() {
+      return ((bitField0_ & 0x00000008) == 0x00000008);
+    }
+    /**
+     * <code>optional int32 type = 4;</code>
+     */
+    public int getType() {
+      return type_;
+    }
+
+    private void initFields() {
+      id_ = 0;
+      ip_ = "";
+      port_ = 0;
+      type_ = 0;
+    }
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized != -1) return isInitialized == 1;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeInt32(1, id_);
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeBytes(2, getIpBytes());
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        output.writeInt32(3, port_);
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        output.writeInt32(4, type_);
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(1, id_);
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(2, getIpBytes());
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(3, port_);
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(4, type_);
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
+    }
+
+    public static com.roje.game.message.common.CommonMessage.ConnInfo parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.roje.game.message.common.CommonMessage.ConnInfo parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.roje.game.message.common.CommonMessage.ConnInfo parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.roje.game.message.common.CommonMessage.ConnInfo parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.roje.game.message.common.CommonMessage.ConnInfo parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static com.roje.game.message.common.CommonMessage.ConnInfo parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+    public static com.roje.game.message.common.CommonMessage.ConnInfo parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input);
+    }
+    public static com.roje.game.message.common.CommonMessage.ConnInfo parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
+    }
+    public static com.roje.game.message.common.CommonMessage.ConnInfo parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static com.roje.game.message.common.CommonMessage.ConnInfo parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(com.roje.game.message.common.CommonMessage.ConnInfo prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code ConnInfo}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.roje.game.message.common.CommonMessage.ConnInfoOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.roje.game.message.common.CommonMessage.internal_static_ConnInfo_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.roje.game.message.common.CommonMessage.internal_static_ConnInfo_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.roje.game.message.common.CommonMessage.ConnInfo.class, com.roje.game.message.common.CommonMessage.ConnInfo.Builder.class);
+      }
+
+      // Construct using com.roje.game.message.common.CommonMessage.ConnInfo.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+        }
+      }
+      private static Builder create() {
+        return new Builder();
+      }
+
+      public Builder clear() {
+        super.clear();
+        id_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000001);
+        ip_ = "";
+        bitField0_ = (bitField0_ & ~0x00000002);
+        port_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000004);
+        type_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000008);
+        return this;
+      }
+
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.roje.game.message.common.CommonMessage.internal_static_ConnInfo_descriptor;
+      }
+
+      public com.roje.game.message.common.CommonMessage.ConnInfo getDefaultInstanceForType() {
+        return com.roje.game.message.common.CommonMessage.ConnInfo.getDefaultInstance();
+      }
+
+      public com.roje.game.message.common.CommonMessage.ConnInfo build() {
+        com.roje.game.message.common.CommonMessage.ConnInfo result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public com.roje.game.message.common.CommonMessage.ConnInfo buildPartial() {
+        com.roje.game.message.common.CommonMessage.ConnInfo result = new com.roje.game.message.common.CommonMessage.ConnInfo(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
+        }
+        result.id_ = id_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        result.ip_ = ip_;
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+          to_bitField0_ |= 0x00000004;
+        }
+        result.port_ = port_;
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+          to_bitField0_ |= 0x00000008;
+        }
+        result.type_ = type_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.roje.game.message.common.CommonMessage.ConnInfo) {
+          return mergeFrom((com.roje.game.message.common.CommonMessage.ConnInfo)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.roje.game.message.common.CommonMessage.ConnInfo other) {
+        if (other == com.roje.game.message.common.CommonMessage.ConnInfo.getDefaultInstance()) return this;
+        if (other.hasId()) {
+          setId(other.getId());
+        }
+        if (other.hasIp()) {
+          bitField0_ |= 0x00000002;
+          ip_ = other.ip_;
+          onChanged();
+        }
+        if (other.hasPort()) {
+          setPort(other.getPort());
+        }
+        if (other.hasType()) {
+          setType(other.getType());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.roje.game.message.common.CommonMessage.ConnInfo parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.roje.game.message.common.CommonMessage.ConnInfo) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      // optional int32 id = 1;
+      private int id_ ;
+      /**
+       * <code>optional int32 id = 1;</code>
+       */
+      public boolean hasId() {
+        return ((bitField0_ & 0x00000001) == 0x00000001);
+      }
+      /**
+       * <code>optional int32 id = 1;</code>
+       */
+      public int getId() {
+        return id_;
+      }
+      /**
+       * <code>optional int32 id = 1;</code>
+       */
+      public Builder setId(int value) {
+        bitField0_ |= 0x00000001;
+        id_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional int32 id = 1;</code>
+       */
+      public Builder clearId() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        id_ = 0;
+        onChanged();
+        return this;
+      }
+
+      // optional string ip = 2;
+      private java.lang.Object ip_ = "";
+      /**
+       * <code>optional string ip = 2;</code>
+       */
+      public boolean hasIp() {
+        return ((bitField0_ & 0x00000002) == 0x00000002);
+      }
+      /**
+       * <code>optional string ip = 2;</code>
+       */
+      public java.lang.String getIp() {
+        java.lang.Object ref = ip_;
+        if (!(ref instanceof java.lang.String)) {
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          ip_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string ip = 2;</code>
+       */
+      public com.google.protobuf.ByteString
+          getIpBytes() {
+        java.lang.Object ref = ip_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          ip_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string ip = 2;</code>
+       */
+      public Builder setIp(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000002;
+        ip_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string ip = 2;</code>
+       */
+      public Builder clearIp() {
+        bitField0_ = (bitField0_ & ~0x00000002);
+        ip_ = getDefaultInstance().getIp();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string ip = 2;</code>
+       */
+      public Builder setIpBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000002;
+        ip_ = value;
+        onChanged();
+        return this;
+      }
+
+      // optional int32 port = 3;
+      private int port_ ;
+      /**
+       * <code>optional int32 port = 3;</code>
+       */
+      public boolean hasPort() {
+        return ((bitField0_ & 0x00000004) == 0x00000004);
+      }
+      /**
+       * <code>optional int32 port = 3;</code>
+       */
+      public int getPort() {
+        return port_;
+      }
+      /**
+       * <code>optional int32 port = 3;</code>
+       */
+      public Builder setPort(int value) {
+        bitField0_ |= 0x00000004;
+        port_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional int32 port = 3;</code>
+       */
+      public Builder clearPort() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        port_ = 0;
+        onChanged();
+        return this;
+      }
+
+      // optional int32 type = 4;
+      private int type_ ;
+      /**
+       * <code>optional int32 type = 4;</code>
+       */
+      public boolean hasType() {
+        return ((bitField0_ & 0x00000008) == 0x00000008);
+      }
+      /**
+       * <code>optional int32 type = 4;</code>
+       */
+      public int getType() {
+        return type_;
+      }
+      /**
+       * <code>optional int32 type = 4;</code>
+       */
+      public Builder setType(int value) {
+        bitField0_ |= 0x00000008;
+        type_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional int32 type = 4;</code>
+       */
+      public Builder clearType() {
+        bitField0_ = (bitField0_ & ~0x00000008);
+        type_ = 0;
+        onChanged();
+        return this;
+      }
+
+      // @@protoc_insertion_point(builder_scope:ConnInfo)
+    }
+
+    static {
+      defaultInstance = new ConnInfo(true);
+      defaultInstance.initFields();
+    }
+
+    // @@protoc_insertion_point(class_scope:ConnInfo)
+  }
+
   public interface ServerInfoOrBuilder
       extends com.google.protobuf.MessageOrBuilder {
 
@@ -5293,23 +6768,23 @@ public final class CommonMessage {
      */
     int getType();
 
-    // optional int32 port = 4;
+    // optional int32 innerPort = 4;
     /**
-     * <code>optional int32 port = 4;</code>
+     * <code>optional int32 innerPort = 4;</code>
      *
      * <pre>
      * 端口
      * </pre>
      */
-    boolean hasPort();
+    boolean hasInnerPort();
     /**
-     * <code>optional int32 port = 4;</code>
+     * <code>optional int32 innerPort = 4;</code>
      *
      * <pre>
      * 端口
      * </pre>
      */
-    int getPort();
+    int getInnerPort();
 
     // optional int32 state = 5;
     /**
@@ -5518,6 +6993,16 @@ public final class CommonMessage {
      * <code>optional int32 connectedCount = 15;</code>
      */
     int getConnectedCount();
+
+    // optional int32 userPort = 16;
+    /**
+     * <code>optional int32 userPort = 16;</code>
+     */
+    boolean hasUserPort();
+    /**
+     * <code>optional int32 userPort = 16;</code>
+     */
+    int getUserPort();
   }
   /**
    * Protobuf type {@code ServerInfo}
@@ -5591,7 +7076,7 @@ public final class CommonMessage {
             }
             case 32: {
               bitField0_ |= 0x00000008;
-              port_ = input.readInt32();
+              innerPort_ = input.readInt32();
               break;
             }
             case 40: {
@@ -5647,6 +7132,11 @@ public final class CommonMessage {
             case 120: {
               bitField0_ |= 0x00004000;
               connectedCount_ = input.readInt32();
+              break;
+            }
+            case 128: {
+              bitField0_ |= 0x00008000;
+              userPort_ = input.readInt32();
               break;
             }
           }
@@ -5792,28 +7282,28 @@ public final class CommonMessage {
       return type_;
     }
 
-    // optional int32 port = 4;
-    public static final int PORT_FIELD_NUMBER = 4;
-    private int port_;
+    // optional int32 innerPort = 4;
+    public static final int INNERPORT_FIELD_NUMBER = 4;
+    private int innerPort_;
     /**
-     * <code>optional int32 port = 4;</code>
+     * <code>optional int32 innerPort = 4;</code>
      *
      * <pre>
      * 端口
      * </pre>
      */
-    public boolean hasPort() {
+    public boolean hasInnerPort() {
       return ((bitField0_ & 0x00000008) == 0x00000008);
     }
     /**
-     * <code>optional int32 port = 4;</code>
+     * <code>optional int32 innerPort = 4;</code>
      *
      * <pre>
      * 端口
      * </pre>
      */
-    public int getPort() {
-      return port_;
+    public int getInnerPort() {
+      return innerPort_;
     }
 
     // optional int32 state = 5;
@@ -6134,11 +7624,27 @@ public final class CommonMessage {
       return connectedCount_;
     }
 
+    // optional int32 userPort = 16;
+    public static final int USERPORT_FIELD_NUMBER = 16;
+    private int userPort_;
+    /**
+     * <code>optional int32 userPort = 16;</code>
+     */
+    public boolean hasUserPort() {
+      return ((bitField0_ & 0x00008000) == 0x00008000);
+    }
+    /**
+     * <code>optional int32 userPort = 16;</code>
+     */
+    public int getUserPort() {
+      return userPort_;
+    }
+
     private void initFields() {
       id_ = 0;
       ip_ = "";
       type_ = 0;
-      port_ = 0;
+      innerPort_ = 0;
       state_ = 0;
       online_ = 0;
       maxUserCount_ = 0;
@@ -6150,6 +7656,7 @@ public final class CommonMessage {
       version_ = 0;
       requireClientVersion_ = 0;
       connectedCount_ = 0;
+      userPort_ = 0;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -6177,7 +7684,7 @@ public final class CommonMessage {
         output.writeInt32(3, type_);
       }
       if (((bitField0_ & 0x00000008) == 0x00000008)) {
-        output.writeInt32(4, port_);
+        output.writeInt32(4, innerPort_);
       }
       if (((bitField0_ & 0x00000010) == 0x00000010)) {
         output.writeInt32(5, state_);
@@ -6212,6 +7719,9 @@ public final class CommonMessage {
       if (((bitField0_ & 0x00004000) == 0x00004000)) {
         output.writeInt32(15, connectedCount_);
       }
+      if (((bitField0_ & 0x00008000) == 0x00008000)) {
+        output.writeInt32(16, userPort_);
+      }
       getUnknownFields().writeTo(output);
     }
 
@@ -6235,7 +7745,7 @@ public final class CommonMessage {
       }
       if (((bitField0_ & 0x00000008) == 0x00000008)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(4, port_);
+          .computeInt32Size(4, innerPort_);
       }
       if (((bitField0_ & 0x00000010) == 0x00000010)) {
         size += com.google.protobuf.CodedOutputStream
@@ -6280,6 +7790,10 @@ public final class CommonMessage {
       if (((bitField0_ & 0x00004000) == 0x00004000)) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(15, connectedCount_);
+      }
+      if (((bitField0_ & 0x00008000) == 0x00008000)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(16, userPort_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -6407,7 +7921,7 @@ public final class CommonMessage {
         bitField0_ = (bitField0_ & ~0x00000002);
         type_ = 0;
         bitField0_ = (bitField0_ & ~0x00000004);
-        port_ = 0;
+        innerPort_ = 0;
         bitField0_ = (bitField0_ & ~0x00000008);
         state_ = 0;
         bitField0_ = (bitField0_ & ~0x00000010);
@@ -6431,6 +7945,8 @@ public final class CommonMessage {
         bitField0_ = (bitField0_ & ~0x00002000);
         connectedCount_ = 0;
         bitField0_ = (bitField0_ & ~0x00004000);
+        userPort_ = 0;
+        bitField0_ = (bitField0_ & ~0x00008000);
         return this;
       }
 
@@ -6474,7 +7990,7 @@ public final class CommonMessage {
         if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
           to_bitField0_ |= 0x00000008;
         }
-        result.port_ = port_;
+        result.innerPort_ = innerPort_;
         if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
           to_bitField0_ |= 0x00000010;
         }
@@ -6519,6 +8035,10 @@ public final class CommonMessage {
           to_bitField0_ |= 0x00004000;
         }
         result.connectedCount_ = connectedCount_;
+        if (((from_bitField0_ & 0x00008000) == 0x00008000)) {
+          to_bitField0_ |= 0x00008000;
+        }
+        result.userPort_ = userPort_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -6546,8 +8066,8 @@ public final class CommonMessage {
         if (other.hasType()) {
           setType(other.getType());
         }
-        if (other.hasPort()) {
-          setPort(other.getPort());
+        if (other.hasInnerPort()) {
+          setInnerPort(other.getInnerPort());
         }
         if (other.hasState()) {
           setState(other.getState());
@@ -6585,6 +8105,9 @@ public final class CommonMessage {
         }
         if (other.hasConnectedCount()) {
           setConnectedCount(other.getConnectedCount());
+        }
+        if (other.hasUserPort()) {
+          setUserPort(other.getUserPort());
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
@@ -6813,51 +8336,51 @@ public final class CommonMessage {
         return this;
       }
 
-      // optional int32 port = 4;
-      private int port_ ;
+      // optional int32 innerPort = 4;
+      private int innerPort_ ;
       /**
-       * <code>optional int32 port = 4;</code>
+       * <code>optional int32 innerPort = 4;</code>
        *
        * <pre>
        * 端口
        * </pre>
        */
-      public boolean hasPort() {
+      public boolean hasInnerPort() {
         return ((bitField0_ & 0x00000008) == 0x00000008);
       }
       /**
-       * <code>optional int32 port = 4;</code>
+       * <code>optional int32 innerPort = 4;</code>
        *
        * <pre>
        * 端口
        * </pre>
        */
-      public int getPort() {
-        return port_;
+      public int getInnerPort() {
+        return innerPort_;
       }
       /**
-       * <code>optional int32 port = 4;</code>
+       * <code>optional int32 innerPort = 4;</code>
        *
        * <pre>
        * 端口
        * </pre>
        */
-      public Builder setPort(int value) {
+      public Builder setInnerPort(int value) {
         bitField0_ |= 0x00000008;
-        port_ = value;
+        innerPort_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>optional int32 port = 4;</code>
+       * <code>optional int32 innerPort = 4;</code>
        *
        * <pre>
        * 端口
        * </pre>
        */
-      public Builder clearPort() {
+      public Builder clearInnerPort() {
         bitField0_ = (bitField0_ & ~0x00000008);
-        port_ = 0;
+        innerPort_ = 0;
         onChanged();
         return this;
       }
@@ -7483,6 +9006,39 @@ public final class CommonMessage {
         return this;
       }
 
+      // optional int32 userPort = 16;
+      private int userPort_ ;
+      /**
+       * <code>optional int32 userPort = 16;</code>
+       */
+      public boolean hasUserPort() {
+        return ((bitField0_ & 0x00008000) == 0x00008000);
+      }
+      /**
+       * <code>optional int32 userPort = 16;</code>
+       */
+      public int getUserPort() {
+        return userPort_;
+      }
+      /**
+       * <code>optional int32 userPort = 16;</code>
+       */
+      public Builder setUserPort(int value) {
+        bitField0_ |= 0x00008000;
+        userPort_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional int32 userPort = 16;</code>
+       */
+      public Builder clearUserPort() {
+        bitField0_ = (bitField0_ & ~0x00008000);
+        userPort_ = 0;
+        onChanged();
+        return this;
+      }
+
       // @@protoc_insertion_point(builder_scope:ServerInfo)
     }
 
@@ -7540,6 +9096,11 @@ public final class CommonMessage {
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_IdleServerResponse_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_ConnInfo_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_ConnInfo_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_ServerInfo_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
@@ -7561,27 +9122,31 @@ public final class CommonMessage {
       "Res\022\"\n\terrorCode\030\002 \001(\0162\017.SystemErroCode\022" +
       "\013\n\003msg\030\003 \001(\t\"^\n\025ServerRegisterRequest\022$\n" +
       "\003mid\030\001 \001(\0162\004.MID:\021ServerRegisterReq\022\037\n\ns" +
-      "erverInfo\030\002 \002(\0132\013.ServerInfo\"P\n\026ServerRe" +
-      "gisterResponse\022$\n\003mid\030\001 \001(\0162\004.MID:\021Serve",
-      "rRegisterRes\022\020\n\010serverId\030\002 \001(\005\"Z\n\023Server" +
-      "UpdateRequest\022\"\n\003mid\030\001 \001(\0162\004.MID:\017Server" +
-      "UpdateReq\022\037\n\nserverInfo\030\002 \002(\0132\013.ServerIn" +
-      "fo\"W\n\024ServerUpdateResponse\022\"\n\003mid\030\001 \001(\0162" +
-      "\004.MID:\017ServerUpdateRes\022\016\n\006sucess\030\002 \001(\010\022\013" +
-      "\n\003msg\030\003 \001(\t\"C\n\021IdleServerRequest\022 \n\003mid\030" +
-      "\001 \001(\0162\004.MID:\rIdleServerReq\022\014\n\004type\030\002 \001(\005" +
-      "\"6\n\022IdleServerResponse\022 \n\003mid\030\001 \001(\0162\004.MI" +
-      "D:\rIdleServerRes\"\224\002\n\nServerInfo\022\n\n\002id\030\001 " +
-      "\002(\005\022\n\n\002ip\030\002 \001(\t\022\014\n\004type\030\003 \001(\005\022\014\n\004port\030\004 ",
-      "\001(\005\022\r\n\005state\030\005 \001(\005\022\016\n\006online\030\006 \001(\005\022\024\n\014ma" +
-      "xUserCount\030\007 \001(\005\022\020\n\010httpport\030\010 \001(\005\022\014\n\004na" +
-      "me\030\t \001(\t\022\r\n\005wwwip\030\n \001(\t\022\022\n\nfreeMemory\030\013 " +
-      "\001(\005\022\023\n\013totalMemory\030\014 \001(\005\022\017\n\007version\030\r \001(" +
-      "\005\022\034\n\024requireClientVersion\030\016 \001(\005\022\026\n\016conne" +
-      "ctedCount\030\017 \001(\005*T\n\016SystemErroCode\022\017\n\013Hal" +
-      "lNotFind\020\001\022\017\n\013GameNotFind\020\002\022\017\n\013ConectRes" +
-      "et\020\003\022\017\n\013GateNotFind\020\004B\036\n\034com.roje.game.m" +
-      "essage.common"
+      "erverInfo\030\002 \002(\0132\013.ServerInfo\"\243\001\n\026ServerR" +
+      "egisterResponse\022$\n\003mid\030\001 \001(\0162\004.MID:\021Serv",
+      "erRegisterRes\022\020\n\010serverId\030\002 \001(\005\022\033\n\010connI" +
+      "nfo\030\003 \003(\0132\t.ConnInfo\022\n\n\002ip\030\004 \001(\t\022\014\n\004port" +
+      "\030\005 \001(\005\022\014\n\004type\030\006 \001(\005\022\014\n\004isMe\030\007 \001(\010\"Z\n\023Se" +
+      "rverUpdateRequest\022\"\n\003mid\030\001 \001(\0162\004.MID:\017Se" +
+      "rverUpdateReq\022\037\n\nserverInfo\030\002 \002(\0132\013.Serv" +
+      "erInfo\"W\n\024ServerUpdateResponse\022\"\n\003mid\030\001 " +
+      "\001(\0162\004.MID:\017ServerUpdateRes\022\016\n\006sucess\030\002 \001" +
+      "(\010\022\013\n\003msg\030\003 \001(\t\"C\n\021IdleServerRequest\022 \n\003" +
+      "mid\030\001 \001(\0162\004.MID:\rIdleServerReq\022\014\n\004type\030\002" +
+      " \001(\005\"6\n\022IdleServerResponse\022 \n\003mid\030\001 \001(\0162",
+      "\004.MID:\rIdleServerRes\">\n\010ConnInfo\022\n\n\002id\030\001" +
+      " \001(\005\022\n\n\002ip\030\002 \001(\t\022\014\n\004port\030\003 \001(\005\022\014\n\004type\030\004" +
+      " \001(\005\"\253\002\n\nServerInfo\022\n\n\002id\030\001 \002(\005\022\n\n\002ip\030\002 " +
+      "\001(\t\022\014\n\004type\030\003 \001(\005\022\021\n\tinnerPort\030\004 \001(\005\022\r\n\005" +
+      "state\030\005 \001(\005\022\016\n\006online\030\006 \001(\005\022\024\n\014maxUserCo" +
+      "unt\030\007 \001(\005\022\020\n\010httpport\030\010 \001(\005\022\014\n\004name\030\t \001(" +
+      "\t\022\r\n\005wwwip\030\n \001(\t\022\022\n\nfreeMemory\030\013 \001(\005\022\023\n\013" +
+      "totalMemory\030\014 \001(\005\022\017\n\007version\030\r \001(\005\022\034\n\024re" +
+      "quireClientVersion\030\016 \001(\005\022\026\n\016connectedCou" +
+      "nt\030\017 \001(\005\022\020\n\010userPort\030\020 \001(\005*T\n\016SystemErro",
+      "Code\022\017\n\013HallNotFind\020\001\022\017\n\013GameNotFind\020\002\022\017" +
+      "\n\013ConectReset\020\003\022\017\n\013GateNotFind\020\004B\036\n\034com." +
+      "roje.game.message.common"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -7617,7 +9182,7 @@ public final class CommonMessage {
           internal_static_ServerRegisterResponse_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_ServerRegisterResponse_descriptor,
-              new java.lang.String[] { "Mid", "ServerId", });
+              new java.lang.String[] { "Mid", "ServerId", "ConnInfo", "Ip", "Port", "Type", "IsMe", });
           internal_static_ServerUpdateRequest_descriptor =
             getDescriptor().getMessageTypes().get(5);
           internal_static_ServerUpdateRequest_fieldAccessorTable = new
@@ -7642,12 +9207,18 @@ public final class CommonMessage {
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_IdleServerResponse_descriptor,
               new java.lang.String[] { "Mid", });
-          internal_static_ServerInfo_descriptor =
+          internal_static_ConnInfo_descriptor =
             getDescriptor().getMessageTypes().get(9);
+          internal_static_ConnInfo_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_ConnInfo_descriptor,
+              new java.lang.String[] { "Id", "Ip", "Port", "Type", });
+          internal_static_ServerInfo_descriptor =
+            getDescriptor().getMessageTypes().get(10);
           internal_static_ServerInfo_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_ServerInfo_descriptor,
-              new java.lang.String[] { "Id", "Ip", "Type", "Port", "State", "Online", "MaxUserCount", "Httpport", "Name", "Wwwip", "FreeMemory", "TotalMemory", "Version", "RequireClientVersion", "ConnectedCount", });
+              new java.lang.String[] { "Id", "Ip", "Type", "InnerPort", "State", "Online", "MaxUserCount", "Httpport", "Name", "Wwwip", "FreeMemory", "TotalMemory", "Version", "RequireClientVersion", "ConnectedCount", "UserPort", });
           return null;
         }
       };

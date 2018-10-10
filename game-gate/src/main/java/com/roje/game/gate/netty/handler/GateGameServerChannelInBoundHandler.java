@@ -9,8 +9,8 @@ import io.netty.channel.ChannelHandlerContext;
 public class GateGameServerChannelInBoundHandler extends DefaultInBoundHandler {
     private GateUserSessionManager sessionManager;
     //内部服务器消息处理不使用线程容器执行
-    public GateGameServerChannelInBoundHandler(boolean containUid, MessageDispatcher dispatcher,GateUserSessionManager sessionManager) {
-        super(containUid,null,dispatcher);
+    public GateGameServerChannelInBoundHandler(MessageDispatcher dispatcher,GateUserSessionManager sessionManager) {
+        super(true,null,dispatcher);
         this.sessionManager = sessionManager;
     }
 
