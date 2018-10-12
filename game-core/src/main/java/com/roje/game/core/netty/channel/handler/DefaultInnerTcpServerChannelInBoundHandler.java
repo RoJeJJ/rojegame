@@ -1,8 +1,7 @@
-package com.roje.game.cluster.netty.handler;
+package com.roje.game.core.netty.channel.handler;
 
 import com.roje.game.core.dispatcher.MessageDispatcher;
 import com.roje.game.core.manager.ServerManager;
-import com.roje.game.core.netty.channel.handler.DefaultInBoundHandler;
 import com.roje.game.core.service.Service;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.timeout.IdleStateEvent;
@@ -10,11 +9,11 @@ import lombok.extern.slf4j.Slf4j;
 
 
 @Slf4j
-public class ClusterTcpServerChannelInBoundHandler extends DefaultInBoundHandler {
+public class DefaultInnerTcpServerChannelInBoundHandler extends DefaultInBoundHandler {
     private ServerManager serverManager;
 
-    public ClusterTcpServerChannelInBoundHandler(boolean containUid, Service service, MessageDispatcher dispatcher,ServerManager serverManager) {
-        super(containUid,service,dispatcher);
+    public DefaultInnerTcpServerChannelInBoundHandler(boolean hasID,Service service, MessageDispatcher dispatcher, ServerManager serverManager) {
+        super(hasID,service,dispatcher);
         this.serverManager = serverManager;
     }
 
@@ -34,12 +33,6 @@ public class ClusterTcpServerChannelInBoundHandler extends DefaultInBoundHandler
                     log.warn("{} reader timeout --- close it");
                     ctx.close();
                     break;
-                case WRITER_IDLE:
-                    log.warn("{} writer timeout");
-                    break;
-                case ALL_IDLE:
-                    log.warn("{} all timeout");
-                    break;
             }
         }
     }
@@ -47,7 +40,7 @@ public class ClusterTcpServerChannelInBoundHandler extends DefaultInBoundHandler
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
 //        super.exceptionCaught(ctx, cause);
-        log.warn("{}连接异常,关闭连接",ctx);
+        log.warn("连接异常,关闭连接",cause);
         ctx.close();
     }
 }

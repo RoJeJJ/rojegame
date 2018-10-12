@@ -29,53 +29,56 @@ public class AppCluster {
     }
 
     @Bean
-    public BaseInfo clusterInfo(){
+    public BaseInfo clusterInfo() {
         return new BaseInfo();
     }
 
     @Bean
-    public ServerManager serverManager(BaseInfo clusterInfo){
+    public ServerManager serverManager(BaseInfo clusterInfo) {
         return new ServerManager(clusterInfo);
     }
 
 
     @Bean
     @ConfigurationProperties(prefix = "thread-config")
-    public ThreadConfig threadConfig(){
+    public ThreadConfig threadConfig() {
         return new ThreadConfig();
     }
 
     @Bean("clusterTcpServerConfig")
     @ConfigurationProperties(prefix = "netty-cluster-tcp-server-config")
-    public NettyTcpServerConfig clusterTcpServerConfig(){
+    public NettyTcpServerConfig clusterTcpServerConfig() {
         return new NettyTcpServerConfig();
     }
 
     @Bean("clusterHttpServerConfig")
     @ConfigurationProperties(prefix = "netty-cluster-http-server-config")
-    public NettyServerConfig clusterHttpServerConfig(){
+    public NettyServerConfig clusterHttpServerConfig() {
         return new NettyServerConfig();
     }
 
     @Bean
-    public Service clusterTcpExecutorService(ThreadConfig config){
+    public Service clusterTcpExecutorService(ThreadConfig config) {
         return new Service(config);
     }
 
     @Bean
-    public NettyHttpServer clusterHttpServer(@Qualifier("clusterHttpChannelInitializer")ChannelInitializer<SocketChannel> channelInitializer,
-                                           @Qualifier("clusterHttpServerConfig")NettyServerConfig clusterHttpServerConfig){
-        return new NettyHttpServer(channelInitializer, clusterHttpServerConfig);
+    public NettyHttpServer clusterHttpServer(@Qualifier("clusterHttpChannelInitializer") ChannelInitializer<SocketChannel> channelInitializer,
+                                             @Qualifier("clusterHttpServerConfig") NettyServerConfig clusterHttpServerConfig,
+                                             BaseInfo clusterInfo) {
+        return new NettyHttpServer(channelInitializer, clusterHttpServerConfig, clusterInfo.getHttpPort());
     }
 
     @Bean
-    public NettyTcpServer clusterTcpServer(@Qualifier("clusterTcpChannelInitializer") ChannelInitializer<SocketChannel> channelInitializer,
-                                         @Qualifier("clusterTcpServerConfig") NettyTcpServerConfig nettyTcpServerConfig){
-        return new NettyTcpServer(channelInitializer, nettyTcpServerConfig);
+    public NettyTcpServer clusterTcpServer(
+            @Qualifier("clusterTcpChannelInitializer") ChannelInitializer<SocketChannel> channelInitializer,
+            @Qualifier("clusterTcpServerConfig") NettyTcpServerConfig nettyTcpServerConfig,
+            BaseInfo clusterInfo) {
+        return new NettyTcpServer(channelInitializer, nettyTcpServerConfig, clusterInfo.getInnerPort());
     }
 
     @Bean
-    public MessageDispatcher messageDispatcher(){
+    public MessageDispatcher messageDispatcher() {
         return new MessageDispatcher();
     }
 }

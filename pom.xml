@@ -16,6 +16,7 @@
         <module>game-cluster</module>
         <module>game-test</module>
         <module>game-hall</module>
+        <module>login-server</module>
     </modules>
     <packaging>pom</packaging>
     <name>roje-game</name>
@@ -103,6 +104,11 @@
                 <artifactId>lombok</artifactId>
                 <version>1.18.2</version>
                 <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>8.0.11</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

@@ -5,12 +5,12 @@ import com.roje.game.core.config.NettyConnGateClientConfig;
 import com.roje.game.core.config.ThreadConfig;
 import com.roje.game.core.dispatcher.MessageDispatcher;
 import com.roje.game.core.manager.ConnGateTcpMultiManager;
-import com.roje.game.core.manager.UserManager;
+import com.roje.game.core.manager.SessionManager;
 import com.roje.game.core.netty.NettyClusterTcpClient;
 import com.roje.game.core.netty.channel.initializer.ConnClusterClientChannelInitializer;
 import com.roje.game.core.server.BaseInfo;
 import com.roje.game.core.service.Service;
-import com.roje.game.hall.manager.HallUserManager;
+import com.roje.game.hall.manager.HallSessionManager;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.socket.SocketChannel;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -30,58 +30,61 @@ public class AppHall {
 
     @Bean
     @ConfigurationProperties(prefix = "thread-config")
-    public ThreadConfig threadConfig(){
+    public ThreadConfig threadConfig() {
         return new ThreadConfig();
     }
 
     @Bean
-    public BaseInfo hallInfo(){
+    public BaseInfo hallInfo() {
         return new BaseInfo();
     }
 
     @Bean
-    public NettyConnClusterClientConfig hallClusterClientConfig(){
+    public NettyConnClusterClientConfig hallClusterClientConfig() {
         return new NettyConnClusterClientConfig();
     }
 
     @Bean
-    public NettyConnGateClientConfig nettyConnGateClientConfig(){
+    public NettyConnGateClientConfig nettyConnGateClientConfig() {
         return new NettyConnGateClientConfig();
     }
 
     @Bean
-    public Service hallGateExecutorService(ThreadConfig config){
+    public Service hallGateExecutorService(ThreadConfig config) {
         return new Service(config);
     }
 
     @Bean
-    public HallUserManager hallUserManager(){
-        return new HallUserManager();
+    public HallSessionManager hallUserManager() {
+        return new HallSessionManager();
     }
 
     @Bean
-    public MessageDispatcher messageDispatcher(){
+    public MessageDispatcher messageDispatcher() {
         return new MessageDispatcher();
     }
 
     @Bean("hallClusterClientChannelInitializer")
     public ConnClusterClientChannelInitializer hallClusterClientChannelInitializer(NettyConnClusterClientConfig clusterClientConfig,
                                                                                    MessageDispatcher dispatcher,
-                                                                                   UserManager userManager,
-                                                                                   BaseInfo baseInfo){
-        return new ConnClusterClientChannelInitializer(clusterClientConfig,dispatcher,userManager,baseInfo);
+                                                                                   SessionManager sessionManager,
+                                                                                   BaseInfo baseInfo) {
+        return new ConnClusterClientChannelInitializer(clusterClientConfig, dispatcher, sessionManager, baseInfo);
     }
 
     @Bean
     public NettyClusterTcpClient hallClusterTcpClient(NettyConnClusterClientConfig clusterClientConfig,
-                                                      @Qualifier("hallClusterClientChannelInitializer") ChannelInitializer<SocketChannel> channelInitializer){
-        return new NettyClusterTcpClient(clusterClientConfig,channelInitializer);
+                                                      @Qualifier("hallClusterClientChannelInitializer") ChannelInitializer<SocketChannel> channelInitializer) {
+        return new NettyClusterTcpClient(clusterClientConfig, channelInitializer);
     }
 
     @Bean
-    public ConnGateTcpMultiManager nettyGateTcpMultiManager(NettyConnGateClientConfig nettyConnGateClientConfig,
-                                                            Service service,
-                                                            MessageDispatcher dispatcher){
-        return new ConnGateTcpMultiManager(nettyConnGateClientConfig,service,dispatcher);
+    public ConnGateTcpMultiManager nettyGateTcpMultiManager(
+            NettyConnGateClientConfig nettyConnGateClientConfig,
+            Service service,
+            MessageDispatcher dispatcher,
+            BaseInfo baseInfo,
+            SessionManager sessionManager) {
+        return new ConnGateTcpMultiManager(nettyConnGateClientConfig, service, dispatcher, baseInfo, sessionManager);
     }
 }

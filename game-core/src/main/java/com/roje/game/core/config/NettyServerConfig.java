@@ -12,5 +12,4 @@ public class NettyServerConfig {
     private boolean soKeepAlive = true;
     private boolean tcpNoDelay = true;
     private int soLinger = 0;
-    private int port = 0;
 }

@@ -2,9 +2,9 @@ package com.roje.game.core.netty.channel.initializer;
 
 import com.roje.game.core.config.NettyConnClusterClientConfig;
 import com.roje.game.core.dispatcher.MessageDispatcher;
-import com.roje.game.core.manager.UserManager;
+import com.roje.game.core.manager.SessionManager;
 import com.roje.game.core.netty.channel.codec.DefaultMessageCodec;
-import com.roje.game.core.netty.channel.handler.DefaultToClusterTcpClientChannelInBoundHandler;
+import com.roje.game.core.netty.channel.handler.DefaultInnerTcpClientChannelInBoundHandler;
 import com.roje.game.core.server.BaseInfo;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
@@ -15,7 +15,7 @@ import io.netty.handler.timeout.IdleStateHandler;
 public class ConnClusterClientChannelInitializer extends ChannelInitializer<SocketChannel> {
     private final NettyConnClusterClientConfig clientConfig;
 
-    private final UserManager userManager;
+    private final SessionManager sessionManager;
 
     private final MessageDispatcher dispatcher;
 
@@ -23,11 +23,11 @@ public class ConnClusterClientChannelInitializer extends ChannelInitializer<Sock
 
     public ConnClusterClientChannelInitializer(NettyConnClusterClientConfig clientConfig,
                                                MessageDispatcher dispatcher,
-                                               UserManager userManager,
+                                               SessionManager sessionManager,
                                                BaseInfo baseInfo) {
         this.clientConfig = clientConfig;
         this.dispatcher = dispatcher;
-        this.userManager = userManager;
+        this.sessionManager = sessionManager;
         this.baseInfo = baseInfo;
     }
 
@@ -36,6 +36,6 @@ public class ConnClusterClientChannelInitializer extends ChannelInitializer<Sock
         ChannelPipeline pipeline = socketChannel.pipeline();
         pipeline.addLast(new IdleStateHandler(clientConfig.getReaderIdleTime(),clientConfig.getWriterIdleTime(),clientConfig.getAllIdleTime()));
         pipeline.addLast(new DefaultMessageCodec());
-        pipeline.addLast(new DefaultToClusterTcpClientChannelInBoundHandler(dispatcher,userManager,baseInfo));
+        pipeline.addLast(new DefaultInnerTcpClientChannelInBoundHandler(false,null,dispatcher, sessionManager,baseInfo));
     }
 }

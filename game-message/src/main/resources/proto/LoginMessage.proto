@@ -2,26 +2,21 @@ option java_package="com.roje.game.message.login";
 import "Mid.proto";
 
 message LoginRequest{
-    optional MID mid			= 1 [default = LoginReq]; 	//消息id
-    optional string account                 = 2; //账号
-    optional string password                = 3; //密码
-    optional LoginType loginType            = 4; //登录类型
-    optional string sessionId				= 5; //会话ID（服务器内部使用）
-    optional int32 gateId					= 6; //网关ID（服务器内部使用）
-    optional string ip						= 7; //IP地址（服务器内部使用）
-    optional int32 version					= 8; //版本号
+    required MID mid			= 1 [default = LoginReq]; 	//消息id
+    required string account                 = 2; //账号
+    required string password                = 3; //密码
+    required LoginType loginType            = 4; //登录类型
+    optional int32 version					= 5; //版本号
+    optional string sessionId				= 6; //会话ID（服务器内部使用）
+    optional int32 gateId					= 7; //网关ID（服务器内部使用）
+    optional string ip						= 8; //IP地址（服务器内部使用）
 }
 message LoginResponse {
-    optional MID mid			        = 1 [default = LoginRes]; 	//消息id
-    optional bool ok 			    = 2; //请求是否发送成功
-    optional int64 uid 			    = 3; //用户id
-    optional int64 rid			    = 4; //角色ID
+    required MID mid			        = 1 [default = LoginRes]; 	//消息id
+    required bool ok  			    = 2; //请求是否发送成功
+    required string msg            = 3;
+    optional int64 uid 			    = 4; //用户id
     optional string sessionId	= 5; //会话ID
-}
-message LoseConnection{
-    optional MID mid                = 1 [default = LoseConntionReq];
-    optional int64 uid            = 2;
-    optional int64 rid            = 3;
 }
 //登录类型
 enum LoginType{

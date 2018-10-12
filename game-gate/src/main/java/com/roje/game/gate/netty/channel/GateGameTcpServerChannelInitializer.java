@@ -2,9 +2,9 @@ package com.roje.game.gate.netty.channel;
 
 import com.roje.game.core.config.NettyTcpServerConfig;
 import com.roje.game.core.dispatcher.MessageDispatcher;
+import com.roje.game.core.manager.ServerManager;
 import com.roje.game.core.netty.channel.codec.DefaultMessageCodec;
-import com.roje.game.gate.manager.GateUserSessionManager;
-import com.roje.game.gate.netty.handler.GateGameServerChannelInBoundHandler;
+import com.roje.game.core.netty.channel.handler.DefaultInnerTcpServerChannelInBoundHandler;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
@@ -20,15 +20,15 @@ public class GateGameTcpServerChannelInitializer extends ChannelInitializer<Sock
 
     private final MessageDispatcher dispatcher;
 
-    private final GateUserSessionManager sessionManager;
+    private final ServerManager serverManager;
 
     @Autowired
     public GateGameTcpServerChannelInitializer(@Qualifier("gateGameTcpConfig") NettyTcpServerConfig nettyTcpServerConfig,
                                                MessageDispatcher dispatcher,
-                                               GateUserSessionManager sessionManager) {
+                                               ServerManager serverManager) {
         this.nettyTcpServerConfig = nettyTcpServerConfig;
         this.dispatcher = dispatcher;
-        this.sessionManager = sessionManager;
+        this.serverManager = serverManager;
     }
 
     @Override
@@ -36,6 +36,6 @@ public class GateGameTcpServerChannelInitializer extends ChannelInitializer<Sock
         ChannelPipeline pipeline = socketChannel.pipeline();
         pipeline.addLast(new IdleStateHandler(nettyTcpServerConfig.getReaderIdleTime(), nettyTcpServerConfig.getWriterIdleTime(), nettyTcpServerConfig.getAllIdleTime()));
         pipeline.addLast(new DefaultMessageCodec());
-        pipeline.addLast(new GateGameServerChannelInBoundHandler(dispatcher,sessionManager));
+        pipeline.addLast(new DefaultInnerTcpServerChannelInBoundHandler(true,null,dispatcher,serverManager));
     }
 }

@@ -1,21 +1,13 @@
 package com.roje.game.core.server;
 
 import com.google.protobuf.Message;
-import com.roje.game.message.login.LoginMessage;
 import io.netty.channel.Channel;
 import lombok.Getter;
 import lombok.Setter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.Optional;
-import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
 @Getter
 @Setter
 public class ServerInfo {
-    private static final Logger LOG = LoggerFactory.getLogger(ServerInfo.class);
     // 服务器ID
     private int id;
 

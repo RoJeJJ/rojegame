@@ -11,7 +11,7 @@ message HeartBeatResponse{
 //系统错误消息返回
 message ErrorResponse{
     optional MID mid					= 1 [default = SystemErrorRes]; 	//消息id
-    optional SystemErroCode errorCode	= 2; //错误码
+    optional SystemErrCode errorCode	= 2; //错误码
     optional string msg					= 3; //错误信息
 }
 //向集群服务器注册
@@ -21,12 +21,14 @@ message ServerRegisterRequest{
 }
 message ServerRegisterResponse{
     optional MID mid            = 1 [default = ServerRegisterRes];
-    optional int32 serverId   = 2;
-    repeated ConnInfo  connInfo        = 3;
-    optional string ip = 4;
-    optional int32 port = 5;
-    optional int32 type = 6;
-    optional bool isMe = 7;
+    optional bool success   =2;
+    optional int32 serverId   = 3;
+    repeated ConnInfo  connInfo        = 4;
+    optional string ip = 5;
+    optional int32 port = 6;
+    optional int32 type = 7;
+    optional bool isMe = 8;
+    optional int32 regType = 9;
 }
 //向集群服务器更新
 message ServerUpdateRequest{
@@ -74,9 +76,10 @@ message ServerInfo {
 }
 
 //系统错误码
-enum SystemErroCode{
+enum SystemErrCode{
     HallNotFind							= 1;	//没有可用大厅服
     GameNotFind							= 2;	//没有可用游戏服
-    ConectReset							= 3;	//连接已重置，失效
+    ConnectReset							= 3;	//连接已重置，失效
     GateNotFind                        = 4;//没有可用大厅服务器
+    NotLoginOn                          =5;//没有登录
 }

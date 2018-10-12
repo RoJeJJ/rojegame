@@ -9,7 +9,14 @@ thread-config:
 netty:
   config:
     gate-game-tcp:
-      port: 8089
+      soBackLog: 2048
+      soKeepAlive: true
+      tcpNoDelay: true
+      readerIdleTime: 20
+      writerIdleTime: 0
+      allIdleTime: 0
+      soLinger: 0
+    gate-user-tcp:
       soBackLog: 2048
       soKeepAlive: true
       tcpNoDelay: true

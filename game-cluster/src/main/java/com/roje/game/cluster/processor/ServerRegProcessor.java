@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 
+import java.net.InetSocketAddress;
 import java.util.List;
 
 import static com.roje.game.message.Mid.MID.ServerRegisterReq_VALUE;
@@ -32,11 +33,14 @@ public class ServerRegProcessor extends MessageProcessor {
         CommonMessage.ServerRegisterRequest request = CommonMessage.ServerRegisterRequest.parseFrom(bytes);
         CommonMessage.ServerInfo info = request.getServerInfo();
         ServerInfo serverInfo = serverManager.registerServer(info,channel);
-        if (serverInfo == null)
-            log.info("服务器注册失败");
-        else {
-            log.info("注册成功");
-            CommonMessage.ServerRegisterResponse.Builder builder = CommonMessage.ServerRegisterResponse.newBuilder();
+        CommonMessage.ServerRegisterResponse.Builder builder = CommonMessage.ServerRegisterResponse.newBuilder();
+        builder.setRegType(ServerType.Cluster.getType());
+        if (serverInfo == null) {
+            log.info("{}注册到集群服务器失败", ((InetSocketAddress) channel.remoteAddress()).getAddress().getHostName());
+            builder.setSuccess(false);
+        }else {
+            log.info("{}注册到集群服务器成功",serverInfo.getName());
+            builder.setSuccess(true);
             builder.setServerId(serverInfo.getId());
             builder.setIp(serverInfo.getIp());
             builder.setPort(serverInfo.getInnerPort());
@@ -45,12 +49,12 @@ public class ServerRegProcessor extends MessageProcessor {
                 List<CommonMessage.ConnInfo> connInfos = serverManager.getGateConnInfo(info.getVersion());
                 builder.addAllConnInfo(connInfos);
             }
-            builder.setIsMe(true);
-            channel.writeAndFlush(builder.build());
             if (serverInfo.getType() == ServerType.Gate.getType()){
                 builder.setIsMe(false);
                 serverManager.publishGateServerConnected(builder.build(),info.getVersion());
             }
         }
+        builder.setIsMe(true);
+        channel.writeAndFlush(builder.build());
     }
 }

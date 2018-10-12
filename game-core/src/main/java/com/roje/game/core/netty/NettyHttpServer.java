@@ -17,9 +17,11 @@ public class NettyHttpServer implements Runnable {
     private ChannelInitializer<SocketChannel> initializer;
     private NettyServerConfig nettyServerConfig;
     private Channel channel;
-    public NettyHttpServer(ChannelInitializer<SocketChannel> initializer,NettyServerConfig nettyServerConfig){
+    private int port;
+    public NettyHttpServer(ChannelInitializer<SocketChannel> initializer,NettyServerConfig nettyServerConfig,int port){
         this.initializer = initializer;
         this.nettyServerConfig = nettyServerConfig;
+        this.port = port;
     }
     @Override
     public void run() {
@@ -34,9 +36,9 @@ public class NettyHttpServer implements Runnable {
                     .childOption(ChannelOption.TCP_NODELAY, nettyServerConfig.isTcpNoDelay())
                     .childOption(ChannelOption.SO_KEEPALIVE, nettyServerConfig.isSoKeepAlive())
                     .childOption(ChannelOption.SO_LINGER, nettyServerConfig.getSoLinger());
-            ChannelFuture channelFuture = bootstrap.bind(nettyServerConfig.getPort()).sync().addListener(channelFuture1 -> {
+            ChannelFuture channelFuture = bootstrap.bind(port).sync().addListener(channelFuture1 -> {
                 if (channelFuture1.isSuccess())
-                    LOG.info("HTTP服务器已启动,监听端口:" + nettyServerConfig.getPort());
+                    LOG.info("HTTP服务器已启动,监听端口:" + port);
                 else
                     LOG.error("HTTP服务器启动失败");
             });

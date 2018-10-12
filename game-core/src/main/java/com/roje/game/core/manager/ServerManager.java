@@ -4,6 +4,7 @@ import com.roje.game.core.server.BaseInfo;
 import com.roje.game.core.server.ServerInfo;
 import com.roje.game.core.server.ServerState;
 import com.roje.game.core.server.ServerType;
+import com.roje.game.core.util.MessageUtil;
 import com.roje.game.message.common.CommonMessage;
 import io.netty.channel.Channel;
 import io.netty.util.AttributeKey;
@@ -64,7 +65,7 @@ public class ServerManager {
         return serverInfo;
     }
 
-    public void updateServer(Channel channel,CommonMessage.ServerInfo info) {
+    public CommonMessage.ServerUpdateResponse updateServer(Channel channel, CommonMessage.ServerInfo info) {
         CommonMessage.ServerUpdateResponse.Builder builder = CommonMessage.ServerUpdateResponse.newBuilder();
         ServerInfo serverInfo = channel.attr(SERVER_INFO_ATTRIBUTE_KEY).get();
         if (serverInfo == null){
@@ -82,7 +83,7 @@ public class ServerManager {
             builder.setSucess(true);
             builder.setMsg("成功");
         }
-        channel.writeAndFlush(builder.build());
+        return builder.build();
     }
 
     /**

@@ -3,14 +3,13 @@ package com.roje.game.core.manager;
 import com.roje.game.core.session.Session;
 import io.netty.channel.Channel;
 import io.netty.util.AttributeKey;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public abstract class UserSessionManager<T extends Session> implements UserManager {
-    private static final Logger LOG = LoggerFactory.getLogger(UserSessionManager.class);
+@Slf4j
+public abstract class SessionSessionManager<T extends Session> implements SessionManager {
 
     private final AttributeKey<T> SESSION_ATTRIBUTE_KEY = AttributeKey.newInstance("netty.session");
     /**
@@ -31,7 +30,7 @@ public abstract class UserSessionManager<T extends Session> implements UserManag
         allSessions.put(session.id(),session);
         anonymousSessions.put(session.id(),session);
         session.channel().attr(SESSION_ATTRIBUTE_KEY).set(session);
-        LOG.info("session:{} open", session.id());
+        log.info("session:{} open", session.id());
     }
 
     public void sessionClosed(Channel channel) {
@@ -42,7 +41,7 @@ public abstract class UserSessionManager<T extends Session> implements UserManag
             onlineSessions.remove(session.getUid());
             session.channel().attr(SESSION_ATTRIBUTE_KEY).set(null);
             session.sessionClosed();
-            LOG.info("session:{} closed",session.id());
+            log.info("session:{} closed",session.id());
         }
     }
 

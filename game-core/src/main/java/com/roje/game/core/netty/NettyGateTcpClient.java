@@ -3,13 +3,14 @@ package com.roje.game.core.netty;
 import com.roje.game.core.config.NettyConnGateClientConfig;
 import com.roje.game.core.manager.ConnGateTcpMultiManager;
 import com.roje.game.core.netty.channel.codec.DefaultMessageCodec;
-import com.roje.game.core.netty.channel.handler.DefaultConnGateTcpClientChannelInBoundHandler;
+import com.roje.game.core.netty.channel.handler.DefaultInnerTcpClientChannelInBoundHandler;
 import com.roje.game.message.common.CommonMessage;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.timeout.IdleStateHandler;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -46,8 +47,15 @@ public class NettyGateTcpClient implements Runnable {
                         @Override
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
                             ChannelPipeline pipeline = socketChannel.pipeline();
+                            pipeline.addLast(new IdleStateHandler(gateClientConfig.getReaderIdleTime(),
+                                    gateClientConfig.getWriterIdleTime(),
+                                    gateClientConfig.getAllIdleTime()));
                             pipeline.addLast(new DefaultMessageCodec());
-                            pipeline.addLast(new DefaultConnGateTcpClientChannelInBoundHandler(manager.getService(),manager.getDispatcher()));
+                            pipeline.addLast(new DefaultInnerTcpClientChannelInBoundHandler(true,
+                                    manager.getService(),
+                                    manager.getDispatcher(),
+                                    manager.getSessionManager(),
+                                    manager.getBaseInfo()));
                         }
                     });
             ChannelFuture channelFuture = bootstrap.connect().sync();

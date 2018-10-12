@@ -6,13 +6,13 @@ import com.roje.game.core.config.NettyTcpServerConfig;
 import com.roje.game.core.config.ThreadConfig;
 import com.roje.game.core.dispatcher.MessageDispatcher;
 import com.roje.game.core.manager.ServerManager;
-import com.roje.game.core.manager.UserManager;
+import com.roje.game.core.manager.SessionManager;
 import com.roje.game.core.netty.NettyClusterTcpClient;
 import com.roje.game.core.netty.NettyTcpServer;
 import com.roje.game.core.netty.channel.initializer.ConnClusterClientChannelInitializer;
 import com.roje.game.core.server.BaseInfo;
 import com.roje.game.core.service.Service;
-import com.roje.game.gate.manager.GateUserSessionManager;
+import com.roje.game.gate.manager.GateSessionSessionManager;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.socket.SocketChannel;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -42,14 +42,20 @@ public class AppGate {
         return new NettyTcpServerConfig();
     }
 
+    @Bean("gateUserTcpConfig")
+    @ConfigurationProperties(prefix = "netty.config.gate-user-tcp")
+    public NettyTcpServerConfig gateUserTcpConfig() {
+        return new NettyTcpServerConfig();
+    }
+
     @Bean
-    public NettyConnClusterClientConfig gateClusterClientConfig(){
+    public NettyConnClusterClientConfig gateClusterClientConfig() {
         return new NettyConnClusterClientConfig();
     }
 
     @Bean("gateInfo")
     @ConfigurationProperties(prefix = "server.info")
-    public BaseInfo gateInfo(){
+    public BaseInfo gateInfo() {
         return new BaseInfo();
     }
 
@@ -59,20 +65,29 @@ public class AppGate {
     }
 
     @Bean
-    public ServerManager serverManager(BaseInfo gateInfo){
+    public ServerManager serverManager(BaseInfo gateInfo) {
         return new ServerManager(gateInfo);
     }
 
     @Bean
-    public GateUserSessionManager sessionManager() {
-        return new GateUserSessionManager();
+    public GateSessionSessionManager sessionManager() {
+        return new GateSessionSessionManager();
     }
 
     @Bean
     public NettyTcpServer gateGameTcpServer(
             @Qualifier("gateGameTcpServerChannelInitializer") ChannelInitializer<SocketChannel> channelInitializer,
-            @Qualifier("gateGameTcpConfig") NettyTcpServerConfig nettyTcpServerConfig) {
-        return new NettyTcpServer(channelInitializer, nettyTcpServerConfig);
+            @Qualifier("gateGameTcpConfig") NettyTcpServerConfig nettyTcpServerConfig,
+            BaseInfo gateInfo) {
+        return new NettyTcpServer(channelInitializer, nettyTcpServerConfig, gateInfo.getInnerPort());
+    }
+
+    @Bean
+    public NettyTcpServer getUserTcpServer(
+            @Qualifier("gateUserTcpServerChannelInitializer") ChannelInitializer<SocketChannel> channelInitializer,
+            @Qualifier("gateUserTcpConfig") NettyTcpServerConfig nettyTcpServerConfig,
+            BaseInfo gateInfo) {
+        return new NettyTcpServer(channelInitializer, nettyTcpServerConfig, gateInfo.getUserPort());
     }
 
     @Bean
@@ -83,14 +98,15 @@ public class AppGate {
     @Bean("gateClusterClientChannelInitializer")
     public ConnClusterClientChannelInitializer gateClusterClientChannelInitializer(NettyConnClusterClientConfig clusterClientConfig,
                                                                                    MessageDispatcher dispatcher,
-                                                                                   UserManager userManager,
-                                                                                   BaseInfo baseInfo){
-        return new ConnClusterClientChannelInitializer(clusterClientConfig,dispatcher,userManager,baseInfo);
+                                                                                   SessionManager sessionManager,
+                                                                                   BaseInfo baseInfo) {
+        return new ConnClusterClientChannelInitializer(clusterClientConfig, dispatcher, sessionManager, baseInfo);
     }
 
     @Bean
-    public NettyClusterTcpClient gateClusterClient(NettyConnClusterClientConfig clientConfig,
-                                                   @Qualifier("gateClusterClientChannelInitializer") ChannelInitializer<SocketChannel> clientChannelInitializer){
-        return new NettyClusterTcpClient(clientConfig,clientChannelInitializer);
+    public NettyClusterTcpClient gateClusterClient(
+            NettyConnClusterClientConfig clientConfig,
+            @Qualifier("gateClusterClientChannelInitializer") ChannelInitializer<SocketChannel> clientChannelInitializer) {
+        return new NettyClusterTcpClient(clientConfig, clientChannelInitializer);
     }
 }

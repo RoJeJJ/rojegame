@@ -23,7 +23,7 @@ public class Service {
                     config.getIoKeepAliveTime(),TimeUnit.MILLISECONDS,new LinkedBlockingQueue<>(config.getIoCapacity()),
                     new IoThreadFactory());
             executorMap.put(ThreadType.io,ioExecutor);
-            ServerThread syncThread = new ServerThread(new ThreadGroup(config.getSyncName()),config.getSyncName(),
+            ServerThread syncThread = new ServerThread(new ThreadGroup(config.getSyncName()),"roje-"+config.getSyncName(),
                     config.getSyncTimeInterval(),config.getSyncCommandSize());
             syncThread.start();
             executorMap.put(ThreadType.sync,syncThread);

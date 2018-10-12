@@ -1,10 +1,10 @@
 package com.roje.game.cluster.netty.channel;
 
-import com.roje.game.cluster.netty.handler.ClusterTcpServerChannelInBoundHandler;
 import com.roje.game.core.config.NettyTcpServerConfig;
 import com.roje.game.core.dispatcher.MessageDispatcher;
 import com.roje.game.core.manager.ServerManager;
 import com.roje.game.core.netty.channel.codec.DefaultMessageCodec;
+import com.roje.game.core.netty.channel.handler.DefaultInnerTcpServerChannelInBoundHandler;
 import com.roje.game.core.service.Service;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
@@ -41,6 +41,6 @@ public class ClusterTcpChannelInitializer extends ChannelInitializer<SocketChann
                 nettyTcpServerConfig.getWriterIdleTime(),
                 nettyTcpServerConfig.getAllIdleTime()));
         pipeline.addLast(new DefaultMessageCodec());
-        pipeline.addLast(new ClusterTcpServerChannelInBoundHandler(false,service,dispatcher,serverManager));
+        pipeline.addLast(new DefaultInnerTcpServerChannelInBoundHandler(false,service,dispatcher,serverManager));
     }
 }

@@ -7,7 +7,6 @@ thread-config:
   sync-time-interval: 0
   sync-command-size: 100000
 netty-cluster-tcp-server-config:
-  port: 7000
   so-back-log: 2048
   so-keep-alive: true
   tcp-no-delay: true

@@ -1,19 +1,18 @@
-package com.roje.game.gate.processor.impl.cluster;
+package com.roje.game.gate.processor.resp.cluster;
 
 import com.roje.game.core.processor.MessageProcessor;
 import com.roje.game.core.processor.Processor;
 import com.roje.game.message.Mid;
 import io.netty.channel.Channel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
 @Processor(mid = Mid.MID.ServerUpdateRes_VALUE)
 public class ServerUpdateRespProcessor extends MessageProcessor {
-    private static final Logger LOG = LoggerFactory.getLogger(ServerUpdateRespProcessor.class);
     @Override
     public void handler(Channel channel, byte[] bytes) {
-//        LOG.info("向集群服务器更新信息成功");
+//        log.info("向集群服务器更新信息成功");
     }
 }

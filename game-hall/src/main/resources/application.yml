@@ -30,4 +30,7 @@ netty-conn-gate-client:
   so-linger: 0
   tcp-no-delay: true
   connect-timeout: 5
+  reader-idle-time: 20
+  all-idle-time: 10
+  writer-idle-time: 10
 

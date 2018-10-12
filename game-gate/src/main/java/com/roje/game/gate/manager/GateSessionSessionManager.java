@@ -1,14 +1,14 @@
 package com.roje.game.gate.manager;
 
 import com.roje.game.core.manager.ServerManager;
-import com.roje.game.core.manager.UserSessionManager;
+import com.roje.game.core.manager.SessionSessionManager;
 import com.roje.game.core.server.ServerInfo;
 import com.roje.game.core.server.ServerType;
 import com.roje.game.gate.session.GateUserSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
-public class GateUserSessionManager extends UserSessionManager<GateUserSession> {
+public class GateSessionSessionManager extends SessionSessionManager<GateUserSession> {
     @Autowired
     private ServerManager serverManager;
 

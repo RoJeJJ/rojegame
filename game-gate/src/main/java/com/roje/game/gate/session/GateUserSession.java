@@ -1,19 +1,22 @@
 package com.roje.game.gate.session;
 
+import com.google.protobuf.Message;
 import com.roje.game.core.config.MessageConfig;
 import com.roje.game.core.session.Session;
 import com.roje.game.core.server.ServerInfo;
 import com.roje.game.core.util.MessageUtil;
 import com.roje.game.message.common.CommonMessage;
-import com.roje.game.message.login.LoginMessage;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.logging.Handler;
+
+@Slf4j
 public class GateUserSession extends Session {
-    private static final Logger LOG = LoggerFactory.getLogger(GateUserSession.class);
     private ServerInfo hallServer;
     private ServerInfo gameServer;
     public GateUserSession(Channel channel) {
@@ -38,44 +41,40 @@ public class GateUserSession extends Session {
 
     @Override
     public void sessionClosed() {
-        LoginMessage.LoseConnection.Builder builder = LoginMessage.LoseConnection.newBuilder();
-        builder.setUid(uid);
-        builder.setRid(rid);
+//        LoginMessage.LoseConnection.Builder builder = LoginMessage.LoseConnection.newBuilder();
+//        builder.setUid(uid);
+//        builder.setRid(rid);
+//        if (hallServer != null){
+//            hallServer.send(builder.build());
+//        }
+//        if (gameServer != null){
+//            gameServer.send(builder.build());
+//        }
+    }
+
+    public void sendToHall(boolean auth,int mid, byte[] content){
         if (hallServer != null){
-            hallServer.send(builder.build());
-        }
-        if (gameServer != null){
-            gameServer.send(builder.build());
-        }
-    }
-
-    public void sendToHall(int mid, byte[] content){
-        if (hallServer != null){
-            send(hallServer.getChannel(),mid,content);
+            sendTo(auth,hallServer.getChannel(),mid,content);
         }else {
-                LOG.warn("没有可用的大厅服务器");
-                channel.writeAndFlush(MessageUtil.errorResponse(CommonMessage.SystemErroCode.HallNotFind, "没有可用的大厅服务器"));
+                log.warn("没有可用的大厅服务器");
+                channel.writeAndFlush(MessageUtil.errorResponse(CommonMessage.SystemErrCode.HallNotFind, "没有可用的大厅服务器"));
         }
     }
 
-    public void sendToGame(int mid, byte[] content){
-        if (gameServer != null){
-            send(gameServer.getChannel(),mid,content);
-        }else {
-            LOG.warn("没有可用的游戏服务器");
-            channel.writeAndFlush(MessageUtil.errorResponse(CommonMessage.SystemErroCode.HallNotFind, "没有可用的大厅服务器"));
-        }
-    }
-
-    private void send(Channel channel,int mid,byte[] content){
-        if (channel != null && channel.isActive()) {
-            int len = MessageConfig.MidLen + MessageConfig.UidLen + content.length;
-            ByteBuf buf = Unpooled.buffer(len);
-            buf.writeInt(mid);
-            buf.writeLong(uid);
-            buf.writeBytes(content);
-            channel.writeAndFlush(buf);
+    private void sendTo(boolean auth,Channel channel,int mid,byte[] content){
+        if (auth && uid == 0){
+            log.warn("还没有登录");
+            send(MessageUtil.errorResponse(CommonMessage.SystemErrCode.NotLoginOn,"请先登录"));
         }else
-            LOG.warn("session消息发送失败");
+            MessageUtil.send(channel,mid,uid,content);
+    }
+
+    public void sendToGame(boolean auth,int mid, byte[] content){
+        if (gameServer != null){
+            sendTo(auth,gameServer.getChannel(),mid,content);
+        }else {
+            log.warn("没有可用的游戏服务器");
+            channel.writeAndFlush(MessageUtil.errorResponse(CommonMessage.SystemErrCode.HallNotFind, "没有可用的大厅服务器"));
+        }
     }
 }

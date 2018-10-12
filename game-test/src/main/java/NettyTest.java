@@ -1,42 +1,35 @@
+import com.roje.game.core.dispatcher.MessageDispatcher;
+import com.roje.game.core.netty.channel.codec.DefaultMessageCodec;
+import com.roje.game.message.Mid;
+import com.roje.game.message.login.LoginMessage;
+import io.netty.bootstrap.Bootstrap;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-
-import java.util.Timer;
-import java.util.TimerTask;
+import io.netty.channel.socket.nio.NioSocketChannel;
 
 public class NettyTest implements Runnable{
-    private EventLoopGroup boss;
-    private EventLoopGroup worker;
     private Channel channel;
     public void run(){
+        EventLoopGroup group = new NioEventLoopGroup();
         try {
-            boss = new NioEventLoopGroup();
-            worker = new NioEventLoopGroup();
-            ServerBootstrap serverBootstrap = new ServerBootstrap();
-            serverBootstrap.group(boss, worker)
-                    .channel(NioServerSocketChannel.class)
-                    .childHandler(new ChannelInitializer<SocketChannel>() {
+            Bootstrap bootstrap = new Bootstrap();
+            bootstrap.group(group)
+                    .channel(NioSocketChannel.class)
+                    .remoteAddress("127.0.0.1",8088)
+                    .handler(new ChannelInitializer<SocketChannel>() {
                         @Override
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
-
+                            ChannelPipeline pipeline = socketChannel.pipeline();
+                            pipeline.addLast(new DefaultMessageCodec());
+                            pipeline.addLast(new TestHandler() );
                         }
                     })
-                    .option(ChannelOption.SO_BACKLOG, 2048)
-                    .childOption(ChannelOption.TCP_NODELAY, true)
-                    .childOption(ChannelOption.SO_KEEPALIVE, true)
-                    .childOption(ChannelOption.SO_LINGER, 0);
-            ChannelFuture channelFuture = serverBootstrap.bind(8000).sync();
-            System.out.println("TCP服务器已启动,监听端口:" + 8000);
-            new Timer().schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    System.out.println("stop");
-                    channel.close();
-                }
-            },5000);
+                    .option(ChannelOption.TCP_NODELAY,true)
+                    .option(ChannelOption.SO_LINGER, 0);
+            ChannelFuture channelFuture = bootstrap.connect().sync();
             channel = channelFuture.channel();
             channelFuture.channel().closeFuture().sync();
             System.out.println("TCP服务器已停止");
@@ -47,13 +40,8 @@ public class NettyTest implements Runnable{
         }
     }
     public void stop(){
-        System.out.println("退出");
-        if (boss != null && !boss.isShutdown() && !boss.isShuttingDown() ) {
-            boss.shutdownGracefully();
-        }
-        if (worker != null && !worker.isShutdown() && !worker.isShuttingDown()) {
-            worker.shutdownGracefully();
-        }
+       if (channel != null && channel.isActive())
+           channel.close();
     }
     public void start(){
         Thread thread = new Thread(this);
@@ -68,5 +56,22 @@ public class NettyTest implements Runnable{
     public static void main(String[] args) {
         NettyTest test = new NettyTest();
         test.start();
+    }
+
+    public class TestHandler extends SimpleChannelInboundHandler<byte[]>{
+        @Override
+        protected void channelRead0(ChannelHandlerContext channelHandlerContext, byte[] bytes) throws Exception {
+        }
+
+        @Override
+        public void channelActive(ChannelHandlerContext ctx){
+            LoginMessage.LoginRequest.Builder builder = LoginMessage.LoginRequest.newBuilder();
+            builder.setAccount("abc");
+            builder.setPassword("123456");
+            builder.setLoginType(LoginMessage.LoginType.ACCOUNT);
+            builder.setVersion(1);
+            builder.setMid(Mid.MID.LoginReq);
+            ctx.writeAndFlush(builder.build());
+        }
     }
 }

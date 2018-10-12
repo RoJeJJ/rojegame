@@ -6,14 +6,13 @@ import com.roje.game.core.config.MessageConfig;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageCodec;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 import java.util.function.Predicate;
 
+@Slf4j
 public class DefaultMessageCodec extends ByteToMessageCodec<Object> {
-    private static final Logger LOG = LoggerFactory.getLogger(DefaultMessageCodec.class);
     private Predicate<ChannelHandlerContext> channelHandlerContextPredicate;
 
     @Override
@@ -42,13 +41,13 @@ public class DefaultMessageCodec extends ByteToMessageCodec<Object> {
         byteBuf.markReaderIndex();
         int len = byteBuf.readInt();
         if (len < 0 || len < MessageConfig.headLen){
-            LOG.warn("消息解析异常,长度:{},HEAD_SIZE:{}",len,MessageConfig.headLen);
+            log.warn("消息解析异常,长度:{},HEAD_SIZE:{}",len,MessageConfig.headLen);
             byteBuf.clear();
             channelHandlerContext.close();
             return;
         }
         if (channelHandlerContextPredicate != null && channelHandlerContextPredicate.test(channelHandlerContext)){
-            LOG.warn("消息解析异常");
+            log.warn("消息解析异常");
             byteBuf.clear();
             channelHandlerContext.close();
             return;

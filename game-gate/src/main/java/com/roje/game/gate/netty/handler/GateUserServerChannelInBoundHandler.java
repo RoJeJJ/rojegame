@@ -3,19 +3,18 @@ package com.roje.game.gate.netty.handler;
 import com.roje.game.core.dispatcher.MessageDispatcher;
 import com.roje.game.core.netty.channel.handler.DefaultInBoundHandler;
 import com.roje.game.core.service.Service;
-import com.roje.game.gate.manager.GateUserSessionManager;
+import com.roje.game.gate.manager.GateSessionSessionManager;
 import com.roje.game.gate.session.GateUserSession;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.timeout.IdleStateEvent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class GateUserServerChannelInBoundHandler extends DefaultInBoundHandler {
-    private static final Logger LOG = LoggerFactory.getLogger(GateUserServerChannelInBoundHandler.class);
-    private GateUserSessionManager sessionManager;
+    private GateSessionSessionManager sessionManager;
 
-    public GateUserServerChannelInBoundHandler(boolean containUid, Service service, MessageDispatcher dispatcher,GateUserSessionManager sessionManager) {
-        super(containUid,service,dispatcher);
+    public GateUserServerChannelInBoundHandler(Service service, MessageDispatcher dispatcher, GateSessionSessionManager sessionManager) {
+        super(false,service,dispatcher);
         this.sessionManager = sessionManager;
     }
 
@@ -24,14 +23,14 @@ public class GateUserServerChannelInBoundHandler extends DefaultInBoundHandler {
     public void forward(ChannelHandlerContext ctx,int mid,long uid, byte[] bytes) {
         GateUserSession session = sessionManager.getSession(ctx.channel());
         if (session == null) {
-            LOG.warn("未知请求,关闭连接");
+            log.warn("未知请求,关闭连接");
             ctx.close();
             return;
         }
         if (mid > 20000) { //消息号大于20000的消息转发到游戏服
-           session.sendToGame(mid,bytes);
+           session.sendToGame(true,mid,bytes);
         } else if (mid > 10000) { //大于10000,小于20000 转发到大厅服务器
-            session.sendToHall(mid,bytes);
+            session.sendToHall(true,mid,bytes);
         }
     }
 
@@ -55,7 +54,7 @@ public class GateUserServerChannelInBoundHandler extends DefaultInBoundHandler {
             IdleStateEvent event = (IdleStateEvent) evt;
             switch (event.state()) {
                 case READER_IDLE:
-                    LOG.warn("{} reader timeout,close it---", ctx);
+                    log.warn("{} reader timeout,close it---", ctx);
                     ctx.close();
                     break;
             }
@@ -64,7 +63,7 @@ public class GateUserServerChannelInBoundHandler extends DefaultInBoundHandler {
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-        LOG.warn("连接{}异常:{} \n 关闭连接", ctx, cause);
+        log.warn("连接{}异常:{} \n 关闭连接", ctx, cause);
         ctx.close();
     }
 

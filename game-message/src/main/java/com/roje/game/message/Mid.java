@@ -375,21 +375,21 @@ public final class Mid {
      */
     CreateGuildRes(44, 10034),
     /**
-     * <code>LoseConntionReq = 10035;</code>
+     * <code>LoseConnectionReq = 10035;</code>
      *
      * <pre>
      *连接断开
      * </pre>
      */
-    LoseConntionReq(45, 10035),
+    LoseConnectionReq(45, 10035),
     /**
-     * <code>LoseConntionRes = 10036;</code>
+     * <code>LoseConnectionRes = 10036;</code>
      *
      * <pre>
      *连接断开
      * </pre>
      */
-    LoseConntionRes(46, 10036),
+    LoseConnectionRes(46, 10036),
     /**
      * <code>EnterRoomReq = 20001;</code>
      *
@@ -892,21 +892,21 @@ public final class Mid {
      */
     public static final int CreateGuildRes_VALUE = 10034;
     /**
-     * <code>LoseConntionReq = 10035;</code>
+     * <code>LoseConnectionReq = 10035;</code>
      *
      * <pre>
      *连接断开
      * </pre>
      */
-    public static final int LoseConntionReq_VALUE = 10035;
+    public static final int LoseConnectionReq_VALUE = 10035;
     /**
-     * <code>LoseConntionRes = 10036;</code>
+     * <code>LoseConnectionRes = 10036;</code>
      *
      * <pre>
      *连接断开
      * </pre>
      */
-    public static final int LoseConntionRes_VALUE = 10036;
+    public static final int LoseConnectionRes_VALUE = 10036;
     /**
      * <code>EnterRoomReq = 20001;</code>
      *
@@ -1102,8 +1102,8 @@ public final class Mid {
         case 10032: return GuildApprovalRes;
         case 10033: return CreateGuildReq;
         case 10034: return CreateGuildRes;
-        case 10035: return LoseConntionReq;
-        case 10036: return LoseConntionRes;
+        case 10035: return LoseConnectionReq;
+        case 10036: return LoseConnectionRes;
         case 20001: return EnterRoomReq;
         case 20002: return EnterRoomRes;
         case 20003: return ApplyAthleticsReq;
@@ -1182,7 +1182,7 @@ public final class Mid {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\tMid.proto*\224\n\n\003MID\022\026\n\021ServerRegisterReq" +
+      "\n\tMid.proto*\230\n\n\003MID\022\026\n\021ServerRegisterReq" +
       "\020\351\007\022\026\n\021ServerRegisterRes\020\352\007\022\022\n\rServerLis" +
       "tReq\020\353\007\022\022\n\rServerListRes\020\354\007\022\030\n\023ChangeRol" +
       "eServerReq\020\355\007\022\030\n\023ChangeRoleServerRes\020\356\007\022" +
@@ -1204,18 +1204,18 @@ public final class Mid {
       "\014GuildListRes\020\254N\022\022\n\rApplyGuildReq\020\255N\022\022\n\r",
       "ApplyGuildRes\020\256N\022\025\n\020GuildApprovalReq\020\257N\022" +
       "\025\n\020GuildApprovalRes\020\260N\022\023\n\016CreateGuildReq" +
-      "\020\261N\022\023\n\016CreateGuildRes\020\262N\022\024\n\017LoseConntion" +
-      "Req\020\263N\022\024\n\017LoseConntionRes\020\264N\022\022\n\014EnterRoo" +
-      "mReq\020\241\234\001\022\022\n\014EnterRoomRes\020\242\234\001\022\027\n\021ApplyAth" +
-      "leticsReq\020\243\234\001\022\027\n\021ApplyAthleticsRes\020\244\234\001\022\021" +
-      "\n\013QuitRoomReq\020\245\234\001\022\021\n\013QuitRoomRes\020\246\234\001\022\026\n\020" +
-      "FishEnterRoomRes\020\250\234\001\022\021\n\013RoomInfoRes\020\252\234\001\022" +
-      "\023\n\rRoomChangeRes\020\254\234\001\022\021\n\013UseSkillReq\020\255\234\001\022" +
-      "\021\n\013UseSkillRes\020\256\234\001\022\r\n\007FireReq\020\257\234\001\022\r\n\007Fir",
-      "eRes\020\260\234\001\022\023\n\rFireResultReq\020\261\234\001\022\023\n\rFireRes" +
-      "ultRes\020\262\234\001\022\022\n\014GunLeveUpReq\020\263\234\001\022\022\n\014GunLev" +
-      "eUpRes\020\264\234\001\022\026\n\020ErrorMessageResp\020\261\352\001B\027\n\025co" +
-      "m.roje.game.message"
+      "\020\261N\022\023\n\016CreateGuildRes\020\262N\022\026\n\021LoseConnecti" +
+      "onReq\020\263N\022\026\n\021LoseConnectionRes\020\264N\022\022\n\014Ente" +
+      "rRoomReq\020\241\234\001\022\022\n\014EnterRoomRes\020\242\234\001\022\027\n\021Appl" +
+      "yAthleticsReq\020\243\234\001\022\027\n\021ApplyAthleticsRes\020\244" +
+      "\234\001\022\021\n\013QuitRoomReq\020\245\234\001\022\021\n\013QuitRoomRes\020\246\234\001" +
+      "\022\026\n\020FishEnterRoomRes\020\250\234\001\022\021\n\013RoomInfoRes\020" +
+      "\252\234\001\022\023\n\rRoomChangeRes\020\254\234\001\022\021\n\013UseSkillReq\020" +
+      "\255\234\001\022\021\n\013UseSkillRes\020\256\234\001\022\r\n\007FireReq\020\257\234\001\022\r\n",
+      "\007FireRes\020\260\234\001\022\023\n\rFireResultReq\020\261\234\001\022\023\n\rFir" +
+      "eResultRes\020\262\234\001\022\022\n\014GunLeveUpReq\020\263\234\001\022\022\n\014Gu" +
+      "nLeveUpRes\020\264\234\001\022\026\n\020ErrorMessageResp\020\261\352\001B\027" +
+      "\n\025com.roje.game.message"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {

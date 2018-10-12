@@ -15,4 +15,10 @@ public class NettyConnGateClientConfig {
 
     //连接超时
     private int connectTimeout = 5;
+
+    private int readerIdleTime = 0;
+
+    private int writerIdleTime = 0;
+
+    private int allIdleTime = 10;
 }

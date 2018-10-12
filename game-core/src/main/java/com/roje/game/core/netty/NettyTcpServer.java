@@ -15,10 +15,12 @@ public class NettyTcpServer implements Runnable {
     private ChannelInitializer<SocketChannel> initializer;
     private NettyTcpServerConfig nettyTcpServerConfig;
     private Channel channel;
+    private int port;
 
-    public NettyTcpServer(ChannelInitializer<SocketChannel> initializer,NettyTcpServerConfig nettyTcpServerConfig){
+    public NettyTcpServer(ChannelInitializer<SocketChannel> initializer,NettyTcpServerConfig nettyTcpServerConfig,int port){
         this.initializer = initializer;
         this.nettyTcpServerConfig = nettyTcpServerConfig;
+        this.port = port;
     }
 
     @Override
@@ -35,9 +37,9 @@ public class NettyTcpServer implements Runnable {
                     .childOption(ChannelOption.SO_KEEPALIVE, nettyTcpServerConfig.isSoKeepAlive())
                     .childOption(ChannelOption.SO_LINGER, nettyTcpServerConfig.getSoLinger());
 
-            ChannelFuture channelFuture = serverBootstrap.bind(nettyTcpServerConfig.getPort()).sync().addListener(channelFuture1 -> {
+            ChannelFuture channelFuture = serverBootstrap.bind(port).sync().addListener(channelFuture1 -> {
                 if (channelFuture1.isSuccess())
-                    log.info("TCP服务器已启动,监听端口:" + nettyTcpServerConfig.getPort());
+                    log.info("TCP服务器已启动,监听端口:" + port);
                 else
                     log.info("TCP服务器启动失败");
             });

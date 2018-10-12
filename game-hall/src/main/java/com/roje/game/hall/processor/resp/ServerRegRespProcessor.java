@@ -4,6 +4,7 @@ import com.roje.game.core.manager.ConnGateTcpMultiManager;
 import com.roje.game.core.processor.MessageProcessor;
 import com.roje.game.core.processor.Processor;
 import com.roje.game.core.server.BaseInfo;
+import com.roje.game.core.server.ServerType;
 import com.roje.game.message.Mid.MID;
 import com.roje.game.message.common.CommonMessage;
 import io.netty.channel.Channel;
@@ -33,23 +34,32 @@ public class ServerRegRespProcessor extends MessageProcessor {
     public void handler(Channel channel, byte[] bytes) throws Exception {
         CommonMessage.ServerRegisterResponse response = CommonMessage.ServerRegisterResponse.parseFrom(bytes);
         int id = response.getServerId();
-        if (response.getIsMe()){
-            hallInfo.setId(id);
-            log.info("注册成功,id:{}",id);
+        if (response.getSuccess()){
+            if (response.getRegType() == ServerType.Cluster.getType()){
+                if (response.getIsMe()){
+                    log.info("注册到集群成功,id:{}",id);
 
-            List<CommonMessage.ConnInfo> connInfos = response.getConnInfoList();
-            if (connInfos != null && connInfos.size() > 0){
-                for (CommonMessage.ConnInfo connInfo : connInfos)
-                    connGateTcpMultiManager.connect(connInfo);
-            }else
-                log.warn("没有可用的网关服务器");
-        }else {
-            CommonMessage.ConnInfo.Builder builder = CommonMessage.ConnInfo.newBuilder();
-            builder.setId(id);
-            builder.setIp(response.getIp());
-            builder.setPort(response.getPort());
-            builder.setType(response.getType());
-            connGateTcpMultiManager.connect(builder.build());
-        }
+                    hallInfo.setId(id);
+
+                    List<CommonMessage.ConnInfo> connInfos = response.getConnInfoList();
+                    if (connInfos != null && connInfos.size() > 0){
+                        for (CommonMessage.ConnInfo connInfo : connInfos)
+                            connGateTcpMultiManager.connect(connInfo);
+                    }else
+                        log.warn("没有可用的网关服务器");
+                } else if (response.getType() == ServerType.Gate.getType()){
+                    CommonMessage.ConnInfo.Builder builder = CommonMessage.ConnInfo.newBuilder();
+                    builder.setId(id);
+                    builder.setIp(response.getIp());
+                    builder.setPort(response.getPort());
+                    builder.setType(response.getType());
+                    connGateTcpMultiManager.connect(builder.build());
+                }
+            }else if (response.getRegType() == ServerType.Gate.getType()){
+                if (response.getIsMe())
+                    log.info("注册到网关成功");
+            }
+        }else
+            log.warn("注册失败!");
     }
 }

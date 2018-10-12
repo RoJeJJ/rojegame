@@ -15,5 +15,8 @@
         <module name="game-test" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="login-server" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

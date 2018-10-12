@@ -1,27 +1,25 @@
-package com.roje.game.gate.processor.impl.game;
+package com.roje.game.gate.processor.resp.game;
 
 import com.roje.game.core.processor.MessageProcessor;
 import com.roje.game.core.processor.Processor;
-import com.roje.game.gate.manager.GateUserSessionManager;
+import com.roje.game.gate.manager.GateSessionSessionManager;
 import com.roje.game.gate.session.GateUserSession;
+import com.roje.game.message.Mid;
 import com.roje.game.message.login.LoginMessage;
 import io.netty.channel.Channel;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import static com.roje.game.message.Mid.MID.LoginRes_VALUE;
 
 @Slf4j
 @Component
-@Processor(mid = LoginRes_VALUE)
+@Processor(mid = Mid.MID.LoginRes_VALUE)
 public class LoginRespProcessor extends MessageProcessor {
-    private final GateUserSessionManager sessionManager;
+    private final GateSessionSessionManager sessionManager;
 
     @Autowired
-    public LoginRespProcessor(GateUserSessionManager sessionManager) {
+    public LoginRespProcessor(GateSessionSessionManager sessionManager) {
         this.sessionManager = sessionManager;
     }
 
@@ -36,10 +34,13 @@ public class LoginRespProcessor extends MessageProcessor {
             return;
         }
         if (response.getOk()){
-            session.setRid(response.getRid());
+            log.info("{}登录成功",response.getUid());
             session.setUid(response.getUid());
             sessionManager.sessionLogin(session);
         }
-        session.send(response);
+        LoginMessage.LoginResponse.Builder builder = LoginMessage.LoginResponse.newBuilder();
+        builder.setOk(response.getOk());
+        builder.setMsg(response.getMsg());
+        session.send(builder.build());
     }
 }
