@@ -1,39 +1,42 @@
 package com.roje.game.core.dispatcher;
 
-import com.google.protobuf.MessageLite;
 import com.roje.game.core.processor.HttpProcessor;
 import com.roje.game.core.processor.HttpRequestProcessor;
 import com.roje.game.core.processor.Processor;
 import com.roje.game.core.processor.MessageProcessor;
+import com.roje.game.message.action.Action;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class MessageDispatcher {
-    private Map<Integer,MessageProcessor> handlerMap = new HashMap<>();
-    private Map<String,HttpRequestProcessor> httpHandlerMap = new HashMap<>();
-    public void register(Object handler){
-        if (handler instanceof MessageProcessor){
+    private Map<Action, MessageProcessor> handlerMap = new HashMap<>();
+    private Map<String, HttpRequestProcessor> httpHandlerMap = new HashMap<>();
+
+    public void register(Object handler) {
+        if (handler instanceof MessageProcessor) {
             MessageProcessor mp = (MessageProcessor) handler;
-            Processor h = mp.getClass().getAnnotation(Processor.class);
-            if (h != null){
-                Class<? extends MessageLite> clazz = h.clazz();
-                if (clazz != null)
+            Processor processor = mp.getClass().getAnnotation(Processor.class);
+            if (processor != null) {
+                Action action = processor.action();
+                handlerMap.put(action, mp);
             }
-                handlerMap.put(h.mid(),mp);
-        }else if (handler instanceof HttpRequestProcessor){
+        } else if (handler instanceof HttpRequestProcessor) {
             HttpRequestProcessor hrp = (HttpRequestProcessor) handler;
-            HttpProcessor hp = hrp.getClass().getAnnotation(HttpProcessor.class);
-            if (hp != null)
-                httpHandlerMap.put(hp.path(),hrp);
+            HttpProcessor httpProcessor = hrp.getClass().getAnnotation(HttpProcessor.class);
+            if (httpProcessor != null) {
+                httpHandlerMap.put(httpProcessor.path(), hrp);
+            }
         }
     }
+
     @SuppressWarnings("unchecked")
-    public <T extends MessageProcessor>T getMessageHandler(int mid){
-        return (T) handlerMap.get(mid);
+    public <T extends MessageProcessor> T getMessageHandler(Action action) {
+        return (T) handlerMap.get(action);
     }
+
     @SuppressWarnings("unchecked")
-    public <T extends HttpRequestProcessor> T getHttpMessageHandler(String path){
+    public <T extends HttpRequestProcessor> T getHttpMessageHandler(String path) {
         return (T) httpHandlerMap.get(path);
     }
 }

@@ -7,6 +7,6 @@ import java.lang.annotation.RetentionPolicy;
 
 @Retention(RetentionPolicy.RUNTIME)
 public @interface HttpProcessor {
-    String path() default "";
+    String path();
     ThreadType thread() default ThreadType.io;
 }

@@ -1,20 +1,25 @@
-ï»¿@echo off
+@echo off
 setlocal enabledelayedexpansion
-
-echo å¼€å§‹ç”Ÿæˆprotoä»£ç ...
+set b=%cd%
+echo É¾³ý¾ÉÎÄ¼þ
 echo.
 
-FOR %%p in (*.proto) do (ã€€ã€€
+rd/s/q H:\IdeaProjects\rojegame\game-message\src\main\java\com
+
+echo ¿ªÊ¼Éú³Éproto´úÂë...
+echo.
+
+FOR %%p in (*.proto) do (¡¡¡¡
 	set proto=!proto!%%p 
 )
 
 echo %proto%
-protoc --java_out G:\project_IEDA\rojegame\game-message\src\main\java ./%proto%
+protoc --java_out H:\IdeaProjects\rojegame\game-message\src\main\java ./%proto%
 
-::å¤åˆ¶protobufåˆ°game-manageåŽå°
+::¸´ÖÆprotobufµ½game-manageºóÌ¨
 ::xcopy *.proto G:\project_IEDA\game-server-master\game-manage\src\main\webapp\assets\proto /s /h
 
 echo.
-echo æ‰§è¡Œå®Œæˆ...
+echo Ö´ÐÐÍê³É...
 echo.
 PAUSE 

@@ -16,7 +16,6 @@
         <module>game-cluster</module>
         <module>game-test</module>
         <module>game-hall</module>
-        <module>login-server</module>
     </modules>
     <packaging>pom</packaging>
     <name>roje-game</name>

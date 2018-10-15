@@ -1,0 +1,13 @@
+syntax="proto3";
+import "server_info.proto";
+option java_package = "com.roje.game.message.server_update";
+option java_multiple_files = true;
+
+message ServerUpdateRequest{
+    ServerInfo serverInfo = 1;
+}
+
+message ServerUpdateResponse{
+    bool success = 1;
+    string msg = 2;
+}

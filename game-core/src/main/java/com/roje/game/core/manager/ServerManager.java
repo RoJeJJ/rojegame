@@ -1,11 +1,13 @@
 package com.roje.game.core.manager;
 
 import com.roje.game.core.server.BaseInfo;
-import com.roje.game.core.server.ServerInfo;
-import com.roje.game.core.server.ServerState;
-import com.roje.game.core.server.ServerType;
-import com.roje.game.core.util.MessageUtil;
-import com.roje.game.message.common.CommonMessage;
+import com.roje.game.message.broadcast.GateConnected;
+import com.roje.game.message.server_info.ServerInfo;
+import com.roje.game.message.server_info.ServerStatus;
+import com.roje.game.message.server_info.ServerType;
+import com.roje.game.message.server_register.Connection;
+import com.roje.game.message.server_register.ServerRegResponse;
+import com.roje.game.message.server_update.ServerUpdateResponse;
 import io.netty.channel.Channel;
 import io.netty.util.AttributeKey;
 import lombok.extern.slf4j.Slf4j;
@@ -21,66 +23,69 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ServerManager {
     private static AtomicInteger idGenerator = new AtomicInteger(1);
-    private Map<Integer, ServerInfo> serverMap = new ConcurrentHashMap<>();
-    private static final AttributeKey<ServerInfo> SERVER_INFO_ATTRIBUTE_KEY = AttributeKey.newInstance("netty.server_info");
+    private Map<Integer, ServerInfo.Builder> serverMap = new ConcurrentHashMap<>();
+    private Map<Integer,Channel> channelMap = new ConcurrentHashMap<>();
+    private static final AttributeKey<ServerInfo.Builder> SERVER_INFO_ATTRIBUTE_KEY = AttributeKey.newInstance("netty.server_info");
     private BaseInfo baseInfo;
 
     public ServerManager(BaseInfo baseInfo){
         this.baseInfo = baseInfo;
     }
 
-    public ServerInfo registerServer(CommonMessage.ServerInfo info, Channel channel) {
-        ServerInfo serverInfo = channel.attr(SERVER_INFO_ATTRIBUTE_KEY).get();
-        if (serverInfo != null){
+    public void registerServer(ServerInfo serverInfo, Channel channel) {
+        ServerRegResponse.Builder respBuilder = ServerRegResponse.newBuilder();
+        ServerInfo.Builder temp = channel.attr(SERVER_INFO_ATTRIBUTE_KEY).get();
+        if (temp != null){
             log.warn("不能重复注册");
-            return null;
+            respBuilder.setSuccess(false);
+            respBuilder.setMsg("不能重复注册");
+            return;
         }
-        ServerType type = ServerType.valueOf(info.getType());
-        if (type == ServerType.UnKnown)
-            log.warn("服务器类型未知");
-        else
-            log.info("服务器类型{}",type.name());
-        serverInfo = new ServerInfo();
+        log.info("服务器类型{}",serverInfo.getType().name());
+        ServerInfo.Builder builder = serverInfo.toBuilder();
         if (baseInfo.getType() == ServerType.Cluster){
             int id = idGenerator.getAndIncrement();
-            serverInfo.setId(id);
-        }else
-            serverInfo.setId(info.getId());
-        serverInfo.setHttpPort(info.getHttpport());
-        serverInfo.setIp(info.getIp());
-        serverInfo.setMaxUserCount(info.getMaxUserCount());
-        serverInfo.setName(info.getName());
-        serverInfo.setOnline(info.getOnline());
-        serverInfo.setUserPort(info.getUserPort());
-        serverInfo.setInnerPort(info.getInnerPort());
-        serverInfo.setType(info.getType());
-        serverInfo.setWwwip(info.getWwwip());
-        serverInfo.setChannel(channel);
-        serverInfo.setFreeMemory(info.getFreeMemory());
-        serverInfo.setTotalMemory(info.getTotalMemory());
-        serverInfo.setClientVersionCode(info.getRequireClientVersion());
-        serverInfo.setVersionCode(info.getVersion());
-        serverMap.put(serverInfo.getId(), serverInfo);
-        channel.attr(SERVER_INFO_ATTRIBUTE_KEY).set(serverInfo);
-        return serverInfo;
+            builder.setId(id);
+        }
+        channelMap.put(builder.getId(),channel);
+        serverMap.put(builder.getId(), builder);
+        channel.attr(SERVER_INFO_ATTRIBUTE_KEY).set(builder);
+        respBuilder.setSuccess(true);
+        respBuilder.setMsg("成功");
+        respBuilder.setId(builder.getId());
+        respBuilder.setType(baseInfo.getType());
+        if (serverInfo.getType() == ServerType.Hall || serverInfo.getType() == ServerType.Game){
+            respBuilder.addAllGateConns(getGateConnInfo(serverInfo.getVersion()));
+        }
+        log.info("{}注册到集群服务器成功",serverInfo.getName());
+        channel.writeAndFlush(respBuilder.build());
+
+        //如果网关服务器连接,把连接信息广播给其他服务器
+        if (serverInfo.getType() == ServerType.Gate) {
+            GateConnected.Builder connBuilder = GateConnected.newBuilder();
+            connBuilder.setIp(builder.getIp());
+            connBuilder.setProt(builder.getInnerPort());
+            connBuilder.setId(builder.getId());
+            publishGateServerConnected(connBuilder.build(), serverInfo.getVersion());
+        }
     }
 
-    public CommonMessage.ServerUpdateResponse updateServer(Channel channel, CommonMessage.ServerInfo info) {
-        CommonMessage.ServerUpdateResponse.Builder builder = CommonMessage.ServerUpdateResponse.newBuilder();
-        ServerInfo serverInfo = channel.attr(SERVER_INFO_ATTRIBUTE_KEY).get();
-        if (serverInfo == null){
+    public ServerUpdateResponse updateServer(Channel channel, ServerInfo info) {
+        ServerUpdateResponse.Builder builder = ServerUpdateResponse.newBuilder();
+        ServerInfo.Builder tempBuilder = channel.attr(SERVER_INFO_ATTRIBUTE_KEY).get();
+        if (tempBuilder == null){
             log.warn("服务器的注册信息不存在???");
-            builder.setSucess(false);
+            builder.setSuccess(false);
             builder.setMsg("未找到该服务器的信息,是不是没有注册");
         }else {
-            serverInfo.setMaxUserCount(info.getMaxUserCount());
-            serverInfo.setName(info.getName());
-            serverInfo.setOnline(info.getOnline());
-            serverInfo.setFreeMemory(info.getFreeMemory());
-            serverInfo.setTotalMemory(info.getTotalMemory());
-            serverInfo.setClientVersionCode(info.getRequireClientVersion());
-            serverInfo.setVersionCode(info.getVersion());
-            builder.setSucess(true);
+            tempBuilder.setMaxUserCount(info.getMaxUserCount());
+            tempBuilder.setName(info.getName());
+            tempBuilder.setOnline(info.getOnline());
+            tempBuilder.setFreeMemory(info.getFreeMemory());
+            tempBuilder.setTotalMemory(info.getTotalMemory());
+            tempBuilder.setRequireClientVersion(info.getRequireClientVersion());
+            tempBuilder.setVersion(info.getVersion());
+            builder.setSuccess(true);
             builder.setMsg("成功");
         }
         return builder.build();
@@ -89,49 +94,57 @@ public class ServerManager {
     /**
      * 取消注册服务器
      *
-     * @param serverInfo 服务器信息
+     * @param id 服务器ID
      * @param channel    客户端channel
      */
-    public void unRegister(ServerInfo serverInfo, Channel channel) {
+    private void unRegister(int id, Channel channel) {
         channel.attr(SERVER_INFO_ATTRIBUTE_KEY).set(null);
-        serverMap.remove(serverInfo.getId());
+        serverMap.remove(id);
+        channelMap.remove(id);
     }
 
     public ServerInfo getIdleServer(ServerType type, int ver) {
-        Optional<ServerInfo> optional = serverMap.values().stream().filter(serverInfo -> serverInfo.getState() == ServerState.NORMAL.getState() &&
-                serverInfo.getType() == type.getType() && ver >= serverInfo.getClientVersionCode()
+        Optional<ServerInfo.Builder> optional = serverMap.values().stream().filter(builder -> builder.getState() == ServerStatus.Normal &&
+                        builder.getType() == type && ver >= builder.getRequireClientVersion()
                 /*&& serverInfo.getChannel() != null && serverInfo.getChannel().isActive()*/)
-                .min(Comparator.comparingInt(ServerInfo::getOnline));
-        return optional.orElse(null);
+                .min(Comparator.comparingInt(ServerInfo.Builder::getOnline));
+        if (optional.isPresent()){
+            ServerInfo.Builder builder = optional.get();
+            return builder.build();
+        }else
+            return null;
     }
 
-    public List<CommonMessage.ConnInfo> getGateConnInfo(int ver){
-        return serverMap.values().stream().filter(serverInfo -> serverInfo.getState() == ServerState.NORMAL.getState() &&
-        serverInfo.getType() == ServerType.Gate.getType() &&
-        ver >= serverInfo.getClientVersionCode()).map(serverInfo -> {
-            CommonMessage.ConnInfo.Builder builder = CommonMessage.ConnInfo.newBuilder();
-            builder.setId(serverInfo.getId());
-            builder.setType(serverInfo.getType());
-            builder.setIp(serverInfo.getIp());
-            builder.setPort(serverInfo.getInnerPort());
-            return builder.build();
+    private List<Connection> getGateConnInfo(int ver){
+        return serverMap.values().stream().filter(builder -> builder.getState() == ServerStatus.Normal &&
+        builder.getType() == ServerType.Gate &&
+        ver >= builder.getRequireClientVersion()).map(builder -> {
+            Connection.Builder connBuilder = Connection.newBuilder();
+            connBuilder.setId(builder.getId());
+            connBuilder.setIp(builder.getIp());
+            connBuilder.setPort(builder.getInnerPort());
+            return connBuilder.build();
         }).collect(Collectors.toList());
     }
 
     public void channelInactive(Channel channel) {
-        ServerInfo serverInfo = channel.attr(SERVER_INFO_ATTRIBUTE_KEY).get();
-        if (serverInfo != null) {
-            log.warn("服务器:{}:{}断开连接", serverInfo.getName(),serverInfo.getId());
-            unRegister(serverInfo,channel);
+        ServerInfo.Builder serverInfoBuilder = channel.attr(SERVER_INFO_ATTRIBUTE_KEY).get();
+        if (serverInfoBuilder != null) {
+            log.warn("服务器:{}:{}断开连接", serverInfoBuilder.getName(),serverInfoBuilder.getId());
+            unRegister(serverInfoBuilder.getId(),channel);
         }else
             log.warn("未知连接断开");
     }
 
-    public void publishGateServerConnected(CommonMessage.ServerRegisterResponse response,int ver) {
-        serverMap.values().stream().filter(serverInfo -> serverInfo.getState() == ServerState.NORMAL.getState() &&
-                (serverInfo.getType() == ServerType.Hall.getType() || serverInfo.getType() == ServerType.Game.getType()) &&
-                ver >= serverInfo.getClientVersionCode())
+    private void publishGateServerConnected(GateConnected gateConnected, int ver) {
+        serverMap.values().stream().filter(serverInfoBuilder -> serverInfoBuilder.getState() == ServerStatus.Normal &&
+                (serverInfoBuilder.getType() == ServerType.Hall || serverInfoBuilder.getType() == ServerType.Game) &&
+                ver >= serverInfoBuilder.getRequireClientVersion())
                 .collect(Collectors.toList())
-                .forEach(serverInfo -> serverInfo.send(response));
+                .forEach(serverInfoBuilder -> {
+                    Channel channel = channelMap.get(serverInfoBuilder.getId());
+                    if (channel != null && channel.isActive())
+                        channel.writeAndFlush(gateConnected);
+                });
     }
 }

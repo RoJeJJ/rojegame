@@ -1,6 +1,7 @@
 package com.roje.game.core.processor;
 
 import com.roje.game.core.dispatcher.MessageDispatcher;
+import com.roje.game.message.frame.Frame;
 import io.netty.channel.Channel;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,9 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.annotation.PostConstruct;
 
 
-public abstract class MessageProcessor<MSG> {
-    @Setter@Getter
-    protected long uid;
+public abstract class MessageProcessor {
     @Autowired
     private MessageDispatcher dispatcher;
     @PostConstruct
@@ -19,5 +18,5 @@ public abstract class MessageProcessor<MSG> {
         dispatcher.register(this);
     }
 
-    public abstract void handler(Channel channel, MSG msg)throws Exception;
+    public abstract void handler(Channel channel, Frame frame)throws Exception;
 }

@@ -4,8 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@Getter
-@Setter
+@Getter@Setter
 @ConfigurationProperties
 public class NettyTcpServerConfig extends NettyServerConfig {
     private int readerIdleTime = 0;

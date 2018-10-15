@@ -1,5 +1,7 @@
 package com.roje.game.core.server;
 
+import com.roje.game.message.server_info.ServerStatus;
+import com.roje.game.message.server_info.ServerType;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -25,7 +27,7 @@ public class BaseInfo {
 
     private int userPort;
     // 当前状态 1表示维护；0表示正常
-    private ServerState state = ServerState.NORMAL;
+    private ServerStatus state = ServerStatus.Normal;
     // http端口
     private int httpPort;
     // 最大用户人数
