@@ -1,4 +1,4 @@
-package com.roje.game.hall;
+package com.roje.game.hall.entity;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -21,7 +21,7 @@ public class WxUser {
     /**
      * 普通用户性别，1为男性，2为女性
      */
-    private String sex;
+    private int sex;
     /**
      * 普通用户个人资料填写的省份
      */

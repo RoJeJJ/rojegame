@@ -1,6 +1,5 @@
 package clientTest;
 
-import com.roje.game.core.netty.channel.codec.DefaultMessageCodec;
 import com.roje.game.message.login.LoginMessage;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
@@ -25,7 +24,7 @@ public class LoginTest {
                         @Override
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
                             ChannelPipeline pipeline = socketChannel.pipeline();
-                            pipeline.addLast(new DefaultMessageCodec());
+                            pipeline.addLast(new DefaultMessageDecoder());
                         }
                     });
             ChannelFuture future = bootstrap.connect().sync();

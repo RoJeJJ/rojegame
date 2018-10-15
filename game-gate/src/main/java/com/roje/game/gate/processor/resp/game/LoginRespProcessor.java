@@ -34,13 +34,11 @@ public class LoginRespProcessor extends MessageProcessor {
             return;
         }
         if (response.getOk()){
-            log.info("{}登录成功",response.getUid());
-            session.setUid(response.getUid());
+            long uid = response.getInfo().getId();
+            log.info("{}登录成功",uid);
+            session.setUid(uid);
             sessionManager.sessionLogin(session);
         }
-        LoginMessage.LoginResponse.Builder builder = LoginMessage.LoginResponse.newBuilder();
-        builder.setOk(response.getOk());
-        builder.setMsg(response.getMsg());
-        session.send(builder.build());
+        session.send(response);
     }
 }

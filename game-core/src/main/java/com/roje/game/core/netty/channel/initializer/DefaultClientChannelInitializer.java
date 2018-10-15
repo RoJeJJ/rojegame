@@ -1,7 +1,6 @@
 package com.roje.game.core.netty.channel.initializer;
 
 import com.roje.game.core.config.ClientConfig;
-import com.roje.game.core.netty.channel.codec.DefaultMessageCodec;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
@@ -20,7 +19,7 @@ public class DefaultClientChannelInitializer extends ChannelInitializer<SocketCh
     protected void initChannel(SocketChannel socketChannel) {
         ChannelPipeline pipeline = socketChannel.pipeline();
         pipeline.addLast(new IdleStateHandler(clientConfig.getReaderIdleTime(),clientConfig.getWriterIdleTime(),clientConfig.getAllIdleTime()));
-        pipeline.addLast(new DefaultMessageCodec());
+        pipeline.addLast(new DefaultMessageDecoder());
         for (ChannelHandler handler:handlers){
             pipeline.addLast(handler);
         }

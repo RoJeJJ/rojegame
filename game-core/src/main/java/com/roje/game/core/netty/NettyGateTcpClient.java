@@ -2,7 +2,6 @@ package com.roje.game.core.netty;
 
 import com.roje.game.core.config.NettyConnGateClientConfig;
 import com.roje.game.core.manager.ConnGateTcpMultiManager;
-import com.roje.game.core.netty.channel.codec.DefaultMessageCodec;
 import com.roje.game.core.netty.channel.handler.DefaultInnerTcpClientChannelInBoundHandler;
 import com.roje.game.message.common.CommonMessage;
 import io.netty.bootstrap.Bootstrap;
@@ -50,7 +49,7 @@ public class NettyGateTcpClient implements Runnable {
                             pipeline.addLast(new IdleStateHandler(gateClientConfig.getReaderIdleTime(),
                                     gateClientConfig.getWriterIdleTime(),
                                     gateClientConfig.getAllIdleTime()));
-                            pipeline.addLast(new DefaultMessageCodec());
+                            pipeline.addLast(new DefaultMessageDecoder());
                             pipeline.addLast(new DefaultInnerTcpClientChannelInBoundHandler(true,
                                     manager.getService(),
                                     manager.getDispatcher(),

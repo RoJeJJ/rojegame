@@ -1,5 +1,6 @@
 package com.roje.game.core.dispatcher;
 
+import com.google.protobuf.MessageLite;
 import com.roje.game.core.processor.HttpProcessor;
 import com.roje.game.core.processor.HttpRequestProcessor;
 import com.roje.game.core.processor.Processor;
@@ -15,7 +16,10 @@ public class MessageDispatcher {
         if (handler instanceof MessageProcessor){
             MessageProcessor mp = (MessageProcessor) handler;
             Processor h = mp.getClass().getAnnotation(Processor.class);
-            if (h != null)
+            if (h != null){
+                Class<? extends MessageLite> clazz = h.clazz();
+                if (clazz != null)
+            }
                 handlerMap.put(h.mid(),mp);
         }else if (handler instanceof HttpRequestProcessor){
             HttpRequestProcessor hrp = (HttpRequestProcessor) handler;

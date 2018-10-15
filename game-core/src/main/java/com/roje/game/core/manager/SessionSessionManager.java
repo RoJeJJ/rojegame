@@ -15,7 +15,7 @@ public abstract class SessionSessionManager<T extends Session> implements Sessio
     /**
      * 所有连接的channel ,key为channelId
      */
-    private final Map<String, T> allSessions = new ConcurrentHashMap<>();
+    private final Map<String, T> sessions = new ConcurrentHashMap<>();
     /**
      * 未登录用户,key为channelId
      */
@@ -27,7 +27,7 @@ public abstract class SessionSessionManager<T extends Session> implements Sessio
 
 
     public void sessionOpen(T session){
-        allSessions.put(session.id(),session);
+        sessions.put(session.id(),session);
         anonymousSessions.put(session.id(),session);
         session.channel().attr(SESSION_ATTRIBUTE_KEY).set(session);
         log.info("session:{} open", session.id());
@@ -36,7 +36,7 @@ public abstract class SessionSessionManager<T extends Session> implements Sessio
     public void sessionClosed(Channel channel) {
         Session session = channel.attr(SESSION_ATTRIBUTE_KEY).get();
         if (session != null){
-            allSessions.remove(session.id());
+            sessions.remove(session.id());
             anonymousSessions.remove(session.id());
             onlineSessions.remove(session.getUid());
             session.channel().attr(SESSION_ATTRIBUTE_KEY).set(null);
@@ -56,7 +56,7 @@ public abstract class SessionSessionManager<T extends Session> implements Sessio
 
     @Override
     public int getConnectedCount() {
-        return allSessions.size();
+        return sessions.size();
     }
 
     public T getSession(Channel channel){

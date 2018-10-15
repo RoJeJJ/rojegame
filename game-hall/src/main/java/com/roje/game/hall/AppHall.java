@@ -10,6 +10,8 @@ import com.roje.game.core.netty.NettyClusterTcpClient;
 import com.roje.game.core.netty.channel.initializer.ConnClusterClientChannelInitializer;
 import com.roje.game.core.server.BaseInfo;
 import com.roje.game.core.service.Service;
+import com.roje.game.core.service.redis.IdService;
+import com.roje.game.core.service.redis.UserRedisService;
 import com.roje.game.hall.manager.HallSessionManager;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.socket.SocketChannel;
@@ -19,6 +21,8 @@ import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 
 @SpringBootApplication
 public class AppHall {
@@ -86,5 +90,15 @@ public class AppHall {
             BaseInfo baseInfo,
             SessionManager sessionManager) {
         return new ConnGateTcpMultiManager(nettyConnGateClientConfig, service, dispatcher, baseInfo, sessionManager);
+    }
+
+    @Bean
+    public UserRedisService userRedisService(RedisTemplate<Object,Object> redisTemplate){
+        return new UserRedisService(redisTemplate);
+    }
+
+    @Bean public IdService idService(
+            StringRedisTemplate stringRedisTemplate){
+        return new IdService(stringRedisTemplate);
     }
 }

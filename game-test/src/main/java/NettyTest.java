@@ -1,15 +1,13 @@
-import com.roje.game.core.dispatcher.MessageDispatcher;
-import com.roje.game.core.netty.channel.codec.DefaultMessageCodec;
 import com.roje.game.message.Mid;
 import com.roje.game.message.login.LoginMessage;
 import io.netty.bootstrap.Bootstrap;
-import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
-import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class NettyTest implements Runnable{
     private Channel channel;
     public void run(){
@@ -23,7 +21,7 @@ public class NettyTest implements Runnable{
                         @Override
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
                             ChannelPipeline pipeline = socketChannel.pipeline();
-                            pipeline.addLast(new DefaultMessageCodec());
+                            pipeline.addLast(new DefaultMessageDecoder());
                             pipeline.addLast(new TestHandler() );
                         }
                     })
@@ -61,6 +59,13 @@ public class NettyTest implements Runnable{
     public class TestHandler extends SimpleChannelInboundHandler<byte[]>{
         @Override
         protected void channelRead0(ChannelHandlerContext channelHandlerContext, byte[] bytes) throws Exception {
+            LoginMessage.LoginResponse response = LoginMessage.LoginResponse.parseFrom(bytes);
+            if (response.getOk()){
+                log.info("登录成功");
+            }else {
+                log.info("登录失败");
+                log.info(response.getMsg());
+            }
         }
 
         @Override
@@ -68,7 +73,7 @@ public class NettyTest implements Runnable{
             LoginMessage.LoginRequest.Builder builder = LoginMessage.LoginRequest.newBuilder();
             builder.setAccount("abc");
             builder.setPassword("123456");
-            builder.setLoginType(LoginMessage.LoginType.ACCOUNT);
+            builder.setLoginType(LoginMessage.LoginType.WECHAT);
             builder.setVersion(1);
             builder.setMid(Mid.MID.LoginReq);
             ctx.writeAndFlush(builder.build());

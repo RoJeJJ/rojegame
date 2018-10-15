@@ -3,7 +3,6 @@ package com.roje.game.gate.netty.channel;
 import com.roje.game.core.config.NettyTcpServerConfig;
 import com.roje.game.core.dispatcher.MessageDispatcher;
 import com.roje.game.core.manager.ServerManager;
-import com.roje.game.core.netty.channel.codec.DefaultMessageCodec;
 import com.roje.game.core.netty.channel.handler.DefaultInnerTcpServerChannelInBoundHandler;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
@@ -35,7 +34,7 @@ public class GateGameTcpServerChannelInitializer extends ChannelInitializer<Sock
     protected void initChannel(SocketChannel socketChannel) throws Exception {
         ChannelPipeline pipeline = socketChannel.pipeline();
         pipeline.addLast(new IdleStateHandler(nettyTcpServerConfig.getReaderIdleTime(), nettyTcpServerConfig.getWriterIdleTime(), nettyTcpServerConfig.getAllIdleTime()));
-        pipeline.addLast(new DefaultMessageCodec());
+        pipeline.addLast(new DefaultMessageDecoder());
         pipeline.addLast(new DefaultInnerTcpServerChannelInBoundHandler(true,null,dispatcher,serverManager));
     }
 }
