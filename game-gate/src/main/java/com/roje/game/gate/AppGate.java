@@ -12,7 +12,7 @@ import com.roje.game.core.netty.NettyTcpServer;
 import com.roje.game.core.netty.channel.initializer.ConnClusterClientChannelInitializer;
 import com.roje.game.core.server.BaseInfo;
 import com.roje.game.core.service.Service;
-import com.roje.game.gate.manager.GateSessionSessionManager;
+import com.roje.game.gate.manager.GateSessionManager;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.socket.SocketChannel;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -70,8 +70,8 @@ public class AppGate {
     }
 
     @Bean
-    public GateSessionSessionManager sessionManager() {
-        return new GateSessionSessionManager();
+    public SessionManager sessionManager(ServerManager serverManager) {
+        return new GateSessionManager(serverManager);
     }
 
     @Bean

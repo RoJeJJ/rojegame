@@ -19,7 +19,7 @@ private static final long serialVersionUID = 0L;
     success_ = false;
     msg_ = "";
     id_ = 0;
-    gateConns_ = java.util.Collections.emptyList();
+    gateInfo_ = java.util.Collections.emptyList();
     type_ = 0;
   }
 
@@ -65,11 +65,11 @@ private static final long serialVersionUID = 0L;
           }
           case 34: {
             if (!((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
-              gateConns_ = new java.util.ArrayList<com.roje.game.message.server_register.Connection>();
+              gateInfo_ = new java.util.ArrayList<com.roje.game.message.conn_info.ConnInfo>();
               mutable_bitField0_ |= 0x00000008;
             }
-            gateConns_.add(
-                input.readMessage(com.roje.game.message.server_register.Connection.parser(), extensionRegistry));
+            gateInfo_.add(
+                input.readMessage(com.roje.game.message.conn_info.ConnInfo.parser(), extensionRegistry));
             break;
           }
           case 40: {
@@ -94,7 +94,7 @@ private static final long serialVersionUID = 0L;
           e).setUnfinishedMessage(this);
     } finally {
       if (((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
-        gateConns_ = java.util.Collections.unmodifiableList(gateConns_);
+        gateInfo_ = java.util.Collections.unmodifiableList(gateInfo_);
       }
       this.unknownFields = unknownFields.build();
       makeExtensionsImmutable();
@@ -166,39 +166,39 @@ private static final long serialVersionUID = 0L;
     return id_;
   }
 
-  public static final int GATECONNS_FIELD_NUMBER = 4;
-  private java.util.List<com.roje.game.message.server_register.Connection> gateConns_;
+  public static final int GATEINFO_FIELD_NUMBER = 4;
+  private java.util.List<com.roje.game.message.conn_info.ConnInfo> gateInfo_;
   /**
-   * <code>repeated .Connection gateConns = 4;</code>
+   * <code>repeated .ConnInfo gateInfo = 4;</code>
    */
-  public java.util.List<com.roje.game.message.server_register.Connection> getGateConnsList() {
-    return gateConns_;
+  public java.util.List<com.roje.game.message.conn_info.ConnInfo> getGateInfoList() {
+    return gateInfo_;
   }
   /**
-   * <code>repeated .Connection gateConns = 4;</code>
+   * <code>repeated .ConnInfo gateInfo = 4;</code>
    */
-  public java.util.List<? extends com.roje.game.message.server_register.ConnectionOrBuilder> 
-      getGateConnsOrBuilderList() {
-    return gateConns_;
+  public java.util.List<? extends com.roje.game.message.conn_info.ConnInfoOrBuilder> 
+      getGateInfoOrBuilderList() {
+    return gateInfo_;
   }
   /**
-   * <code>repeated .Connection gateConns = 4;</code>
+   * <code>repeated .ConnInfo gateInfo = 4;</code>
    */
-  public int getGateConnsCount() {
-    return gateConns_.size();
+  public int getGateInfoCount() {
+    return gateInfo_.size();
   }
   /**
-   * <code>repeated .Connection gateConns = 4;</code>
+   * <code>repeated .ConnInfo gateInfo = 4;</code>
    */
-  public com.roje.game.message.server_register.Connection getGateConns(int index) {
-    return gateConns_.get(index);
+  public com.roje.game.message.conn_info.ConnInfo getGateInfo(int index) {
+    return gateInfo_.get(index);
   }
   /**
-   * <code>repeated .Connection gateConns = 4;</code>
+   * <code>repeated .ConnInfo gateInfo = 4;</code>
    */
-  public com.roje.game.message.server_register.ConnectionOrBuilder getGateConnsOrBuilder(
+  public com.roje.game.message.conn_info.ConnInfoOrBuilder getGateInfoOrBuilder(
       int index) {
-    return gateConns_.get(index);
+    return gateInfo_.get(index);
   }
 
   public static final int TYPE_FIELD_NUMBER = 5;
@@ -241,8 +241,8 @@ private static final long serialVersionUID = 0L;
     if (id_ != 0) {
       output.writeInt32(3, id_);
     }
-    for (int i = 0; i < gateConns_.size(); i++) {
-      output.writeMessage(4, gateConns_.get(i));
+    for (int i = 0; i < gateInfo_.size(); i++) {
+      output.writeMessage(4, gateInfo_.get(i));
     }
     if (type_ != com.roje.game.message.server_info.ServerType.Unknown.getNumber()) {
       output.writeEnum(5, type_);
@@ -267,9 +267,9 @@ private static final long serialVersionUID = 0L;
       size += com.google.protobuf.CodedOutputStream
         .computeInt32Size(3, id_);
     }
-    for (int i = 0; i < gateConns_.size(); i++) {
+    for (int i = 0; i < gateInfo_.size(); i++) {
       size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(4, gateConns_.get(i));
+        .computeMessageSize(4, gateInfo_.get(i));
     }
     if (type_ != com.roje.game.message.server_info.ServerType.Unknown.getNumber()) {
       size += com.google.protobuf.CodedOutputStream
@@ -297,8 +297,8 @@ private static final long serialVersionUID = 0L;
         .equals(other.getMsg());
     result = result && (getId()
         == other.getId());
-    result = result && getGateConnsList()
-        .equals(other.getGateConnsList());
+    result = result && getGateInfoList()
+        .equals(other.getGateInfoList());
     result = result && type_ == other.type_;
     result = result && unknownFields.equals(other.unknownFields);
     return result;
@@ -318,9 +318,9 @@ private static final long serialVersionUID = 0L;
     hash = (53 * hash) + getMsg().hashCode();
     hash = (37 * hash) + ID_FIELD_NUMBER;
     hash = (53 * hash) + getId();
-    if (getGateConnsCount() > 0) {
-      hash = (37 * hash) + GATECONNS_FIELD_NUMBER;
-      hash = (53 * hash) + getGateConnsList().hashCode();
+    if (getGateInfoCount() > 0) {
+      hash = (37 * hash) + GATEINFO_FIELD_NUMBER;
+      hash = (53 * hash) + getGateInfoList().hashCode();
     }
     hash = (37 * hash) + TYPE_FIELD_NUMBER;
     hash = (53 * hash) + type_;
@@ -452,7 +452,7 @@ private static final long serialVersionUID = 0L;
     private void maybeForceBuilderInitialization() {
       if (com.google.protobuf.GeneratedMessageV3
               .alwaysUseFieldBuilders) {
-        getGateConnsFieldBuilder();
+        getGateInfoFieldBuilder();
       }
     }
     @java.lang.Override
@@ -464,11 +464,11 @@ private static final long serialVersionUID = 0L;
 
       id_ = 0;
 
-      if (gateConnsBuilder_ == null) {
-        gateConns_ = java.util.Collections.emptyList();
+      if (gateInfoBuilder_ == null) {
+        gateInfo_ = java.util.Collections.emptyList();
         bitField0_ = (bitField0_ & ~0x00000008);
       } else {
-        gateConnsBuilder_.clear();
+        gateInfoBuilder_.clear();
       }
       type_ = 0;
 
@@ -503,14 +503,14 @@ private static final long serialVersionUID = 0L;
       result.success_ = success_;
       result.msg_ = msg_;
       result.id_ = id_;
-      if (gateConnsBuilder_ == null) {
+      if (gateInfoBuilder_ == null) {
         if (((bitField0_ & 0x00000008) == 0x00000008)) {
-          gateConns_ = java.util.Collections.unmodifiableList(gateConns_);
+          gateInfo_ = java.util.Collections.unmodifiableList(gateInfo_);
           bitField0_ = (bitField0_ & ~0x00000008);
         }
-        result.gateConns_ = gateConns_;
+        result.gateInfo_ = gateInfo_;
       } else {
-        result.gateConns_ = gateConnsBuilder_.build();
+        result.gateInfo_ = gateInfoBuilder_.build();
       }
       result.type_ = type_;
       result.bitField0_ = to_bitField0_;
@@ -572,29 +572,29 @@ private static final long serialVersionUID = 0L;
       if (other.getId() != 0) {
         setId(other.getId());
       }
-      if (gateConnsBuilder_ == null) {
-        if (!other.gateConns_.isEmpty()) {
-          if (gateConns_.isEmpty()) {
-            gateConns_ = other.gateConns_;
+      if (gateInfoBuilder_ == null) {
+        if (!other.gateInfo_.isEmpty()) {
+          if (gateInfo_.isEmpty()) {
+            gateInfo_ = other.gateInfo_;
             bitField0_ = (bitField0_ & ~0x00000008);
           } else {
-            ensureGateConnsIsMutable();
-            gateConns_.addAll(other.gateConns_);
+            ensureGateInfoIsMutable();
+            gateInfo_.addAll(other.gateInfo_);
           }
           onChanged();
         }
       } else {
-        if (!other.gateConns_.isEmpty()) {
-          if (gateConnsBuilder_.isEmpty()) {
-            gateConnsBuilder_.dispose();
-            gateConnsBuilder_ = null;
-            gateConns_ = other.gateConns_;
+        if (!other.gateInfo_.isEmpty()) {
+          if (gateInfoBuilder_.isEmpty()) {
+            gateInfoBuilder_.dispose();
+            gateInfoBuilder_ = null;
+            gateInfo_ = other.gateInfo_;
             bitField0_ = (bitField0_ & ~0x00000008);
-            gateConnsBuilder_ = 
+            gateInfoBuilder_ = 
               com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
-                 getGateConnsFieldBuilder() : null;
+                 getGateInfoFieldBuilder() : null;
           } else {
-            gateConnsBuilder_.addAllMessages(other.gateConns_);
+            gateInfoBuilder_.addAllMessages(other.gateInfo_);
           }
         }
       }
@@ -752,244 +752,244 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.util.List<com.roje.game.message.server_register.Connection> gateConns_ =
+    private java.util.List<com.roje.game.message.conn_info.ConnInfo> gateInfo_ =
       java.util.Collections.emptyList();
-    private void ensureGateConnsIsMutable() {
+    private void ensureGateInfoIsMutable() {
       if (!((bitField0_ & 0x00000008) == 0x00000008)) {
-        gateConns_ = new java.util.ArrayList<com.roje.game.message.server_register.Connection>(gateConns_);
+        gateInfo_ = new java.util.ArrayList<com.roje.game.message.conn_info.ConnInfo>(gateInfo_);
         bitField0_ |= 0x00000008;
        }
     }
 
     private com.google.protobuf.RepeatedFieldBuilderV3<
-        com.roje.game.message.server_register.Connection, com.roje.game.message.server_register.Connection.Builder, com.roje.game.message.server_register.ConnectionOrBuilder> gateConnsBuilder_;
+        com.roje.game.message.conn_info.ConnInfo, com.roje.game.message.conn_info.ConnInfo.Builder, com.roje.game.message.conn_info.ConnInfoOrBuilder> gateInfoBuilder_;
 
     /**
-     * <code>repeated .Connection gateConns = 4;</code>
+     * <code>repeated .ConnInfo gateInfo = 4;</code>
      */
-    public java.util.List<com.roje.game.message.server_register.Connection> getGateConnsList() {
-      if (gateConnsBuilder_ == null) {
-        return java.util.Collections.unmodifiableList(gateConns_);
+    public java.util.List<com.roje.game.message.conn_info.ConnInfo> getGateInfoList() {
+      if (gateInfoBuilder_ == null) {
+        return java.util.Collections.unmodifiableList(gateInfo_);
       } else {
-        return gateConnsBuilder_.getMessageList();
+        return gateInfoBuilder_.getMessageList();
       }
     }
     /**
-     * <code>repeated .Connection gateConns = 4;</code>
+     * <code>repeated .ConnInfo gateInfo = 4;</code>
      */
-    public int getGateConnsCount() {
-      if (gateConnsBuilder_ == null) {
-        return gateConns_.size();
+    public int getGateInfoCount() {
+      if (gateInfoBuilder_ == null) {
+        return gateInfo_.size();
       } else {
-        return gateConnsBuilder_.getCount();
+        return gateInfoBuilder_.getCount();
       }
     }
     /**
-     * <code>repeated .Connection gateConns = 4;</code>
+     * <code>repeated .ConnInfo gateInfo = 4;</code>
      */
-    public com.roje.game.message.server_register.Connection getGateConns(int index) {
-      if (gateConnsBuilder_ == null) {
-        return gateConns_.get(index);
+    public com.roje.game.message.conn_info.ConnInfo getGateInfo(int index) {
+      if (gateInfoBuilder_ == null) {
+        return gateInfo_.get(index);
       } else {
-        return gateConnsBuilder_.getMessage(index);
+        return gateInfoBuilder_.getMessage(index);
       }
     }
     /**
-     * <code>repeated .Connection gateConns = 4;</code>
+     * <code>repeated .ConnInfo gateInfo = 4;</code>
      */
-    public Builder setGateConns(
-        int index, com.roje.game.message.server_register.Connection value) {
-      if (gateConnsBuilder_ == null) {
+    public Builder setGateInfo(
+        int index, com.roje.game.message.conn_info.ConnInfo value) {
+      if (gateInfoBuilder_ == null) {
         if (value == null) {
           throw new NullPointerException();
         }
-        ensureGateConnsIsMutable();
-        gateConns_.set(index, value);
+        ensureGateInfoIsMutable();
+        gateInfo_.set(index, value);
         onChanged();
       } else {
-        gateConnsBuilder_.setMessage(index, value);
+        gateInfoBuilder_.setMessage(index, value);
       }
       return this;
     }
     /**
-     * <code>repeated .Connection gateConns = 4;</code>
+     * <code>repeated .ConnInfo gateInfo = 4;</code>
      */
-    public Builder setGateConns(
-        int index, com.roje.game.message.server_register.Connection.Builder builderForValue) {
-      if (gateConnsBuilder_ == null) {
-        ensureGateConnsIsMutable();
-        gateConns_.set(index, builderForValue.build());
+    public Builder setGateInfo(
+        int index, com.roje.game.message.conn_info.ConnInfo.Builder builderForValue) {
+      if (gateInfoBuilder_ == null) {
+        ensureGateInfoIsMutable();
+        gateInfo_.set(index, builderForValue.build());
         onChanged();
       } else {
-        gateConnsBuilder_.setMessage(index, builderForValue.build());
+        gateInfoBuilder_.setMessage(index, builderForValue.build());
       }
       return this;
     }
     /**
-     * <code>repeated .Connection gateConns = 4;</code>
+     * <code>repeated .ConnInfo gateInfo = 4;</code>
      */
-    public Builder addGateConns(com.roje.game.message.server_register.Connection value) {
-      if (gateConnsBuilder_ == null) {
+    public Builder addGateInfo(com.roje.game.message.conn_info.ConnInfo value) {
+      if (gateInfoBuilder_ == null) {
         if (value == null) {
           throw new NullPointerException();
         }
-        ensureGateConnsIsMutable();
-        gateConns_.add(value);
+        ensureGateInfoIsMutable();
+        gateInfo_.add(value);
         onChanged();
       } else {
-        gateConnsBuilder_.addMessage(value);
+        gateInfoBuilder_.addMessage(value);
       }
       return this;
     }
     /**
-     * <code>repeated .Connection gateConns = 4;</code>
+     * <code>repeated .ConnInfo gateInfo = 4;</code>
      */
-    public Builder addGateConns(
-        int index, com.roje.game.message.server_register.Connection value) {
-      if (gateConnsBuilder_ == null) {
+    public Builder addGateInfo(
+        int index, com.roje.game.message.conn_info.ConnInfo value) {
+      if (gateInfoBuilder_ == null) {
         if (value == null) {
           throw new NullPointerException();
         }
-        ensureGateConnsIsMutable();
-        gateConns_.add(index, value);
+        ensureGateInfoIsMutable();
+        gateInfo_.add(index, value);
         onChanged();
       } else {
-        gateConnsBuilder_.addMessage(index, value);
+        gateInfoBuilder_.addMessage(index, value);
       }
       return this;
     }
     /**
-     * <code>repeated .Connection gateConns = 4;</code>
+     * <code>repeated .ConnInfo gateInfo = 4;</code>
      */
-    public Builder addGateConns(
-        com.roje.game.message.server_register.Connection.Builder builderForValue) {
-      if (gateConnsBuilder_ == null) {
-        ensureGateConnsIsMutable();
-        gateConns_.add(builderForValue.build());
+    public Builder addGateInfo(
+        com.roje.game.message.conn_info.ConnInfo.Builder builderForValue) {
+      if (gateInfoBuilder_ == null) {
+        ensureGateInfoIsMutable();
+        gateInfo_.add(builderForValue.build());
         onChanged();
       } else {
-        gateConnsBuilder_.addMessage(builderForValue.build());
+        gateInfoBuilder_.addMessage(builderForValue.build());
       }
       return this;
     }
     /**
-     * <code>repeated .Connection gateConns = 4;</code>
+     * <code>repeated .ConnInfo gateInfo = 4;</code>
      */
-    public Builder addGateConns(
-        int index, com.roje.game.message.server_register.Connection.Builder builderForValue) {
-      if (gateConnsBuilder_ == null) {
-        ensureGateConnsIsMutable();
-        gateConns_.add(index, builderForValue.build());
+    public Builder addGateInfo(
+        int index, com.roje.game.message.conn_info.ConnInfo.Builder builderForValue) {
+      if (gateInfoBuilder_ == null) {
+        ensureGateInfoIsMutable();
+        gateInfo_.add(index, builderForValue.build());
         onChanged();
       } else {
-        gateConnsBuilder_.addMessage(index, builderForValue.build());
+        gateInfoBuilder_.addMessage(index, builderForValue.build());
       }
       return this;
     }
     /**
-     * <code>repeated .Connection gateConns = 4;</code>
+     * <code>repeated .ConnInfo gateInfo = 4;</code>
      */
-    public Builder addAllGateConns(
-        java.lang.Iterable<? extends com.roje.game.message.server_register.Connection> values) {
-      if (gateConnsBuilder_ == null) {
-        ensureGateConnsIsMutable();
+    public Builder addAllGateInfo(
+        java.lang.Iterable<? extends com.roje.game.message.conn_info.ConnInfo> values) {
+      if (gateInfoBuilder_ == null) {
+        ensureGateInfoIsMutable();
         com.google.protobuf.AbstractMessageLite.Builder.addAll(
-            values, gateConns_);
+            values, gateInfo_);
         onChanged();
       } else {
-        gateConnsBuilder_.addAllMessages(values);
+        gateInfoBuilder_.addAllMessages(values);
       }
       return this;
     }
     /**
-     * <code>repeated .Connection gateConns = 4;</code>
+     * <code>repeated .ConnInfo gateInfo = 4;</code>
      */
-    public Builder clearGateConns() {
-      if (gateConnsBuilder_ == null) {
-        gateConns_ = java.util.Collections.emptyList();
+    public Builder clearGateInfo() {
+      if (gateInfoBuilder_ == null) {
+        gateInfo_ = java.util.Collections.emptyList();
         bitField0_ = (bitField0_ & ~0x00000008);
         onChanged();
       } else {
-        gateConnsBuilder_.clear();
+        gateInfoBuilder_.clear();
       }
       return this;
     }
     /**
-     * <code>repeated .Connection gateConns = 4;</code>
+     * <code>repeated .ConnInfo gateInfo = 4;</code>
      */
-    public Builder removeGateConns(int index) {
-      if (gateConnsBuilder_ == null) {
-        ensureGateConnsIsMutable();
-        gateConns_.remove(index);
+    public Builder removeGateInfo(int index) {
+      if (gateInfoBuilder_ == null) {
+        ensureGateInfoIsMutable();
+        gateInfo_.remove(index);
         onChanged();
       } else {
-        gateConnsBuilder_.remove(index);
+        gateInfoBuilder_.remove(index);
       }
       return this;
     }
     /**
-     * <code>repeated .Connection gateConns = 4;</code>
+     * <code>repeated .ConnInfo gateInfo = 4;</code>
      */
-    public com.roje.game.message.server_register.Connection.Builder getGateConnsBuilder(
+    public com.roje.game.message.conn_info.ConnInfo.Builder getGateInfoBuilder(
         int index) {
-      return getGateConnsFieldBuilder().getBuilder(index);
+      return getGateInfoFieldBuilder().getBuilder(index);
     }
     /**
-     * <code>repeated .Connection gateConns = 4;</code>
+     * <code>repeated .ConnInfo gateInfo = 4;</code>
      */
-    public com.roje.game.message.server_register.ConnectionOrBuilder getGateConnsOrBuilder(
+    public com.roje.game.message.conn_info.ConnInfoOrBuilder getGateInfoOrBuilder(
         int index) {
-      if (gateConnsBuilder_ == null) {
-        return gateConns_.get(index);  } else {
-        return gateConnsBuilder_.getMessageOrBuilder(index);
+      if (gateInfoBuilder_ == null) {
+        return gateInfo_.get(index);  } else {
+        return gateInfoBuilder_.getMessageOrBuilder(index);
       }
     }
     /**
-     * <code>repeated .Connection gateConns = 4;</code>
+     * <code>repeated .ConnInfo gateInfo = 4;</code>
      */
-    public java.util.List<? extends com.roje.game.message.server_register.ConnectionOrBuilder> 
-         getGateConnsOrBuilderList() {
-      if (gateConnsBuilder_ != null) {
-        return gateConnsBuilder_.getMessageOrBuilderList();
+    public java.util.List<? extends com.roje.game.message.conn_info.ConnInfoOrBuilder> 
+         getGateInfoOrBuilderList() {
+      if (gateInfoBuilder_ != null) {
+        return gateInfoBuilder_.getMessageOrBuilderList();
       } else {
-        return java.util.Collections.unmodifiableList(gateConns_);
+        return java.util.Collections.unmodifiableList(gateInfo_);
       }
     }
     /**
-     * <code>repeated .Connection gateConns = 4;</code>
+     * <code>repeated .ConnInfo gateInfo = 4;</code>
      */
-    public com.roje.game.message.server_register.Connection.Builder addGateConnsBuilder() {
-      return getGateConnsFieldBuilder().addBuilder(
-          com.roje.game.message.server_register.Connection.getDefaultInstance());
+    public com.roje.game.message.conn_info.ConnInfo.Builder addGateInfoBuilder() {
+      return getGateInfoFieldBuilder().addBuilder(
+          com.roje.game.message.conn_info.ConnInfo.getDefaultInstance());
     }
     /**
-     * <code>repeated .Connection gateConns = 4;</code>
+     * <code>repeated .ConnInfo gateInfo = 4;</code>
      */
-    public com.roje.game.message.server_register.Connection.Builder addGateConnsBuilder(
+    public com.roje.game.message.conn_info.ConnInfo.Builder addGateInfoBuilder(
         int index) {
-      return getGateConnsFieldBuilder().addBuilder(
-          index, com.roje.game.message.server_register.Connection.getDefaultInstance());
+      return getGateInfoFieldBuilder().addBuilder(
+          index, com.roje.game.message.conn_info.ConnInfo.getDefaultInstance());
     }
     /**
-     * <code>repeated .Connection gateConns = 4;</code>
+     * <code>repeated .ConnInfo gateInfo = 4;</code>
      */
-    public java.util.List<com.roje.game.message.server_register.Connection.Builder> 
-         getGateConnsBuilderList() {
-      return getGateConnsFieldBuilder().getBuilderList();
+    public java.util.List<com.roje.game.message.conn_info.ConnInfo.Builder> 
+         getGateInfoBuilderList() {
+      return getGateInfoFieldBuilder().getBuilderList();
     }
     private com.google.protobuf.RepeatedFieldBuilderV3<
-        com.roje.game.message.server_register.Connection, com.roje.game.message.server_register.Connection.Builder, com.roje.game.message.server_register.ConnectionOrBuilder> 
-        getGateConnsFieldBuilder() {
-      if (gateConnsBuilder_ == null) {
-        gateConnsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
-            com.roje.game.message.server_register.Connection, com.roje.game.message.server_register.Connection.Builder, com.roje.game.message.server_register.ConnectionOrBuilder>(
-                gateConns_,
+        com.roje.game.message.conn_info.ConnInfo, com.roje.game.message.conn_info.ConnInfo.Builder, com.roje.game.message.conn_info.ConnInfoOrBuilder> 
+        getGateInfoFieldBuilder() {
+      if (gateInfoBuilder_ == null) {
+        gateInfoBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+            com.roje.game.message.conn_info.ConnInfo, com.roje.game.message.conn_info.ConnInfo.Builder, com.roje.game.message.conn_info.ConnInfoOrBuilder>(
+                gateInfo_,
                 ((bitField0_ & 0x00000008) == 0x00000008),
                 getParentForChildren(),
                 isClean());
-        gateConns_ = null;
+        gateInfo_ = null;
       }
-      return gateConnsBuilder_;
+      return gateInfoBuilder_;
     }
 
     private int type_ = 0;

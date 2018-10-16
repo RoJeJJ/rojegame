@@ -5,7 +5,7 @@ import com.roje.game.core.dispatcher.MessageDispatcher;
 import com.roje.game.core.netty.NettyGateTcpClient;
 import com.roje.game.core.server.BaseInfo;
 import com.roje.game.core.service.Service;
-import com.roje.game.message.common.CommonMessage;
+import com.roje.game.message.conn_info.ConnInfo;
 import lombok.Getter;
 
 import java.util.Map;
@@ -26,14 +26,14 @@ public class ConnGateTcpMultiManager {
     private MessageDispatcher dispatcher;
 
     @Getter
-    private SessionManager sessionManager;
+    private ISessionManager ISessionManager;
 
-    public ConnGateTcpMultiManager(NettyConnGateClientConfig gateClientConfig, Service service, MessageDispatcher dispatcher, BaseInfo baseInfo, SessionManager sessionManager){
+    public ConnGateTcpMultiManager(NettyConnGateClientConfig gateClientConfig, Service service, MessageDispatcher dispatcher, BaseInfo baseInfo, ISessionManager ISessionManager){
         this.gateClientConfig = gateClientConfig;
         this.service = service;
         this.dispatcher = dispatcher;
         this.baseInfo = baseInfo;
-        this.sessionManager = sessionManager;
+        this.ISessionManager = ISessionManager;
     }
 
     public synchronized void addClient(NettyGateTcpClient client){
@@ -44,7 +44,7 @@ public class ConnGateTcpMultiManager {
         clientMap.remove(id);
     }
 
-    public void connect(CommonMessage.ConnInfo connInfo){
+    public void connect(ConnInfo connInfo){
         new NettyGateTcpClient(this,gateClientConfig,connInfo).start();
     }
 }

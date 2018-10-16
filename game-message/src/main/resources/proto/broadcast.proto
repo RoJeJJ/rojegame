@@ -1,9 +1,8 @@
 syntax = "proto3";
+import "conn_info.proto";
 option java_package = "com.roje.game.message.broadcast";
 option java_multiple_files = true;
 
 message GateConnected{
-    int32 id = 1;
-    string ip = 2;
-    int32 prot = 3;
+    ConnInfo connInfo = 1;
 }

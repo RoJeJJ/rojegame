@@ -52,11 +52,16 @@ public interface ServerInfoOrBuilder extends
   com.roje.game.message.server_info.ServerType getType();
 
   /**
+   * <code>int32 gameId = 4;</code>
+   */
+  int getGameId();
+
+  /**
    * <pre>
    * 端口
    * </pre>
    *
-   * <code>int32 innerPort = 4;</code>
+   * <code>int32 innerPort = 5;</code>
    */
   int getInnerPort();
 
@@ -65,7 +70,7 @@ public interface ServerInfoOrBuilder extends
    *状态 -1表示维护；0表示准备开启；1表示正常，2表示不显示，3表示内部开启
    * </pre>
    *
-   * <code>.ServerStatus state = 5;</code>
+   * <code>.ServerStatus state = 6;</code>
    */
   int getStateValue();
   /**
@@ -73,7 +78,7 @@ public interface ServerInfoOrBuilder extends
    *状态 -1表示维护；0表示准备开启；1表示正常，2表示不显示，3表示内部开启
    * </pre>
    *
-   * <code>.ServerStatus state = 5;</code>
+   * <code>.ServerStatus state = 6;</code>
    */
   com.roje.game.message.server_info.ServerStatus getState();
 
@@ -82,7 +87,7 @@ public interface ServerInfoOrBuilder extends
    * 在线人数
    * </pre>
    *
-   * <code>int32 online = 6;</code>
+   * <code>int32 online = 7;</code>
    */
   int getOnline();
 
@@ -91,7 +96,7 @@ public interface ServerInfoOrBuilder extends
    * 在线人数
    * </pre>
    *
-   * <code>int32 maxUserCount = 7;</code>
+   * <code>int32 maxUserCount = 8;</code>
    */
   int getMaxUserCount();
 
@@ -100,7 +105,7 @@ public interface ServerInfoOrBuilder extends
    * http端口
    * </pre>
    *
-   * <code>int32 httpport = 8;</code>
+   * <code>int32 httpport = 9;</code>
    */
   int getHttpport();
 
@@ -109,7 +114,7 @@ public interface ServerInfoOrBuilder extends
    *名字
    * </pre>
    *
-   * <code>string name = 9;</code>
+   * <code>string name = 10;</code>
    */
   java.lang.String getName();
   /**
@@ -117,7 +122,7 @@ public interface ServerInfoOrBuilder extends
    *名字
    * </pre>
    *
-   * <code>string name = 9;</code>
+   * <code>string name = 10;</code>
    */
   com.google.protobuf.ByteString
       getNameBytes();
@@ -127,7 +132,7 @@ public interface ServerInfoOrBuilder extends
    * 外网地址
    * </pre>
    *
-   * <code>string wwwip = 10;</code>
+   * <code>string wwwip = 11;</code>
    */
   java.lang.String getWwwip();
   /**
@@ -135,7 +140,7 @@ public interface ServerInfoOrBuilder extends
    * 外网地址
    * </pre>
    *
-   * <code>string wwwip = 10;</code>
+   * <code>string wwwip = 11;</code>
    */
   com.google.protobuf.ByteString
       getWwwipBytes();
@@ -145,7 +150,7 @@ public interface ServerInfoOrBuilder extends
    *空闲内存
    * </pre>
    *
-   * <code>int32 freeMemory = 11;</code>
+   * <code>int32 freeMemory = 12;</code>
    */
   int getFreeMemory();
 
@@ -154,7 +159,7 @@ public interface ServerInfoOrBuilder extends
    *可用内存
    * </pre>
    *
-   * <code>int32 totalMemory = 12;</code>
+   * <code>int32 totalMemory = 13;</code>
    */
   int getTotalMemory();
 
@@ -163,7 +168,7 @@ public interface ServerInfoOrBuilder extends
    *版本号
    * </pre>
    *
-   * <code>int32 version = 13;</code>
+   * <code>int32 version = 14;</code>
    */
   int getVersion();
 
@@ -172,17 +177,17 @@ public interface ServerInfoOrBuilder extends
    *要求的客户端版本
    * </pre>
    *
-   * <code>int32 requireClientVersion = 14;</code>
+   * <code>int32 requireClientVersion = 15;</code>
    */
   int getRequireClientVersion();
 
   /**
-   * <code>int32 connectedCount = 15;</code>
+   * <code>int32 connectedCount = 16;</code>
    */
   int getConnectedCount();
 
   /**
-   * <code>int32 userPort = 16;</code>
+   * <code>int32 userPort = 17;</code>
    */
   int getUserPort();
 }

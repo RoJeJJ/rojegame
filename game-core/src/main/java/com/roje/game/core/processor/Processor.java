@@ -1,6 +1,7 @@
 package com.roje.game.core.processor;
 
 
+import com.google.protobuf.Message;
 import com.roje.game.core.thread.ThreadType;
 import com.roje.game.message.action.Action;
 

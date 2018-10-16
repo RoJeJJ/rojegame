@@ -24,11 +24,6 @@ public final class ServerRegister {
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_ServerRegResponse_fieldAccessorTable;
-  static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_Connection_descriptor;
-  static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_Connection_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -39,13 +34,13 @@ public final class ServerRegister {
   static {
     java.lang.String[] descriptorData = {
       "\n\025server_register.proto\032\021server_info.pro" +
-      "to\"3\n\020ServerRegRequest\022\037\n\nserverInfo\030\001 \001" +
-      "(\0132\013.ServerInfo\"x\n\021ServerRegResponse\022\017\n\007" +
-      "success\030\001 \001(\010\022\013\n\003msg\030\002 \001(\t\022\n\n\002id\030\003 \001(\005\022\036" +
-      "\n\tgateConns\030\004 \003(\0132\013.Connection\022\031\n\004type\030\005" +
-      " \001(\0162\013.ServerType\"2\n\nConnection\022\n\n\002id\030\001 " +
-      "\001(\005\022\n\n\002ip\030\002 \001(\t\022\014\n\004port\030\003 \001(\005B)\n%com.roj" +
-      "e.game.message.server_registerP\001b\006proto3"
+      "to\032\017conn_info.proto\"3\n\020ServerRegRequest\022" +
+      "\037\n\nserverInfo\030\001 \001(\0132\013.ServerInfo\"u\n\021Serv" +
+      "erRegResponse\022\017\n\007success\030\001 \001(\010\022\013\n\003msg\030\002 " +
+      "\001(\t\022\n\n\002id\030\003 \001(\005\022\033\n\010gateInfo\030\004 \003(\0132\t.Conn" +
+      "Info\022\031\n\004type\030\005 \001(\0162\013.ServerTypeB)\n%com.r" +
+      "oje.game.message.server_registerP\001b\006prot" +
+      "o3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -59,6 +54,7 @@ public final class ServerRegister {
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
           com.roje.game.message.server_info.ServerInfoOuterClass.getDescriptor(),
+          com.roje.game.message.conn_info.ConnInfoOuterClass.getDescriptor(),
         }, assigner);
     internal_static_ServerRegRequest_descriptor =
       getDescriptor().getMessageTypes().get(0);
@@ -71,14 +67,9 @@ public final class ServerRegister {
     internal_static_ServerRegResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_ServerRegResponse_descriptor,
-        new java.lang.String[] { "Success", "Msg", "Id", "GateConns", "Type", });
-    internal_static_Connection_descriptor =
-      getDescriptor().getMessageTypes().get(2);
-    internal_static_Connection_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_Connection_descriptor,
-        new java.lang.String[] { "Id", "Ip", "Port", });
+        new java.lang.String[] { "Success", "Msg", "Id", "GateInfo", "Type", });
     com.roje.game.message.server_info.ServerInfoOuterClass.getDescriptor();
+    com.roje.game.message.conn_info.ConnInfoOuterClass.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

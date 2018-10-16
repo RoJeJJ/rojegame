@@ -12,8 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 public class DefaultInnerTcpServerChannelInBoundHandler extends DefaultInBoundHandler {
     private ServerManager serverManager;
 
-    public DefaultInnerTcpServerChannelInBoundHandler(boolean hasID,Service service, MessageDispatcher dispatcher, ServerManager serverManager) {
-        super(hasID,service,dispatcher);
+    public DefaultInnerTcpServerChannelInBoundHandler(Service service, MessageDispatcher dispatcher, ServerManager serverManager) {
+        super(service,dispatcher);
         this.serverManager = serverManager;
     }
 

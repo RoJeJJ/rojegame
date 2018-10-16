@@ -1,0 +1,9 @@
+syntax = "proto3";
+option java_package = "com.roje.game.message.heart_beat";
+option java_multiple_files = true;
+
+message HeartBeatRequest{}
+
+message HeartBeatResponse{
+    int64 time = 1;
+}

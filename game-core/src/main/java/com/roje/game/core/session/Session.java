@@ -1,7 +1,7 @@
 package com.roje.game.core.session;
 
 
-import com.google.protobuf.Message;
+import com.roje.game.message.frame.Frame;
 import io.netty.channel.Channel;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public abstract class Session {
-    private String id;
+    protected String id;
     @Getter @Setter
     protected long uid;
     protected Channel channel;
@@ -28,9 +28,9 @@ public abstract class Session {
         return channel;
     }
 
-    public void send(Message message){
+    public void send(Frame frame){
         if (channel != null && channel.isActive())
-            channel.writeAndFlush(message);
+            channel.writeAndFlush(frame);
         else
             log.warn("{}发送消息失败",uid);
     }
@@ -45,5 +45,16 @@ public abstract class Session {
 //        }else
 //            log.warn("{}发送消息失败",uid);
 //    }
-    public abstract void sessionClosed();
+    public void onClosed(){}
+
+    public void onOpen(){}
+
+    public void close() {
+        if (channel != null)
+            channel.close();
+    }
+
+    public void open() {
+        onOpen();
+    }
 }

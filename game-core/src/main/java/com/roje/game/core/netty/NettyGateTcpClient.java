@@ -3,11 +3,11 @@ package com.roje.game.core.netty;
 import com.roje.game.core.config.NettyConnGateClientConfig;
 import com.roje.game.core.manager.ConnGateTcpMultiManager;
 import com.roje.game.core.netty.channel.handler.DefaultInnerTcpClientChannelInBoundHandler;
-import com.roje.game.message.common.CommonMessage;
+import com.roje.game.core.netty.channel.initializer.DefaultChannelInitializer;
+import com.roje.game.message.conn_info.ConnInfo;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
-import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.timeout.IdleStateHandler;
 import lombok.extern.slf4j.Slf4j;
@@ -19,13 +19,13 @@ public class NettyGateTcpClient implements Runnable {
 
     private NettyConnGateClientConfig gateClientConfig;
 
-    private CommonMessage.ConnInfo connInfo;
+    private ConnInfo connInfo;
 
     private ConnGateTcpMultiManager manager;
 
     public NettyGateTcpClient(ConnGateTcpMultiManager manager,
                               NettyConnGateClientConfig gateClientConfig,
-                              CommonMessage.ConnInfo connInfo){
+                              ConnInfo connInfo){
         this.gateClientConfig = gateClientConfig;
         this.connInfo = connInfo;
         this.manager = manager;
@@ -42,18 +42,16 @@ public class NettyGateTcpClient implements Runnable {
                     .option(ChannelOption.SO_LINGER, gateClientConfig.getSoLinger())
                     .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, gateClientConfig.getConnectTimeout())
                     .option(ChannelOption.TCP_NODELAY, gateClientConfig.isTcpNoDelay())
-                    .handler(new ChannelInitializer<SocketChannel>() {
+                    .handler(new DefaultChannelInitializer() {
                         @Override
-                        protected void initChannel(SocketChannel socketChannel) throws Exception {
-                            ChannelPipeline pipeline = socketChannel.pipeline();
+                        public void custom(ChannelPipeline pipeline) throws Exception {
                             pipeline.addLast(new IdleStateHandler(gateClientConfig.getReaderIdleTime(),
                                     gateClientConfig.getWriterIdleTime(),
                                     gateClientConfig.getAllIdleTime()));
-                            pipeline.addLast(new DefaultMessageDecoder());
-                            pipeline.addLast(new DefaultInnerTcpClientChannelInBoundHandler(true,
+                            pipeline.addLast(new DefaultInnerTcpClientChannelInBoundHandler(
                                     manager.getService(),
                                     manager.getDispatcher(),
-                                    manager.getSessionManager(),
+                                    manager.getISessionManager(),
                                     manager.getBaseInfo()));
                         }
                     });
@@ -75,7 +73,7 @@ public class NettyGateTcpClient implements Runnable {
         }
     }
 
-    public CommonMessage.ConnInfo getConnInfo() {
+    public ConnInfo getConnInfo() {
         return connInfo;
     }
 

@@ -5,14 +5,14 @@ import com.roje.game.core.config.NettyConnGateClientConfig;
 import com.roje.game.core.config.ThreadConfig;
 import com.roje.game.core.dispatcher.MessageDispatcher;
 import com.roje.game.core.manager.ConnGateTcpMultiManager;
-import com.roje.game.core.manager.SessionManager;
+import com.roje.game.core.manager.ISessionManager;
 import com.roje.game.core.netty.NettyClusterTcpClient;
 import com.roje.game.core.netty.channel.initializer.ConnClusterClientChannelInitializer;
 import com.roje.game.core.server.BaseInfo;
 import com.roje.game.core.service.Service;
 import com.roje.game.core.service.redis.IdService;
 import com.roje.game.core.service.redis.UserRedisService;
-import com.roje.game.hall.manager.HallSessionManager;
+import com.roje.game.hall.manager.HallISessionManager;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.socket.SocketChannel;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -59,8 +59,8 @@ public class AppHall {
     }
 
     @Bean
-    public HallSessionManager hallUserManager() {
-        return new HallSessionManager();
+    public HallISessionManager hallUserManager() {
+        return new HallISessionManager();
     }
 
     @Bean
@@ -71,9 +71,9 @@ public class AppHall {
     @Bean("hallClusterClientChannelInitializer")
     public ConnClusterClientChannelInitializer hallClusterClientChannelInitializer(NettyConnClusterClientConfig clusterClientConfig,
                                                                                    MessageDispatcher dispatcher,
-                                                                                   SessionManager sessionManager,
+                                                                                   ISessionManager ISessionManager,
                                                                                    BaseInfo baseInfo) {
-        return new ConnClusterClientChannelInitializer(clusterClientConfig, dispatcher, sessionManager, baseInfo);
+        return new ConnClusterClientChannelInitializer(clusterClientConfig, dispatcher, ISessionManager, baseInfo);
     }
 
     @Bean
@@ -88,8 +88,8 @@ public class AppHall {
             Service service,
             MessageDispatcher dispatcher,
             BaseInfo baseInfo,
-            SessionManager sessionManager) {
-        return new ConnGateTcpMultiManager(nettyConnGateClientConfig, service, dispatcher, baseInfo, sessionManager);
+            ISessionManager ISessionManager) {
+        return new ConnGateTcpMultiManager(nettyConnGateClientConfig, service, dispatcher, baseInfo, ISessionManager);
     }
 
     @Bean

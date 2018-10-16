@@ -8,22 +8,15 @@ public interface GateConnectedOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>int32 id = 1;</code>
+   * <code>.ConnInfo connInfo = 1;</code>
    */
-  int getId();
-
+  boolean hasConnInfo();
   /**
-   * <code>string ip = 2;</code>
+   * <code>.ConnInfo connInfo = 1;</code>
    */
-  java.lang.String getIp();
+  com.roje.game.message.conn_info.ConnInfo getConnInfo();
   /**
-   * <code>string ip = 2;</code>
+   * <code>.ConnInfo connInfo = 1;</code>
    */
-  com.google.protobuf.ByteString
-      getIpBytes();
-
-  /**
-   * <code>int32 prot = 3;</code>
-   */
-  int getProt();
+  com.roje.game.message.conn_info.ConnInfoOrBuilder getConnInfoOrBuilder();
 }

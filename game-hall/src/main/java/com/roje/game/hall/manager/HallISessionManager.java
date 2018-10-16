@@ -1,8 +1,8 @@
 package com.roje.game.hall.manager;
 
-import com.roje.game.core.manager.SessionManager;
+import com.roje.game.core.manager.ISessionManager;
 
-public class HallSessionManager implements SessionManager {
+public class HallISessionManager implements ISessionManager {
     @Override
     public int getOnlineCount() {
         return 0;

@@ -23,10 +23,13 @@ public final class ActionOuterClass {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\014action.proto*d\n\006Action\022\010\n\004snap\020\000\022\021\n\014Se" +
-      "rverRegReq\020\351\007\022\021\n\014ServerRegRes\020\352\007\022\024\n\017Serv" +
-      "erUpdateReq\020\353\007\022\024\n\017ServerUpdateRes\020\354\007B \n\034" +
-      "com.roje.game.message.actionP\001b\006proto3"
+      "\n\014action.proto*\325\001\n\006Action\022\010\n\004snap\020\000\022\021\n\014S" +
+      "erverRegReq\020\351\007\022\021\n\014ServerRegRes\020\352\007\022\024\n\017Ser" +
+      "verUpdateReq\020\353\007\022\024\n\017ServerUpdateRes\020\354\007\022\025\n" +
+      "\020PubGateConnected\020\321\017\022\024\n\017PubErrorMessage\020" +
+      "\322\017\022\r\n\010LoginReq\020\221N\022\r\n\010LoginRes\020\222N\022\021\n\014Hear" +
+      "tBeatReq\020\223N\022\021\n\014HeartBeatRes\020\224NB \n\034com.ro" +
+      "je.game.message.actionP\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {

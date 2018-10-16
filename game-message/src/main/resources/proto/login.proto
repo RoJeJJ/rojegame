@@ -1,0 +1,33 @@
+syntax = "proto3";
+import "user_info.proto";
+option java_package = "com.roje.game.message.login";
+option java_multiple_files = true;
+
+enum LoginType{
+    WeChat = 0;
+    Account = 1;
+}
+message LoginRequest{
+    string account                 = 1; //账号
+    string password                = 2; //密码
+    LoginType loginType            = 3; //登录类型
+    int32 version                  = 4;//客户端版本号
+}
+
+message LoginResponse{
+    bool success = 1;
+    string msg = 2;
+    UserInfo userInfo = 3;
+}
+
+message InnerLoginRequest{
+    LoginRequest request            = 1;
+    string sessionId				= 2; //会话ID（服务器内部使用）
+    int32 gateId					= 3; //网关ID（服务器内部使用）
+    string ip						= 4; //IP地址（服务器内部使用）
+}
+
+message InnerLoginResponse{
+    LoginResponse response = 1;
+    string sessionId = 2;
+}

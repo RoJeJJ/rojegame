@@ -2,30 +2,31 @@ package com.roje.game.gate.netty.channel;
 
 import com.roje.game.core.config.NettyTcpServerConfig;
 import com.roje.game.core.dispatcher.MessageDispatcher;
+import com.roje.game.core.manager.SessionManager;
+import com.roje.game.core.netty.channel.initializer.DefaultChannelInitializer;
 import com.roje.game.core.service.Service;
-import com.roje.game.gate.manager.GateSessionSessionManager;
+import com.roje.game.gate.manager.GateSessionManager;
 import com.roje.game.gate.netty.handler.GateUserServerChannelInBoundHandler;
-import io.netty.channel.ChannelInitializer;
+import com.roje.game.gate.session.GateUserSession;
 import io.netty.channel.ChannelPipeline;
-import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.timeout.IdleStateHandler;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component("gateUserTcpServerChannelInitializer")
-public class GateUserTcpServerChannelInitializer extends ChannelInitializer<SocketChannel> {
+public class GateUserTcpServerChannelInitializer extends DefaultChannelInitializer {
     private final NettyTcpServerConfig nettyTcpServerConfig;
 
     private final MessageDispatcher dispatcher;
 
-    private final GateSessionSessionManager sessionManager;
+    private final SessionManager<GateUserSession> sessionManager;
 
     private final Service gateUserExecutorService;
 
     public GateUserTcpServerChannelInitializer(
             @Qualifier("gateUserTcpConfig") NettyTcpServerConfig nettyTcpServerConfig,
             MessageDispatcher dispatcher,
-            GateSessionSessionManager sessionManager,
+            SessionManager<GateUserSession> sessionManager,
             Service service) {
         this.nettyTcpServerConfig = nettyTcpServerConfig;
         this.dispatcher = dispatcher;
@@ -34,10 +35,8 @@ public class GateUserTcpServerChannelInitializer extends ChannelInitializer<Sock
     }
 
     @Override
-    protected void initChannel(SocketChannel socketChannel) throws Exception {
-        ChannelPipeline pipeline = socketChannel.pipeline();
+    public void custom(ChannelPipeline pipeline) throws Exception {
         pipeline.addLast(new IdleStateHandler(nettyTcpServerConfig.getReaderIdleTime(), nettyTcpServerConfig.getWriterIdleTime(), nettyTcpServerConfig.getAllIdleTime()));
-        pipeline.addLast(new DefaultMessageDecoder());
         pipeline.addLast(new GateUserServerChannelInBoundHandler(gateUserExecutorService, dispatcher, sessionManager));
     }
 }

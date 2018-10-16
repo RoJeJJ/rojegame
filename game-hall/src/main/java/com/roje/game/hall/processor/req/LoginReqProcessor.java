@@ -10,8 +10,13 @@ import com.roje.game.core.service.redis.UserRedisService;
 import com.roje.game.core.util.MessageUtil;
 import com.roje.game.hall.entity.WxUser;
 import com.roje.game.hall.utils.WeChatUtil;
-import com.roje.game.message.Mid;
-import com.roje.game.message.login.LoginMessage;
+import com.roje.game.message.action.Action;
+import com.roje.game.message.frame.Frame;
+import com.roje.game.message.login.InnerLoginRequest;
+import com.roje.game.message.login.InnerLoginResponse;
+import com.roje.game.message.login.LoginRequest;
+import com.roje.game.message.login.LoginResponse;
+import com.roje.game.message.user_info.UserInfo;
 import io.netty.channel.Channel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +26,7 @@ import java.util.UUID;
 
 @Slf4j
 @Component
-@Processor(mid = Mid.MID.LoginReq_VALUE)
+@Processor(action = Action.LoginReq)
 public class LoginReqProcessor extends MessageProcessor {
 
     private final UserRedisService userRedisService;
@@ -36,58 +41,60 @@ public class LoginReqProcessor extends MessageProcessor {
     }
 
     @Override
-    public void handler(Channel channel, byte[] bytes) throws Exception {
-        LoginMessage.LoginRequest request = LoginMessage.LoginRequest.parseFrom(bytes);
-        log.info("请求登录:{},{}",request.getAccount(),request.getPassword());
-        switch (request.getLoginType()){
-            case WECHAT:
-                loginWeChat(channel,request);
+    public void handler(Channel channel, Frame frame) throws Exception {
+        InnerLoginRequest innerLoginRequest = frame.getData().unpack(InnerLoginRequest.class);
+        LoginRequest loginRequest = innerLoginRequest.getRequest();
+        log.info("请求登录:{},{}", loginRequest.getAccount(),loginRequest.getPassword());
+        switch (loginRequest.getLoginType()){
+            case WeChat:
+                loginWeChat(channel,loginRequest,innerLoginRequest.getSessionId());
                 break;
-            case ACCOUNT:
-                loginAccount(channel,request);
+            case Account:
+                loginAccount(channel,loginRequest,innerLoginRequest.getSessionId());
                 break;
         }
     }
 
-    private void loginWeChat(Channel channel, LoginMessage.LoginRequest request){
+    private void loginWeChat(Channel channel, LoginRequest request,String sessionId){
         String openid = request.getAccount();
         String token = request.getPassword();
         JsonObject data = WeChatUtil.userInfo(openid,token);
-        LoginMessage.LoginResponse.Builder builder = LoginMessage.LoginResponse.newBuilder();
-        builder.setSessionId(request.getSessionId());
-        builder.setMid(Mid.MID.LoginRes);
+        InnerLoginResponse.Builder innerBuilder = InnerLoginResponse.newBuilder();
+        innerBuilder.setSessionId(sessionId);
+        LoginResponse.Builder builder = LoginResponse.newBuilder();
         if (data == null || data.has("errcode")){
-            builder.setOk(false);
+            builder.setSuccess(false);
             builder.setMsg("微信验证失败");
-            MessageUtil.send(channel,builder.getMid().getNumber(),0,builder.build().toByteArray());
-            return;
+            innerBuilder.setResponse(builder.build());
+        }else {
+            WxUser wxUser = new Gson().fromJson(data,WxUser.class);
+            User user = userRedisService.get(openid);
+            if (user == null){
+                user = new User();
+                user.setAccount(openid);
+                user.setPassword(token);
+                user.setHeadimg(wxUser.getHeadimgurl());
+                user.setSex(wxUser.getSex());
+                user.setId(idService.genrate());
+                user.setGold(10000);
+                userRedisService.save(user);
+            }
+            user.setGameToken(UUID.randomUUID().toString().replace("-",""));
+            builder.setSuccess(true);
+            UserInfo.Builder userInfoBuilder = UserInfo.newBuilder();
+            userInfoBuilder.setAccount(user.getAccount())
+                    .setId(user.getId())
+                    .setHeadimg(user.getHeadimg())
+                    .setNickname(user.getNickname())
+                    .setGameToken(user.getGameToken())
+                    .setGold(user.getGold());
+            builder.setUserInfo(userInfoBuilder.build());
+            innerBuilder.setResponse(builder.build());
         }
-        WxUser wxUser = new Gson().fromJson(data,WxUser.class);
-        User user = userRedisService.get(openid);
-        if (user == null){
-            user = new User();
-            user.setAccount(openid);
-            user.setPassword(token);
-            user.setHeadimg(wxUser.getHeadimgurl());
-            user.setSex(wxUser.getSex());
-            user.setId(idService.genrate());
-            user.setGold(10000);
-            userRedisService.save(user);
-        }
-        user.setGameToken(UUID.randomUUID().toString().replace("-",""));
-        builder.setOk(true);
-        LoginMessage.UserInfo.Builder userInfoBuilder = LoginMessage.UserInfo.newBuilder();
-        userInfoBuilder.setAccount(user.getAccount())
-                .setId(user.getId())
-                .setHeadimg(user.getHeadimg())
-                .setNickname(user.getNickname())
-                .setGameToken(user.getGameToken())
-                .setGold(user.getGold());
-        builder.setInfo(userInfoBuilder.build());
-        MessageUtil.send(channel,builder.getMid().getNumber(),user.getId(),builder.build().toByteArray());
+        MessageUtil.send(channel,Action.LoginRes,innerBuilder.build());
     }
 
-    private void loginAccount(Channel channel, LoginMessage.LoginRequest request){
+    private void loginAccount(Channel channel, LoginRequest request,String sessionId){
         String account = request.getAccount();
         String password = request.getPassword();
     }

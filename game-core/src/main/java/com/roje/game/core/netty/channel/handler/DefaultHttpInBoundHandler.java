@@ -9,15 +9,14 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.DefaultHttpRequest;
 import io.netty.handler.codec.http.HttpMethod;
 import io.netty.handler.codec.http.HttpResponseStatus;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.Executor;
 
 import static com.roje.game.core.util.HttpUtils.sendError;
 
+@Slf4j
 public class DefaultHttpInBoundHandler extends SimpleChannelInboundHandler<DefaultHttpRequest> {
-    private static Logger LOG = LoggerFactory.getLogger(DefaultHttpInBoundHandler.class);
     private MessageDispatcher dispatcher;
     private Service service;
 
@@ -33,7 +32,7 @@ public class DefaultHttpInBoundHandler extends SimpleChannelInboundHandler<Defau
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, DefaultHttpRequest request) {
         //400
         //405
-        LOG.info("接收请求:"+request.uri());
+        log.info("接收请求:"+request.uri());
         if (request.method() != HttpMethod.GET){
             System.out.println("bad method");
             sendError(channelHandlerContext,HttpResponseStatus.METHOD_NOT_ALLOWED);
@@ -41,7 +40,7 @@ public class DefaultHttpInBoundHandler extends SimpleChannelInboundHandler<Defau
         }
         String path = request.uri();
         path = path.substring(0,path.indexOf("?"));
-        LOG.info("path:{}",path);
+        log.info("path:{}",path);
         HttpRequestProcessor handler = dispatcher.getHttpMessageHandler(path);
         //404
         if (handler == null){
@@ -62,6 +61,6 @@ public class DefaultHttpInBoundHandler extends SimpleChannelInboundHandler<Defau
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-        LOG.warn("cause an exception",cause);
+        log.warn("cause an exception",cause);
     }
 }

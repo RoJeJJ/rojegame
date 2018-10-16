@@ -16,9 +16,6 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private GateConnected() {
-    id_ = 0;
-    ip_ = "";
-    prot_ = 0;
   }
 
   @java.lang.Override
@@ -45,20 +42,17 @@ private static final long serialVersionUID = 0L;
           case 0:
             done = true;
             break;
-          case 8: {
+          case 10: {
+            com.roje.game.message.conn_info.ConnInfo.Builder subBuilder = null;
+            if (connInfo_ != null) {
+              subBuilder = connInfo_.toBuilder();
+            }
+            connInfo_ = input.readMessage(com.roje.game.message.conn_info.ConnInfo.parser(), extensionRegistry);
+            if (subBuilder != null) {
+              subBuilder.mergeFrom(connInfo_);
+              connInfo_ = subBuilder.buildPartial();
+            }
 
-            id_ = input.readInt32();
-            break;
-          }
-          case 18: {
-            java.lang.String s = input.readStringRequireUtf8();
-
-            ip_ = s;
-            break;
-          }
-          case 24: {
-
-            prot_ = input.readInt32();
             break;
           }
           default: {
@@ -93,56 +87,25 @@ private static final long serialVersionUID = 0L;
             com.roje.game.message.broadcast.GateConnected.class, com.roje.game.message.broadcast.GateConnected.Builder.class);
   }
 
-  public static final int ID_FIELD_NUMBER = 1;
-  private int id_;
+  public static final int CONNINFO_FIELD_NUMBER = 1;
+  private com.roje.game.message.conn_info.ConnInfo connInfo_;
   /**
-   * <code>int32 id = 1;</code>
+   * <code>.ConnInfo connInfo = 1;</code>
    */
-  public int getId() {
-    return id_;
-  }
-
-  public static final int IP_FIELD_NUMBER = 2;
-  private volatile java.lang.Object ip_;
-  /**
-   * <code>string ip = 2;</code>
-   */
-  public java.lang.String getIp() {
-    java.lang.Object ref = ip_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      ip_ = s;
-      return s;
-    }
+  public boolean hasConnInfo() {
+    return connInfo_ != null;
   }
   /**
-   * <code>string ip = 2;</code>
+   * <code>.ConnInfo connInfo = 1;</code>
    */
-  public com.google.protobuf.ByteString
-      getIpBytes() {
-    java.lang.Object ref = ip_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      ip_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+  public com.roje.game.message.conn_info.ConnInfo getConnInfo() {
+    return connInfo_ == null ? com.roje.game.message.conn_info.ConnInfo.getDefaultInstance() : connInfo_;
   }
-
-  public static final int PROT_FIELD_NUMBER = 3;
-  private int prot_;
   /**
-   * <code>int32 prot = 3;</code>
+   * <code>.ConnInfo connInfo = 1;</code>
    */
-  public int getProt() {
-    return prot_;
+  public com.roje.game.message.conn_info.ConnInfoOrBuilder getConnInfoOrBuilder() {
+    return getConnInfo();
   }
 
   private byte memoizedIsInitialized = -1;
@@ -159,14 +122,8 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (id_ != 0) {
-      output.writeInt32(1, id_);
-    }
-    if (!getIpBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, ip_);
-    }
-    if (prot_ != 0) {
-      output.writeInt32(3, prot_);
+    if (connInfo_ != null) {
+      output.writeMessage(1, getConnInfo());
     }
     unknownFields.writeTo(output);
   }
@@ -177,16 +134,9 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (id_ != 0) {
+    if (connInfo_ != null) {
       size += com.google.protobuf.CodedOutputStream
-        .computeInt32Size(1, id_);
-    }
-    if (!getIpBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, ip_);
-    }
-    if (prot_ != 0) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeInt32Size(3, prot_);
+        .computeMessageSize(1, getConnInfo());
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -204,12 +154,11 @@ private static final long serialVersionUID = 0L;
     com.roje.game.message.broadcast.GateConnected other = (com.roje.game.message.broadcast.GateConnected) obj;
 
     boolean result = true;
-    result = result && (getId()
-        == other.getId());
-    result = result && getIp()
-        .equals(other.getIp());
-    result = result && (getProt()
-        == other.getProt());
+    result = result && (hasConnInfo() == other.hasConnInfo());
+    if (hasConnInfo()) {
+      result = result && getConnInfo()
+          .equals(other.getConnInfo());
+    }
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -221,12 +170,10 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + ID_FIELD_NUMBER;
-    hash = (53 * hash) + getId();
-    hash = (37 * hash) + IP_FIELD_NUMBER;
-    hash = (53 * hash) + getIp().hashCode();
-    hash = (37 * hash) + PROT_FIELD_NUMBER;
-    hash = (53 * hash) + getProt();
+    if (hasConnInfo()) {
+      hash = (37 * hash) + CONNINFO_FIELD_NUMBER;
+      hash = (53 * hash) + getConnInfo().hashCode();
+    }
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -360,12 +307,12 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      id_ = 0;
-
-      ip_ = "";
-
-      prot_ = 0;
-
+      if (connInfoBuilder_ == null) {
+        connInfo_ = null;
+      } else {
+        connInfo_ = null;
+        connInfoBuilder_ = null;
+      }
       return this;
     }
 
@@ -392,9 +339,11 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public com.roje.game.message.broadcast.GateConnected buildPartial() {
       com.roje.game.message.broadcast.GateConnected result = new com.roje.game.message.broadcast.GateConnected(this);
-      result.id_ = id_;
-      result.ip_ = ip_;
-      result.prot_ = prot_;
+      if (connInfoBuilder_ == null) {
+        result.connInfo_ = connInfo_;
+      } else {
+        result.connInfo_ = connInfoBuilder_.build();
+      }
       onBuilt();
       return result;
     }
@@ -443,15 +392,8 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(com.roje.game.message.broadcast.GateConnected other) {
       if (other == com.roje.game.message.broadcast.GateConnected.getDefaultInstance()) return this;
-      if (other.getId() != 0) {
-        setId(other.getId());
-      }
-      if (!other.getIp().isEmpty()) {
-        ip_ = other.ip_;
-        onChanged();
-      }
-      if (other.getProt() != 0) {
-        setProt(other.getProt());
+      if (other.hasConnInfo()) {
+        mergeConnInfo(other.getConnInfo());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -482,125 +424,121 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private int id_ ;
+    private com.roje.game.message.conn_info.ConnInfo connInfo_ = null;
+    private com.google.protobuf.SingleFieldBuilderV3<
+        com.roje.game.message.conn_info.ConnInfo, com.roje.game.message.conn_info.ConnInfo.Builder, com.roje.game.message.conn_info.ConnInfoOrBuilder> connInfoBuilder_;
     /**
-     * <code>int32 id = 1;</code>
+     * <code>.ConnInfo connInfo = 1;</code>
      */
-    public int getId() {
-      return id_;
+    public boolean hasConnInfo() {
+      return connInfoBuilder_ != null || connInfo_ != null;
     }
     /**
-     * <code>int32 id = 1;</code>
+     * <code>.ConnInfo connInfo = 1;</code>
      */
-    public Builder setId(int value) {
-      
-      id_ = value;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>int32 id = 1;</code>
-     */
-    public Builder clearId() {
-      
-      id_ = 0;
-      onChanged();
-      return this;
-    }
-
-    private java.lang.Object ip_ = "";
-    /**
-     * <code>string ip = 2;</code>
-     */
-    public java.lang.String getIp() {
-      java.lang.Object ref = ip_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        ip_ = s;
-        return s;
+    public com.roje.game.message.conn_info.ConnInfo getConnInfo() {
+      if (connInfoBuilder_ == null) {
+        return connInfo_ == null ? com.roje.game.message.conn_info.ConnInfo.getDefaultInstance() : connInfo_;
       } else {
-        return (java.lang.String) ref;
+        return connInfoBuilder_.getMessage();
       }
     }
     /**
-     * <code>string ip = 2;</code>
+     * <code>.ConnInfo connInfo = 1;</code>
      */
-    public com.google.protobuf.ByteString
-        getIpBytes() {
-      java.lang.Object ref = ip_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        ip_ = b;
-        return b;
+    public Builder setConnInfo(com.roje.game.message.conn_info.ConnInfo value) {
+      if (connInfoBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        connInfo_ = value;
+        onChanged();
       } else {
-        return (com.google.protobuf.ByteString) ref;
+        connInfoBuilder_.setMessage(value);
+      }
+
+      return this;
+    }
+    /**
+     * <code>.ConnInfo connInfo = 1;</code>
+     */
+    public Builder setConnInfo(
+        com.roje.game.message.conn_info.ConnInfo.Builder builderForValue) {
+      if (connInfoBuilder_ == null) {
+        connInfo_ = builderForValue.build();
+        onChanged();
+      } else {
+        connInfoBuilder_.setMessage(builderForValue.build());
+      }
+
+      return this;
+    }
+    /**
+     * <code>.ConnInfo connInfo = 1;</code>
+     */
+    public Builder mergeConnInfo(com.roje.game.message.conn_info.ConnInfo value) {
+      if (connInfoBuilder_ == null) {
+        if (connInfo_ != null) {
+          connInfo_ =
+            com.roje.game.message.conn_info.ConnInfo.newBuilder(connInfo_).mergeFrom(value).buildPartial();
+        } else {
+          connInfo_ = value;
+        }
+        onChanged();
+      } else {
+        connInfoBuilder_.mergeFrom(value);
+      }
+
+      return this;
+    }
+    /**
+     * <code>.ConnInfo connInfo = 1;</code>
+     */
+    public Builder clearConnInfo() {
+      if (connInfoBuilder_ == null) {
+        connInfo_ = null;
+        onChanged();
+      } else {
+        connInfo_ = null;
+        connInfoBuilder_ = null;
+      }
+
+      return this;
+    }
+    /**
+     * <code>.ConnInfo connInfo = 1;</code>
+     */
+    public com.roje.game.message.conn_info.ConnInfo.Builder getConnInfoBuilder() {
+      
+      onChanged();
+      return getConnInfoFieldBuilder().getBuilder();
+    }
+    /**
+     * <code>.ConnInfo connInfo = 1;</code>
+     */
+    public com.roje.game.message.conn_info.ConnInfoOrBuilder getConnInfoOrBuilder() {
+      if (connInfoBuilder_ != null) {
+        return connInfoBuilder_.getMessageOrBuilder();
+      } else {
+        return connInfo_ == null ?
+            com.roje.game.message.conn_info.ConnInfo.getDefaultInstance() : connInfo_;
       }
     }
     /**
-     * <code>string ip = 2;</code>
+     * <code>.ConnInfo connInfo = 1;</code>
      */
-    public Builder setIp(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  
-      ip_ = value;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string ip = 2;</code>
-     */
-    public Builder clearIp() {
-      
-      ip_ = getDefaultInstance().getIp();
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string ip = 2;</code>
-     */
-    public Builder setIpBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      
-      ip_ = value;
-      onChanged();
-      return this;
-    }
-
-    private int prot_ ;
-    /**
-     * <code>int32 prot = 3;</code>
-     */
-    public int getProt() {
-      return prot_;
-    }
-    /**
-     * <code>int32 prot = 3;</code>
-     */
-    public Builder setProt(int value) {
-      
-      prot_ = value;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>int32 prot = 3;</code>
-     */
-    public Builder clearProt() {
-      
-      prot_ = 0;
-      onChanged();
-      return this;
+    private com.google.protobuf.SingleFieldBuilderV3<
+        com.roje.game.message.conn_info.ConnInfo, com.roje.game.message.conn_info.ConnInfo.Builder, com.roje.game.message.conn_info.ConnInfoOrBuilder> 
+        getConnInfoFieldBuilder() {
+      if (connInfoBuilder_ == null) {
+        connInfoBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            com.roje.game.message.conn_info.ConnInfo, com.roje.game.message.conn_info.ConnInfo.Builder, com.roje.game.message.conn_info.ConnInfoOrBuilder>(
+                getConnInfo(),
+                getParentForChildren(),
+                isClean());
+        connInfo_ = null;
+      }
+      return connInfoBuilder_;
     }
     @java.lang.Override
     public final Builder setUnknownFields(

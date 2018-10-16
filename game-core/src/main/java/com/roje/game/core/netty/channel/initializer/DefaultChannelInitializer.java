@@ -1,5 +1,6 @@
 package com.roje.game.core.netty.channel.initializer;
 
+import com.roje.game.message.frame.Frame;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
@@ -16,7 +17,6 @@ public class DefaultChannelInitializer extends ChannelInitializer<SocketChannel>
         pipeline.addLast("protobufDecoder",new ProtobufDecoder(Frame.getDefaultInstance()));
         pipeline.addLast("frameEncoder", new ProtobufVarint32LengthFieldPrepender());
         pipeline.addLast("protobufEncoder", new ProtobufEncoder());
-        pipeline.addLast("messageDecoder",new DefaultMessageDecoder());
         custom(pipeline);
     }
 

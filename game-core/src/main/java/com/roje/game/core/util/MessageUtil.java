@@ -1,78 +1,50 @@
 package com.roje.game.core.util;
 
-import com.roje.game.message.common.CommonMessage;
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
+import com.google.protobuf.Any;
+import com.google.protobuf.Message;
+import com.roje.game.message.action.Action;
+import com.roje.game.message.error.ErrorCode;
+import com.roje.game.message.error.ErrorMessage;
+import com.roje.game.message.frame.Frame;
+import com.roje.game.message.inner_message.InnerMessage;
 import io.netty.channel.Channel;
 import lombok.extern.slf4j.Slf4j;
 
 
 @Slf4j
 public class MessageUtil {
-    /**
-     * 小端字节转int
-     * @param bytes 字节数组
-     * @param offset 偏移
-     * @param len 长度
-     * @return int数据
-     */
-    public static int getInt(byte[] bytes, int offset, int len){
-        ByteBuf buf = Unpooled.buffer(4);
-        try {
-            buf.writeBytes(bytes,offset,len);
-            return buf.readInt();
-        }finally {
-            buf.release();
-        }
+    public static <T extends Message> void send(Channel channel, Action action, T message){
+        if (channel != null && channel.isActive()){
+            Frame.Builder builder = Frame.newBuilder();
+            builder.setAction(action);
+            builder.setData(Any.pack(message));
+            channel.writeAndFlush(builder.build());
+        }else
+            log.warn("消息发送失败");
     }
 
-    public static long getLong(byte[] bytes,int offset,int len){
-        ByteBuf buf = Unpooled.buffer(8);
-        try {
-            buf.writeBytes(bytes,offset,len);
-            return buf.readLong();
-        }finally {
-            buf.release();
-        }
+    public static void sendError(Channel channel, ErrorCode errorCode){
+        ErrorMessage.Builder errBuilder = ErrorMessage.newBuilder();
+        errBuilder.setErrCode(errorCode);
+        send(channel,Action.PubErrorMessage,errBuilder.build());
     }
 
-    public static byte[] getMessage(byte[] bytes,int offset,int len){
-        byte[] des = new byte[len];
-        System.arraycopy(bytes,offset,des,0,len);
-        return des;
-    }
-
-    public static CommonMessage.ErrorResponse errorResponse(CommonMessage.SystemErrCode code, String msg) {
-        CommonMessage.ErrorResponse.Builder builder = CommonMessage.ErrorResponse.newBuilder();
-        builder.setErrorCode(code);
-        if (org.springframework.util.StringUtils.isEmpty(msg))
-            msg = "UnKnown";
-        builder.setMsg(msg);
-        return builder.build();
-    }
-
-    public static void send(Channel channel, int mid,long uid, byte[] content){
+    public static void send(Channel channel, long uid, Frame frame){
         if (channel != null && channel.isActive()) {
-            ByteBuf buf = Unpooled.buffer();
-            buf.writeInt(mid);
-            buf.writeLong(uid);
-            buf.writeBytes(content);
-            byte[] bytes = new byte[buf.readableBytes()];
-            buf.readBytes(bytes);
-            channel.writeAndFlush(bytes);
+            Frame.Builder frameBuilder = frame.toBuilder();
+            InnerMessage.Builder builder = InnerMessage.newBuilder();
+            builder.setUid(uid);
+            builder.setData(frameBuilder.getData());
+            frameBuilder.setData(Any.pack(builder.build()));
+            channel.writeAndFlush(frameBuilder.build());
         }else
             log.warn("session消息发送失败");
     }
 
-    public static void send(Channel channel, int mid, byte[] content){
-        if (channel != null && channel.isActive()) {
-            ByteBuf buf = Unpooled.buffer();
-            buf.writeInt(mid);
-            buf.writeBytes(content);
-            byte[] bytes = new byte[buf.readableBytes()];
-            buf.readBytes(bytes);
-            channel.writeAndFlush(bytes);
-        }else
+    public static void send(Channel channel,Frame frame){
+        if (channel != null && channel.isActive())
+            channel.writeAndFlush(frame);
+        else
             log.warn("session消息发送失败");
     }
 }

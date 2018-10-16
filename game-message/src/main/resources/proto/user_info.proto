@@ -1,0 +1,13 @@
+syntax = "proto3";
+option java_package = "com.roje.game.message.user_info";
+option java_multiple_files = true;
+
+message UserInfo{
+    int64 id               =1;//用户id
+    string account     =2;//账户
+    string nickname    =3;//昵称
+    string headimg     =4;//头像
+    int32 sex                   =5;//性别
+    int64 gold             =6;//金币
+    string gameToken   =7;//token
+}

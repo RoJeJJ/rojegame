@@ -28,27 +28,27 @@ public interface ServerRegResponseOrBuilder extends
   int getId();
 
   /**
-   * <code>repeated .Connection gateConns = 4;</code>
+   * <code>repeated .ConnInfo gateInfo = 4;</code>
    */
-  java.util.List<com.roje.game.message.server_register.Connection> 
-      getGateConnsList();
+  java.util.List<com.roje.game.message.conn_info.ConnInfo> 
+      getGateInfoList();
   /**
-   * <code>repeated .Connection gateConns = 4;</code>
+   * <code>repeated .ConnInfo gateInfo = 4;</code>
    */
-  com.roje.game.message.server_register.Connection getGateConns(int index);
+  com.roje.game.message.conn_info.ConnInfo getGateInfo(int index);
   /**
-   * <code>repeated .Connection gateConns = 4;</code>
+   * <code>repeated .ConnInfo gateInfo = 4;</code>
    */
-  int getGateConnsCount();
+  int getGateInfoCount();
   /**
-   * <code>repeated .Connection gateConns = 4;</code>
+   * <code>repeated .ConnInfo gateInfo = 4;</code>
    */
-  java.util.List<? extends com.roje.game.message.server_register.ConnectionOrBuilder> 
-      getGateConnsOrBuilderList();
+  java.util.List<? extends com.roje.game.message.conn_info.ConnInfoOrBuilder> 
+      getGateInfoOrBuilderList();
   /**
-   * <code>repeated .Connection gateConns = 4;</code>
+   * <code>repeated .ConnInfo gateInfo = 4;</code>
    */
-  com.roje.game.message.server_register.ConnectionOrBuilder getGateConnsOrBuilder(
+  com.roje.game.message.conn_info.ConnInfoOrBuilder getGateInfoOrBuilder(
       int index);
 
   /**

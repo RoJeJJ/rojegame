@@ -1,36 +1,37 @@
 package com.roje.game.gate.netty.handler;
 
 import com.roje.game.core.dispatcher.MessageDispatcher;
+import com.roje.game.core.manager.SessionManager;
 import com.roje.game.core.netty.channel.handler.DefaultInBoundHandler;
 import com.roje.game.core.service.Service;
-import com.roje.game.gate.manager.GateSessionSessionManager;
 import com.roje.game.gate.session.GateUserSession;
+import com.roje.game.message.frame.Frame;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.timeout.IdleStateEvent;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class GateUserServerChannelInBoundHandler extends DefaultInBoundHandler {
-    private GateSessionSessionManager sessionManager;
+    private SessionManager<GateUserSession> sessionManager;
 
-    public GateUserServerChannelInBoundHandler(Service service, MessageDispatcher dispatcher, GateSessionSessionManager sessionManager) {
-        super(false,service,dispatcher);
+    public GateUserServerChannelInBoundHandler(Service service, MessageDispatcher dispatcher, SessionManager<GateUserSession> sessionManager) {
+        super(service,dispatcher);
         this.sessionManager = sessionManager;
     }
 
 
     @Override
-    public void forward(ChannelHandlerContext ctx,int mid,long uid, byte[] bytes) {
+    public void forward(ChannelHandlerContext ctx, Frame frame) {
         GateUserSession session = sessionManager.getSession(ctx.channel());
         if (session == null) {
             log.warn("未知请求,关闭连接");
             ctx.close();
             return;
         }
-        if (mid > 20000) { //消息号大于20000的消息转发到游戏服
-           session.sendToGame(true,mid,bytes);
-        } else if (mid > 10000) { //大于10000,小于20000 转发到大厅服务器
-            session.sendToHall(true,mid,bytes);
+        if (frame.getAction().getNumber() > 20000) { //消息号大于20000的消息转发到游戏服
+           session.sendToGame(frame);
+        } else if (frame.getAction().getNumber() > 10000) { //大于10000,小于20000 转发到大厅服务器
+            session.sendToHall(frame);
         }
     }
 

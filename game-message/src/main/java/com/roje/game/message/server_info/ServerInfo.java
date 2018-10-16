@@ -19,6 +19,7 @@ private static final long serialVersionUID = 0L;
     id_ = 0;
     ip_ = "";
     type_ = 0;
+    gameId_ = 0;
     innerPort_ = 0;
     state_ = 0;
     online_ = 0;
@@ -77,68 +78,73 @@ private static final long serialVersionUID = 0L;
           }
           case 32: {
 
-            innerPort_ = input.readInt32();
+            gameId_ = input.readInt32();
             break;
           }
           case 40: {
+
+            innerPort_ = input.readInt32();
+            break;
+          }
+          case 48: {
             int rawValue = input.readEnum();
 
             state_ = rawValue;
             break;
           }
-          case 48: {
+          case 56: {
 
             online_ = input.readInt32();
             break;
           }
-          case 56: {
+          case 64: {
 
             maxUserCount_ = input.readInt32();
             break;
           }
-          case 64: {
+          case 72: {
 
             httpport_ = input.readInt32();
-            break;
-          }
-          case 74: {
-            java.lang.String s = input.readStringRequireUtf8();
-
-            name_ = s;
             break;
           }
           case 82: {
             java.lang.String s = input.readStringRequireUtf8();
 
-            wwwip_ = s;
+            name_ = s;
             break;
           }
-          case 88: {
+          case 90: {
+            java.lang.String s = input.readStringRequireUtf8();
 
-            freeMemory_ = input.readInt32();
+            wwwip_ = s;
             break;
           }
           case 96: {
 
-            totalMemory_ = input.readInt32();
+            freeMemory_ = input.readInt32();
             break;
           }
           case 104: {
 
-            version_ = input.readInt32();
+            totalMemory_ = input.readInt32();
             break;
           }
           case 112: {
 
-            requireClientVersion_ = input.readInt32();
+            version_ = input.readInt32();
             break;
           }
           case 120: {
 
-            connectedCount_ = input.readInt32();
+            requireClientVersion_ = input.readInt32();
             break;
           }
           case 128: {
+
+            connectedCount_ = input.readInt32();
+            break;
+          }
+          case 136: {
 
             userPort_ = input.readInt32();
             break;
@@ -255,27 +261,36 @@ private static final long serialVersionUID = 0L;
     return result == null ? com.roje.game.message.server_info.ServerType.UNRECOGNIZED : result;
   }
 
-  public static final int INNERPORT_FIELD_NUMBER = 4;
+  public static final int GAMEID_FIELD_NUMBER = 4;
+  private int gameId_;
+  /**
+   * <code>int32 gameId = 4;</code>
+   */
+  public int getGameId() {
+    return gameId_;
+  }
+
+  public static final int INNERPORT_FIELD_NUMBER = 5;
   private int innerPort_;
   /**
    * <pre>
    * 端口
    * </pre>
    *
-   * <code>int32 innerPort = 4;</code>
+   * <code>int32 innerPort = 5;</code>
    */
   public int getInnerPort() {
     return innerPort_;
   }
 
-  public static final int STATE_FIELD_NUMBER = 5;
+  public static final int STATE_FIELD_NUMBER = 6;
   private int state_;
   /**
    * <pre>
    *状态 -1表示维护；0表示准备开启；1表示正常，2表示不显示，3表示内部开启
    * </pre>
    *
-   * <code>.ServerStatus state = 5;</code>
+   * <code>.ServerStatus state = 6;</code>
    */
   public int getStateValue() {
     return state_;
@@ -285,7 +300,7 @@ private static final long serialVersionUID = 0L;
    *状态 -1表示维护；0表示准备开启；1表示正常，2表示不显示，3表示内部开启
    * </pre>
    *
-   * <code>.ServerStatus state = 5;</code>
+   * <code>.ServerStatus state = 6;</code>
    */
   public com.roje.game.message.server_info.ServerStatus getState() {
     @SuppressWarnings("deprecation")
@@ -293,53 +308,53 @@ private static final long serialVersionUID = 0L;
     return result == null ? com.roje.game.message.server_info.ServerStatus.UNRECOGNIZED : result;
   }
 
-  public static final int ONLINE_FIELD_NUMBER = 6;
+  public static final int ONLINE_FIELD_NUMBER = 7;
   private int online_;
   /**
    * <pre>
    * 在线人数
    * </pre>
    *
-   * <code>int32 online = 6;</code>
+   * <code>int32 online = 7;</code>
    */
   public int getOnline() {
     return online_;
   }
 
-  public static final int MAXUSERCOUNT_FIELD_NUMBER = 7;
+  public static final int MAXUSERCOUNT_FIELD_NUMBER = 8;
   private int maxUserCount_;
   /**
    * <pre>
    * 在线人数
    * </pre>
    *
-   * <code>int32 maxUserCount = 7;</code>
+   * <code>int32 maxUserCount = 8;</code>
    */
   public int getMaxUserCount() {
     return maxUserCount_;
   }
 
-  public static final int HTTPPORT_FIELD_NUMBER = 8;
+  public static final int HTTPPORT_FIELD_NUMBER = 9;
   private int httpport_;
   /**
    * <pre>
    * http端口
    * </pre>
    *
-   * <code>int32 httpport = 8;</code>
+   * <code>int32 httpport = 9;</code>
    */
   public int getHttpport() {
     return httpport_;
   }
 
-  public static final int NAME_FIELD_NUMBER = 9;
+  public static final int NAME_FIELD_NUMBER = 10;
   private volatile java.lang.Object name_;
   /**
    * <pre>
    *名字
    * </pre>
    *
-   * <code>string name = 9;</code>
+   * <code>string name = 10;</code>
    */
   public java.lang.String getName() {
     java.lang.Object ref = name_;
@@ -358,7 +373,7 @@ private static final long serialVersionUID = 0L;
    *名字
    * </pre>
    *
-   * <code>string name = 9;</code>
+   * <code>string name = 10;</code>
    */
   public com.google.protobuf.ByteString
       getNameBytes() {
@@ -374,14 +389,14 @@ private static final long serialVersionUID = 0L;
     }
   }
 
-  public static final int WWWIP_FIELD_NUMBER = 10;
+  public static final int WWWIP_FIELD_NUMBER = 11;
   private volatile java.lang.Object wwwip_;
   /**
    * <pre>
    * 外网地址
    * </pre>
    *
-   * <code>string wwwip = 10;</code>
+   * <code>string wwwip = 11;</code>
    */
   public java.lang.String getWwwip() {
     java.lang.Object ref = wwwip_;
@@ -400,7 +415,7 @@ private static final long serialVersionUID = 0L;
    * 外网地址
    * </pre>
    *
-   * <code>string wwwip = 10;</code>
+   * <code>string wwwip = 11;</code>
    */
   public com.google.protobuf.ByteString
       getWwwipBytes() {
@@ -416,71 +431,71 @@ private static final long serialVersionUID = 0L;
     }
   }
 
-  public static final int FREEMEMORY_FIELD_NUMBER = 11;
+  public static final int FREEMEMORY_FIELD_NUMBER = 12;
   private int freeMemory_;
   /**
    * <pre>
    *空闲内存
    * </pre>
    *
-   * <code>int32 freeMemory = 11;</code>
+   * <code>int32 freeMemory = 12;</code>
    */
   public int getFreeMemory() {
     return freeMemory_;
   }
 
-  public static final int TOTALMEMORY_FIELD_NUMBER = 12;
+  public static final int TOTALMEMORY_FIELD_NUMBER = 13;
   private int totalMemory_;
   /**
    * <pre>
    *可用内存
    * </pre>
    *
-   * <code>int32 totalMemory = 12;</code>
+   * <code>int32 totalMemory = 13;</code>
    */
   public int getTotalMemory() {
     return totalMemory_;
   }
 
-  public static final int VERSION_FIELD_NUMBER = 13;
+  public static final int VERSION_FIELD_NUMBER = 14;
   private int version_;
   /**
    * <pre>
    *版本号
    * </pre>
    *
-   * <code>int32 version = 13;</code>
+   * <code>int32 version = 14;</code>
    */
   public int getVersion() {
     return version_;
   }
 
-  public static final int REQUIRECLIENTVERSION_FIELD_NUMBER = 14;
+  public static final int REQUIRECLIENTVERSION_FIELD_NUMBER = 15;
   private int requireClientVersion_;
   /**
    * <pre>
    *要求的客户端版本
    * </pre>
    *
-   * <code>int32 requireClientVersion = 14;</code>
+   * <code>int32 requireClientVersion = 15;</code>
    */
   public int getRequireClientVersion() {
     return requireClientVersion_;
   }
 
-  public static final int CONNECTEDCOUNT_FIELD_NUMBER = 15;
+  public static final int CONNECTEDCOUNT_FIELD_NUMBER = 16;
   private int connectedCount_;
   /**
-   * <code>int32 connectedCount = 15;</code>
+   * <code>int32 connectedCount = 16;</code>
    */
   public int getConnectedCount() {
     return connectedCount_;
   }
 
-  public static final int USERPORT_FIELD_NUMBER = 16;
+  public static final int USERPORT_FIELD_NUMBER = 17;
   private int userPort_;
   /**
-   * <code>int32 userPort = 16;</code>
+   * <code>int32 userPort = 17;</code>
    */
   public int getUserPort() {
     return userPort_;
@@ -509,44 +524,47 @@ private static final long serialVersionUID = 0L;
     if (type_ != com.roje.game.message.server_info.ServerType.Unknown.getNumber()) {
       output.writeEnum(3, type_);
     }
+    if (gameId_ != 0) {
+      output.writeInt32(4, gameId_);
+    }
     if (innerPort_ != 0) {
-      output.writeInt32(4, innerPort_);
+      output.writeInt32(5, innerPort_);
     }
     if (state_ != com.roje.game.message.server_info.ServerStatus.Normal.getNumber()) {
-      output.writeEnum(5, state_);
+      output.writeEnum(6, state_);
     }
     if (online_ != 0) {
-      output.writeInt32(6, online_);
+      output.writeInt32(7, online_);
     }
     if (maxUserCount_ != 0) {
-      output.writeInt32(7, maxUserCount_);
+      output.writeInt32(8, maxUserCount_);
     }
     if (httpport_ != 0) {
-      output.writeInt32(8, httpport_);
+      output.writeInt32(9, httpport_);
     }
     if (!getNameBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 9, name_);
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 10, name_);
     }
     if (!getWwwipBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 10, wwwip_);
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 11, wwwip_);
     }
     if (freeMemory_ != 0) {
-      output.writeInt32(11, freeMemory_);
+      output.writeInt32(12, freeMemory_);
     }
     if (totalMemory_ != 0) {
-      output.writeInt32(12, totalMemory_);
+      output.writeInt32(13, totalMemory_);
     }
     if (version_ != 0) {
-      output.writeInt32(13, version_);
+      output.writeInt32(14, version_);
     }
     if (requireClientVersion_ != 0) {
-      output.writeInt32(14, requireClientVersion_);
+      output.writeInt32(15, requireClientVersion_);
     }
     if (connectedCount_ != 0) {
-      output.writeInt32(15, connectedCount_);
+      output.writeInt32(16, connectedCount_);
     }
     if (userPort_ != 0) {
-      output.writeInt32(16, userPort_);
+      output.writeInt32(17, userPort_);
     }
     unknownFields.writeTo(output);
   }
@@ -568,55 +586,59 @@ private static final long serialVersionUID = 0L;
       size += com.google.protobuf.CodedOutputStream
         .computeEnumSize(3, type_);
     }
+    if (gameId_ != 0) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeInt32Size(4, gameId_);
+    }
     if (innerPort_ != 0) {
       size += com.google.protobuf.CodedOutputStream
-        .computeInt32Size(4, innerPort_);
+        .computeInt32Size(5, innerPort_);
     }
     if (state_ != com.roje.game.message.server_info.ServerStatus.Normal.getNumber()) {
       size += com.google.protobuf.CodedOutputStream
-        .computeEnumSize(5, state_);
+        .computeEnumSize(6, state_);
     }
     if (online_ != 0) {
       size += com.google.protobuf.CodedOutputStream
-        .computeInt32Size(6, online_);
+        .computeInt32Size(7, online_);
     }
     if (maxUserCount_ != 0) {
       size += com.google.protobuf.CodedOutputStream
-        .computeInt32Size(7, maxUserCount_);
+        .computeInt32Size(8, maxUserCount_);
     }
     if (httpport_ != 0) {
       size += com.google.protobuf.CodedOutputStream
-        .computeInt32Size(8, httpport_);
+        .computeInt32Size(9, httpport_);
     }
     if (!getNameBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(9, name_);
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(10, name_);
     }
     if (!getWwwipBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(10, wwwip_);
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(11, wwwip_);
     }
     if (freeMemory_ != 0) {
       size += com.google.protobuf.CodedOutputStream
-        .computeInt32Size(11, freeMemory_);
+        .computeInt32Size(12, freeMemory_);
     }
     if (totalMemory_ != 0) {
       size += com.google.protobuf.CodedOutputStream
-        .computeInt32Size(12, totalMemory_);
+        .computeInt32Size(13, totalMemory_);
     }
     if (version_ != 0) {
       size += com.google.protobuf.CodedOutputStream
-        .computeInt32Size(13, version_);
+        .computeInt32Size(14, version_);
     }
     if (requireClientVersion_ != 0) {
       size += com.google.protobuf.CodedOutputStream
-        .computeInt32Size(14, requireClientVersion_);
+        .computeInt32Size(15, requireClientVersion_);
     }
     if (connectedCount_ != 0) {
       size += com.google.protobuf.CodedOutputStream
-        .computeInt32Size(15, connectedCount_);
+        .computeInt32Size(16, connectedCount_);
     }
     if (userPort_ != 0) {
       size += com.google.protobuf.CodedOutputStream
-        .computeInt32Size(16, userPort_);
+        .computeInt32Size(17, userPort_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -639,6 +661,8 @@ private static final long serialVersionUID = 0L;
     result = result && getIp()
         .equals(other.getIp());
     result = result && type_ == other.type_;
+    result = result && (getGameId()
+        == other.getGameId());
     result = result && (getInnerPort()
         == other.getInnerPort());
     result = result && state_ == other.state_;
@@ -681,6 +705,8 @@ private static final long serialVersionUID = 0L;
     hash = (53 * hash) + getIp().hashCode();
     hash = (37 * hash) + TYPE_FIELD_NUMBER;
     hash = (53 * hash) + type_;
+    hash = (37 * hash) + GAMEID_FIELD_NUMBER;
+    hash = (53 * hash) + getGameId();
     hash = (37 * hash) + INNERPORT_FIELD_NUMBER;
     hash = (53 * hash) + getInnerPort();
     hash = (37 * hash) + STATE_FIELD_NUMBER;
@@ -846,6 +872,8 @@ private static final long serialVersionUID = 0L;
 
       type_ = 0;
 
+      gameId_ = 0;
+
       innerPort_ = 0;
 
       state_ = 0;
@@ -901,6 +929,7 @@ private static final long serialVersionUID = 0L;
       result.id_ = id_;
       result.ip_ = ip_;
       result.type_ = type_;
+      result.gameId_ = gameId_;
       result.innerPort_ = innerPort_;
       result.state_ = state_;
       result.online_ = online_;
@@ -971,6 +1000,9 @@ private static final long serialVersionUID = 0L;
       }
       if (other.type_ != 0) {
         setTypeValue(other.getTypeValue());
+      }
+      if (other.getGameId() != 0) {
+        setGameId(other.getGameId());
       }
       if (other.getInnerPort() != 0) {
         setInnerPort(other.getInnerPort());
@@ -1234,13 +1266,39 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
+    private int gameId_ ;
+    /**
+     * <code>int32 gameId = 4;</code>
+     */
+    public int getGameId() {
+      return gameId_;
+    }
+    /**
+     * <code>int32 gameId = 4;</code>
+     */
+    public Builder setGameId(int value) {
+      
+      gameId_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>int32 gameId = 4;</code>
+     */
+    public Builder clearGameId() {
+      
+      gameId_ = 0;
+      onChanged();
+      return this;
+    }
+
     private int innerPort_ ;
     /**
      * <pre>
      * 端口
      * </pre>
      *
-     * <code>int32 innerPort = 4;</code>
+     * <code>int32 innerPort = 5;</code>
      */
     public int getInnerPort() {
       return innerPort_;
@@ -1250,7 +1308,7 @@ private static final long serialVersionUID = 0L;
      * 端口
      * </pre>
      *
-     * <code>int32 innerPort = 4;</code>
+     * <code>int32 innerPort = 5;</code>
      */
     public Builder setInnerPort(int value) {
       
@@ -1263,7 +1321,7 @@ private static final long serialVersionUID = 0L;
      * 端口
      * </pre>
      *
-     * <code>int32 innerPort = 4;</code>
+     * <code>int32 innerPort = 5;</code>
      */
     public Builder clearInnerPort() {
       
@@ -1278,7 +1336,7 @@ private static final long serialVersionUID = 0L;
      *状态 -1表示维护；0表示准备开启；1表示正常，2表示不显示，3表示内部开启
      * </pre>
      *
-     * <code>.ServerStatus state = 5;</code>
+     * <code>.ServerStatus state = 6;</code>
      */
     public int getStateValue() {
       return state_;
@@ -1288,7 +1346,7 @@ private static final long serialVersionUID = 0L;
      *状态 -1表示维护；0表示准备开启；1表示正常，2表示不显示，3表示内部开启
      * </pre>
      *
-     * <code>.ServerStatus state = 5;</code>
+     * <code>.ServerStatus state = 6;</code>
      */
     public Builder setStateValue(int value) {
       state_ = value;
@@ -1300,7 +1358,7 @@ private static final long serialVersionUID = 0L;
      *状态 -1表示维护；0表示准备开启；1表示正常，2表示不显示，3表示内部开启
      * </pre>
      *
-     * <code>.ServerStatus state = 5;</code>
+     * <code>.ServerStatus state = 6;</code>
      */
     public com.roje.game.message.server_info.ServerStatus getState() {
       @SuppressWarnings("deprecation")
@@ -1312,7 +1370,7 @@ private static final long serialVersionUID = 0L;
      *状态 -1表示维护；0表示准备开启；1表示正常，2表示不显示，3表示内部开启
      * </pre>
      *
-     * <code>.ServerStatus state = 5;</code>
+     * <code>.ServerStatus state = 6;</code>
      */
     public Builder setState(com.roje.game.message.server_info.ServerStatus value) {
       if (value == null) {
@@ -1328,7 +1386,7 @@ private static final long serialVersionUID = 0L;
      *状态 -1表示维护；0表示准备开启；1表示正常，2表示不显示，3表示内部开启
      * </pre>
      *
-     * <code>.ServerStatus state = 5;</code>
+     * <code>.ServerStatus state = 6;</code>
      */
     public Builder clearState() {
       
@@ -1343,7 +1401,7 @@ private static final long serialVersionUID = 0L;
      * 在线人数
      * </pre>
      *
-     * <code>int32 online = 6;</code>
+     * <code>int32 online = 7;</code>
      */
     public int getOnline() {
       return online_;
@@ -1353,7 +1411,7 @@ private static final long serialVersionUID = 0L;
      * 在线人数
      * </pre>
      *
-     * <code>int32 online = 6;</code>
+     * <code>int32 online = 7;</code>
      */
     public Builder setOnline(int value) {
       
@@ -1366,7 +1424,7 @@ private static final long serialVersionUID = 0L;
      * 在线人数
      * </pre>
      *
-     * <code>int32 online = 6;</code>
+     * <code>int32 online = 7;</code>
      */
     public Builder clearOnline() {
       
@@ -1381,7 +1439,7 @@ private static final long serialVersionUID = 0L;
      * 在线人数
      * </pre>
      *
-     * <code>int32 maxUserCount = 7;</code>
+     * <code>int32 maxUserCount = 8;</code>
      */
     public int getMaxUserCount() {
       return maxUserCount_;
@@ -1391,7 +1449,7 @@ private static final long serialVersionUID = 0L;
      * 在线人数
      * </pre>
      *
-     * <code>int32 maxUserCount = 7;</code>
+     * <code>int32 maxUserCount = 8;</code>
      */
     public Builder setMaxUserCount(int value) {
       
@@ -1404,7 +1462,7 @@ private static final long serialVersionUID = 0L;
      * 在线人数
      * </pre>
      *
-     * <code>int32 maxUserCount = 7;</code>
+     * <code>int32 maxUserCount = 8;</code>
      */
     public Builder clearMaxUserCount() {
       
@@ -1419,7 +1477,7 @@ private static final long serialVersionUID = 0L;
      * http端口
      * </pre>
      *
-     * <code>int32 httpport = 8;</code>
+     * <code>int32 httpport = 9;</code>
      */
     public int getHttpport() {
       return httpport_;
@@ -1429,7 +1487,7 @@ private static final long serialVersionUID = 0L;
      * http端口
      * </pre>
      *
-     * <code>int32 httpport = 8;</code>
+     * <code>int32 httpport = 9;</code>
      */
     public Builder setHttpport(int value) {
       
@@ -1442,7 +1500,7 @@ private static final long serialVersionUID = 0L;
      * http端口
      * </pre>
      *
-     * <code>int32 httpport = 8;</code>
+     * <code>int32 httpport = 9;</code>
      */
     public Builder clearHttpport() {
       
@@ -1457,7 +1515,7 @@ private static final long serialVersionUID = 0L;
      *名字
      * </pre>
      *
-     * <code>string name = 9;</code>
+     * <code>string name = 10;</code>
      */
     public java.lang.String getName() {
       java.lang.Object ref = name_;
@@ -1476,7 +1534,7 @@ private static final long serialVersionUID = 0L;
      *名字
      * </pre>
      *
-     * <code>string name = 9;</code>
+     * <code>string name = 10;</code>
      */
     public com.google.protobuf.ByteString
         getNameBytes() {
@@ -1496,7 +1554,7 @@ private static final long serialVersionUID = 0L;
      *名字
      * </pre>
      *
-     * <code>string name = 9;</code>
+     * <code>string name = 10;</code>
      */
     public Builder setName(
         java.lang.String value) {
@@ -1513,7 +1571,7 @@ private static final long serialVersionUID = 0L;
      *名字
      * </pre>
      *
-     * <code>string name = 9;</code>
+     * <code>string name = 10;</code>
      */
     public Builder clearName() {
       
@@ -1526,7 +1584,7 @@ private static final long serialVersionUID = 0L;
      *名字
      * </pre>
      *
-     * <code>string name = 9;</code>
+     * <code>string name = 10;</code>
      */
     public Builder setNameBytes(
         com.google.protobuf.ByteString value) {
@@ -1546,7 +1604,7 @@ private static final long serialVersionUID = 0L;
      * 外网地址
      * </pre>
      *
-     * <code>string wwwip = 10;</code>
+     * <code>string wwwip = 11;</code>
      */
     public java.lang.String getWwwip() {
       java.lang.Object ref = wwwip_;
@@ -1565,7 +1623,7 @@ private static final long serialVersionUID = 0L;
      * 外网地址
      * </pre>
      *
-     * <code>string wwwip = 10;</code>
+     * <code>string wwwip = 11;</code>
      */
     public com.google.protobuf.ByteString
         getWwwipBytes() {
@@ -1585,7 +1643,7 @@ private static final long serialVersionUID = 0L;
      * 外网地址
      * </pre>
      *
-     * <code>string wwwip = 10;</code>
+     * <code>string wwwip = 11;</code>
      */
     public Builder setWwwip(
         java.lang.String value) {
@@ -1602,7 +1660,7 @@ private static final long serialVersionUID = 0L;
      * 外网地址
      * </pre>
      *
-     * <code>string wwwip = 10;</code>
+     * <code>string wwwip = 11;</code>
      */
     public Builder clearWwwip() {
       
@@ -1615,7 +1673,7 @@ private static final long serialVersionUID = 0L;
      * 外网地址
      * </pre>
      *
-     * <code>string wwwip = 10;</code>
+     * <code>string wwwip = 11;</code>
      */
     public Builder setWwwipBytes(
         com.google.protobuf.ByteString value) {
@@ -1635,7 +1693,7 @@ private static final long serialVersionUID = 0L;
      *空闲内存
      * </pre>
      *
-     * <code>int32 freeMemory = 11;</code>
+     * <code>int32 freeMemory = 12;</code>
      */
     public int getFreeMemory() {
       return freeMemory_;
@@ -1645,7 +1703,7 @@ private static final long serialVersionUID = 0L;
      *空闲内存
      * </pre>
      *
-     * <code>int32 freeMemory = 11;</code>
+     * <code>int32 freeMemory = 12;</code>
      */
     public Builder setFreeMemory(int value) {
       
@@ -1658,7 +1716,7 @@ private static final long serialVersionUID = 0L;
      *空闲内存
      * </pre>
      *
-     * <code>int32 freeMemory = 11;</code>
+     * <code>int32 freeMemory = 12;</code>
      */
     public Builder clearFreeMemory() {
       
@@ -1673,7 +1731,7 @@ private static final long serialVersionUID = 0L;
      *可用内存
      * </pre>
      *
-     * <code>int32 totalMemory = 12;</code>
+     * <code>int32 totalMemory = 13;</code>
      */
     public int getTotalMemory() {
       return totalMemory_;
@@ -1683,7 +1741,7 @@ private static final long serialVersionUID = 0L;
      *可用内存
      * </pre>
      *
-     * <code>int32 totalMemory = 12;</code>
+     * <code>int32 totalMemory = 13;</code>
      */
     public Builder setTotalMemory(int value) {
       
@@ -1696,7 +1754,7 @@ private static final long serialVersionUID = 0L;
      *可用内存
      * </pre>
      *
-     * <code>int32 totalMemory = 12;</code>
+     * <code>int32 totalMemory = 13;</code>
      */
     public Builder clearTotalMemory() {
       
@@ -1711,7 +1769,7 @@ private static final long serialVersionUID = 0L;
      *版本号
      * </pre>
      *
-     * <code>int32 version = 13;</code>
+     * <code>int32 version = 14;</code>
      */
     public int getVersion() {
       return version_;
@@ -1721,7 +1779,7 @@ private static final long serialVersionUID = 0L;
      *版本号
      * </pre>
      *
-     * <code>int32 version = 13;</code>
+     * <code>int32 version = 14;</code>
      */
     public Builder setVersion(int value) {
       
@@ -1734,7 +1792,7 @@ private static final long serialVersionUID = 0L;
      *版本号
      * </pre>
      *
-     * <code>int32 version = 13;</code>
+     * <code>int32 version = 14;</code>
      */
     public Builder clearVersion() {
       
@@ -1749,7 +1807,7 @@ private static final long serialVersionUID = 0L;
      *要求的客户端版本
      * </pre>
      *
-     * <code>int32 requireClientVersion = 14;</code>
+     * <code>int32 requireClientVersion = 15;</code>
      */
     public int getRequireClientVersion() {
       return requireClientVersion_;
@@ -1759,7 +1817,7 @@ private static final long serialVersionUID = 0L;
      *要求的客户端版本
      * </pre>
      *
-     * <code>int32 requireClientVersion = 14;</code>
+     * <code>int32 requireClientVersion = 15;</code>
      */
     public Builder setRequireClientVersion(int value) {
       
@@ -1772,7 +1830,7 @@ private static final long serialVersionUID = 0L;
      *要求的客户端版本
      * </pre>
      *
-     * <code>int32 requireClientVersion = 14;</code>
+     * <code>int32 requireClientVersion = 15;</code>
      */
     public Builder clearRequireClientVersion() {
       
@@ -1783,13 +1841,13 @@ private static final long serialVersionUID = 0L;
 
     private int connectedCount_ ;
     /**
-     * <code>int32 connectedCount = 15;</code>
+     * <code>int32 connectedCount = 16;</code>
      */
     public int getConnectedCount() {
       return connectedCount_;
     }
     /**
-     * <code>int32 connectedCount = 15;</code>
+     * <code>int32 connectedCount = 16;</code>
      */
     public Builder setConnectedCount(int value) {
       
@@ -1798,7 +1856,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>int32 connectedCount = 15;</code>
+     * <code>int32 connectedCount = 16;</code>
      */
     public Builder clearConnectedCount() {
       
@@ -1809,13 +1867,13 @@ private static final long serialVersionUID = 0L;
 
     private int userPort_ ;
     /**
-     * <code>int32 userPort = 16;</code>
+     * <code>int32 userPort = 17;</code>
      */
     public int getUserPort() {
       return userPort_;
     }
     /**
-     * <code>int32 userPort = 16;</code>
+     * <code>int32 userPort = 17;</code>
      */
     public Builder setUserPort(int value) {
       
@@ -1824,7 +1882,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>int32 userPort = 16;</code>
+     * <code>int32 userPort = 17;</code>
      */
     public Builder clearUserPort() {
       

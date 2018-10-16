@@ -1,10 +1,9 @@
 package com.roje.game.core.processor;
 
+import com.google.protobuf.Message;
 import com.roje.game.core.dispatcher.MessageDispatcher;
 import com.roje.game.message.frame.Frame;
 import io.netty.channel.Channel;
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;

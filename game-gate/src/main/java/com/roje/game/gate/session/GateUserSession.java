@@ -1,80 +1,97 @@
 package com.roje.game.gate.session;
 
-import com.google.protobuf.Message;
-import com.roje.game.core.config.MessageConfig;
+import com.google.protobuf.Any;
 import com.roje.game.core.session.Session;
-import com.roje.game.core.server.ServerInfo;
 import com.roje.game.core.util.MessageUtil;
-import com.roje.game.message.common.CommonMessage;
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
+import com.roje.game.message.error.ErrorCode;
+import com.roje.game.message.frame.Frame;
+import com.roje.game.message.login.InnerLoginRequest;
+import com.roje.game.message.login.LoginRequest;
+import com.roje.game.message.login.LoginResponse;
 import io.netty.channel.Channel;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import java.util.logging.Handler;
+import java.net.InetSocketAddress;
 
 @Slf4j
 public class GateUserSession extends Session {
-    private ServerInfo hallServer;
-    private ServerInfo gameServer;
+    enum LoginStatus {
+        UnLogin, Logining, logined
+    }
+
+    @Getter
+    @Setter
+    private Channel hallChannel;
+    @Getter
+    @Setter
+    private Channel gameChannel;
+
+    private LoginStatus loginStatus;
+
     public GateUserSession(Channel channel) {
         super(channel);
     }
 
-    public ServerInfo getHallServer() {
-        return hallServer;
-    }
-
-    public void setHallServer(ServerInfo hallServer) {
-        this.hallServer = hallServer;
-    }
-
-    public ServerInfo getGameServer() {
-        return gameServer;
-    }
-
-    public void setGameServer(ServerInfo gameServer) {
-        this.gameServer = gameServer;
+    @Override
+    public void onOpen() {
+        loginStatus = LoginStatus.UnLogin;
     }
 
     @Override
-    public void sessionClosed() {
-//        LoginMessage.LoseConnection.Builder builder = LoginMessage.LoseConnection.newBuilder();
-//        builder.setUid(uid);
-//        builder.setRid(rid);
-//        if (hallServer != null){
-//            hallServer.send(builder.build());
-//        }
-//        if (gameServer != null){
-//            gameServer.send(builder.build());
-//        }
+    public void onClosed() {
+        super.onClosed();
     }
 
-    public void sendToHall(boolean auth,int mid, byte[] content){
-        if (hallServer != null){
-            sendTo(auth,hallServer.getChannel(),mid,content);
-        }else {
-                log.warn("没有可用的大厅服务器");
-                channel.writeAndFlush(MessageUtil.errorResponse(CommonMessage.SystemErrCode.HallNotFind, "没有可用的大厅服务器"));
-        }
+    public void sendToHall(Frame frame) {
+        sendTo(hallChannel, frame);
     }
 
-    private void sendTo(boolean auth,Channel channel,int mid,byte[] content){
-        if (auth && uid == 0){
+    private void sendTo(Channel channel, Frame frame) {
+        if (uid == 0) {
             log.warn("还没有登录");
-            send(MessageUtil.errorResponse(CommonMessage.SystemErrCode.NotLoginOn,"请先登录"));
-        }else
-            MessageUtil.send(channel,mid,uid,content);
+            MessageUtil.sendError(channel, ErrorCode.NotLoginOn);
+        } else
+            MessageUtil.send(channel, uid, frame);
     }
 
-    public void sendToGame(boolean auth,int mid, byte[] content){
-        if (gameServer != null){
-            sendTo(auth,gameServer.getChannel(),mid,content);
-        }else {
-            log.warn("没有可用的游戏服务器");
-            channel.writeAndFlush(MessageUtil.errorResponse(CommonMessage.SystemErrCode.HallNotFind, "没有可用的大厅服务器"));
+    public void sendToGame(Frame frame) {
+        sendTo(gameChannel, frame);
+    }
+
+
+    public synchronized void loginRequest(Frame frame, int gateId) throws Exception {
+        switch (loginStatus) {
+            case Logining:
+                MessageUtil.sendError(channel, ErrorCode.RepeatedReq);
+                return;
+            case logined:
+                MessageUtil.sendError(channel, ErrorCode.AlreadyLogged);
+                return;
         }
+        loginStatus = LoginStatus.Logining;
+        Frame.Builder frameBuilder = frame.toBuilder();
+        InnerLoginRequest.Builder builder = InnerLoginRequest.newBuilder();
+        builder.setSessionId(id);
+        builder.setGateId(gateId);
+        builder.setRequest(frame.getData().unpack(LoginRequest.class));
+        builder.setIp(((InetSocketAddress) channel.remoteAddress()).getAddress().getHostAddress());
+        frameBuilder.setData(Any.pack(builder.build()));
+
+        sendToHall(frameBuilder.build());
+    }
+
+    public synchronized void loginResponse(Frame frame, LoginResponse response) {
+        if (!response.getSuccess()){
+            loginStatus = LoginStatus.UnLogin;
+        }else {
+            long uid = response.getUserInfo().getId();
+            log.info("{}登录成功",uid);
+            this.uid = uid;
+        }
+        Frame.Builder builder = frame.toBuilder();
+        builder.setData(Any.pack(response));
+        send(builder.build());
     }
 }

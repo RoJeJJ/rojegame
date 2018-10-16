@@ -8,4 +8,12 @@ enum Action{
     ServerRegRes = 1002;
     ServerUpdateReq = 1003;
     ServerUpdateRes = 1004;
+
+    PubGateConnected = 2001;
+    PubErrorMessage = 2002;
+
+    LoginReq = 10001;
+    LoginRes = 10002;
+    HeartBeatReq = 10003;
+    HeartBeatRes = 10004;
 }

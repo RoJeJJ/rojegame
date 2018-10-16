@@ -4,6 +4,7 @@ import com.roje.game.core.config.NettyTcpServerConfig;
 import com.roje.game.core.dispatcher.MessageDispatcher;
 import com.roje.game.core.manager.ServerManager;
 import com.roje.game.core.netty.channel.handler.DefaultInnerTcpServerChannelInBoundHandler;
+import com.roje.game.core.netty.channel.initializer.DefaultChannelInitializer;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
@@ -13,7 +14,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component("gateGameTcpServerChannelInitializer")
-public class GateGameTcpServerChannelInitializer extends ChannelInitializer<SocketChannel> {
+public class GateGameTcpServerChannelInitializer extends DefaultChannelInitializer {
 
     private final NettyTcpServerConfig nettyTcpServerConfig;
 
@@ -31,10 +32,8 @@ public class GateGameTcpServerChannelInitializer extends ChannelInitializer<Sock
     }
 
     @Override
-    protected void initChannel(SocketChannel socketChannel) throws Exception {
-        ChannelPipeline pipeline = socketChannel.pipeline();
+    public void custom(ChannelPipeline pipeline) throws Exception {
         pipeline.addLast(new IdleStateHandler(nettyTcpServerConfig.getReaderIdleTime(), nettyTcpServerConfig.getWriterIdleTime(), nettyTcpServerConfig.getAllIdleTime()));
-        pipeline.addLast(new DefaultMessageDecoder());
-        pipeline.addLast(new DefaultInnerTcpServerChannelInBoundHandler(true,null,dispatcher,serverManager));
+        pipeline.addLast(new DefaultInnerTcpServerChannelInBoundHandler(null,dispatcher,serverManager));
     }
 }

@@ -1,0 +1,17 @@
+syntax = "proto3";
+option java_package = "com.roje.game.message.error";
+option java_multiple_files = true;
+
+message ErrorMessage{
+    ErrorCode errCode = 1;
+    string errMsg = 2;
+}
+
+enum ErrorCode{
+    HallNotFind = 0;
+    GateNotFind = 1;
+    NotLoginOn = 2;
+    ConnectReset = 3;
+    RepeatedReq = 4;
+    AlreadyLogged = 5;
+}

@@ -34,6 +34,8 @@ public class BaseInfo {
     private int maxUserCount;
     // 服务器类型
     private ServerType type;
+    //游戏id
+    private int gameId;
 
     private int clientVersionCode;
 }

@@ -1,5 +1,6 @@
 syntax = "proto3";
 import "server_info.proto";
+import "conn_info.proto";
 option java_package = "com.roje.game.message.server_register";
 option java_multiple_files = true;
 
@@ -11,12 +12,6 @@ message ServerRegResponse{
     bool success = 1;
     string msg = 2;
     int32 id = 3;
-    repeated Connection gateConns = 4;
+    repeated ConnInfo gateInfo = 4;
     ServerType type = 5;
-}
-
-message Connection{
-    int32 id = 1;
-    string ip = 2;
-    int32 port = 3;
 }

@@ -28,9 +28,10 @@ public final class Broadcast {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\017broadcast.proto\"5\n\rGateConnected\022\n\n\002id" +
-      "\030\001 \001(\005\022\n\n\002ip\030\002 \001(\t\022\014\n\004prot\030\003 \001(\005B#\n\037com." +
-      "roje.game.message.broadcastP\001b\006proto3"
+      "\n\017broadcast.proto\032\017conn_info.proto\",\n\rGa" +
+      "teConnected\022\033\n\010connInfo\030\001 \001(\0132\t.ConnInfo" +
+      "B#\n\037com.roje.game.message.broadcastP\001b\006p" +
+      "roto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -43,13 +44,15 @@ public final class Broadcast {
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
+          com.roje.game.message.conn_info.ConnInfoOuterClass.getDescriptor(),
         }, assigner);
     internal_static_GateConnected_descriptor =
       getDescriptor().getMessageTypes().get(0);
     internal_static_GateConnected_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_GateConnected_descriptor,
-        new java.lang.String[] { "Id", "Ip", "Prot", });
+        new java.lang.String[] { "ConnInfo", });
+    com.roje.game.message.conn_info.ConnInfoOuterClass.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

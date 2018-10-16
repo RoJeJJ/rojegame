@@ -1,14 +1,15 @@
 package com.roje.game.core.netty.channel.handler;
 
-import com.google.protobuf.Message;
 import com.roje.game.core.dispatcher.MessageDispatcher;
-import com.roje.game.core.manager.SessionManager;
+import com.roje.game.core.manager.ISessionManager;
 import com.roje.game.core.server.BaseInfo;
 import com.roje.game.core.service.Service;
 import com.roje.game.core.util.MessageUtil;
 import com.roje.game.core.util.ServerUtil;
-import com.roje.game.message.common.CommonMessage;
-import io.netty.channel.Channel;
+import com.roje.game.message.action.Action;
+import com.roje.game.message.server_info.ServerInfo;
+import com.roje.game.message.server_register.ServerRegRequest;
+import com.roje.game.message.server_update.ServerUpdateRequest;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.timeout.IdleStateEvent;
 import lombok.extern.slf4j.Slf4j;
@@ -16,34 +17,23 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class DefaultInnerTcpClientChannelInBoundHandler extends DefaultInBoundHandler {
     private BaseInfo baseInfo;
-    private SessionManager sessionManager;
-    private boolean hasID;
+    private ISessionManager ISessionManager;
 
     public DefaultInnerTcpClientChannelInBoundHandler(
-            boolean hasID,
             Service service,
             MessageDispatcher dispatcher,
-            SessionManager sessionManager,
+            ISessionManager ISessionManager,
             BaseInfo baseInfo) {
-        super(hasID, service, dispatcher);
-        this.sessionManager = sessionManager;
+        super(service, dispatcher);
+        this.ISessionManager = ISessionManager;
         this.baseInfo = baseInfo;
-        this.hasID = hasID;
     }
 
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) {
         log.info("注册到服务器");
-        CommonMessage.ServerRegisterRequest registerRequest = registerRequest();
-        send(ctx.channel(), registerRequest.getMid().getNumber(), registerRequest);
-    }
-
-    private void send(Channel channel, int mid, Message message) {
-        if (hasID)
-            MessageUtil.send(channel, mid, 0, message.toByteArray());
-        else
-            MessageUtil.send(channel, mid, message.toByteArray());
+        MessageUtil.send(ctx.channel(), Action.ServerRegReq,registerRequest());
     }
 
     @Override
@@ -58,8 +48,7 @@ public class DefaultInnerTcpClientChannelInBoundHandler extends DefaultInBoundHa
                 case ALL_IDLE:
                     //如果注册成功,定时向集群服务器更新
                     if (baseInfo.getId() != 0) {
-                        CommonMessage.ServerUpdateRequest updateRequest = updateRequest();
-                        send(ctx.channel(), updateRequest.getMid().getNumber(), updateRequest);
+                        MessageUtil.send(ctx.channel(),Action.ServerUpdateReq,updateRequest());
                     } else
                         ctx.close();
                     break;
@@ -73,46 +62,47 @@ public class DefaultInnerTcpClientChannelInBoundHandler extends DefaultInBoundHa
         ctx.close();
     }
 
-    private CommonMessage.ServerRegisterRequest registerRequest() {
-        CommonMessage.ServerRegisterRequest.Builder builder = CommonMessage.ServerRegisterRequest.newBuilder();
-        CommonMessage.ServerInfo.Builder serverInfoBuilder = CommonMessage.ServerInfo.newBuilder();
+    private ServerRegRequest registerRequest() {
+        ServerRegRequest.Builder builder = ServerRegRequest.newBuilder();
+        ServerInfo.Builder serverInfoBuilder = ServerInfo.newBuilder();
         serverInfoBuilder.setName(baseInfo.getName());
         serverInfoBuilder.setId(baseInfo.getId());
         serverInfoBuilder.setIp(baseInfo.getIp());
-        serverInfoBuilder.setType(baseInfo.getType().getType());
+        serverInfoBuilder.setType(baseInfo.getType());
+        serverInfoBuilder.setGameId(baseInfo.getGameId());
         serverInfoBuilder.setUserPort(baseInfo.getUserPort());
         serverInfoBuilder.setInnerPort(baseInfo.getInnerPort());
         serverInfoBuilder.setHttpport(baseInfo.getHttpPort());
         serverInfoBuilder.setMaxUserCount(baseInfo.getMaxUserCount());
-        serverInfoBuilder.setOnline(sessionManager.getOnlineCount());
-        serverInfoBuilder.setConnectedCount(sessionManager.getConnectedCount());
+        serverInfoBuilder.setOnline(ISessionManager.getOnlineCount());
+        serverInfoBuilder.setConnectedCount(ISessionManager.getConnectedCount());
         serverInfoBuilder.setFreeMemory(ServerUtil.freeMemory());
         serverInfoBuilder.setTotalMemory(ServerUtil.totalMemory());
         serverInfoBuilder.setVersion(baseInfo.getVersionCode());
         serverInfoBuilder.setRequireClientVersion(baseInfo.getClientVersionCode());
-        serverInfoBuilder.setState(baseInfo.getState().getState());
+        serverInfoBuilder.setState(baseInfo.getState());
         builder.setServerInfo(serverInfoBuilder);
         return builder.build();
     }
 
-    private CommonMessage.ServerUpdateRequest updateRequest() {
-        CommonMessage.ServerUpdateRequest.Builder builder = CommonMessage.ServerUpdateRequest.newBuilder();
-        CommonMessage.ServerInfo.Builder serverInfoBuilder = CommonMessage.ServerInfo.newBuilder();
+    private ServerUpdateRequest updateRequest() {
+        ServerUpdateRequest.Builder builder = ServerUpdateRequest.newBuilder();
+        ServerInfo.Builder serverInfoBuilder = ServerInfo.newBuilder();
         serverInfoBuilder.setName(baseInfo.getName());
         serverInfoBuilder.setId(baseInfo.getId());
         serverInfoBuilder.setIp(baseInfo.getIp());
-        serverInfoBuilder.setType(baseInfo.getType().getType());
+        serverInfoBuilder.setType(baseInfo.getType());
         serverInfoBuilder.setUserPort(baseInfo.getUserPort());
         serverInfoBuilder.setInnerPort(baseInfo.getInnerPort());
         serverInfoBuilder.setHttpport(baseInfo.getHttpPort());
         serverInfoBuilder.setMaxUserCount(baseInfo.getMaxUserCount());
-        serverInfoBuilder.setOnline(sessionManager.getOnlineCount());
-        serverInfoBuilder.setConnectedCount(sessionManager.getConnectedCount());
+        serverInfoBuilder.setOnline(ISessionManager.getOnlineCount());
+        serverInfoBuilder.setConnectedCount(ISessionManager.getConnectedCount());
         serverInfoBuilder.setFreeMemory(ServerUtil.freeMemory());
         serverInfoBuilder.setTotalMemory(ServerUtil.totalMemory());
         serverInfoBuilder.setVersion(baseInfo.getVersionCode());
         serverInfoBuilder.setRequireClientVersion(baseInfo.getClientVersionCode());
-        serverInfoBuilder.setState(baseInfo.getState().getState());
+        serverInfoBuilder.setState(baseInfo.getState());
         builder.setServerInfo(serverInfoBuilder);
         return builder.build();
     }

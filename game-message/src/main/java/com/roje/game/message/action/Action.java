@@ -28,6 +28,30 @@ public enum Action
    * <code>ServerUpdateRes = 1004;</code>
    */
   ServerUpdateRes(1004),
+  /**
+   * <code>PubGateConnected = 2001;</code>
+   */
+  PubGateConnected(2001),
+  /**
+   * <code>PubErrorMessage = 2002;</code>
+   */
+  PubErrorMessage(2002),
+  /**
+   * <code>LoginReq = 10001;</code>
+   */
+  LoginReq(10001),
+  /**
+   * <code>LoginRes = 10002;</code>
+   */
+  LoginRes(10002),
+  /**
+   * <code>HeartBeatReq = 10003;</code>
+   */
+  HeartBeatReq(10003),
+  /**
+   * <code>HeartBeatRes = 10004;</code>
+   */
+  HeartBeatRes(10004),
   UNRECOGNIZED(-1),
   ;
 
@@ -51,6 +75,30 @@ public enum Action
    * <code>ServerUpdateRes = 1004;</code>
    */
   public static final int ServerUpdateRes_VALUE = 1004;
+  /**
+   * <code>PubGateConnected = 2001;</code>
+   */
+  public static final int PubGateConnected_VALUE = 2001;
+  /**
+   * <code>PubErrorMessage = 2002;</code>
+   */
+  public static final int PubErrorMessage_VALUE = 2002;
+  /**
+   * <code>LoginReq = 10001;</code>
+   */
+  public static final int LoginReq_VALUE = 10001;
+  /**
+   * <code>LoginRes = 10002;</code>
+   */
+  public static final int LoginRes_VALUE = 10002;
+  /**
+   * <code>HeartBeatReq = 10003;</code>
+   */
+  public static final int HeartBeatReq_VALUE = 10003;
+  /**
+   * <code>HeartBeatRes = 10004;</code>
+   */
+  public static final int HeartBeatRes_VALUE = 10004;
 
 
   public final int getNumber() {
@@ -76,6 +124,12 @@ public enum Action
       case 1002: return ServerRegRes;
       case 1003: return ServerUpdateReq;
       case 1004: return ServerUpdateRes;
+      case 2001: return PubGateConnected;
+      case 2002: return PubErrorMessage;
+      case 10001: return LoginReq;
+      case 10002: return LoginRes;
+      case 10003: return HeartBeatReq;
+      case 10004: return HeartBeatRes;
       default: return null;
     }
   }
