@@ -4,8 +4,9 @@ option java_package = "com.roje.game.message.login";
 option java_multiple_files = true;
 
 enum LoginType{
-    WeChat = 0;
-    Account = 1;
+    Login_Type_Default = 0;
+    WeChat = 1;
+    Account = 2;
 }
 message LoginRequest{
     string account                 = 1; //账号

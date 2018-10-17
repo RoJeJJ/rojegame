@@ -9,24 +9,32 @@ package com.roje.game.message.login;
 public enum LoginType
     implements com.google.protobuf.ProtocolMessageEnum {
   /**
-   * <code>WeChat = 0;</code>
+   * <code>Login_Type_Default = 0;</code>
    */
-  WeChat(0),
+  Login_Type_Default(0),
   /**
-   * <code>Account = 1;</code>
+   * <code>WeChat = 1;</code>
    */
-  Account(1),
+  WeChat(1),
+  /**
+   * <code>Account = 2;</code>
+   */
+  Account(2),
   UNRECOGNIZED(-1),
   ;
 
   /**
-   * <code>WeChat = 0;</code>
+   * <code>Login_Type_Default = 0;</code>
    */
-  public static final int WeChat_VALUE = 0;
+  public static final int Login_Type_Default_VALUE = 0;
   /**
-   * <code>Account = 1;</code>
+   * <code>WeChat = 1;</code>
    */
-  public static final int Account_VALUE = 1;
+  public static final int WeChat_VALUE = 1;
+  /**
+   * <code>Account = 2;</code>
+   */
+  public static final int Account_VALUE = 2;
 
 
   public final int getNumber() {
@@ -47,8 +55,9 @@ public enum LoginType
 
   public static LoginType forNumber(int value) {
     switch (value) {
-      case 0: return WeChat;
-      case 1: return Account;
+      case 0: return Login_Type_Default;
+      case 1: return WeChat;
+      case 2: return Account;
       default: return null;
     }
   }

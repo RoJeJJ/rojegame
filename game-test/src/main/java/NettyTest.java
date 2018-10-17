@@ -1,6 +1,7 @@
 import com.google.protobuf.Any;
 import com.roje.game.core.netty.channel.initializer.DefaultChannelInitializer;
 import com.roje.game.message.action.Action;
+import com.roje.game.message.error.ErrorMessage;
 import com.roje.game.message.frame.Frame;
 import com.roje.game.message.login.LoginRequest;
 import com.roje.game.message.login.LoginResponse;
@@ -58,29 +59,38 @@ public class NettyTest implements Runnable{
         test.start();
     }
 
-    public class TestHandler extends SimpleChannelInboundHandler<byte[]>{
+    public class TestHandler extends SimpleChannelInboundHandler<Frame>{
         @Override
-        protected void channelRead0(ChannelHandlerContext channelHandlerContext, byte[] bytes) throws Exception {
-            LoginResponse response = LoginResponse.parseFrom(bytes);
-            if (response.getSuccess()){
-                log.info("登录成功");
-            }else {
-                log.info("登录失败");
-                log.info(response.getMsg());
+        protected void channelRead0(ChannelHandlerContext channelHandlerContext, Frame frame) throws Exception{
+            switch (frame.getAction()){
+                case LoginRes:
+                    LoginResponse response = frame.getData().unpack(LoginResponse.class);
+                    if (response.getSuccess()){
+                        log.info("登录成功");
+                    }else {
+                        log.info("登录失败");
+                        log.info(response.getMsg());
+                    }
+                    break;
+                case PubErrorMessage:
+                    ErrorMessage errorMessage = frame.getData().unpack(ErrorMessage.class);
+                    log.info("错误消息:{},{}",errorMessage.getErrCode().name(),errorMessage.getErrMsg());
             }
         }
 
         @Override
         public void channelActive(ChannelHandlerContext ctx){
-            LoginRequest.Builder builder = LoginRequest.newBuilder();
-            builder.setAccount("abc");
-            builder.setPassword("123456");
-            builder.setLoginType(LoginType.WeChat);
-            builder.setVersion(1);
-            Frame.Builder fb = Frame.newBuilder();
-            fb.setAction(Action.LoginReq);
-            fb.setData(Any.pack(builder.build()));
-            ctx.writeAndFlush(fb);
+//            for (int i=0;i<10;i++){
+                LoginRequest.Builder builder = LoginRequest.newBuilder();
+                builder.setAccount("wuli");
+                builder.setPassword("123456");
+                builder.setLoginType(LoginType.WeChat);
+                builder.setVersion(1);
+                Frame.Builder fb = Frame.newBuilder();
+                fb.setAction(Action.LoginReq);
+                fb.setData(Any.pack(builder.build()));
+                ctx.writeAndFlush(fb);
+//            }
         }
     }
 }

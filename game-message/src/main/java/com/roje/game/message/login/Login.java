@@ -52,9 +52,10 @@ public final class Login {
       "\001(\0132\r.LoginRequest\022\021\n\tsessionId\030\002 \001(\t\022\016\n" +
       "\006gateId\030\003 \001(\005\022\n\n\002ip\030\004 \001(\t\"I\n\022InnerLoginR" +
       "esponse\022 \n\010response\030\001 \001(\0132\016.LoginRespons" +
-      "e\022\021\n\tsessionId\030\002 \001(\t*$\n\tLoginType\022\n\n\006WeC" +
-      "hat\020\000\022\013\n\007Account\020\001B\037\n\033com.roje.game.mess" +
-      "age.loginP\001b\006proto3"
+      "e\022\021\n\tsessionId\030\002 \001(\t*<\n\tLoginType\022\026\n\022Log" +
+      "in_Type_Default\020\000\022\n\n\006WeChat\020\001\022\013\n\007Account" +
+      "\020\002B\037\n\033com.roje.game.message.loginP\001b\006pro" +
+      "to3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {

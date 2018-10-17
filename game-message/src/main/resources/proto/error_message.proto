@@ -8,10 +8,11 @@ message ErrorMessage{
 }
 
 enum ErrorCode{
-    HallNotFind = 0;
-    GateNotFind = 1;
-    NotLoginOn = 2;
-    ConnectReset = 3;
-    RepeatedReq = 4;
-    AlreadyLogged = 5;
+    UnknownErrType = 0;
+    HallNotFind = 1;
+    GateNotFind = 2;
+    NotLoginOn = 3;
+    ConnectReset = 4;
+    RepeatedReq = 5;
+    AlreadyLogged = 6;
 }

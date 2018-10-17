@@ -26,4 +26,9 @@ public class User implements Serializable {
     private long gold;
     //token
     private String gameToken;
+
+    @Override
+    public String toString() {
+        return "User:{id:"+id+",account:"+account+",nickname:"+nickname+"}";
+    }
 }

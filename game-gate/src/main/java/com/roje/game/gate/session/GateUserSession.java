@@ -51,7 +51,7 @@ public class GateUserSession extends Session {
     private void sendTo(Channel channel, Frame frame) {
         if (uid == 0) {
             log.warn("还没有登录");
-            MessageUtil.sendError(channel, ErrorCode.NotLoginOn);
+            MessageUtil.sendError(this.channel, ErrorCode.NotLoginOn,"还没有登录");
         } else
             MessageUtil.send(channel, uid, frame);
     }
@@ -64,10 +64,10 @@ public class GateUserSession extends Session {
     public synchronized void loginRequest(Frame frame, int gateId) throws Exception {
         switch (loginStatus) {
             case Logining:
-                MessageUtil.sendError(channel, ErrorCode.RepeatedReq);
+                MessageUtil.sendError(channel, ErrorCode.RepeatedReq,"重复的登录请求");
                 return;
             case logined:
-                MessageUtil.sendError(channel, ErrorCode.AlreadyLogged);
+                MessageUtil.sendError(channel, ErrorCode.AlreadyLogged,"已经登录了");
                 return;
         }
         loginStatus = LoginStatus.Logining;
@@ -79,7 +79,7 @@ public class GateUserSession extends Session {
         builder.setIp(((InetSocketAddress) channel.remoteAddress()).getAddress().getHostAddress());
         frameBuilder.setData(Any.pack(builder.build()));
 
-        sendToHall(frameBuilder.build());
+        MessageUtil.send(hallChannel,frameBuilder.build());
     }
 
     public synchronized void loginResponse(Frame frame, LoginResponse response) {

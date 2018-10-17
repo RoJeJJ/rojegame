@@ -4,15 +4,17 @@ import com.roje.game.core.config.NettyConnClusterClientConfig;
 import com.roje.game.core.config.NettyConnGateClientConfig;
 import com.roje.game.core.config.ThreadConfig;
 import com.roje.game.core.dispatcher.MessageDispatcher;
-import com.roje.game.core.manager.ConnGateTcpMultiManager;
 import com.roje.game.core.manager.ISessionManager;
 import com.roje.game.core.netty.NettyClusterTcpClient;
+import com.roje.game.core.netty.NettyGateTcpClient;
 import com.roje.game.core.netty.channel.initializer.ConnClusterClientChannelInitializer;
 import com.roje.game.core.server.BaseInfo;
 import com.roje.game.core.service.Service;
 import com.roje.game.core.service.redis.IdService;
 import com.roje.game.core.service.redis.UserRedisService;
-import com.roje.game.hall.manager.HallISessionManager;
+import com.roje.game.core.thread.executor.RJExecutor;
+import com.roje.game.hall.manager.HallUserManager;
+import com.roje.game.hall.service.UserService;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.socket.SocketChannel;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -59,9 +61,11 @@ public class AppHall {
     }
 
     @Bean
-    public HallISessionManager hallUserManager() {
-        return new HallISessionManager();
+    public HallUserManager hallUserManager(
+            UserService userService) {
+        return new HallUserManager(userService);
     }
+
 
     @Bean
     public MessageDispatcher messageDispatcher() {
@@ -77,19 +81,10 @@ public class AppHall {
     }
 
     @Bean
-    public NettyClusterTcpClient hallClusterTcpClient(NettyConnClusterClientConfig clusterClientConfig,
-                                                      @Qualifier("hallClusterClientChannelInitializer") ChannelInitializer<SocketChannel> channelInitializer) {
+    public NettyClusterTcpClient hallClusterTcpClient(
+            NettyConnClusterClientConfig clusterClientConfig,
+            @Qualifier("hallClusterClientChannelInitializer") ChannelInitializer<SocketChannel> channelInitializer) {
         return new NettyClusterTcpClient(clusterClientConfig, channelInitializer);
-    }
-
-    @Bean
-    public ConnGateTcpMultiManager nettyGateTcpMultiManager(
-            NettyConnGateClientConfig nettyConnGateClientConfig,
-            Service service,
-            MessageDispatcher dispatcher,
-            BaseInfo baseInfo,
-            ISessionManager ISessionManager) {
-        return new ConnGateTcpMultiManager(nettyConnGateClientConfig, service, dispatcher, baseInfo, ISessionManager);
     }
 
     @Bean
@@ -100,5 +95,20 @@ public class AppHall {
     @Bean public IdService idService(
             StringRedisTemplate stringRedisTemplate){
         return new IdService(stringRedisTemplate);
+    }
+
+    @Bean
+    public NettyGateTcpClient hallGateTcpClient(
+            NettyConnGateClientConfig nettyConnGateClientConfig,
+            Service service,
+            MessageDispatcher dispatcher,
+            ISessionManager sessionManager,
+            BaseInfo hallInfo){
+        return new NettyGateTcpClient(nettyConnGateClientConfig,service,dispatcher,sessionManager,hallInfo);
+    }
+
+    @Bean
+    public RJExecutor userExecutor(){
+        return new RJExecutor(3,"user");
     }
 }

@@ -30,10 +30,11 @@ public final class ErrorMessageOuterClass {
     java.lang.String[] descriptorData = {
       "\n\023error_message.proto\";\n\014ErrorMessage\022\033\n" +
       "\007errCode\030\001 \001(\0162\n.ErrorCode\022\016\n\006errMsg\030\002 \001" +
-      "(\t*s\n\tErrorCode\022\017\n\013HallNotFind\020\000\022\017\n\013Gate" +
-      "NotFind\020\001\022\016\n\nNotLoginOn\020\002\022\020\n\014ConnectRese" +
-      "t\020\003\022\017\n\013RepeatedReq\020\004\022\021\n\rAlreadyLogged\020\005B" +
-      "\037\n\033com.roje.game.message.errorP\001b\006proto3"
+      "(\t*\207\001\n\tErrorCode\022\022\n\016UnknownErrType\020\000\022\017\n\013" +
+      "HallNotFind\020\001\022\017\n\013GateNotFind\020\002\022\016\n\nNotLog" +
+      "inOn\020\003\022\020\n\014ConnectReset\020\004\022\017\n\013RepeatedReq\020" +
+      "\005\022\021\n\rAlreadyLogged\020\006B\037\n\033com.roje.game.me" +
+      "ssage.errorP\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {

@@ -243,7 +243,7 @@ private static final long serialVersionUID = 0L;
     if (!getPasswordBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 2, password_);
     }
-    if (loginType_ != com.roje.game.message.login.LoginType.WeChat.getNumber()) {
+    if (loginType_ != com.roje.game.message.login.LoginType.Login_Type_Default.getNumber()) {
       output.writeEnum(3, loginType_);
     }
     if (version_ != 0) {
@@ -264,7 +264,7 @@ private static final long serialVersionUID = 0L;
     if (!getPasswordBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, password_);
     }
-    if (loginType_ != com.roje.game.message.login.LoginType.WeChat.getNumber()) {
+    if (loginType_ != com.roje.game.message.login.LoginType.Login_Type_Default.getNumber()) {
       size += com.google.protobuf.CodedOutputStream
         .computeEnumSize(3, loginType_);
     }

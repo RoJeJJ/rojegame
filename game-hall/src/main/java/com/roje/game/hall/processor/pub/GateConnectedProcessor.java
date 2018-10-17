@@ -1,6 +1,6 @@
 package com.roje.game.hall.processor.pub;
 
-import com.roje.game.core.manager.ConnGateTcpMultiManager;
+import com.roje.game.core.netty.NettyGateTcpClient;
 import com.roje.game.core.processor.MessageProcessor;
 import com.roje.game.core.processor.Processor;
 import com.roje.game.message.action.Action;
@@ -17,11 +17,11 @@ import org.springframework.stereotype.Component;
 @Processor(action = Action.PubGateConnected)
 public class GateConnectedProcessor extends MessageProcessor {
 
-    private final ConnGateTcpMultiManager gateTcpMultiManager;
+    private final NettyGateTcpClient nettyGateTcpClient;
 
     @Autowired
-    public GateConnectedProcessor(ConnGateTcpMultiManager gateTcpMultiManager) {
-        this.gateTcpMultiManager = gateTcpMultiManager;
+    public GateConnectedProcessor(NettyGateTcpClient nettyGateTcpClient) {
+        this.nettyGateTcpClient = nettyGateTcpClient;
     }
 
     @Override
@@ -29,6 +29,6 @@ public class GateConnectedProcessor extends MessageProcessor {
         GateConnected connected = frame.getData().unpack(GateConnected.class);
         ConnInfo connInfo = connected.getConnInfo();
         if (connInfo != null)
-            gateTcpMultiManager.connect(connInfo);
+            nettyGateTcpClient.connect(connInfo.getIp(),connInfo.getPort());
     }
 }

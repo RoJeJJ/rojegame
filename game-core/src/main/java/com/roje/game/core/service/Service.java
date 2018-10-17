@@ -2,7 +2,7 @@ package com.roje.game.core.service;
 
 import com.roje.game.core.config.ThreadConfig;
 import com.roje.game.core.thread.ExecutorPool;
-import com.roje.game.core.thread.IoThreadFactory;
+import com.roje.game.core.thread.factory.IoThreadFactory;
 import com.roje.game.core.thread.ServerThread;
 import com.roje.game.core.thread.ThreadType;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +24,7 @@ public class Service {
                     new IoThreadFactory());
             executorMap.put(ThreadType.io,ioExecutor);
             ServerThread syncThread = new ServerThread(new ThreadGroup(config.getSyncName()),"roje-"+config.getSyncName(),
-                    config.getSyncTimeInterval(),config.getSyncCommandSize());
+                    /*config.getSyncTimeInterval(),*/config.getSyncCommandSize());
             syncThread.start();
             executorMap.put(ThreadType.sync,syncThread);
         }
@@ -36,7 +36,7 @@ public class Service {
             try {
                 if (executor instanceof ServerThread) {
                     if (((ServerThread) executor).isAlive())
-                        ((ServerThread) executor).stop(true);
+                        ((ServerThread) executor).shutDown();
                 } else if (executor instanceof ThreadPoolExecutor) {
                     if (!((ThreadPoolExecutor) executor).isShutdown()) {
                         ((ThreadPoolExecutor) executor).shutdown();

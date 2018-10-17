@@ -1,4 +1,6 @@
-package com.roje.game.core.thread;
+package com.roje.game.core.thread.factory;
+
+import com.roje.game.core.thread.ThreadType;
 
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -12,7 +14,7 @@ public class IoThreadFactory implements ThreadFactory {
     }
     @Override
     public Thread newThread(Runnable r) {
-        Thread thread = new Thread(group,r,"roje-"+ThreadType.io.name()+"-"+Counter.getAndIncrement(),0);
+        Thread thread = new Thread(group,r,"roje-"+ ThreadType.io.name()+"-"+Counter.getAndIncrement(),0);
         if (thread.isDaemon())
             thread.setDaemon(false);
         if (thread.getPriority() != Thread.NORM_PRIORITY)

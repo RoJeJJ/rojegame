@@ -8,9 +8,5 @@ public enum ThreadType {
     /**
      * 全局同步线程
      */
-    sync,
-    /**
-     * 房间线程池
-     */
-    room
+    sync
 }

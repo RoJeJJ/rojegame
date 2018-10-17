@@ -2,7 +2,6 @@ package bean;
 
 import com.roje.game.core.dispatcher.MessageDispatcher;
 import com.roje.game.gate.AppGate;
-import com.roje.game.message.Mid;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,6 +17,5 @@ public class BeanTest {
     MessageDispatcher dispatcher;
     @Test
     public void bean(){
-        log.info(dispatcher.getMessageHandler(Mid.MID.ServerRegisterReq_VALUE).getClass().getSimpleName());
     }
 }

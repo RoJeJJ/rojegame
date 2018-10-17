@@ -17,17 +17,20 @@ public class ClusterTcpChannelInitializer extends DefaultChannelInitializer {
 
     private final NettyTcpServerConfig nettyTcpServerConfig;
 
-    private final Service service;
+//    private final Service service;
 
     private final MessageDispatcher dispatcher;
 
     private final ServerManager serverManager;
 
     @Autowired
-    public ClusterTcpChannelInitializer(@Qualifier("clusterTcpServerConfig") NettyTcpServerConfig nettyTcpServerConfig,
-                                        Service service, MessageDispatcher dispatcher,ServerManager serverManager) {
+    public ClusterTcpChannelInitializer(
+            @Qualifier("clusterTcpServerConfig") NettyTcpServerConfig nettyTcpServerConfig,
+//            Service service,
+            MessageDispatcher dispatcher,
+            ServerManager serverManager) {
         this.nettyTcpServerConfig = nettyTcpServerConfig;
-        this.service = service;
+//        this.service = service;
         this.dispatcher = dispatcher;
         this.serverManager = serverManager;
     }
@@ -37,6 +40,6 @@ public class ClusterTcpChannelInitializer extends DefaultChannelInitializer {
         pipeline.addLast(new IdleStateHandler(nettyTcpServerConfig.getReaderIdleTime(),
                 nettyTcpServerConfig.getWriterIdleTime(),
                 nettyTcpServerConfig.getAllIdleTime()));
-        pipeline.addLast(new DefaultInnerTcpServerChannelInBoundHandler(false,service,dispatcher,serverManager));
+        pipeline.addLast(new DefaultInnerTcpServerChannelInBoundHandler(/*service*/null, dispatcher, serverManager));
     }
 }

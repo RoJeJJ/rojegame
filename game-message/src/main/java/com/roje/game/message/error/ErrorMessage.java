@@ -153,7 +153,7 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (errCode_ != com.roje.game.message.error.ErrorCode.HallNotFind.getNumber()) {
+    if (errCode_ != com.roje.game.message.error.ErrorCode.UnknownErrType.getNumber()) {
       output.writeEnum(1, errCode_);
     }
     if (!getErrMsgBytes().isEmpty()) {
@@ -168,7 +168,7 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (errCode_ != com.roje.game.message.error.ErrorCode.HallNotFind.getNumber()) {
+    if (errCode_ != com.roje.game.message.error.ErrorCode.UnknownErrType.getNumber()) {
       size += com.google.protobuf.CodedOutputStream
         .computeEnumSize(1, errCode_);
     }

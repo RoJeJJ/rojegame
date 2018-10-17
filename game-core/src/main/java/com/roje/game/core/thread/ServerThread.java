@@ -1,7 +1,5 @@
 package com.roje.game.core.thread;
 
-import com.roje.game.core.thread.timer.TimerEvent;
-import com.roje.game.core.thread.timer.TimerThread;
 import lombok.extern.slf4j.Slf4j;
 import java.util.concurrent.Executor;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -15,10 +13,11 @@ public class ServerThread extends Thread implements Executor {
      * 线程名称
      */
     private String name;
-    /**
-     * 定时任务时间间隔
-     */
-    private final long timeInterval;
+
+//    /**
+//     * 定时任务时间间隔
+//     */
+//    private final long timeInterval;
     /**
      * 任务队列
      */
@@ -26,7 +25,7 @@ public class ServerThread extends Thread implements Executor {
     /**
      * 已经暂停
      */
-    protected boolean stop;
+    private boolean stop;
     /**
      * 最后一次执行任务的时间
      */
@@ -34,20 +33,13 @@ public class ServerThread extends Thread implements Executor {
     /**
      * 定时器
      */
-    private TimerThread timer;
 
-    public ServerThread(ThreadGroup group,String threadName,long timeInterval,int commandSize){
+    public ServerThread(ThreadGroup group,String threadName,/*long timeInterval,*/int commandSize){
         super(group,threadName);
         this.name = threadName;
-        this.timeInterval = timeInterval;
-        if (timeInterval > 0)
-            timer = new TimerThread(this);
+        /*this.timeInterval = timeInterval;*/
         queue = new LinkedBlockingQueue<>(commandSize);
-        setUncaughtExceptionHandler((t, e) -> {
-            log.error("ServerThread.setUncaughtExceptionHandler",e);
-            if (timer != null)
-                timer.stop(true);
-        });
+        setUncaughtExceptionHandler((t, e) -> log.error("ServerThread.setUncaughtExceptionHandler",e));
     }
     @Override
     public void execute(Runnable command) {
@@ -61,14 +53,10 @@ public class ServerThread extends Thread implements Executor {
     public String getThreadName(){
         return name;
     }
-    public void addTimerEvent(TimerEvent event){
-        if (timer != null)
-            timer.addTimerEvent(event);
-    }
 
-    public long getTimeInterval() {
-        return timeInterval;
-    }
+//    public long getTimeInterval() {
+//        return timeInterval;
+//    }
 
     public long getLastExecuteTime() {
         return lastExecuteTime;
@@ -78,8 +66,6 @@ public class ServerThread extends Thread implements Executor {
     public void run() {
         stop = false;
         log.info(name+"线程已经开始运行");
-        if (timeInterval > 0 && timer != null)
-            timer.start();
         int loop = 0;
         while (!stop && !isInterrupted()){
             Runnable command = queue.poll();
@@ -111,11 +97,9 @@ public class ServerThread extends Thread implements Executor {
             }
         }
     }
-    public void stop(boolean flag){
+    public void shutDown(){
         stop = false;
         log.warn("线程{}停止",name);
-        if (timer != null)
-            timer.stop(flag);
         queue.clear();
         synchronized (this){
             notify();

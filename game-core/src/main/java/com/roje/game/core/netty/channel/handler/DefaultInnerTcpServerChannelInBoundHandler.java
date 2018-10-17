@@ -38,7 +38,7 @@ public class DefaultInnerTcpServerChannelInBoundHandler extends DefaultInBoundHa
     }
 
     @Override
-    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
 //        super.exceptionCaught(ctx, cause);
         log.warn("连接异常,关闭连接",cause);
         ctx.close();

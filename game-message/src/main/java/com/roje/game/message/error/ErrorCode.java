@@ -9,56 +9,64 @@ package com.roje.game.message.error;
 public enum ErrorCode
     implements com.google.protobuf.ProtocolMessageEnum {
   /**
-   * <code>HallNotFind = 0;</code>
+   * <code>UnknownErrType = 0;</code>
    */
-  HallNotFind(0),
+  UnknownErrType(0),
   /**
-   * <code>GateNotFind = 1;</code>
+   * <code>HallNotFind = 1;</code>
    */
-  GateNotFind(1),
+  HallNotFind(1),
   /**
-   * <code>NotLoginOn = 2;</code>
+   * <code>GateNotFind = 2;</code>
    */
-  NotLoginOn(2),
+  GateNotFind(2),
   /**
-   * <code>ConnectReset = 3;</code>
+   * <code>NotLoginOn = 3;</code>
    */
-  ConnectReset(3),
+  NotLoginOn(3),
   /**
-   * <code>RepeatedReq = 4;</code>
+   * <code>ConnectReset = 4;</code>
    */
-  RepeatedReq(4),
+  ConnectReset(4),
   /**
-   * <code>AlreadyLogged = 5;</code>
+   * <code>RepeatedReq = 5;</code>
    */
-  AlreadyLogged(5),
+  RepeatedReq(5),
+  /**
+   * <code>AlreadyLogged = 6;</code>
+   */
+  AlreadyLogged(6),
   UNRECOGNIZED(-1),
   ;
 
   /**
-   * <code>HallNotFind = 0;</code>
+   * <code>UnknownErrType = 0;</code>
    */
-  public static final int HallNotFind_VALUE = 0;
+  public static final int UnknownErrType_VALUE = 0;
   /**
-   * <code>GateNotFind = 1;</code>
+   * <code>HallNotFind = 1;</code>
    */
-  public static final int GateNotFind_VALUE = 1;
+  public static final int HallNotFind_VALUE = 1;
   /**
-   * <code>NotLoginOn = 2;</code>
+   * <code>GateNotFind = 2;</code>
    */
-  public static final int NotLoginOn_VALUE = 2;
+  public static final int GateNotFind_VALUE = 2;
   /**
-   * <code>ConnectReset = 3;</code>
+   * <code>NotLoginOn = 3;</code>
    */
-  public static final int ConnectReset_VALUE = 3;
+  public static final int NotLoginOn_VALUE = 3;
   /**
-   * <code>RepeatedReq = 4;</code>
+   * <code>ConnectReset = 4;</code>
    */
-  public static final int RepeatedReq_VALUE = 4;
+  public static final int ConnectReset_VALUE = 4;
   /**
-   * <code>AlreadyLogged = 5;</code>
+   * <code>RepeatedReq = 5;</code>
    */
-  public static final int AlreadyLogged_VALUE = 5;
+  public static final int RepeatedReq_VALUE = 5;
+  /**
+   * <code>AlreadyLogged = 6;</code>
+   */
+  public static final int AlreadyLogged_VALUE = 6;
 
 
   public final int getNumber() {
@@ -79,12 +87,13 @@ public enum ErrorCode
 
   public static ErrorCode forNumber(int value) {
     switch (value) {
-      case 0: return HallNotFind;
-      case 1: return GateNotFind;
-      case 2: return NotLoginOn;
-      case 3: return ConnectReset;
-      case 4: return RepeatedReq;
-      case 5: return AlreadyLogged;
+      case 0: return UnknownErrType;
+      case 1: return HallNotFind;
+      case 2: return GateNotFind;
+      case 3: return NotLoginOn;
+      case 4: return ConnectReset;
+      case 5: return RepeatedReq;
+      case 6: return AlreadyLogged;
       default: return null;
     }
   }

@@ -11,8 +11,6 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import lombok.extern.slf4j.Slf4j;
 
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.util.concurrent.Executor;
 
 
@@ -32,8 +30,6 @@ public class DefaultInBoundHandler extends SimpleChannelInboundHandler<Frame> {
         boolean forward = true;
         if (handler != null) {
             Processor processor = handler.getClass().getAnnotation(Processor.class);
-            ParameterizedType type = (ParameterizedType) handler.getClass().getGenericSuperclass();
-            Type t = type.getActualTypeArguments()[0];
             if (processor != null) {
                 if (service == null) { //如果没有执行任务的服务,默认当前线程执行任务
                     handler.handler(channelHandlerContext.channel(), frame);

@@ -53,7 +53,7 @@ public abstract class SessionManager<T extends Session> implements ISessionManag
         T session = channel.attr(SESSION_ATTRIBUTE_KEY).get();
         if (session == null) {
             log.warn("连接会话已失效");
-            MessageUtil.sendError(channel, ErrorCode.ConnectReset);
+            MessageUtil.sendError(channel, ErrorCode.ConnectReset,"连接失效,请重连");
             channel.close();
         }
         return session;
@@ -63,7 +63,7 @@ public abstract class SessionManager<T extends Session> implements ISessionManag
         T session = sessions.get(sid);
         if (session == null) {
             log.warn("连接会话已失效");
-            MessageUtil.sendError(channel, ErrorCode.ConnectReset);
+            MessageUtil.sendError(channel, ErrorCode.ConnectReset,"连接失效,请重连");
             channel.close();
         }
         return session;

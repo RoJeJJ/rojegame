@@ -3,22 +3,18 @@ package com.roje.game.gate.processor.req.game;
 import com.roje.game.core.manager.ServerManager;
 import com.roje.game.core.processor.MessageProcessor;
 import com.roje.game.core.processor.Processor;
-import com.roje.game.core.server.ServerInfo;
-import com.roje.game.core.server.ServerType;
-import com.roje.game.core.util.MessageUtil;
-import com.roje.game.message.common.CommonMessage;
+import com.roje.game.message.action.Action;
+import com.roje.game.message.frame.Frame;
+import com.roje.game.message.server_info.ServerInfo;
+import com.roje.game.message.server_register.ServerRegRequest;
 import io.netty.channel.Channel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.net.InetSocketAddress;
-
-import static com.roje.game.message.Mid.MID.ServerRegisterReq_VALUE;
-
 @Slf4j
 @Component
-@Processor(mid = ServerRegisterReq_VALUE)
+@Processor(action = Action.ServerRegReq)
 public class ServerRegReqProcessor extends MessageProcessor {
     private ServerManager serverManager;
 
@@ -28,20 +24,9 @@ public class ServerRegReqProcessor extends MessageProcessor {
     }
 
     @Override
-    public void handler(Channel channel, byte[] bytes) throws Exception {
-        CommonMessage.ServerRegisterRequest request = CommonMessage.ServerRegisterRequest.parseFrom(bytes);
-        CommonMessage.ServerInfo info = request.getServerInfo();
-        ServerInfo serverInfo = serverManager.registerServer(info,channel);
-        CommonMessage.ServerRegisterResponse.Builder builder = CommonMessage.ServerRegisterResponse.newBuilder();
-        builder.setRegType(ServerType.Gate.getType());
-        builder.setIsMe(true);
-        if (serverInfo == null) {
-            builder.setSuccess(false);
-            log.info("{}注册到网关服务器失败", ((InetSocketAddress) channel.remoteAddress()).getHostName());
-        }else {
-            builder.setSuccess(true);
-            log.info("{}注册到网关服务器成功",info.getName());
-        }
-        MessageUtil.send(channel,builder.getMid().getNumber(),0,builder.build().toByteArray());
+    public void handler(Channel channel, Frame frame) throws Exception {
+        ServerRegRequest request = frame.getData().unpack(ServerRegRequest.class);
+        ServerInfo info = request.getServerInfo();
+        serverManager.registerServer(info,channel);
     }
 }

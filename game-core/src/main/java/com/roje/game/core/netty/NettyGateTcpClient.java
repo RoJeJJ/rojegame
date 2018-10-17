@@ -1,92 +1,101 @@
 package com.roje.game.core.netty;
 
 import com.roje.game.core.config.NettyConnGateClientConfig;
-import com.roje.game.core.manager.ConnGateTcpMultiManager;
+import com.roje.game.core.dispatcher.MessageDispatcher;
+import com.roje.game.core.manager.ISessionManager;
 import com.roje.game.core.netty.channel.handler.DefaultInnerTcpClientChannelInBoundHandler;
 import com.roje.game.core.netty.channel.initializer.DefaultChannelInitializer;
-import com.roje.game.message.conn_info.ConnInfo;
+import com.roje.game.core.server.BaseInfo;
+import com.roje.game.core.service.Service;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
+import io.netty.channel.group.ChannelGroup;
+import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.timeout.IdleStateHandler;
+import io.netty.util.concurrent.GlobalEventExecutor;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class NettyGateTcpClient implements Runnable {
+public class NettyGateTcpClient {
 
-    private Channel channel;
 
     private NettyConnGateClientConfig gateClientConfig;
 
-    private ConnInfo connInfo;
 
-    private ConnGateTcpMultiManager manager;
 
-    public NettyGateTcpClient(ConnGateTcpMultiManager manager,
-                              NettyConnGateClientConfig gateClientConfig,
-                              ConnInfo connInfo){
+    private Bootstrap bootstrap;
+
+    private ChannelGroup channels;
+
+    private final Service service;
+
+    private final MessageDispatcher dispatcher;
+
+    private final ISessionManager sessionManager;
+
+    @Getter
+    private final BaseInfo baseInfo;
+
+    public NettyGateTcpClient(
+            NettyConnGateClientConfig gateClientConfig,
+            Service service,
+            MessageDispatcher dispatcher,
+            ISessionManager sessionManager,
+            BaseInfo baseInfo){
         this.gateClientConfig = gateClientConfig;
-        this.connInfo = connInfo;
-        this.manager = manager;
+        this.service = service;
+        this.dispatcher = dispatcher;
+        this.sessionManager = sessionManager;
+        this.baseInfo = baseInfo;
+        initClient();
     }
 
-    @Override
-    public void run() {
-        Bootstrap bootstrap = new Bootstrap();
+    private void initClient(){
+        channels = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
+        bootstrap = new Bootstrap();
         EventLoopGroup group = new NioEventLoopGroup();
+
+        bootstrap.group(group)
+                .channel(NioSocketChannel.class)
+                .option(ChannelOption.SO_LINGER, gateClientConfig.getSoLinger())
+                .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, gateClientConfig.getConnectTimeout())
+                .option(ChannelOption.TCP_NODELAY, gateClientConfig.isTcpNoDelay())
+                .handler(new DefaultChannelInitializer() {
+                    @Override
+                    public void custom(ChannelPipeline pipeline) {
+                        pipeline.addLast(new IdleStateHandler(gateClientConfig.getReaderIdleTime(),
+                                gateClientConfig.getWriterIdleTime(),
+                                gateClientConfig.getAllIdleTime()));
+                        pipeline.addLast(new DefaultInnerTcpClientChannelInBoundHandler(
+                                service,
+                                dispatcher,
+                                sessionManager,
+                                baseInfo));
+                    }
+                });
+    }
+
+    public void connect(String ip,int port){
         try {
-            bootstrap.group(group)
-                    .channel(NioSocketChannel.class)
-                    .remoteAddress(connInfo.getIp(),connInfo.getPort())
-                    .option(ChannelOption.SO_LINGER, gateClientConfig.getSoLinger())
-                    .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, gateClientConfig.getConnectTimeout())
-                    .option(ChannelOption.TCP_NODELAY, gateClientConfig.isTcpNoDelay())
-                    .handler(new DefaultChannelInitializer() {
-                        @Override
-                        public void custom(ChannelPipeline pipeline) throws Exception {
-                            pipeline.addLast(new IdleStateHandler(gateClientConfig.getReaderIdleTime(),
-                                    gateClientConfig.getWriterIdleTime(),
-                                    gateClientConfig.getAllIdleTime()));
-                            pipeline.addLast(new DefaultInnerTcpClientChannelInBoundHandler(
-                                    manager.getService(),
-                                    manager.getDispatcher(),
-                                    manager.getISessionManager(),
-                                    manager.getBaseInfo()));
-                        }
-                    });
-            ChannelFuture channelFuture = bootstrap.connect().sync();
-            channel = channelFuture.channel();
-            channelFuture.addListener(future -> {
-                if (future.isSuccess()) {
-                    manager.addClient(this);
-                    log.info("成功连接Gate服务器[{}:{}]", connInfo.getIp(), connInfo.getPort());
+            ChannelFuture channelFuture = bootstrap.connect(ip,port).sync();
+            channelFuture.addListener((ChannelFutureListener) channelFuture1 -> {
+                if (channelFuture1.isSuccess()) {
+                    channels.add(channelFuture1.channel());
+                    log.info("成功连接Gate服务器[{}:{}]", ip, port);
                 }else
-                    log.info("连接Gate服务器[{}:{}]失败", connInfo.getIp(), connInfo.getPort());
+                    log.info("连接Gate服务器[{}:{}]失败", ip, port);
             });
-            channelFuture.channel().closeFuture().sync();
-        }catch (Exception e){
-            log.warn("连接网关出现异常",e);
-        }finally {
-            manager.removeClient(connInfo.getId());
-            group.shutdownGracefully();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 
-    public ConnInfo getConnInfo() {
-        return connInfo;
-    }
-
-    public Channel getChannel() {
-        return channel;
-    }
-
     public void stop(){
-        if (channel != null && channel.isActive())
-            channel.close();
+        channels.close();
     }
 
-    public void start(){
-        new Thread(this).start();
-    }
+
 }

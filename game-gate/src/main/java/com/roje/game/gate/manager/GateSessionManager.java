@@ -26,7 +26,7 @@ public class GateSessionManager extends SessionManager<GateUserSession> {
     public void onSessionOpen(GateUserSession session) {
         ServerInfo serverInfo = serverManager.getIdleServer(ServerType.Hall,session.getVersionCode());
         if (serverInfo == null){
-            MessageUtil.sendError(session.channel(), ErrorCode.HallNotFind);
+            MessageUtil.sendError(session.channel(), ErrorCode.HallNotFind,"大厅服务器不可用");
             session.close();
             return;
         }

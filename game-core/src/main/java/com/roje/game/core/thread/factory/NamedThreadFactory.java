@@ -1,11 +1,11 @@
-package com.roje.game.core.thread;
+package com.roje.game.core.thread.factory;
 
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class NamedThreadFactory implements ThreadFactory {
-    private static AtomicInteger counter = new AtomicInteger(1);
-    private String name = "Lane";
+    private final static AtomicInteger counter = new AtomicInteger(1);
+    private String name;
     private boolean daemon;
     private int priority;
     private ThreadGroup group;
@@ -18,7 +18,7 @@ public class NamedThreadFactory implements ThreadFactory {
         this(name, daemon, Thread.NORM_PRIORITY);
     }
 
-    public NamedThreadFactory(String name, boolean daemon, int priority) {
+    private NamedThreadFactory(String name, boolean daemon, int priority) {
         this.name = name;
         this.daemon = daemon;
         this.priority = priority;

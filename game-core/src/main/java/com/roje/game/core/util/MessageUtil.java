@@ -23,10 +23,16 @@ public class MessageUtil {
             log.warn("消息发送失败");
     }
 
-    public static void sendError(Channel channel, ErrorCode errorCode){
+    public static void sendError(Channel channel, ErrorCode errorCode,String msg){
         ErrorMessage.Builder errBuilder = ErrorMessage.newBuilder();
         errBuilder.setErrCode(errorCode);
+        errBuilder.setErrMsg(msg);
         send(channel,Action.PubErrorMessage,errBuilder.build());
+    }
+
+
+    public static void sendError(Channel channel){
+        sendError(channel,ErrorCode.UnknownErrType,"未知错误");
     }
 
     public static void send(Channel channel, long uid, Frame frame){
