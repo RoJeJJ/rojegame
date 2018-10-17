@@ -1,9 +1,13 @@
-import com.roje.game.message.Mid;
-import com.roje.game.message.login.LoginMessage;
+import com.google.protobuf.Any;
+import com.roje.game.core.netty.channel.initializer.DefaultChannelInitializer;
+import com.roje.game.message.action.Action;
+import com.roje.game.message.frame.Frame;
+import com.roje.game.message.login.LoginRequest;
+import com.roje.game.message.login.LoginResponse;
+import com.roje.game.message.login.LoginType;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
-import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import lombok.extern.slf4j.Slf4j;
 
@@ -17,12 +21,10 @@ public class NettyTest implements Runnable{
             bootstrap.group(group)
                     .channel(NioSocketChannel.class)
                     .remoteAddress("127.0.0.1",8088)
-                    .handler(new ChannelInitializer<SocketChannel>() {
+                    .handler(new DefaultChannelInitializer(){
                         @Override
-                        protected void initChannel(SocketChannel socketChannel) throws Exception {
-                            ChannelPipeline pipeline = socketChannel.pipeline();
-                            pipeline.addLast(new DefaultMessageDecoder());
-                            pipeline.addLast(new TestHandler() );
+                        public void custom(ChannelPipeline pipeline) throws Exception {
+                            pipeline.addLast(new TestHandler());
                         }
                     })
                     .option(ChannelOption.TCP_NODELAY,true)
@@ -59,8 +61,8 @@ public class NettyTest implements Runnable{
     public class TestHandler extends SimpleChannelInboundHandler<byte[]>{
         @Override
         protected void channelRead0(ChannelHandlerContext channelHandlerContext, byte[] bytes) throws Exception {
-            LoginMessage.LoginResponse response = LoginMessage.LoginResponse.parseFrom(bytes);
-            if (response.getOk()){
+            LoginResponse response = LoginResponse.parseFrom(bytes);
+            if (response.getSuccess()){
                 log.info("登录成功");
             }else {
                 log.info("登录失败");
@@ -70,13 +72,15 @@ public class NettyTest implements Runnable{
 
         @Override
         public void channelActive(ChannelHandlerContext ctx){
-            LoginMessage.LoginRequest.Builder builder = LoginMessage.LoginRequest.newBuilder();
+            LoginRequest.Builder builder = LoginRequest.newBuilder();
             builder.setAccount("abc");
             builder.setPassword("123456");
-            builder.setLoginType(LoginMessage.LoginType.WECHAT);
+            builder.setLoginType(LoginType.WeChat);
             builder.setVersion(1);
-            builder.setMid(Mid.MID.LoginReq);
-            ctx.writeAndFlush(builder.build());
+            Frame.Builder fb = Frame.newBuilder();
+            fb.setAction(Action.LoginReq);
+            fb.setData(Any.pack(builder.build()));
+            ctx.writeAndFlush(fb);
         }
     }
 }
