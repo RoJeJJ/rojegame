@@ -63,7 +63,7 @@ public class AppHall {
     @Bean
     public HallUserManager hallUserManager(
             UserService userService) {
-        return new HallUserManager(userService);
+        return new HallUserManager(userService, idService);
     }
 
 

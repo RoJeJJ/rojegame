@@ -1,5 +1,6 @@
 package com.roje.game.core.entity;
 
+import com.google.gson.JsonObject;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,11 +25,21 @@ public class User implements Serializable {
     private int sex;
     //金币
     private long gold;
-    //token
-    private String gameToken;
+
+    private boolean logged;
 
     @Override
     public String toString() {
         return "User:{id:"+id+",account:"+account+",nickname:"+nickname+"}";
+    }
+
+    public JsonObject userInfo(){
+        JsonObject data = new JsonObject();
+        data.addProperty("account",account);
+        data.addProperty("headimg",headimg);
+        data.addProperty("sex",sex);
+        data.addProperty("id",id);
+        data.addProperty("gold",gold);
+        return data;
     }
 }

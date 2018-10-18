@@ -18,6 +18,11 @@ public class DefaultInnerTcpServerChannelInBoundHandler extends DefaultInBoundHa
     }
 
     @Override
+    public void channelActive(ChannelHandlerContext ctx) throws Exception {
+        super.channelActive(ctx);
+    }
+
+    @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
         serverManager.channelInactive(ctx.channel());
         super.channelInactive(ctx);

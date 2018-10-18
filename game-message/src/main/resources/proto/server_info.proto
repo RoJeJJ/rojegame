@@ -2,34 +2,11 @@ syntax = "proto3";
 option java_package = "com.roje.game.message.server_info";
 option java_multiple_files = true;
 message ServerInfo {
-    int32 id = 1; // 服务器ID
-    string ip = 2; // 内网地址
-    ServerType type = 3; // 类型
-    int32 gameId = 4;
-    int32 innerPort = 5; // 端口
-    ServerStatus state = 6; //状态 -1表示维护；0表示准备开启；1表示正常，2表示不显示，3表示内部开启
-    int32 online = 7; // 在线人数
-    int32 maxUserCount = 8; // 在线人数
-    int32 httpport = 9; // http端口
-    string name = 10; //名字
-    string wwwip = 11; // 外网地址
-    int32 freeMemory = 12; //空闲内存
-    int32 totalMemory = 13; //可用内存
-    int32 version = 14; //版本号
-    int32 requireClientVersion = 15;//要求的客户端版本
-    int32 connectedCount = 16;
-    int32 userPort = 17;
-}
-
-enum ServerType{
-    Unknown = 0;
-    Cluster = 1;
-    Gate = 2;
-    Hall = 3;
-    Game = 4;
-}
-
-enum ServerStatus{
-    Normal = 0;
-    Maintain = 1;
+    string ip = 1; // ip地址
+    int32 port = 2;
+    int32 gameId = 3;
+    int32 online = 4; // 在线人数
+    int32 maxUserCount = 5; // 最大在线人数
+    string name = 6; //名字
+    int32 requireVersion = 7;
 }

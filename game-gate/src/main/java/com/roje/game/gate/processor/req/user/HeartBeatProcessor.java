@@ -22,7 +22,8 @@ public class HeartBeatProcessor extends MessageProcessor {
     private final SessionManager<GateUserSession> sessionManager;
 
     @Autowired
-    public HeartBeatProcessor(SessionManager<GateUserSession> sessionManager) {
+    public HeartBeatProcessor(
+            SessionManager<GateUserSession> sessionManager) {
         this.sessionManager = sessionManager;
     }
 

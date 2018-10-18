@@ -1,4 +1,4 @@
-package com.roje.game.hall.entity;
+package com.roje.game.lobby.entity;
 
 import lombok.Getter;
 import lombok.Setter;

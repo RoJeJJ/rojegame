@@ -1,52 +1,16 @@
 package com.roje.game.core.server;
 
-import com.google.protobuf.Message;
-import io.netty.channel.Channel;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
 public class ServerInfo {
-    // 服务器ID
-    private int id;
-
-    //服务器版本号
-    private int versionCode;
-
-    // 服务器名称
-    private String name;
-    // 地址
-    private String ip;
-    // 外网地址
-    private String wwwip;
-    // 端口
-    private int userPort;
-
-    private int innerPort;
-    // 当前状态 1表示维护；0表示正常
-    private int state = 0;
-    // http端口
-    private int httpPort;
-    // 最大用户人数
-    private int maxUserCount;
-    // 在线人数
-    private int online;
-    //连接人数
-    private int connectedCount;
-    // 服务器类型
-    private int type;
-    // 空闲内存
-    private int freeMemory;
-    // 可用内存
-    private int totalMemory;
-    // 版本号,用于判断客户端连接那个服务器
-    private int clientVersionCode;
-
-    private transient Channel channel;
-
-    public void send(Message message) {
-        if (channel != null && channel.isActive())
-            channel.writeAndFlush(message);
-    }
+    private String ip; // ip地址
+    private int port;
+    private int gameId;
+    private int online; // 在线人数
+    private int maxUserCount; // 最大在线人数
+    private String name; //名字
+    private int requireVersion;//要求的客户端版本
 }

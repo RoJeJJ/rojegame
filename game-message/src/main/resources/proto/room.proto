@@ -1,0 +1,12 @@
+syntax = "proto3";
+import "include/any.proto";
+option java_package = "com.roje.game.message.create_room";
+option java_multiple_files = true;
+
+message CreateCardRoomRequest{
+    int32 gameId = 1;
+    google.protobuf.Any config = 2;
+}
+
+message CreateCardRoomResponse{
+}

@@ -1,6 +1,5 @@
 package com.roje.game.hall.processor.req;
 
-import com.google.protobuf.Any;
 import com.roje.game.core.processor.MessageProcessor;
 import com.roje.game.core.processor.Processor;
 import com.roje.game.core.thread.executor.RJExecutor;
@@ -16,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Future;
 
 @Slf4j
 @Component

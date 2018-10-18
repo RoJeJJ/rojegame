@@ -16,4 +16,7 @@ enum Action{
     LoginRes = 10002;
     HeartBeatReq = 10003;
     HeartBeatRes = 10004;
+
+    CreateCardRoomReq = 20001;
+    CreateCarRoomRes = 20002;
 }

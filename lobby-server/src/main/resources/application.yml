@@ -1,0 +1,22 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+spring:
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    timeout: 3000ms
+    jedis:
+      pool:
+        max-active: 8
+        max-idle: 8
+        min-idle: 0
+        max-wait: -1ms
+  application:
+    name: lobby-server
+executor:
+  user:
+    name: user
+    thread-size: 3
