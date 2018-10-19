@@ -17,9 +17,7 @@ private static final long serialVersionUID = 0L;
   }
   private LoginRequest() {
     account_ = "";
-    password_ = "";
-    loginType_ = 0;
-    version_ = 0;
+    gameToken_ = "";
   }
 
   @java.lang.Override
@@ -55,18 +53,7 @@ private static final long serialVersionUID = 0L;
           case 18: {
             java.lang.String s = input.readStringRequireUtf8();
 
-            password_ = s;
-            break;
-          }
-          case 24: {
-            int rawValue = input.readEnum();
-
-            loginType_ = rawValue;
-            break;
-          }
-          case 32: {
-
-            version_ = input.readInt32();
+            gameToken_ = s;
             break;
           }
           default: {
@@ -104,10 +91,6 @@ private static final long serialVersionUID = 0L;
   public static final int ACCOUNT_FIELD_NUMBER = 1;
   private volatile java.lang.Object account_;
   /**
-   * <pre>
-   *账号
-   * </pre>
-   *
    * <code>string account = 1;</code>
    */
   public java.lang.String getAccount() {
@@ -123,10 +106,6 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <pre>
-   *账号
-   * </pre>
-   *
    * <code>string account = 1;</code>
    */
   public com.google.protobuf.ByteString
@@ -143,84 +122,38 @@ private static final long serialVersionUID = 0L;
     }
   }
 
-  public static final int PASSWORD_FIELD_NUMBER = 2;
-  private volatile java.lang.Object password_;
+  public static final int GAMETOKEN_FIELD_NUMBER = 2;
+  private volatile java.lang.Object gameToken_;
   /**
-   * <pre>
-   *密码
-   * </pre>
-   *
-   * <code>string password = 2;</code>
+   * <code>string gameToken = 2;</code>
    */
-  public java.lang.String getPassword() {
-    java.lang.Object ref = password_;
+  public java.lang.String getGameToken() {
+    java.lang.Object ref = gameToken_;
     if (ref instanceof java.lang.String) {
       return (java.lang.String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
       java.lang.String s = bs.toStringUtf8();
-      password_ = s;
+      gameToken_ = s;
       return s;
     }
   }
   /**
-   * <pre>
-   *密码
-   * </pre>
-   *
-   * <code>string password = 2;</code>
+   * <code>string gameToken = 2;</code>
    */
   public com.google.protobuf.ByteString
-      getPasswordBytes() {
-    java.lang.Object ref = password_;
+      getGameTokenBytes() {
+    java.lang.Object ref = gameToken_;
     if (ref instanceof java.lang.String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
               (java.lang.String) ref);
-      password_ = b;
+      gameToken_ = b;
       return b;
     } else {
       return (com.google.protobuf.ByteString) ref;
     }
-  }
-
-  public static final int LOGINTYPE_FIELD_NUMBER = 3;
-  private int loginType_;
-  /**
-   * <pre>
-   *登录类型
-   * </pre>
-   *
-   * <code>.LoginType loginType = 3;</code>
-   */
-  public int getLoginTypeValue() {
-    return loginType_;
-  }
-  /**
-   * <pre>
-   *登录类型
-   * </pre>
-   *
-   * <code>.LoginType loginType = 3;</code>
-   */
-  public com.roje.game.message.login.LoginType getLoginType() {
-    @SuppressWarnings("deprecation")
-    com.roje.game.message.login.LoginType result = com.roje.game.message.login.LoginType.valueOf(loginType_);
-    return result == null ? com.roje.game.message.login.LoginType.UNRECOGNIZED : result;
-  }
-
-  public static final int VERSION_FIELD_NUMBER = 4;
-  private int version_;
-  /**
-   * <pre>
-   *客户端版本号
-   * </pre>
-   *
-   * <code>int32 version = 4;</code>
-   */
-  public int getVersion() {
-    return version_;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -240,14 +173,8 @@ private static final long serialVersionUID = 0L;
     if (!getAccountBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 1, account_);
     }
-    if (!getPasswordBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, password_);
-    }
-    if (loginType_ != com.roje.game.message.login.LoginType.Login_Type_Default.getNumber()) {
-      output.writeEnum(3, loginType_);
-    }
-    if (version_ != 0) {
-      output.writeInt32(4, version_);
+    if (!getGameTokenBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, gameToken_);
     }
     unknownFields.writeTo(output);
   }
@@ -261,16 +188,8 @@ private static final long serialVersionUID = 0L;
     if (!getAccountBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, account_);
     }
-    if (!getPasswordBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, password_);
-    }
-    if (loginType_ != com.roje.game.message.login.LoginType.Login_Type_Default.getNumber()) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeEnumSize(3, loginType_);
-    }
-    if (version_ != 0) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeInt32Size(4, version_);
+    if (!getGameTokenBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, gameToken_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -290,11 +209,8 @@ private static final long serialVersionUID = 0L;
     boolean result = true;
     result = result && getAccount()
         .equals(other.getAccount());
-    result = result && getPassword()
-        .equals(other.getPassword());
-    result = result && loginType_ == other.loginType_;
-    result = result && (getVersion()
-        == other.getVersion());
+    result = result && getGameToken()
+        .equals(other.getGameToken());
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -308,12 +224,8 @@ private static final long serialVersionUID = 0L;
     hash = (19 * hash) + getDescriptor().hashCode();
     hash = (37 * hash) + ACCOUNT_FIELD_NUMBER;
     hash = (53 * hash) + getAccount().hashCode();
-    hash = (37 * hash) + PASSWORD_FIELD_NUMBER;
-    hash = (53 * hash) + getPassword().hashCode();
-    hash = (37 * hash) + LOGINTYPE_FIELD_NUMBER;
-    hash = (53 * hash) + loginType_;
-    hash = (37 * hash) + VERSION_FIELD_NUMBER;
-    hash = (53 * hash) + getVersion();
+    hash = (37 * hash) + GAMETOKEN_FIELD_NUMBER;
+    hash = (53 * hash) + getGameToken().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -449,11 +361,7 @@ private static final long serialVersionUID = 0L;
       super.clear();
       account_ = "";
 
-      password_ = "";
-
-      loginType_ = 0;
-
-      version_ = 0;
+      gameToken_ = "";
 
       return this;
     }
@@ -482,9 +390,7 @@ private static final long serialVersionUID = 0L;
     public com.roje.game.message.login.LoginRequest buildPartial() {
       com.roje.game.message.login.LoginRequest result = new com.roje.game.message.login.LoginRequest(this);
       result.account_ = account_;
-      result.password_ = password_;
-      result.loginType_ = loginType_;
-      result.version_ = version_;
+      result.gameToken_ = gameToken_;
       onBuilt();
       return result;
     }
@@ -537,15 +443,9 @@ private static final long serialVersionUID = 0L;
         account_ = other.account_;
         onChanged();
       }
-      if (!other.getPassword().isEmpty()) {
-        password_ = other.password_;
+      if (!other.getGameToken().isEmpty()) {
+        gameToken_ = other.gameToken_;
         onChanged();
-      }
-      if (other.loginType_ != 0) {
-        setLoginTypeValue(other.getLoginTypeValue());
-      }
-      if (other.getVersion() != 0) {
-        setVersion(other.getVersion());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -578,10 +478,6 @@ private static final long serialVersionUID = 0L;
 
     private java.lang.Object account_ = "";
     /**
-     * <pre>
-     *账号
-     * </pre>
-     *
      * <code>string account = 1;</code>
      */
     public java.lang.String getAccount() {
@@ -597,10 +493,6 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <pre>
-     *账号
-     * </pre>
-     *
      * <code>string account = 1;</code>
      */
     public com.google.protobuf.ByteString
@@ -617,10 +509,6 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <pre>
-     *账号
-     * </pre>
-     *
      * <code>string account = 1;</code>
      */
     public Builder setAccount(
@@ -634,10 +522,6 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <pre>
-     *账号
-     * </pre>
-     *
      * <code>string account = 1;</code>
      */
     public Builder clearAccount() {
@@ -647,10 +531,6 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <pre>
-     *账号
-     * </pre>
-     *
      * <code>string account = 1;</code>
      */
     public Builder setAccountBytes(
@@ -665,194 +545,71 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object password_ = "";
+    private java.lang.Object gameToken_ = "";
     /**
-     * <pre>
-     *密码
-     * </pre>
-     *
-     * <code>string password = 2;</code>
+     * <code>string gameToken = 2;</code>
      */
-    public java.lang.String getPassword() {
-      java.lang.Object ref = password_;
+    public java.lang.String getGameToken() {
+      java.lang.Object ref = gameToken_;
       if (!(ref instanceof java.lang.String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        password_ = s;
+        gameToken_ = s;
         return s;
       } else {
         return (java.lang.String) ref;
       }
     }
     /**
-     * <pre>
-     *密码
-     * </pre>
-     *
-     * <code>string password = 2;</code>
+     * <code>string gameToken = 2;</code>
      */
     public com.google.protobuf.ByteString
-        getPasswordBytes() {
-      java.lang.Object ref = password_;
+        getGameTokenBytes() {
+      java.lang.Object ref = gameToken_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        password_ = b;
+        gameToken_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
       }
     }
     /**
-     * <pre>
-     *密码
-     * </pre>
-     *
-     * <code>string password = 2;</code>
+     * <code>string gameToken = 2;</code>
      */
-    public Builder setPassword(
+    public Builder setGameToken(
         java.lang.String value) {
       if (value == null) {
     throw new NullPointerException();
   }
   
-      password_ = value;
+      gameToken_ = value;
       onChanged();
       return this;
     }
     /**
-     * <pre>
-     *密码
-     * </pre>
-     *
-     * <code>string password = 2;</code>
+     * <code>string gameToken = 2;</code>
      */
-    public Builder clearPassword() {
+    public Builder clearGameToken() {
       
-      password_ = getDefaultInstance().getPassword();
+      gameToken_ = getDefaultInstance().getGameToken();
       onChanged();
       return this;
     }
     /**
-     * <pre>
-     *密码
-     * </pre>
-     *
-     * <code>string password = 2;</code>
+     * <code>string gameToken = 2;</code>
      */
-    public Builder setPasswordBytes(
+    public Builder setGameTokenBytes(
         com.google.protobuf.ByteString value) {
       if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
       
-      password_ = value;
-      onChanged();
-      return this;
-    }
-
-    private int loginType_ = 0;
-    /**
-     * <pre>
-     *登录类型
-     * </pre>
-     *
-     * <code>.LoginType loginType = 3;</code>
-     */
-    public int getLoginTypeValue() {
-      return loginType_;
-    }
-    /**
-     * <pre>
-     *登录类型
-     * </pre>
-     *
-     * <code>.LoginType loginType = 3;</code>
-     */
-    public Builder setLoginTypeValue(int value) {
-      loginType_ = value;
-      onChanged();
-      return this;
-    }
-    /**
-     * <pre>
-     *登录类型
-     * </pre>
-     *
-     * <code>.LoginType loginType = 3;</code>
-     */
-    public com.roje.game.message.login.LoginType getLoginType() {
-      @SuppressWarnings("deprecation")
-      com.roje.game.message.login.LoginType result = com.roje.game.message.login.LoginType.valueOf(loginType_);
-      return result == null ? com.roje.game.message.login.LoginType.UNRECOGNIZED : result;
-    }
-    /**
-     * <pre>
-     *登录类型
-     * </pre>
-     *
-     * <code>.LoginType loginType = 3;</code>
-     */
-    public Builder setLoginType(com.roje.game.message.login.LoginType value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      
-      loginType_ = value.getNumber();
-      onChanged();
-      return this;
-    }
-    /**
-     * <pre>
-     *登录类型
-     * </pre>
-     *
-     * <code>.LoginType loginType = 3;</code>
-     */
-    public Builder clearLoginType() {
-      
-      loginType_ = 0;
-      onChanged();
-      return this;
-    }
-
-    private int version_ ;
-    /**
-     * <pre>
-     *客户端版本号
-     * </pre>
-     *
-     * <code>int32 version = 4;</code>
-     */
-    public int getVersion() {
-      return version_;
-    }
-    /**
-     * <pre>
-     *客户端版本号
-     * </pre>
-     *
-     * <code>int32 version = 4;</code>
-     */
-    public Builder setVersion(int value) {
-      
-      version_ = value;
-      onChanged();
-      return this;
-    }
-    /**
-     * <pre>
-     *客户端版本号
-     * </pre>
-     *
-     * <code>int32 version = 4;</code>
-     */
-    public Builder clearVersion() {
-      
-      version_ = 0;
+      gameToken_ = value;
       onChanged();
       return this;
     }

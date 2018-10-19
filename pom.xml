@@ -17,6 +17,7 @@
         <module>game-test</module>
         <module>game-hall</module>
         <module>lobby-server</module>
+        <module>game-niuniu</module>
     </modules>
     <packaging>pom</packaging>
     <name>roje-game</name>

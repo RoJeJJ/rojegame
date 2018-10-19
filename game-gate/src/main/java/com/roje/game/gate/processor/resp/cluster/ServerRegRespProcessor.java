@@ -2,7 +2,6 @@ package com.roje.game.gate.processor.resp.cluster;
 
 import com.roje.game.core.processor.MessageProcessor;
 import com.roje.game.core.processor.Processor;
-import com.roje.game.core.server.BaseInfo;
 import com.roje.game.message.action.Action;
 import com.roje.game.message.frame.Frame;
 import com.roje.game.message.server_register.ServerRegResponse;

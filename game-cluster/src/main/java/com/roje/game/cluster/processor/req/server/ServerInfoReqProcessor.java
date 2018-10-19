@@ -1,0 +1,31 @@
+package com.roje.game.cluster.processor.req.server;
+
+import com.roje.game.cluster.manager.ServerSessionManager;
+import com.roje.game.core.processor.MessageProcessor;
+import com.roje.game.core.processor.Processor;
+import com.roje.game.message.action.Action;
+import com.roje.game.message.frame.Frame;
+import com.roje.game.message.server_info.ServInfoRequest;
+import io.netty.channel.Channel;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Slf4j
+@Component
+@Processor(action = Action.ServInfoReq)
+public class ServerInfoReqProcessor extends MessageProcessor {
+
+    private final ServerSessionManager serverManager;
+
+    @Autowired
+    public ServerInfoReqProcessor(ServerSessionManager serverManager) {
+        this.serverManager = serverManager;
+    }
+
+    @Override
+    public void handler(Channel channel, Frame frame) throws Exception {
+        ServInfoRequest info = frame.getData().unpack(ServInfoRequest.class);
+        serverManager.serverInfo(channel,info);
+    }
+}

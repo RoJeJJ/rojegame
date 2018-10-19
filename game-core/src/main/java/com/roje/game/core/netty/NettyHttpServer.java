@@ -1,7 +1,6 @@
 package com.roje.game.core.netty;
 
 import com.roje.game.core.config.NettyServerConfig;
-import com.roje.game.core.config.NettyTcpServerConfig;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;

@@ -2,38 +2,33 @@ package com.roje.game.core.netty.channel.handler;
 
 import com.roje.game.core.dispatcher.MessageDispatcher;
 import com.roje.game.core.manager.ISessionManager;
-import com.roje.game.core.server.BaseInfo;
-import com.roje.game.core.service.Service;
+import com.roje.game.core.server.ServerInfo;
 import com.roje.game.core.util.MessageUtil;
-import com.roje.game.core.util.ServerUtil;
 import com.roje.game.message.action.Action;
-import com.roje.game.message.server_info.ServerInfo;
-import com.roje.game.message.server_register.ServerRegRequest;
-import com.roje.game.message.server_update.ServerUpdateRequest;
+import com.roje.game.message.server_info.ServInfoRequest;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.timeout.IdleStateEvent;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class DefaultInnerTcpClientChannelInBoundHandler extends DefaultInBoundHandler {
-    private BaseInfo baseInfo;
-    private ISessionManager ISessionManager;
+    private ServerInfo serverInfo;
+    private ISessionManager sessionManager;
 
     public DefaultInnerTcpClientChannelInBoundHandler(
-            Service service,
             MessageDispatcher dispatcher,
-            ISessionManager ISessionManager,
-            BaseInfo baseInfo) {
-        super(service, dispatcher);
-        this.ISessionManager = ISessionManager;
-        this.baseInfo = baseInfo;
+            ISessionManager sessionManager,
+            ServerInfo serverInfo) {
+        super(null, dispatcher);
+        this.sessionManager = sessionManager;
+        this.serverInfo = serverInfo;
     }
 
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) {
-        log.info("注册到服务器");
-        MessageUtil.send(ctx.channel(), Action.ServerRegReq,registerRequest());
+        log.info("向集群发送消息");
+        MessageUtil.send(ctx.channel(), Action.ServInfoReq,servInfo());
     }
 
     @Override
@@ -46,11 +41,7 @@ public class DefaultInnerTcpClientChannelInBoundHandler extends DefaultInBoundHa
                     ctx.close();
                     break;
                 case ALL_IDLE:
-                    //如果注册成功,定时向集群服务器更新
-                    if (baseInfo.getId() != 0) {
-                        MessageUtil.send(ctx.channel(),Action.ServerUpdateReq,updateRequest());
-                    } else
-                        ctx.close();
+                    MessageUtil.send(ctx.channel(),Action.ServInfoReq,servInfo());
                     break;
             }
         }
@@ -62,48 +53,15 @@ public class DefaultInnerTcpClientChannelInBoundHandler extends DefaultInBoundHa
         ctx.close();
     }
 
-    private ServerRegRequest registerRequest() {
-        ServerRegRequest.Builder builder = ServerRegRequest.newBuilder();
-        ServerInfo.Builder serverInfoBuilder = ServerInfo.newBuilder();
-        serverInfoBuilder.setName(baseInfo.getName());
-        serverInfoBuilder.setId(baseInfo.getId());
-        serverInfoBuilder.setIp(baseInfo.getIp());
-        serverInfoBuilder.setType(baseInfo.getType());
-        serverInfoBuilder.setGameId(baseInfo.getGameId());
-        serverInfoBuilder.setUserPort(baseInfo.getUserPort());
-        serverInfoBuilder.setInnerPort(baseInfo.getInnerPort());
-        serverInfoBuilder.setHttpport(baseInfo.getHttpPort());
-        serverInfoBuilder.setMaxUserCount(baseInfo.getMaxUserCount());
-        serverInfoBuilder.setOnline(ISessionManager.getOnlineCount());
-        serverInfoBuilder.setConnectedCount(ISessionManager.getConnectedCount());
-        serverInfoBuilder.setFreeMemory(ServerUtil.freeMemory());
-        serverInfoBuilder.setTotalMemory(ServerUtil.totalMemory());
-        serverInfoBuilder.setVersion(baseInfo.getVersionCode());
-        serverInfoBuilder.setRequireClientVersion(baseInfo.getClientVersionCode());
-        serverInfoBuilder.setState(baseInfo.getState());
-        builder.setServerInfo(serverInfoBuilder);
-        return builder.build();
-    }
-
-    private ServerUpdateRequest updateRequest() {
-        ServerUpdateRequest.Builder builder = ServerUpdateRequest.newBuilder();
-        ServerInfo.Builder serverInfoBuilder = ServerInfo.newBuilder();
-        serverInfoBuilder.setName(baseInfo.getName());
-        serverInfoBuilder.setId(baseInfo.getId());
-        serverInfoBuilder.setIp(baseInfo.getIp());
-        serverInfoBuilder.setType(baseInfo.getType());
-        serverInfoBuilder.setUserPort(baseInfo.getUserPort());
-        serverInfoBuilder.setInnerPort(baseInfo.getInnerPort());
-        serverInfoBuilder.setHttpport(baseInfo.getHttpPort());
-        serverInfoBuilder.setMaxUserCount(baseInfo.getMaxUserCount());
-        serverInfoBuilder.setOnline(ISessionManager.getOnlineCount());
-        serverInfoBuilder.setConnectedCount(ISessionManager.getConnectedCount());
-        serverInfoBuilder.setFreeMemory(ServerUtil.freeMemory());
-        serverInfoBuilder.setTotalMemory(ServerUtil.totalMemory());
-        serverInfoBuilder.setVersion(baseInfo.getVersionCode());
-        serverInfoBuilder.setRequireClientVersion(baseInfo.getClientVersionCode());
-        serverInfoBuilder.setState(baseInfo.getState());
-        builder.setServerInfo(serverInfoBuilder);
+    private ServInfoRequest servInfo(){
+        ServInfoRequest.Builder builder = ServInfoRequest.newBuilder();
+        builder.setIp(serverInfo.getIp());
+        builder.setPort(serverInfo.getPort());
+        builder.setGameId(serverInfo.getGameId());
+        builder.setName(serverInfo.getName());
+        builder.setOnline(sessionManager.getOnlineCount());
+        builder.setMaxUserCount(serverInfo.getMaxUserCount());
+        builder.setRequireVersion(serverInfo.getRequireVersion());
         return builder.build();
     }
 }

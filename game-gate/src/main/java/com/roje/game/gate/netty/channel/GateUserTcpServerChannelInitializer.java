@@ -1,11 +1,9 @@
 package com.roje.game.gate.netty.channel;
 
-import com.roje.game.core.config.NettyTcpServerConfig;
 import com.roje.game.core.dispatcher.MessageDispatcher;
 import com.roje.game.core.manager.SessionManager;
 import com.roje.game.core.netty.channel.initializer.DefaultChannelInitializer;
 import com.roje.game.core.service.Service;
-import com.roje.game.gate.manager.GateSessionManager;
 import com.roje.game.gate.netty.handler.GateUserServerChannelInBoundHandler;
 import com.roje.game.gate.session.GateUserSession;
 import io.netty.channel.ChannelPipeline;

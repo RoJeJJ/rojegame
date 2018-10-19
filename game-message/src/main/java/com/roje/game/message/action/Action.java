@@ -13,45 +13,33 @@ public enum Action
    */
   snap(0),
   /**
-   * <code>ServerRegReq = 1001;</code>
+   * <code>ServInfoReq = 1001;</code>
    */
-  ServerRegReq(1001),
+  ServInfoReq(1001),
   /**
-   * <code>ServerRegRes = 1002;</code>
+   * <code>ServInfoRes = 1002;</code>
    */
-  ServerRegRes(1002),
-  /**
-   * <code>ServerUpdateReq = 1003;</code>
-   */
-  ServerUpdateReq(1003),
-  /**
-   * <code>ServerUpdateRes = 1004;</code>
-   */
-  ServerUpdateRes(1004),
-  /**
-   * <code>PubGateConnected = 2001;</code>
-   */
-  PubGateConnected(2001),
-  /**
-   * <code>PubErrorMessage = 2002;</code>
-   */
-  PubErrorMessage(2002),
+  ServInfoRes(1002),
   /**
    * <code>LoginReq = 10001;</code>
    */
   LoginReq(10001),
   /**
-   * <code>LoginRes = 10002;</code>
+   * <code>loginRes = 10002;</code>
    */
-  LoginRes(10002),
+  loginRes(10002),
   /**
-   * <code>HeartBeatReq = 10003;</code>
+   * <code>CreateCardRoomReq = 20001;</code>
    */
-  HeartBeatReq(10003),
+  CreateCardRoomReq(20001),
   /**
-   * <code>HeartBeatRes = 10004;</code>
+   * <code>CreateCarRoomRes = 20002;</code>
    */
-  HeartBeatRes(10004),
+  CreateCarRoomRes(20002),
+  /**
+   * <code>ErrorResponse = 30001;</code>
+   */
+  ErrorResponse(30001),
   UNRECOGNIZED(-1),
   ;
 
@@ -60,45 +48,33 @@ public enum Action
    */
   public static final int snap_VALUE = 0;
   /**
-   * <code>ServerRegReq = 1001;</code>
+   * <code>ServInfoReq = 1001;</code>
    */
-  public static final int ServerRegReq_VALUE = 1001;
+  public static final int ServInfoReq_VALUE = 1001;
   /**
-   * <code>ServerRegRes = 1002;</code>
+   * <code>ServInfoRes = 1002;</code>
    */
-  public static final int ServerRegRes_VALUE = 1002;
-  /**
-   * <code>ServerUpdateReq = 1003;</code>
-   */
-  public static final int ServerUpdateReq_VALUE = 1003;
-  /**
-   * <code>ServerUpdateRes = 1004;</code>
-   */
-  public static final int ServerUpdateRes_VALUE = 1004;
-  /**
-   * <code>PubGateConnected = 2001;</code>
-   */
-  public static final int PubGateConnected_VALUE = 2001;
-  /**
-   * <code>PubErrorMessage = 2002;</code>
-   */
-  public static final int PubErrorMessage_VALUE = 2002;
+  public static final int ServInfoRes_VALUE = 1002;
   /**
    * <code>LoginReq = 10001;</code>
    */
   public static final int LoginReq_VALUE = 10001;
   /**
-   * <code>LoginRes = 10002;</code>
+   * <code>loginRes = 10002;</code>
    */
-  public static final int LoginRes_VALUE = 10002;
+  public static final int loginRes_VALUE = 10002;
   /**
-   * <code>HeartBeatReq = 10003;</code>
+   * <code>CreateCardRoomReq = 20001;</code>
    */
-  public static final int HeartBeatReq_VALUE = 10003;
+  public static final int CreateCardRoomReq_VALUE = 20001;
   /**
-   * <code>HeartBeatRes = 10004;</code>
+   * <code>CreateCarRoomRes = 20002;</code>
    */
-  public static final int HeartBeatRes_VALUE = 10004;
+  public static final int CreateCarRoomRes_VALUE = 20002;
+  /**
+   * <code>ErrorResponse = 30001;</code>
+   */
+  public static final int ErrorResponse_VALUE = 30001;
 
 
   public final int getNumber() {
@@ -120,16 +96,13 @@ public enum Action
   public static Action forNumber(int value) {
     switch (value) {
       case 0: return snap;
-      case 1001: return ServerRegReq;
-      case 1002: return ServerRegRes;
-      case 1003: return ServerUpdateReq;
-      case 1004: return ServerUpdateRes;
-      case 2001: return PubGateConnected;
-      case 2002: return PubErrorMessage;
+      case 1001: return ServInfoReq;
+      case 1002: return ServInfoRes;
       case 10001: return LoginReq;
-      case 10002: return LoginRes;
-      case 10003: return HeartBeatReq;
-      case 10004: return HeartBeatRes;
+      case 10002: return loginRes;
+      case 20001: return CreateCardRoomReq;
+      case 20002: return CreateCarRoomRes;
+      case 30001: return ErrorResponse;
       default: return null;
     }
   }

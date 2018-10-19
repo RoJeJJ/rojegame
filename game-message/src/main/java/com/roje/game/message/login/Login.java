@@ -24,16 +24,6 @@ public final class Login {
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_LoginResponse_fieldAccessorTable;
-  static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_InnerLoginRequest_descriptor;
-  static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_InnerLoginRequest_fieldAccessorTable;
-  static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_InnerLoginResponse_descriptor;
-  static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_InnerLoginResponse_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -43,19 +33,10 @@ public final class Login {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\013login.proto\032\017user_info.proto\"a\n\014LoginR" +
-      "equest\022\017\n\007account\030\001 \001(\t\022\020\n\010password\030\002 \001(" +
-      "\t\022\035\n\tloginType\030\003 \001(\0162\n.LoginType\022\017\n\007vers" +
-      "ion\030\004 \001(\005\"J\n\rLoginResponse\022\017\n\007success\030\001 " +
-      "\001(\010\022\013\n\003msg\030\002 \001(\t\022\033\n\010userInfo\030\003 \001(\0132\t.Use" +
-      "rInfo\"b\n\021InnerLoginRequest\022\036\n\007request\030\001 " +
-      "\001(\0132\r.LoginRequest\022\021\n\tsessionId\030\002 \001(\t\022\016\n" +
-      "\006gateId\030\003 \001(\005\022\n\n\002ip\030\004 \001(\t\"I\n\022InnerLoginR" +
-      "esponse\022 \n\010response\030\001 \001(\0132\016.LoginRespons" +
-      "e\022\021\n\tsessionId\030\002 \001(\t*<\n\tLoginType\022\026\n\022Log" +
-      "in_Type_Default\020\000\022\n\n\006WeChat\020\001\022\013\n\007Account" +
-      "\020\002B\037\n\033com.roje.game.message.loginP\001b\006pro" +
-      "to3"
+      "\n\013login.proto\"2\n\014LoginRequest\022\017\n\007account" +
+      "\030\001 \001(\t\022\021\n\tgameToken\030\002 \001(\t\"-\n\rLoginRespon" +
+      "se\022\017\n\007success\030\001 \001(\010\022\013\n\003msg\030\002 \001(\tB\037\n\033com." +
+      "roje.game.message.loginP\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -68,33 +49,19 @@ public final class Login {
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
-          com.roje.game.message.user_info.UserInfoOuterClass.getDescriptor(),
         }, assigner);
     internal_static_LoginRequest_descriptor =
       getDescriptor().getMessageTypes().get(0);
     internal_static_LoginRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_LoginRequest_descriptor,
-        new java.lang.String[] { "Account", "Password", "LoginType", "Version", });
+        new java.lang.String[] { "Account", "GameToken", });
     internal_static_LoginResponse_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_LoginResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_LoginResponse_descriptor,
-        new java.lang.String[] { "Success", "Msg", "UserInfo", });
-    internal_static_InnerLoginRequest_descriptor =
-      getDescriptor().getMessageTypes().get(2);
-    internal_static_InnerLoginRequest_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_InnerLoginRequest_descriptor,
-        new java.lang.String[] { "Request", "SessionId", "GateId", "Ip", });
-    internal_static_InnerLoginResponse_descriptor =
-      getDescriptor().getMessageTypes().get(3);
-    internal_static_InnerLoginResponse_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_InnerLoginResponse_descriptor,
-        new java.lang.String[] { "Response", "SessionId", });
-    com.roje.game.message.user_info.UserInfoOuterClass.getDescriptor();
+        new java.lang.String[] { "Success", "Msg", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

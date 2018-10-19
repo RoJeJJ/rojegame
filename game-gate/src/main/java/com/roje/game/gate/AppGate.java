@@ -1,16 +1,13 @@
 package com.roje.game.gate;
 
 
-import com.roje.game.core.config.NettyConnClusterClientConfig;
-import com.roje.game.core.config.NettyTcpServerConfig;
+import com.roje.game.core.config.ClusterClientConfig;
 import com.roje.game.core.config.ThreadConfig;
 import com.roje.game.core.dispatcher.MessageDispatcher;
-import com.roje.game.core.manager.ServerManager;
 import com.roje.game.core.manager.SessionManager;
 import com.roje.game.core.netty.NettyClusterTcpClient;
 import com.roje.game.core.netty.NettyTcpServer;
-import com.roje.game.core.netty.channel.initializer.ConnClusterClientChannelInitializer;
-import com.roje.game.core.server.BaseInfo;
+import com.roje.game.core.netty.channel.initializer.ClusterClientChannelInitializer;
 import com.roje.game.core.service.Service;
 import com.roje.game.gate.manager.GateSessionManager;
 import io.netty.channel.ChannelInitializer;
@@ -49,8 +46,8 @@ public class AppGate {
     }
 
     @Bean
-    public NettyConnClusterClientConfig gateClusterClientConfig() {
-        return new NettyConnClusterClientConfig();
+    public ClusterClientConfig gateClusterClientConfig() {
+        return new ClusterClientConfig();
     }
 
     @Bean("gateInfo")
@@ -96,16 +93,16 @@ public class AppGate {
     }
 
     @Bean("gateClusterClientChannelInitializer")
-    public ConnClusterClientChannelInitializer gateClusterClientChannelInitializer(NettyConnClusterClientConfig clusterClientConfig,
-                                                                                   MessageDispatcher dispatcher,
-                                                                                   SessionManager sessionManager,
-                                                                                   BaseInfo baseInfo) {
-        return new ConnClusterClientChannelInitializer(clusterClientConfig, dispatcher, sessionManager, baseInfo);
+    public ClusterClientChannelInitializer gateClusterClientChannelInitializer(ClusterClientConfig clusterClientConfig,
+                                                                               MessageDispatcher dispatcher,
+                                                                               SessionManager sessionManager,
+                                                                               BaseInfo baseInfo) {
+        return new ClusterClientChannelInitializer(clusterClientConfig, dispatcher, sessionManager, baseInfo);
     }
 
     @Bean
     public NettyClusterTcpClient gateClusterClient(
-            NettyConnClusterClientConfig clientConfig,
+            ClusterClientConfig clientConfig,
             @Qualifier("gateClusterClientChannelInitializer") ChannelInitializer<SocketChannel> clientChannelInitializer) {
         return new NettyClusterTcpClient(clientConfig, clientChannelInitializer);
     }

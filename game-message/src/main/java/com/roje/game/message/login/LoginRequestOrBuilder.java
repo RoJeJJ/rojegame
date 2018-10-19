@@ -8,64 +8,22 @@ public interface LoginRequestOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <pre>
-   *账号
-   * </pre>
-   *
    * <code>string account = 1;</code>
    */
   java.lang.String getAccount();
   /**
-   * <pre>
-   *账号
-   * </pre>
-   *
    * <code>string account = 1;</code>
    */
   com.google.protobuf.ByteString
       getAccountBytes();
 
   /**
-   * <pre>
-   *密码
-   * </pre>
-   *
-   * <code>string password = 2;</code>
+   * <code>string gameToken = 2;</code>
    */
-  java.lang.String getPassword();
+  java.lang.String getGameToken();
   /**
-   * <pre>
-   *密码
-   * </pre>
-   *
-   * <code>string password = 2;</code>
+   * <code>string gameToken = 2;</code>
    */
   com.google.protobuf.ByteString
-      getPasswordBytes();
-
-  /**
-   * <pre>
-   *登录类型
-   * </pre>
-   *
-   * <code>.LoginType loginType = 3;</code>
-   */
-  int getLoginTypeValue();
-  /**
-   * <pre>
-   *登录类型
-   * </pre>
-   *
-   * <code>.LoginType loginType = 3;</code>
-   */
-  com.roje.game.message.login.LoginType getLoginType();
-
-  /**
-   * <pre>
-   *客户端版本号
-   * </pre>
-   *
-   * <code>int32 version = 4;</code>
-   */
-  int getVersion();
+      getGameTokenBytes();
 }

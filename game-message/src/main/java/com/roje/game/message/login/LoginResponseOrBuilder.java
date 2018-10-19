@@ -21,17 +21,4 @@ public interface LoginResponseOrBuilder extends
    */
   com.google.protobuf.ByteString
       getMsgBytes();
-
-  /**
-   * <code>.UserInfo userInfo = 3;</code>
-   */
-  boolean hasUserInfo();
-  /**
-   * <code>.UserInfo userInfo = 3;</code>
-   */
-  com.roje.game.message.user_info.UserInfo getUserInfo();
-  /**
-   * <code>.UserInfo userInfo = 3;</code>
-   */
-  com.roje.game.message.user_info.UserInfoOrBuilder getUserInfoOrBuilder();
 }

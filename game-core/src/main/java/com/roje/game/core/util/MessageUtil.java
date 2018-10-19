@@ -27,7 +27,7 @@ public class MessageUtil {
         ErrorMessage.Builder errBuilder = ErrorMessage.newBuilder();
         errBuilder.setErrCode(errorCode);
         errBuilder.setErrMsg(msg);
-        send(channel,Action.PubErrorMessage,errBuilder.build());
+        send(channel,Action.ErrorResponse,errBuilder.build());
     }
 
 

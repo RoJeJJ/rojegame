@@ -5,7 +5,7 @@ import com.roje.game.core.dispatcher.MessageDispatcher;
 import com.roje.game.core.manager.ISessionManager;
 import com.roje.game.core.netty.channel.handler.DefaultInnerTcpClientChannelInBoundHandler;
 import com.roje.game.core.netty.channel.initializer.DefaultChannelInitializer;
-import com.roje.game.core.server.BaseInfo;
+import com.roje.game.core.server.ServerInfo;
 import com.roje.game.core.service.Service;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
@@ -30,26 +30,23 @@ public class NettyGateTcpClient {
 
     private ChannelGroup channels;
 
-    private final Service service;
 
     private final MessageDispatcher dispatcher;
 
     private final ISessionManager sessionManager;
 
     @Getter
-    private final BaseInfo baseInfo;
+    private final ServerInfo serverInfo;
 
     public NettyGateTcpClient(
             NettyConnGateClientConfig gateClientConfig,
-            Service service,
             MessageDispatcher dispatcher,
             ISessionManager sessionManager,
-            BaseInfo baseInfo){
+            ServerInfo serverInfo){
         this.gateClientConfig = gateClientConfig;
-        this.service = service;
         this.dispatcher = dispatcher;
         this.sessionManager = sessionManager;
-        this.baseInfo = baseInfo;
+        this.serverInfo = serverInfo;
         initClient();
     }
 
@@ -70,10 +67,9 @@ public class NettyGateTcpClient {
                                 gateClientConfig.getWriterIdleTime(),
                                 gateClientConfig.getAllIdleTime()));
                         pipeline.addLast(new DefaultInnerTcpClientChannelInBoundHandler(
-                                service,
                                 dispatcher,
                                 sessionManager,
-                                baseInfo));
+                                serverInfo));
                     }
                 });
     }

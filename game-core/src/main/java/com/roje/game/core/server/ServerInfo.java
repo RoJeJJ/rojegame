@@ -2,15 +2,16 @@ package com.roje.game.core.server;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @Getter
 @Setter
+@ConfigurationProperties("server-info")
 public class ServerInfo {
-    private String ip; // ip地址
+    private String ip;
     private int port;
     private int gameId;
-    private int online; // 在线人数
-    private int maxUserCount; // 最大在线人数
-    private String name; //名字
-    private int requireVersion;//要求的客户端版本
+    private int maxUserCount;
+    private String name;
+    private int requireVersion;
 }

@@ -1,6 +1,5 @@
 package com.roje.game.lobby.controller;
 
-import com.google.gson.JsonObject;
 import com.roje.game.core.thread.executor.Executor;
 import com.roje.game.lobby.Service.UserService;
 import lombok.extern.slf4j.Slf4j;

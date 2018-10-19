@@ -1,6 +1,5 @@
 package com.roje.game.gate.processor.req.game;
 
-import com.roje.game.core.manager.ServerManager;
 import com.roje.game.core.processor.MessageProcessor;
 import com.roje.game.core.processor.Processor;
 import com.roje.game.message.action.Action;

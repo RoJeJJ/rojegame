@@ -30,4 +30,8 @@ public class UserRedisService {
         userRedisTemplate.opsForHash().put(GAME_TOKEN,token,user);
         return token;
     }
+
+    public String getToken(String account){
+        return (String) userRedisTemplate.opsForHash().get(USER_REDIS,account);
+    }
 }

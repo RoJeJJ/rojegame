@@ -1,14 +1,13 @@
 package com.roje.game.hall;
 
-import com.roje.game.core.config.NettyConnClusterClientConfig;
+import com.roje.game.core.config.ClusterClientConfig;
 import com.roje.game.core.config.NettyConnGateClientConfig;
 import com.roje.game.core.config.ThreadConfig;
 import com.roje.game.core.dispatcher.MessageDispatcher;
 import com.roje.game.core.manager.ISessionManager;
 import com.roje.game.core.netty.NettyClusterTcpClient;
 import com.roje.game.core.netty.NettyGateTcpClient;
-import com.roje.game.core.netty.channel.initializer.ConnClusterClientChannelInitializer;
-import com.roje.game.core.server.BaseInfo;
+import com.roje.game.core.netty.channel.initializer.ClusterClientChannelInitializer;
 import com.roje.game.core.service.Service;
 import com.roje.game.core.service.redis.IdService;
 import com.roje.game.core.service.redis.UserRedisService;
@@ -46,8 +45,8 @@ public class AppHall {
     }
 
     @Bean
-    public NettyConnClusterClientConfig hallClusterClientConfig() {
-        return new NettyConnClusterClientConfig();
+    public ClusterClientConfig hallClusterClientConfig() {
+        return new ClusterClientConfig();
     }
 
     @Bean
@@ -73,16 +72,16 @@ public class AppHall {
     }
 
     @Bean("hallClusterClientChannelInitializer")
-    public ConnClusterClientChannelInitializer hallClusterClientChannelInitializer(NettyConnClusterClientConfig clusterClientConfig,
-                                                                                   MessageDispatcher dispatcher,
-                                                                                   ISessionManager ISessionManager,
-                                                                                   BaseInfo baseInfo) {
-        return new ConnClusterClientChannelInitializer(clusterClientConfig, dispatcher, ISessionManager, baseInfo);
+    public ClusterClientChannelInitializer hallClusterClientChannelInitializer(ClusterClientConfig clusterClientConfig,
+                                                                               MessageDispatcher dispatcher,
+                                                                               ISessionManager ISessionManager,
+                                                                               BaseInfo baseInfo) {
+        return new ClusterClientChannelInitializer(clusterClientConfig, dispatcher, ISessionManager, baseInfo);
     }
 
     @Bean
     public NettyClusterTcpClient hallClusterTcpClient(
-            NettyConnClusterClientConfig clusterClientConfig,
+            ClusterClientConfig clusterClientConfig,
             @Qualifier("hallClusterClientChannelInitializer") ChannelInitializer<SocketChannel> channelInitializer) {
         return new NettyClusterTcpClient(clusterClientConfig, channelInitializer);
     }

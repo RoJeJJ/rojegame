@@ -23,13 +23,12 @@ public final class ActionOuterClass {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\014action.proto*\325\001\n\006Action\022\010\n\004snap\020\000\022\021\n\014S" +
-      "erverRegReq\020\351\007\022\021\n\014ServerRegRes\020\352\007\022\024\n\017Ser" +
-      "verUpdateReq\020\353\007\022\024\n\017ServerUpdateRes\020\354\007\022\025\n" +
-      "\020PubGateConnected\020\321\017\022\024\n\017PubErrorMessage\020" +
-      "\322\017\022\r\n\010LoginReq\020\221N\022\r\n\010LoginRes\020\222N\022\021\n\014Hear" +
-      "tBeatReq\020\223N\022\021\n\014HeartBeatRes\020\224NB \n\034com.ro" +
-      "je.game.message.actionP\001b\006proto3"
+      "\n\014action.proto*\232\001\n\006Action\022\010\n\004snap\020\000\022\020\n\013S" +
+      "ervInfoReq\020\351\007\022\020\n\013ServInfoRes\020\352\007\022\r\n\010Login" +
+      "Req\020\221N\022\r\n\010loginRes\020\222N\022\027\n\021CreateCardRoomR" +
+      "eq\020\241\234\001\022\026\n\020CreateCarRoomRes\020\242\234\001\022\023\n\rErrorR" +
+      "esponse\020\261\352\001B \n\034com.roje.game.message.act" +
+      "ionP\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {

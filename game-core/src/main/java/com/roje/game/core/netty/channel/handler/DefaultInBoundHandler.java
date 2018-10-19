@@ -4,6 +4,7 @@ import com.roje.game.core.dispatcher.MessageDispatcher;
 import com.roje.game.core.processor.MessageProcessor;
 import com.roje.game.core.processor.Processor;
 import com.roje.game.core.service.Service;
+import com.roje.game.core.thread.ThreadType;
 import com.roje.game.message.frame.Frame;
 import com.sun.istack.internal.NotNull;
 import com.sun.istack.internal.Nullable;
@@ -27,15 +28,14 @@ public class DefaultInBoundHandler extends SimpleChannelInboundHandler<Frame> {
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, Frame frame) throws Exception {
         MessageProcessor handler = dispatcher.getMessageHandler(frame.getAction());
-        boolean forward = true;
+        boolean execute = true;
         if (handler != null) {
-            Processor processor = handler.getClass().getAnnotation(Processor.class);
-            if (processor != null) {
-                if (service == null) { //如果没有执行任务的服务,默认当前线程执行任务
-                    handler.handler(channelHandlerContext.channel(), frame);
-                } else {
+            if (service != null){
+                Processor processor = handler.getClass().getAnnotation(Processor.class);
+                if (processor != null){
                     Executor executor = service.getExecutor(processor.thread());
-                    if (executor != null) {
+                    if (executor != null){
+                        execute = false;
                         executor.execute(() -> {
                             try {
                                 handler.handler(channelHandlerContext.channel(), frame);
@@ -43,16 +43,11 @@ public class DefaultInBoundHandler extends SimpleChannelInboundHandler<Frame> {
                                 log.warn("处理消息异常", e);
                             }
                         });
-                    } else {//没有找到执行线程或线程池,当前线程执行
-                        handler.handler(channelHandlerContext.channel(), frame);
                     }
                 }
-                forward = processor.forward();
             }
+            if (execute)
+                handler.handler(channelHandlerContext.channel(), frame);
         }
-        if (forward)
-            forward(channelHandlerContext, frame);
     }
-
-    public void forward(ChannelHandlerContext ctx, Frame frame) {}
 }

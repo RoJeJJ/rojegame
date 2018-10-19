@@ -1,6 +1,5 @@
 package com.roje.game.gate.manager;
 
-import com.roje.game.core.manager.ServerManager;
 import com.roje.game.core.manager.SessionManager;
 import com.roje.game.core.util.MessageUtil;
 import com.roje.game.gate.session.GateUserSession;

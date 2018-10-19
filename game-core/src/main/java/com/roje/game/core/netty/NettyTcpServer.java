@@ -1,6 +1,6 @@
 package com.roje.game.core.netty;
 
-import com.roje.game.core.config.NettyTcpServerConfig;
+import com.roje.game.core.config.NettyServerConfig;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -13,14 +13,12 @@ import javax.annotation.PostConstruct;
 @Slf4j
 public class NettyTcpServer implements Runnable {
     private ChannelInitializer<SocketChannel> initializer;
-    private NettyTcpServerConfig nettyTcpServerConfig;
+    private NettyServerConfig nettyTcpServerConfig;
     private Channel channel;
-    private int port;
 
-    public NettyTcpServer(ChannelInitializer<SocketChannel> initializer,NettyTcpServerConfig nettyTcpServerConfig,int port){
+    public NettyTcpServer(ChannelInitializer<SocketChannel> initializer,NettyServerConfig nettyTcpServerConfig){
         this.initializer = initializer;
         this.nettyTcpServerConfig = nettyTcpServerConfig;
-        this.port = port;
     }
 
     @Override
@@ -37,9 +35,9 @@ public class NettyTcpServer implements Runnable {
                     .childOption(ChannelOption.SO_KEEPALIVE, nettyTcpServerConfig.isSoKeepAlive())
                     .childOption(ChannelOption.SO_LINGER, nettyTcpServerConfig.getSoLinger());
 
-            ChannelFuture channelFuture = serverBootstrap.bind(port).sync().addListener(channelFuture1 -> {
+            ChannelFuture channelFuture = serverBootstrap.bind(nettyTcpServerConfig.getPort()).sync().addListener(channelFuture1 -> {
                 if (channelFuture1.isSuccess())
-                    log.info("TCP服务器已启动,监听端口:" + port);
+                    log.info("TCP服务器已启动,监听端口:{}",nettyTcpServerConfig.getPort());
                 else
                     log.info("TCP服务器启动失败");
             });

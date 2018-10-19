@@ -13,8 +13,6 @@ public abstract class Session {
     @Getter @Setter
     protected long uid;
     protected Channel channel;
-    @Getter@Setter
-    private int versionCode;
     public Session(Channel channel){
         this.channel = channel;
         id = channel.id().asShortText();

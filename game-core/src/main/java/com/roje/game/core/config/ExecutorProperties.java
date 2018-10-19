@@ -3,7 +3,7 @@ package com.roje.game.core.config;
 import lombok.Getter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@ConfigurationProperties
+@ConfigurationProperties(prefix = "game-server.user-thread-config")
 @Getter
 public class ExecutorProperties {
     int threadSize = 1;

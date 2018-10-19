@@ -1,6 +1,7 @@
 package com.roje.game.core.thread;
 
 public enum ThreadType {
+    def,
     /**
      * 耗时线程池
      */

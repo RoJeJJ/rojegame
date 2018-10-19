@@ -6,28 +6,20 @@ thread-config:
   sync-name: sync
   sync-time-interval: 0
   sync-command-size: 100000
-netty-cluster-tcp-server-config:
-  so-back-log: 2048
-  so-keep-alive: true
-  tcp-no-delay: true
-  reader-idle-time: 20
-  writer-idle-time: 0
-  all-idle-time: 0
-  so-linger: 0
-netty-cluster-http-server-config:
-  port: 7001
-  so-back-log: 2048
-  so-keep-alive: true
-  tcp-no-delay: true
-  so-linger: 0
+cluster-server:
+  config:
+    port: 8007
+    so-back-log: 2048
+    so-keep-alive: true
+    tcp-no-delay: true
+    reader-idle-time: 20
+    writer-idle-time: 0
+    all-idle-time: 0
+    so-linger: 0
 server:
-  info:
+  port: 8008
+  servlet:
+    context-path: /roje
+spring:
+  application:
     name: cluster-server
-    ip: 127.0.0.1
-    inner-port: 7000
-    http-port: 7001
-    state: normal
-    max-user-count: 1000
-    type: cluster
-    version-code: 1
-    client-version-code: 0

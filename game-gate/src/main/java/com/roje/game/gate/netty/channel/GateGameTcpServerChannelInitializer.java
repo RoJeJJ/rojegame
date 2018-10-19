@@ -1,13 +1,9 @@
 package com.roje.game.gate.netty.channel;
 
-import com.roje.game.core.config.NettyTcpServerConfig;
 import com.roje.game.core.dispatcher.MessageDispatcher;
-import com.roje.game.core.manager.ServerManager;
 import com.roje.game.core.netty.channel.handler.DefaultInnerTcpServerChannelInBoundHandler;
 import com.roje.game.core.netty.channel.initializer.DefaultChannelInitializer;
-import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
-import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.timeout.IdleStateHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

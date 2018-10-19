@@ -55,19 +55,6 @@ private static final long serialVersionUID = 0L;
             msg_ = s;
             break;
           }
-          case 26: {
-            com.roje.game.message.user_info.UserInfo.Builder subBuilder = null;
-            if (userInfo_ != null) {
-              subBuilder = userInfo_.toBuilder();
-            }
-            userInfo_ = input.readMessage(com.roje.game.message.user_info.UserInfo.parser(), extensionRegistry);
-            if (subBuilder != null) {
-              subBuilder.mergeFrom(userInfo_);
-              userInfo_ = subBuilder.buildPartial();
-            }
-
-            break;
-          }
           default: {
             if (!parseUnknownFieldProto3(
                 input, unknownFields, extensionRegistry, tag)) {
@@ -143,27 +130,6 @@ private static final long serialVersionUID = 0L;
     }
   }
 
-  public static final int USERINFO_FIELD_NUMBER = 3;
-  private com.roje.game.message.user_info.UserInfo userInfo_;
-  /**
-   * <code>.UserInfo userInfo = 3;</code>
-   */
-  public boolean hasUserInfo() {
-    return userInfo_ != null;
-  }
-  /**
-   * <code>.UserInfo userInfo = 3;</code>
-   */
-  public com.roje.game.message.user_info.UserInfo getUserInfo() {
-    return userInfo_ == null ? com.roje.game.message.user_info.UserInfo.getDefaultInstance() : userInfo_;
-  }
-  /**
-   * <code>.UserInfo userInfo = 3;</code>
-   */
-  public com.roje.game.message.user_info.UserInfoOrBuilder getUserInfoOrBuilder() {
-    return getUserInfo();
-  }
-
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -184,9 +150,6 @@ private static final long serialVersionUID = 0L;
     if (!getMsgBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 2, msg_);
     }
-    if (userInfo_ != null) {
-      output.writeMessage(3, getUserInfo());
-    }
     unknownFields.writeTo(output);
   }
 
@@ -202,10 +165,6 @@ private static final long serialVersionUID = 0L;
     }
     if (!getMsgBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, msg_);
-    }
-    if (userInfo_ != null) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(3, getUserInfo());
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -227,11 +186,6 @@ private static final long serialVersionUID = 0L;
         == other.getSuccess());
     result = result && getMsg()
         .equals(other.getMsg());
-    result = result && (hasUserInfo() == other.hasUserInfo());
-    if (hasUserInfo()) {
-      result = result && getUserInfo()
-          .equals(other.getUserInfo());
-    }
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -248,10 +202,6 @@ private static final long serialVersionUID = 0L;
         getSuccess());
     hash = (37 * hash) + MSG_FIELD_NUMBER;
     hash = (53 * hash) + getMsg().hashCode();
-    if (hasUserInfo()) {
-      hash = (37 * hash) + USERINFO_FIELD_NUMBER;
-      hash = (53 * hash) + getUserInfo().hashCode();
-    }
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -389,12 +339,6 @@ private static final long serialVersionUID = 0L;
 
       msg_ = "";
 
-      if (userInfoBuilder_ == null) {
-        userInfo_ = null;
-      } else {
-        userInfo_ = null;
-        userInfoBuilder_ = null;
-      }
       return this;
     }
 
@@ -423,11 +367,6 @@ private static final long serialVersionUID = 0L;
       com.roje.game.message.login.LoginResponse result = new com.roje.game.message.login.LoginResponse(this);
       result.success_ = success_;
       result.msg_ = msg_;
-      if (userInfoBuilder_ == null) {
-        result.userInfo_ = userInfo_;
-      } else {
-        result.userInfo_ = userInfoBuilder_.build();
-      }
       onBuilt();
       return result;
     }
@@ -482,9 +421,6 @@ private static final long serialVersionUID = 0L;
       if (!other.getMsg().isEmpty()) {
         msg_ = other.msg_;
         onChanged();
-      }
-      if (other.hasUserInfo()) {
-        mergeUserInfo(other.getUserInfo());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -608,123 +544,6 @@ private static final long serialVersionUID = 0L;
       msg_ = value;
       onChanged();
       return this;
-    }
-
-    private com.roje.game.message.user_info.UserInfo userInfo_ = null;
-    private com.google.protobuf.SingleFieldBuilderV3<
-        com.roje.game.message.user_info.UserInfo, com.roje.game.message.user_info.UserInfo.Builder, com.roje.game.message.user_info.UserInfoOrBuilder> userInfoBuilder_;
-    /**
-     * <code>.UserInfo userInfo = 3;</code>
-     */
-    public boolean hasUserInfo() {
-      return userInfoBuilder_ != null || userInfo_ != null;
-    }
-    /**
-     * <code>.UserInfo userInfo = 3;</code>
-     */
-    public com.roje.game.message.user_info.UserInfo getUserInfo() {
-      if (userInfoBuilder_ == null) {
-        return userInfo_ == null ? com.roje.game.message.user_info.UserInfo.getDefaultInstance() : userInfo_;
-      } else {
-        return userInfoBuilder_.getMessage();
-      }
-    }
-    /**
-     * <code>.UserInfo userInfo = 3;</code>
-     */
-    public Builder setUserInfo(com.roje.game.message.user_info.UserInfo value) {
-      if (userInfoBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        userInfo_ = value;
-        onChanged();
-      } else {
-        userInfoBuilder_.setMessage(value);
-      }
-
-      return this;
-    }
-    /**
-     * <code>.UserInfo userInfo = 3;</code>
-     */
-    public Builder setUserInfo(
-        com.roje.game.message.user_info.UserInfo.Builder builderForValue) {
-      if (userInfoBuilder_ == null) {
-        userInfo_ = builderForValue.build();
-        onChanged();
-      } else {
-        userInfoBuilder_.setMessage(builderForValue.build());
-      }
-
-      return this;
-    }
-    /**
-     * <code>.UserInfo userInfo = 3;</code>
-     */
-    public Builder mergeUserInfo(com.roje.game.message.user_info.UserInfo value) {
-      if (userInfoBuilder_ == null) {
-        if (userInfo_ != null) {
-          userInfo_ =
-            com.roje.game.message.user_info.UserInfo.newBuilder(userInfo_).mergeFrom(value).buildPartial();
-        } else {
-          userInfo_ = value;
-        }
-        onChanged();
-      } else {
-        userInfoBuilder_.mergeFrom(value);
-      }
-
-      return this;
-    }
-    /**
-     * <code>.UserInfo userInfo = 3;</code>
-     */
-    public Builder clearUserInfo() {
-      if (userInfoBuilder_ == null) {
-        userInfo_ = null;
-        onChanged();
-      } else {
-        userInfo_ = null;
-        userInfoBuilder_ = null;
-      }
-
-      return this;
-    }
-    /**
-     * <code>.UserInfo userInfo = 3;</code>
-     */
-    public com.roje.game.message.user_info.UserInfo.Builder getUserInfoBuilder() {
-      
-      onChanged();
-      return getUserInfoFieldBuilder().getBuilder();
-    }
-    /**
-     * <code>.UserInfo userInfo = 3;</code>
-     */
-    public com.roje.game.message.user_info.UserInfoOrBuilder getUserInfoOrBuilder() {
-      if (userInfoBuilder_ != null) {
-        return userInfoBuilder_.getMessageOrBuilder();
-      } else {
-        return userInfo_ == null ?
-            com.roje.game.message.user_info.UserInfo.getDefaultInstance() : userInfo_;
-      }
-    }
-    /**
-     * <code>.UserInfo userInfo = 3;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-        com.roje.game.message.user_info.UserInfo, com.roje.game.message.user_info.UserInfo.Builder, com.roje.game.message.user_info.UserInfoOrBuilder> 
-        getUserInfoFieldBuilder() {
-      if (userInfoBuilder_ == null) {
-        userInfoBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-            com.roje.game.message.user_info.UserInfo, com.roje.game.message.user_info.UserInfo.Builder, com.roje.game.message.user_info.UserInfoOrBuilder>(
-                getUserInfo(),
-                getParentForChildren(),
-                isClean());
-        userInfo_ = null;
-      }
-      return userInfoBuilder_;
     }
     @java.lang.Override
     public final Builder setUnknownFields(

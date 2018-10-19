@@ -1,6 +1,6 @@
 package com.roje.game.core.netty;
 
-import com.roje.game.core.config.NettyConnClusterClientConfig;
+import com.roje.game.core.config.ClusterClientConfig;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -17,13 +17,13 @@ import javax.annotation.PostConstruct;
 @Slf4j
 public class NettyClusterTcpClient implements Runnable{
     private EventLoopGroup group;
-    private NettyConnClusterClientConfig clientConfig;
+    private ClusterClientConfig clientConfig;
     private Bootstrap bootstrap;
     private Channel channel;
     private ChannelInitializer<SocketChannel> initializer;
     private int reconnectTime;
 
-    public NettyClusterTcpClient(NettyConnClusterClientConfig clientConfig, ChannelInitializer<SocketChannel> initializer) {
+    public NettyClusterTcpClient(ClusterClientConfig clientConfig, ChannelInitializer<SocketChannel> initializer) {
         this.clientConfig = clientConfig;
         this.initializer = initializer;
         initClient();
@@ -36,7 +36,7 @@ public class NettyClusterTcpClient implements Runnable{
         bootstrap.group(group)
                 .channel(NioSocketChannel.class)
                 .handler(initializer)
-                .remoteAddress(clientConfig.getClusterIp(), clientConfig.getClusterPort())
+                .remoteAddress(clientConfig.getIp(), clientConfig.getPort())
                 .option(ChannelOption.SO_LINGER, clientConfig.getSoLinger())
                 .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, clientConfig.getConnectTimeout())
                 .option(ChannelOption.TCP_NODELAY, clientConfig.isTcpNoDelay());
@@ -61,9 +61,9 @@ public class NettyClusterTcpClient implements Runnable{
             channel = future.channel();
             future.addListener(channelFuture -> {
                 if (channelFuture.isSuccess())
-                    log.info("成功连接Cluster服务器[{}:{}]", clientConfig.getClusterIp(), clientConfig.getClusterPort());
+                    log.info("成功连接Cluster服务器[{}:{}]", clientConfig.getIp(), clientConfig.getPort());
                 else {
-                    log.warn(String.format("连接Cluster服务器[%s:%d]失败", clientConfig.getClusterIp(), clientConfig.getClusterPort()));
+                    log.warn(String.format("连接Cluster服务器[%s:%d]失败", clientConfig.getIp(), clientConfig.getPort()));
                 }
             });
             future.channel().closeFuture().sync();
