@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>game-niuniu</artifactId>
-
+    
     <dependencies>
         <dependency>
             <groupId>com.roje.game</groupId>
@@ -25,6 +25,10 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.android.support</groupId>
+            <artifactId>support-annotations</artifactId>
         </dependency>
     </dependencies>
 </project>

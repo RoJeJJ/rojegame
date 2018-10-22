@@ -11,6 +11,8 @@ public class UserRedisService {
 
     private static final String GAME_TOKEN = "game-token";
 
+    private static final String USER_SERVER_IP = "user_server_ip";
+
     private final RedisTemplate<Object,Object> userRedisTemplate;
 
     public UserRedisService(RedisTemplate<Object, Object> userRedisTemplate) {
@@ -33,5 +35,13 @@ public class UserRedisService {
 
     public String getToken(String account){
         return (String) userRedisTemplate.opsForHash().get(USER_REDIS,account);
+    }
+
+    public void bindIp(String account,String ip){
+        userRedisTemplate.opsForHash().put(USER_SERVER_IP,account,ip);
+    }
+
+    public String getIp(String account){
+        return (String) userRedisTemplate.opsForHash().get(USER_SERVER_IP,account);
     }
 }

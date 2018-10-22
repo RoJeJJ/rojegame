@@ -1,6 +1,6 @@
 package com.roje.game.niuniu.processor.req.user;
 
-import com.roje.game.core.manager.SessionManager;
+import com.roje.game.core.manager.session.SessionManager;
 import com.roje.game.core.processor.MessageProcessor;
 import com.roje.game.core.processor.Processor;
 import com.roje.game.core.thread.ThreadType;
@@ -30,6 +30,7 @@ public class LoginReqProcessor extends MessageProcessor {
     @Override
     public void handler(Channel channel, Frame frame) throws Exception {
         LoginRequest loginRequest = frame.getData().unpack(LoginRequest.class);
+
         sessionManager.login(channel,loginRequest);
     }
 }

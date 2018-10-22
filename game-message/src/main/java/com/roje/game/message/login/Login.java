@@ -34,9 +34,9 @@ public final class Login {
   static {
     java.lang.String[] descriptorData = {
       "\n\013login.proto\"2\n\014LoginRequest\022\017\n\007account" +
-      "\030\001 \001(\t\022\021\n\tgameToken\030\002 \001(\t\"-\n\rLoginRespon" +
-      "se\022\017\n\007success\030\001 \001(\010\022\013\n\003msg\030\002 \001(\tB\037\n\033com." +
-      "roje.game.message.loginP\001b\006proto3"
+      "\030\001 \001(\t\022\021\n\tgameToken\030\002 \001(\t\"*\n\rLoginRespon" +
+      "se\022\014\n\004code\030\001 \001(\005\022\013\n\003msg\030\002 \001(\tB\037\n\033com.roj" +
+      "e.game.message.loginP\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -61,7 +61,7 @@ public final class Login {
     internal_static_LoginResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_LoginResponse_descriptor,
-        new java.lang.String[] { "Success", "Msg", });
+        new java.lang.String[] { "Code", "Msg", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

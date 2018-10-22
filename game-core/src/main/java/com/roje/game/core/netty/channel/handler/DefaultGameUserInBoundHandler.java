@@ -1,7 +1,7 @@
 package com.roje.game.core.netty.channel.handler;
 
 import com.roje.game.core.dispatcher.MessageDispatcher;
-import com.roje.game.core.manager.SessionManager;
+import com.roje.game.core.manager.session.SessionManager;
 import com.roje.game.core.service.Service;
 import io.netty.channel.ChannelHandlerContext;
 

@@ -2,7 +2,7 @@ package com.roje.game.core.netty.channel.initializer;
 
 import com.roje.game.core.config.ClusterClientConfig;
 import com.roje.game.core.dispatcher.MessageDispatcher;
-import com.roje.game.core.manager.ISessionManager;
+import com.roje.game.core.manager.session.ISessionManager;
 import com.roje.game.core.netty.channel.handler.DefaultInnerTcpClientChannelInBoundHandler;
 import com.roje.game.core.server.ServerInfo;
 import io.netty.channel.ChannelPipeline;

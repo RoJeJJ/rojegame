@@ -3,7 +3,7 @@ package com.roje.game.lobby;
 import com.roje.game.core.config.ExecutorProperties;
 import com.roje.game.core.service.redis.IdService;
 import com.roje.game.core.service.redis.UserRedisService;
-import com.roje.game.core.thread.executor.Executor;
+import com.roje.game.core.thread.executor.TaskExecutor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -24,10 +24,12 @@ public class AppLobby {
         return new ExecutorProperties();
     }
 
+
+
     @Bean
-    public Executor<String> userExecutor(
+    public TaskExecutor<String> userExecutor(
             @Qualifier("user-executor") ExecutorProperties properties){
-        return new Executor<>(properties);
+        return new TaskExecutor<>(properties);
     }
 
     @Bean

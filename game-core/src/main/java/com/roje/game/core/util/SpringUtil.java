@@ -1,12 +1,11 @@
 package com.roje.game.core.util;
 
+import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 
-public class SpringUtil {
+public class SpringUtil implements ApplicationContextAware {
     private static ApplicationContext context;
-    public static void setApplicationContext(ApplicationContext applicationContext){
-        context = applicationContext;
-    }
     public static ApplicationContext getContext(){
         return context;
     }
@@ -16,5 +15,10 @@ public class SpringUtil {
     }
     public static <T> T getBean(Class<T> tClass){
         return context.getBean(tClass);
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        context = applicationContext;
     }
 }

@@ -1,7 +1,7 @@
 package com.roje.game.gate.processor.req.user;
 
 import com.google.protobuf.Any;
-import com.roje.game.core.manager.SessionManager;
+import com.roje.game.core.manager.session.SessionManager;
 import com.roje.game.core.processor.MessageProcessor;
 import com.roje.game.core.processor.Processor;
 import com.roje.game.core.util.TimeUtil;

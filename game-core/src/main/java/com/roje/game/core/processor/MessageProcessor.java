@@ -1,6 +1,5 @@
 package com.roje.game.core.processor;
 
-import com.google.protobuf.Message;
 import com.roje.game.core.dispatcher.MessageDispatcher;
 import com.roje.game.message.frame.Frame;
 import io.netty.channel.Channel;

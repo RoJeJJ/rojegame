@@ -46,8 +46,9 @@ public class DefaultInBoundHandler extends SimpleChannelInboundHandler<Frame> {
                     }
                 }
             }
-            if (execute)
+            if (execute) {
                 handler.handler(channelHandlerContext.channel(), frame);
+            }
         }
     }
 }

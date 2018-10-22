@@ -4,7 +4,7 @@ package com.roje.game.gate;
 import com.roje.game.core.config.ClusterClientConfig;
 import com.roje.game.core.config.ThreadConfig;
 import com.roje.game.core.dispatcher.MessageDispatcher;
-import com.roje.game.core.manager.SessionManager;
+import com.roje.game.core.manager.session.SessionManager;
 import com.roje.game.core.netty.NettyClusterTcpClient;
 import com.roje.game.core.netty.NettyTcpServer;
 import com.roje.game.core.netty.channel.initializer.ClusterClientChannelInitializer;

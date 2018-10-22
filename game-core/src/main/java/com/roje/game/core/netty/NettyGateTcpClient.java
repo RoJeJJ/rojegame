@@ -2,11 +2,10 @@ package com.roje.game.core.netty;
 
 import com.roje.game.core.config.NettyConnGateClientConfig;
 import com.roje.game.core.dispatcher.MessageDispatcher;
-import com.roje.game.core.manager.ISessionManager;
+import com.roje.game.core.manager.session.ISessionManager;
 import com.roje.game.core.netty.channel.handler.DefaultInnerTcpClientChannelInBoundHandler;
 import com.roje.game.core.netty.channel.initializer.DefaultChannelInitializer;
 import com.roje.game.core.server.ServerInfo;
-import com.roje.game.core.service.Service;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
 import io.netty.channel.group.ChannelGroup;

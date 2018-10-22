@@ -16,7 +16,7 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private LoginResponse() {
-    success_ = false;
+    code_ = 0;
     msg_ = "";
   }
 
@@ -46,7 +46,7 @@ private static final long serialVersionUID = 0L;
             break;
           case 8: {
 
-            success_ = input.readBool();
+            code_ = input.readInt32();
             break;
           }
           case 18: {
@@ -87,13 +87,13 @@ private static final long serialVersionUID = 0L;
             com.roje.game.message.login.LoginResponse.class, com.roje.game.message.login.LoginResponse.Builder.class);
   }
 
-  public static final int SUCCESS_FIELD_NUMBER = 1;
-  private boolean success_;
+  public static final int CODE_FIELD_NUMBER = 1;
+  private int code_;
   /**
-   * <code>bool success = 1;</code>
+   * <code>int32 code = 1;</code>
    */
-  public boolean getSuccess() {
-    return success_;
+  public int getCode() {
+    return code_;
   }
 
   public static final int MSG_FIELD_NUMBER = 2;
@@ -144,8 +144,8 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (success_ != false) {
-      output.writeBool(1, success_);
+    if (code_ != 0) {
+      output.writeInt32(1, code_);
     }
     if (!getMsgBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 2, msg_);
@@ -159,9 +159,9 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (success_ != false) {
+    if (code_ != 0) {
       size += com.google.protobuf.CodedOutputStream
-        .computeBoolSize(1, success_);
+        .computeInt32Size(1, code_);
     }
     if (!getMsgBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, msg_);
@@ -182,8 +182,8 @@ private static final long serialVersionUID = 0L;
     com.roje.game.message.login.LoginResponse other = (com.roje.game.message.login.LoginResponse) obj;
 
     boolean result = true;
-    result = result && (getSuccess()
-        == other.getSuccess());
+    result = result && (getCode()
+        == other.getCode());
     result = result && getMsg()
         .equals(other.getMsg());
     result = result && unknownFields.equals(other.unknownFields);
@@ -197,9 +197,8 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + SUCCESS_FIELD_NUMBER;
-    hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-        getSuccess());
+    hash = (37 * hash) + CODE_FIELD_NUMBER;
+    hash = (53 * hash) + getCode();
     hash = (37 * hash) + MSG_FIELD_NUMBER;
     hash = (53 * hash) + getMsg().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
@@ -335,7 +334,7 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      success_ = false;
+      code_ = 0;
 
       msg_ = "";
 
@@ -365,7 +364,7 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public com.roje.game.message.login.LoginResponse buildPartial() {
       com.roje.game.message.login.LoginResponse result = new com.roje.game.message.login.LoginResponse(this);
-      result.success_ = success_;
+      result.code_ = code_;
       result.msg_ = msg_;
       onBuilt();
       return result;
@@ -415,8 +414,8 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(com.roje.game.message.login.LoginResponse other) {
       if (other == com.roje.game.message.login.LoginResponse.getDefaultInstance()) return this;
-      if (other.getSuccess() != false) {
-        setSuccess(other.getSuccess());
+      if (other.getCode() != 0) {
+        setCode(other.getCode());
       }
       if (!other.getMsg().isEmpty()) {
         msg_ = other.msg_;
@@ -451,28 +450,28 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private boolean success_ ;
+    private int code_ ;
     /**
-     * <code>bool success = 1;</code>
+     * <code>int32 code = 1;</code>
      */
-    public boolean getSuccess() {
-      return success_;
+    public int getCode() {
+      return code_;
     }
     /**
-     * <code>bool success = 1;</code>
+     * <code>int32 code = 1;</code>
      */
-    public Builder setSuccess(boolean value) {
+    public Builder setCode(int value) {
       
-      success_ = value;
+      code_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>bool success = 1;</code>
+     * <code>int32 code = 1;</code>
      */
-    public Builder clearSuccess() {
+    public Builder clearCode() {
       
-      success_ = false;
+      code_ = 0;
       onChanged();
       return this;
     }

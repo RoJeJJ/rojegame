@@ -1,13 +1,10 @@
 package com.roje.game.gate.processor.resp.game;
 
-import com.google.protobuf.Any;
-import com.roje.game.core.manager.SessionManager;
+import com.roje.game.core.manager.session.SessionManager;
 import com.roje.game.core.processor.MessageProcessor;
 import com.roje.game.core.processor.Processor;
-import com.roje.game.core.util.MessageUtil;
 import com.roje.game.gate.session.GateUserSession;
 import com.roje.game.message.action.Action;
-import com.roje.game.message.error.ErrorCode;
 import com.roje.game.message.frame.Frame;
 import com.roje.game.message.login.InnerLoginResponse;
 import com.roje.game.message.login.LoginResponse;

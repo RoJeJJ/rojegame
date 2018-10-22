@@ -3,13 +3,17 @@ package com.roje.game.cluster.manager;
 import com.google.gson.JsonObject;
 import com.roje.game.cluster.server.ServerInfo;
 import com.roje.game.core.netty.ChannelStatus;
+import com.roje.game.core.service.redis.UserRedisService;
 import com.roje.game.core.util.MessageUtil;
 import com.roje.game.message.action.Action;
 import com.roje.game.message.server_info.ServInfoRequest;
 import com.roje.game.message.server_info.ServInfoResponse;
 import io.netty.channel.Channel;
 import io.netty.util.AttributeKey;
+import jdk.nashorn.internal.ir.IfNode;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Comparator;
 import java.util.List;
@@ -22,9 +26,16 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ServerSessionManager {
 
+    private final UserRedisService userRedisService;
+
     private static final AttributeKey<ChannelStatus> CHANNEL_STATUS_ATTRIBUTE_KEY = AttributeKey.newInstance("netty-channel-status");
 
     private Map<String, ServerInfo> serverInfoMap = new ConcurrentHashMap<>();
+
+    @Autowired
+    public ServerSessionManager(UserRedisService userRedisService) {
+        this.userRedisService = userRedisService;
+    }
 
 
     public void channelActive(Channel channel){
@@ -53,8 +64,13 @@ public class ServerSessionManager {
         MessageUtil.send(channel, Action.ServInfoRes,builder.build());
     }
 
-    public JsonObject allocateServer(int gameId, int version) {
+    public JsonObject allocateServer(String account,int gameId, int version,String token) {
         JsonObject data = new JsonObject();
+        if (token != null && StringUtils.equals(token,userRedisService.getToken(account))){
+            data.addProperty("success",false);
+            data.addProperty("msg","invalid token");
+            return data;
+        }
         List<ServerInfo> serverInfos = serverInfoMap.values().stream()
                 .filter(serverInfo -> serverInfo.getGameId() == gameId)
                 .collect(Collectors.toList());
@@ -73,6 +89,7 @@ public class ServerSessionManager {
         }
         ServerInfo serverInfo = serverInfos.stream()
                 .min(Comparator.comparingInt(ServerInfo::getOnline)).get();
+        userRedisService.bindIp(account,serverInfo.getIp());
         data.addProperty("success",true);
         data.add("data",serverInfo.json());
         return data;

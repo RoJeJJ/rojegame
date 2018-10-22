@@ -8,9 +8,9 @@ public interface LoginResponseOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>bool success = 1;</code>
+   * <code>int32 code = 1;</code>
    */
-  boolean getSuccess();
+  int getCode();
 
   /**
    * <code>string msg = 2;</code>

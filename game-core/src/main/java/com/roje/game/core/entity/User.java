@@ -25,6 +25,8 @@ public class User implements Serializable {
     private int sex;
     //金币
     private long gold;
+    //房卡
+    private long card;
 
     private boolean logged;
 
@@ -40,6 +42,7 @@ public class User implements Serializable {
         data.addProperty("sex",sex);
         data.addProperty("id",id);
         data.addProperty("gold",gold);
+        data.addProperty("card",card);
         return data;
     }
 }

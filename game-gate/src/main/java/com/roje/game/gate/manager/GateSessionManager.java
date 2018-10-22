@@ -1,6 +1,6 @@
 package com.roje.game.gate.manager;
 
-import com.roje.game.core.manager.SessionManager;
+import com.roje.game.core.manager.session.SessionManager;
 import com.roje.game.core.util.MessageUtil;
 import com.roje.game.gate.session.GateUserSession;
 import com.roje.game.message.error.ErrorCode;

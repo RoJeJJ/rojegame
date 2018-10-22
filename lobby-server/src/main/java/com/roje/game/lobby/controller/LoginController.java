@@ -1,6 +1,6 @@
 package com.roje.game.lobby.controller;
 
-import com.roje.game.core.thread.executor.Executor;
+import com.roje.game.core.thread.executor.TaskExecutor;
 import com.roje.game.lobby.Service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,20 +18,20 @@ public class LoginController {
 
     private final UserService userService;
 
-    private final Executor<String> userExecutor;
+    private final TaskExecutor<String> userTaskExecutor;
 
     @Autowired
     public LoginController(UserService userService,
-                           Executor<String> userExecutor) {
+                           TaskExecutor<String> userTaskExecutor) {
         this.userService = userService;
-        this.userExecutor = userExecutor;
+        this.userTaskExecutor = userTaskExecutor;
     }
 
     @PostMapping(value = "/login/wechat",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public DeferredResult<String> loginWx(@RequestParam("openid")String openid,
                                   @RequestParam("token")String token){
         final DeferredResult<String> deferredResult = new DeferredResult<>();
-        userExecutor.allocateThread(openid).execute(() -> {
+        userTaskExecutor.allocateThread(openid).execute(() -> {
             String result = userService.loginWechat(openid,token);
             deferredResult.setResult(result);
         });

@@ -3,7 +3,7 @@ package com.roje.game.hall.manager;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.roje.game.core.entity.User;
-import com.roje.game.core.manager.ISessionManager;
+import com.roje.game.core.manager.session.ISessionManager;
 import com.roje.game.core.service.redis.IdService;
 import com.roje.game.core.service.redis.UserRedisService;
 import com.roje.game.core.util.MessageUtil;
