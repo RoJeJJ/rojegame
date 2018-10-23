@@ -1,6 +1,7 @@
 package com.roje.game.core.service.redis;
 
 import com.roje.game.core.entity.User;
+import com.roje.game.core.server.ServerInfo;
 import org.springframework.data.redis.core.RedisTemplate;
 
 import java.util.UUID;
@@ -37,11 +38,12 @@ public class UserRedisService {
         return (String) userRedisTemplate.opsForHash().get(USER_REDIS,account);
     }
 
-    public void bindIp(String account,String ip){
-        userRedisTemplate.opsForHash().put(USER_SERVER_IP,account,ip);
+    public void bindServer(String account, ServerInfo info){
+        userRedisTemplate.opsForHash().put(USER_SERVER_IP,account,info);
     }
 
-    public String getIp(String account){
-        return (String) userRedisTemplate.opsForHash().get(USER_SERVER_IP,account);
+    public ServerInfo getServer(String account){
+        return (ServerInfo) userRedisTemplate.opsForHash().get(USER_SERVER_IP,account);
     }
+
 }

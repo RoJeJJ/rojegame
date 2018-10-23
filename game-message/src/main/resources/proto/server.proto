@@ -1,0 +1,32 @@
+syntax = "proto3";
+option java_package = "com.roje.game.message.server_info";
+option java_multiple_files = true;
+message ServInfo {
+    int32 id = 1;
+    string ip = 2; // ip地址
+    int32 port = 3;
+    int32 gameId = 4;
+    int32 online = 5; // 在线人数
+    int32 maxUserCount = 6; // 最大在线人数
+    string name = 7; //名字
+    int32 requireVersion = 8;
+}
+
+message ServRegRequest {
+    ServInfo servInfo = 1;
+}
+message ServRegResponse {
+    bool success = 1;
+    string msg = 2;
+    int32 id = 3;
+}
+
+message ServInfoRequest {
+    ServInfo servInfo = 1;
+
+}
+
+message ServInfoResponse {
+    bool success = 1;
+    string msg = 2;
+}

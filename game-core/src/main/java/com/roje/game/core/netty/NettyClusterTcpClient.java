@@ -57,7 +57,7 @@ public class NettyClusterTcpClient implements Runnable{
     @Override
     public void run() {
         try {
-            ChannelFuture future = bootstrap.connect().sync();
+            ChannelFuture future = bootstrap.connect().awaitUninterruptibly();
             channel = future.channel();
             future.addListener(channelFuture -> {
                 if (channelFuture.isSuccess())

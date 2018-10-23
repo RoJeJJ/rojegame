@@ -13,13 +13,21 @@ public enum Action
    */
   snap(0),
   /**
-   * <code>ServInfoReq = 1001;</code>
+   * <code>ServRegReq = 1001;</code>
    */
-  ServInfoReq(1001),
+  ServRegReq(1001),
   /**
-   * <code>ServInfoRes = 1002;</code>
+   * <code>ServRegRes = 1002;</code>
    */
-  ServInfoRes(1002),
+  ServRegRes(1002),
+  /**
+   * <code>ServInfoReq = 1003;</code>
+   */
+  ServInfoReq(1003),
+  /**
+   * <code>ServInfoRes = 1004;</code>
+   */
+  ServInfoRes(1004),
   /**
    * <code>LoginReq = 10001;</code>
    */
@@ -33,9 +41,9 @@ public enum Action
    */
   CreateCardRoomReq(20001),
   /**
-   * <code>CreateCarRoomRes = 20002;</code>
+   * <code>CreateCardRoomRes = 20002;</code>
    */
-  CreateCarRoomRes(20002),
+  CreateCardRoomRes(20002),
   /**
    * <code>ErrorResponse = 30001;</code>
    */
@@ -48,13 +56,21 @@ public enum Action
    */
   public static final int snap_VALUE = 0;
   /**
-   * <code>ServInfoReq = 1001;</code>
+   * <code>ServRegReq = 1001;</code>
    */
-  public static final int ServInfoReq_VALUE = 1001;
+  public static final int ServRegReq_VALUE = 1001;
   /**
-   * <code>ServInfoRes = 1002;</code>
+   * <code>ServRegRes = 1002;</code>
    */
-  public static final int ServInfoRes_VALUE = 1002;
+  public static final int ServRegRes_VALUE = 1002;
+  /**
+   * <code>ServInfoReq = 1003;</code>
+   */
+  public static final int ServInfoReq_VALUE = 1003;
+  /**
+   * <code>ServInfoRes = 1004;</code>
+   */
+  public static final int ServInfoRes_VALUE = 1004;
   /**
    * <code>LoginReq = 10001;</code>
    */
@@ -68,9 +84,9 @@ public enum Action
    */
   public static final int CreateCardRoomReq_VALUE = 20001;
   /**
-   * <code>CreateCarRoomRes = 20002;</code>
+   * <code>CreateCardRoomRes = 20002;</code>
    */
-  public static final int CreateCarRoomRes_VALUE = 20002;
+  public static final int CreateCardRoomRes_VALUE = 20002;
   /**
    * <code>ErrorResponse = 30001;</code>
    */
@@ -96,12 +112,14 @@ public enum Action
   public static Action forNumber(int value) {
     switch (value) {
       case 0: return snap;
-      case 1001: return ServInfoReq;
-      case 1002: return ServInfoRes;
+      case 1001: return ServRegReq;
+      case 1002: return ServRegRes;
+      case 1003: return ServInfoReq;
+      case 1004: return ServInfoRes;
       case 10001: return LoginReq;
       case 10002: return loginRes;
       case 20001: return CreateCardRoomReq;
-      case 20002: return CreateCarRoomRes;
+      case 20002: return CreateCardRoomRes;
       case 30001: return ErrorResponse;
       default: return null;
     }

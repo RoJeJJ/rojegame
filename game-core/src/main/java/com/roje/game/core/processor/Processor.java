@@ -13,5 +13,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface Processor {
     Action action();
-    ThreadType thread() default ThreadType.def;
+    ThreadType thread() default ThreadType.io;
 }

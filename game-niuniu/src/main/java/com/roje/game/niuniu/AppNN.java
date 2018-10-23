@@ -1,9 +1,8 @@
 package com.roje.game.niuniu;
 
 import com.roje.game.core.config.ClusterClientConfig;
-import com.roje.game.core.config.ExecutorProperties;
 import com.roje.game.core.config.NettyServerConfig;
-import com.roje.game.core.config.ThreadConfig;
+import com.roje.game.core.config.ThreadProperties;
 import com.roje.game.core.dispatcher.MessageDispatcher;
 import com.roje.game.core.manager.session.ISessionManager;
 import com.roje.game.core.manager.session.SessionManager;
@@ -13,9 +12,10 @@ import com.roje.game.core.netty.channel.initializer.ClusterClientChannelInitiali
 import com.roje.game.core.netty.channel.initializer.GameServerChannelInitializer;
 import com.roje.game.core.server.ServerInfo;
 import com.roje.game.core.service.Service;
+import com.roje.game.core.service.redis.RoomRedisService;
 import com.roje.game.core.service.redis.UserRedisService;
-import com.roje.game.core.thread.executor.TaskExecutor;
 import com.roje.game.core.util.SpringUtil;
+import com.roje.game.niuniu.manager.NNRoomManager;
 import com.roje.game.niuniu.manager.NNSessionManager;
 import com.roje.game.niuniu.properties.NiuNiuProperties;
 import org.springframework.boot.SpringApplication;
@@ -39,16 +39,11 @@ public class AppNN {
         return new ExecutorProperties();
     }
 
+
     @Bean
-    public TaskExecutor<String> userExecutor(ExecutorProperties properties){
-        return new TaskExecutor<>(properties);
+    public RoomRedisService roomRedisService(RedisTemplate<Object,Object> redisTemplate){
+        return new RoomRedisService(redisTemplate);
     }
-
-    @Bean("gameProperties")
-    public static NiuNiuProperties niuProperties(){
-        return new NiuNiuProperties();
-    }
-
     @Bean
     public ClusterClientConfig clusterClientConfig(){
         return new ClusterClientConfig();
@@ -83,6 +78,13 @@ public class AppNN {
     }
 
     @Bean
+    public NNRoomManager roomManager(NiuNiuProperties properties,
+                                     RoomRedisService roomRedisService,
+                                     ServerInfo serverInfo){
+        return new NNRoomManager(properties,roomRedisService,serverInfo);
+    }
+
+    @Bean
     public UserRedisService userRedisService(RedisTemplate<Object,Object> redisTemplate){
         return new UserRedisService(redisTemplate);
     }
@@ -90,17 +92,17 @@ public class AppNN {
     @Bean
     public NNSessionManager sessionManager(UserRedisService userRedisService,
                                            ServerInfo serverInfo,
-                                           TaskExecutor<String> userExecutor,
-                                           NiuNiuProperties properties){
-        return new NNSessionManager(userRedisService,serverInfo,userExecutor,properties);
+                                           Service service,
+                                           NNRoomManager roomManager){
+        return new NNSessionManager(userRedisService,serverInfo,service,roomManager);
     }
 
     @Bean
-    public ThreadConfig threadConfig(){
-        return new ThreadConfig();
+    public ThreadProperties threadConfig(){
+        return new ThreadProperties();
     }
 
-    @Bean Service service(ThreadConfig config){
+    @Bean Service service(ThreadProperties config){
         return new Service(config);
     }
 

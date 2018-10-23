@@ -5,6 +5,7 @@ import com.roje.game.core.dispatcher.MessageDispatcher;
 import com.roje.game.cluster.manager.ServerSessionManager;
 import com.roje.game.cluster.netty.channel.handler.DefaultInnerTcpServerChannelInBoundHandler;
 import com.roje.game.core.netty.channel.initializer.DefaultChannelInitializer;
+import com.roje.game.core.service.Service;
 import io.netty.channel.ChannelPipeline;
 import io.netty.handler.timeout.IdleStateHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +20,17 @@ public class ClusterTcpChannelInitializer extends DefaultChannelInitializer {
 
     private final ServerSessionManager serverManager;
 
+    private final Service service;
+
     @Autowired
     public ClusterTcpChannelInitializer(
             NettyServerConfig nettyServerConfig,
             MessageDispatcher dispatcher,
+            Service service,
             ServerSessionManager serverManager) {
         this.nettyServerConfig = nettyServerConfig;
         this.dispatcher = dispatcher;
+        this.service = service;
         this.serverManager = serverManager;
     }
 
@@ -34,6 +39,6 @@ public class ClusterTcpChannelInitializer extends DefaultChannelInitializer {
         pipeline.addLast(new IdleStateHandler(nettyServerConfig.getReaderIdleTime(),
                 nettyServerConfig.getWriterIdleTime(),
                 nettyServerConfig.getAllIdleTime()));
-        pipeline.addLast(new DefaultInnerTcpServerChannelInBoundHandler(dispatcher, serverManager));
+        pipeline.addLast(new DefaultInnerTcpServerChannelInBoundHandler(dispatcher, serverManager,service));
     }
 }

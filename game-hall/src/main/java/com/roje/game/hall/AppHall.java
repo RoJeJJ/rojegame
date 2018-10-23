@@ -2,7 +2,7 @@ package com.roje.game.hall;
 
 import com.roje.game.core.config.ClusterClientConfig;
 import com.roje.game.core.config.NettyConnGateClientConfig;
-import com.roje.game.core.config.ThreadConfig;
+import com.roje.game.core.config.ThreadProperties;
 import com.roje.game.core.dispatcher.MessageDispatcher;
 import com.roje.game.core.manager.session.ISessionManager;
 import com.roje.game.core.netty.NettyClusterTcpClient;
@@ -35,8 +35,8 @@ public class AppHall {
 
     @Bean
     @ConfigurationProperties(prefix = "thread-config")
-    public ThreadConfig threadConfig() {
-        return new ThreadConfig();
+    public ThreadProperties threadConfig() {
+        return new ThreadProperties();
     }
 
     @Bean
@@ -55,7 +55,7 @@ public class AppHall {
     }
 
     @Bean
-    public Service hallGateExecutorService(ThreadConfig config) {
+    public Service hallGateExecutorService(ThreadProperties config) {
         return new Service(config);
     }
 

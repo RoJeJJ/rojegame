@@ -2,7 +2,7 @@ package com.roje.game.gate;
 
 
 import com.roje.game.core.config.ClusterClientConfig;
-import com.roje.game.core.config.ThreadConfig;
+import com.roje.game.core.config.ThreadProperties;
 import com.roje.game.core.dispatcher.MessageDispatcher;
 import com.roje.game.core.manager.session.SessionManager;
 import com.roje.game.core.netty.NettyClusterTcpClient;
@@ -29,8 +29,8 @@ public class AppGate {
 
     @Bean
     @ConfigurationProperties(prefix = "thread-config")
-    public ThreadConfig threadConfig() {
-        return new ThreadConfig();
+    public ThreadProperties threadConfig() {
+        return new ThreadProperties();
     }
 
     @Bean("gateGameTcpConfig")
@@ -88,7 +88,7 @@ public class AppGate {
     }
 
     @Bean
-    public Service gateUserExecutorService(ThreadConfig config) {
+    public Service gateUserExecutorService(ThreadProperties config) {
         return new Service(config);
     }
 

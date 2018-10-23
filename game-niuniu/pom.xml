@@ -26,9 +26,5 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.android.support</groupId>
-            <artifactId>support-annotations</artifactId>
-        </dependency>
     </dependencies>
 </project>

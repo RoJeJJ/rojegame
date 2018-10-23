@@ -4,14 +4,16 @@ option java_multiple_files = true;
 
 enum Action{
     snap = 0;
-    ServInfoReq = 1001;
-    ServInfoRes = 1002;
+    ServRegReq = 1001;
+    ServRegRes = 1002;
+    ServInfoReq = 1003;
+    ServInfoRes = 1004;
 
     LoginReq = 10001;
     loginRes = 10002;
 
     CreateCardRoomReq = 20001;
-    CreateCarRoomRes = 20002;
+    CreateCardRoomRes = 20002;
 
 
     ErrorResponse = 30001;

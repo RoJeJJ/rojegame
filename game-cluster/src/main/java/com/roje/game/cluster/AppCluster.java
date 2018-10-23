@@ -1,10 +1,11 @@
 package com.roje.game.cluster;
 
 import com.roje.game.core.config.NettyServerConfig;
-import com.roje.game.core.config.ThreadConfig;
+import com.roje.game.core.config.ThreadProperties;
 import com.roje.game.core.dispatcher.MessageDispatcher;
 import com.roje.game.cluster.manager.ServerSessionManager;
 import com.roje.game.core.netty.NettyTcpServer;
+import com.roje.game.core.service.Service;
 import com.roje.game.core.service.redis.UserRedisService;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.socket.SocketChannel;
@@ -27,14 +28,20 @@ public class AppCluster {
     }
 
     @Bean
-    public ServerSessionManager serverManager(UserRedisService userRedisService){
-        return new ServerSessionManager(userRedisService);
+    public Service service(ThreadProperties properties){
+        return new Service(properties);
+    }
+
+    @Bean
+    public ServerSessionManager serverManager(UserRedisService userRedisService,
+                                              Service service){
+        return new ServerSessionManager(userRedisService, service);
     }
 
     @Bean
     @ConfigurationProperties(prefix = "thread-config")
-    public ThreadConfig threadConfig() {
-        return new ThreadConfig();
+    public ThreadProperties threadConfig() {
+        return new ThreadProperties();
     }
 
     @Bean

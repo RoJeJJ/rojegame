@@ -6,7 +6,7 @@ client:
     all-idle-time: 10
     tcp-no-delay: true
     reconnect-time: 5
-    connect-timeout: 10
+    connect-timeout: 2000
     ip: 127.0.0.1
     port: 8007
 serverInfo:
@@ -26,9 +26,6 @@ game-server:
     reader-idle-time: 0
     writer-idle-time: 0
     all-idle-time: 0
-  user-thread-config:
-    thread-size: 3
-    name: user
 spring:
   redis:
     database: 0
@@ -42,5 +39,17 @@ spring:
         max-wait: -1ms
         min-idle: 0
 niuniu:
-  config:
-    max-create-count: 1
+  max-create-count: 1
+thread-config:
+  io-config:
+    core-pool-size: 3
+    maximum-pool-size: 10
+    keep-alive-time: 30
+    capacity: 100000
+  sync-config:
+    command-size: 100000
+  custom-configs:
+    - name: channel
+      thread-size: 3
+    - name: role
+      thread-size: 3

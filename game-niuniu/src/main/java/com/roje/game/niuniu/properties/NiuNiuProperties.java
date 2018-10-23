@@ -2,7 +2,9 @@ package com.roje.game.niuniu.properties;
 
 import com.roje.game.core.config.GameProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
 
-@ConfigurationProperties(prefix = "niuniu.config")
+@Component
+@ConfigurationProperties(prefix = "niuniu")
 public class NiuNiuProperties extends GameProperties {
 }

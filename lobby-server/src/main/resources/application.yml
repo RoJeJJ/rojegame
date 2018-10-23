@@ -16,7 +16,7 @@ spring:
         max-wait: -1ms
   application:
     name: lobby-server
-executor:
-  user:
-    name: user
-    thread-size: 3
+thread-config:
+  custom-configs:
+    - name: account
+      thread-size: 3

@@ -1,10 +1,9 @@
 package com.roje.game.lobby;
 
-import com.roje.game.core.config.ExecutorProperties;
+import com.roje.game.core.config.ThreadProperties;
+import com.roje.game.core.service.Service;
 import com.roje.game.core.service.redis.IdService;
 import com.roje.game.core.service.redis.UserRedisService;
-import com.roje.game.core.thread.executor.TaskExecutor;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -18,18 +17,14 @@ public class AppLobby {
         SpringApplication.run(AppLobby.class);
     }
 
-    @Bean("user-executor")
-    @ConfigurationProperties("executor.user")
-    public ExecutorProperties userExecutorProperties(){
-        return new ExecutorProperties();
+    @Bean
+    public ThreadProperties threadProperties(){
+        return new ThreadProperties();
     }
 
-
-
     @Bean
-    public TaskExecutor<String> userExecutor(
-            @Qualifier("user-executor") ExecutorProperties properties){
-        return new TaskExecutor<>(properties);
+    public Service service(ThreadProperties properties){
+        return new Service(properties);
     }
 
     @Bean

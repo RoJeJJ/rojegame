@@ -1,11 +1,16 @@
 thread-config:
-  io-core-pool-size: 10
-  io-maximum-pool-size: 100
-  io-keep-alive-time: 30
-  io-capacity: 100000
-  sync-name: sync
-  sync-time-interval: 0
-  sync-command-size: 100000
+  custom-configs:
+    - name: channel
+      thread-size: 3
+    - name: account
+      thread-size: 3
+  io-config:
+    core-pool-size: 3
+    maximum-pool-size: 10
+    keep-alive-time: 30
+    capacity: 100000
+  sync-config:
+    command-size: 100000
 cluster-server:
   config:
     port: 8007

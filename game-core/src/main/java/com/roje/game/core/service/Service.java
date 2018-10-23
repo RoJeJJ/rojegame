@@ -1,12 +1,15 @@
 package com.roje.game.core.service;
 
-import com.roje.game.core.config.ThreadConfig;
+import com.roje.game.core.config.ThreadProperties;
 import com.roje.game.core.thread.ExecutorPool;
+import com.roje.game.core.thread.executor.TaskExecutor;
 import com.roje.game.core.thread.factory.IoThreadFactory;
 import com.roje.game.core.thread.ServerThread;
 import com.roje.game.core.thread.ThreadType;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.*;
 
@@ -15,18 +18,31 @@ public class Service {
     /**
      * 线程容器
      */
-    private final Map<ThreadType,Executor> executorMap = new ConcurrentHashMap<>();
+    private final Map<ThreadType,Executor> executorMap = new HashMap<>();
 
-    public Service(ThreadConfig config){
-        if (config != null){
-            ThreadPoolExecutor ioExecutor = new ThreadPoolExecutor(config.getIoCorePoolSize(),config.getIoMaximumPoolSize(),
-                    config.getIoKeepAliveTime(),TimeUnit.MILLISECONDS,new LinkedBlockingQueue<>(config.getIoCapacity()),
+    private final Map<String,TaskExecutor> customExecutors = new HashMap<>();
+
+    public Service(ThreadProperties config){
+        ThreadProperties.IoConfig ioConf = config.getIoConfig();
+        if (ioConf != null) {
+            ThreadPoolExecutor ioExecutor = new ThreadPoolExecutor(ioConf.getCorePoolSize(), ioConf.getMaximumPoolSize(),
+                    ioConf.getKeepAliveTime(), TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(ioConf.getCapacity()),
                     new IoThreadFactory());
-            executorMap.put(ThreadType.io,ioExecutor);
-            ServerThread syncThread = new ServerThread(new ThreadGroup(config.getSyncName()),"roje-"+config.getSyncName(),
-                    /*config.getSyncTimeInterval(),*/config.getSyncCommandSize());
+            executorMap.put(ThreadType.io, ioExecutor);
+        }
+        ThreadProperties.SyncConfig syncConf = config.getSyncConfig();
+        if (syncConf != null) {
+            ServerThread syncThread = new ServerThread(new ThreadGroup("sync"),"roje-sync",
+                    /*config.getSyncTimeInterval(),*/syncConf.getCommandSize());
             syncThread.start();
             executorMap.put(ThreadType.sync,syncThread);
+        }
+        List<ThreadProperties.CustomConfig> customConfs = config.getCustomConfigs();
+        if (customConfs != null && customConfs.size() > 0){
+            for (ThreadProperties.CustomConfig customConfig: customConfs){
+                TaskExecutor executor = new TaskExecutor(customConfig.getName(),customConfig.getThreadSize());
+                customExecutors.put(customConfig.getName(),executor);
+            }
         }
         Runtime.getRuntime().addShutdownHook(new Thread(this::shutDown));
     }
@@ -49,17 +65,15 @@ public class Service {
                 log.error("关闭线程异常",e);
             }
         });
-    }
-    /**
-     * 添加线程池
-
-     */
-    public void addExecutorPool(ThreadType type,Executor executor){
-        executorMap.put(type,executor);
+        customExecutors.values().forEach(TaskExecutor::shutDown);
     }
 
     @SuppressWarnings("unchecked")
     public <T extends Executor>T getExecutor(ThreadType type){
         return (T) executorMap.get(type);
+    }
+
+    public TaskExecutor getCustomExecutor(String name){
+        return customExecutors.get(name);
     }
 }

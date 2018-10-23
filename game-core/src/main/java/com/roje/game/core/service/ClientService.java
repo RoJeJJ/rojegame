@@ -1,6 +1,6 @@
 package com.roje.game.core.service;
 
-import com.roje.game.core.config.ThreadConfig;
+import com.roje.game.core.config.ThreadProperties;
 import com.roje.game.core.netty.NettyClusterTcpClient;
 
 public class ClientService extends Service{
@@ -10,8 +10,8 @@ public class ClientService extends Service{
         super(null);
         this.tcpClient = tcpClient;
     }
-    public ClientService(ThreadConfig threadConfig,NettyClusterTcpClient tcpClient){
-        super(threadConfig);
+    public ClientService(ThreadProperties threadProperties, NettyClusterTcpClient tcpClient){
+        super(threadProperties);
         this.tcpClient = tcpClient;
     }
 

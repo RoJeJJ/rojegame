@@ -23,12 +23,13 @@ public final class ActionOuterClass {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\014action.proto*\232\001\n\006Action\022\010\n\004snap\020\000\022\020\n\013S" +
-      "ervInfoReq\020\351\007\022\020\n\013ServInfoRes\020\352\007\022\r\n\010Login" +
-      "Req\020\221N\022\r\n\010loginRes\020\222N\022\027\n\021CreateCardRoomR" +
-      "eq\020\241\234\001\022\026\n\020CreateCarRoomRes\020\242\234\001\022\023\n\rErrorR" +
-      "esponse\020\261\352\001B \n\034com.roje.game.message.act" +
-      "ionP\001b\006proto3"
+      "\n\014action.proto*\275\001\n\006Action\022\010\n\004snap\020\000\022\017\n\nS" +
+      "ervRegReq\020\351\007\022\017\n\nServRegRes\020\352\007\022\020\n\013ServInf" +
+      "oReq\020\353\007\022\020\n\013ServInfoRes\020\354\007\022\r\n\010LoginReq\020\221N" +
+      "\022\r\n\010loginRes\020\222N\022\027\n\021CreateCardRoomReq\020\241\234\001" +
+      "\022\027\n\021CreateCardRoomRes\020\242\234\001\022\023\n\rErrorRespon" +
+      "se\020\261\352\001B \n\034com.roje.game.message.actionP\001" +
+      "b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {

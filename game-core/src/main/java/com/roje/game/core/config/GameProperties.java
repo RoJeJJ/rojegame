@@ -7,5 +7,5 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Getter@Setter
 @ConfigurationProperties
 public class GameProperties {
-    private int maxCreateCount;
+    protected int maxCreateCount;
 }

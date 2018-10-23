@@ -3,6 +3,7 @@ package com.roje.game.cluster.netty.channel.handler;
 import com.roje.game.core.dispatcher.MessageDispatcher;
 import com.roje.game.cluster.manager.ServerSessionManager;
 import com.roje.game.core.netty.channel.handler.DefaultInBoundHandler;
+import com.roje.game.core.service.Service;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.timeout.IdleStateEvent;
 import lombok.extern.slf4j.Slf4j;
@@ -12,21 +13,21 @@ import lombok.extern.slf4j.Slf4j;
 public class DefaultInnerTcpServerChannelInBoundHandler extends DefaultInBoundHandler {
     private ServerSessionManager serverManager;
 
-    public DefaultInnerTcpServerChannelInBoundHandler(MessageDispatcher dispatcher, ServerSessionManager serverManager) {
-        super(null,dispatcher);
+    public DefaultInnerTcpServerChannelInBoundHandler(MessageDispatcher dispatcher,
+                                                      ServerSessionManager serverManager,
+                                                      Service service) {
+        super(service,dispatcher);
         this.serverManager = serverManager;
     }
 
     @Override
-    public void channelActive(ChannelHandlerContext ctx) throws Exception {
+    public void channelActive(ChannelHandlerContext ctx) {
         serverManager.channelActive(ctx.channel());
-        super.channelActive(ctx);
     }
 
     @Override
-    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+    public void channelInactive(ChannelHandlerContext ctx){
         serverManager.channelInactive(ctx.channel());
-        super.channelInactive(ctx);
     }
 
     @Override

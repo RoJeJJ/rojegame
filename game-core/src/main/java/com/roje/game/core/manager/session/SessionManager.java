@@ -1,17 +1,15 @@
 package com.roje.game.core.manager.session;
 
-import com.roje.game.core.config.GameProperties;
 import com.roje.game.core.entity.Role;
 import com.roje.game.core.entity.Room;
 import com.roje.game.core.entity.User;
 import com.roje.game.core.exception.ErrorData;
 import com.roje.game.core.exception.RJException;
 import com.roje.game.core.manager.room.RoomManager;
-import com.roje.game.core.manager.session.ISessionManager;
 import com.roje.game.core.server.AuthStatus;
 import com.roje.game.core.server.ServerInfo;
+import com.roje.game.core.service.Service;
 import com.roje.game.core.service.redis.UserRedisService;
-import com.roje.game.core.thread.executor.TaskExecutor;
 import com.roje.game.core.util.MessageUtil;
 import com.roje.game.message.action.Action;
 import com.roje.game.message.create_room.CreateCardRoomResponse;
@@ -19,15 +17,13 @@ import com.roje.game.message.frame.Frame;
 import com.roje.game.message.login.LoginRequest;
 import com.roje.game.message.login.LoginResponse;
 import io.netty.channel.Channel;
-import io.netty.channel.group.ChannelGroup;
-import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.util.AttributeKey;
-import io.netty.util.concurrent.GlobalEventExecutor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
@@ -37,7 +33,6 @@ public abstract class SessionManager<R extends Role<M>,M extends Room> implement
 
     private final AttributeKey<R> ROLE_ATTRIBUTE_KEY = AttributeKey.newInstance("roje.channel.role");
 
-    private ChannelGroup channels = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
 
     private Map<String, R> accRolesMap = new ConcurrentHashMap<>();
 
@@ -45,19 +40,27 @@ public abstract class SessionManager<R extends Role<M>,M extends Room> implement
 
     private final ServerInfo serverInfo;
 
-    private final TaskExecutor<String> userChannelExecutor;
+    private final Service service;
 
 
     private final RoomManager<M,R> roomManager;
 
     public SessionManager(UserRedisService userRedisService,
                           ServerInfo info,
-                          TaskExecutor<String> userChannelExecutor,
+                          Service service,
                           RoomManager<M,R> roomManager){
         this.userRedisService = userRedisService;
         this.serverInfo = info;
-        this.userChannelExecutor = userChannelExecutor;
+        this.service = service;
         this.roomManager = roomManager;
+    }
+
+    private ScheduledExecutorService channelExecutorService(Channel channel){
+        return service.getCustomExecutor("channel").allocateThread(id(channel));
+    }
+
+    private ScheduledExecutorService roleExecutorService(R role){
+        return service.getCustomExecutor("role").allocateThread(role.getAccount());
     }
 
     public String id(Channel channel){
@@ -65,13 +68,12 @@ public abstract class SessionManager<R extends Role<M>,M extends Room> implement
     }
 
     public void sessionActive(Channel channel){
-        userChannelExecutor.allocateThread(id(channel)).execute(() -> {
-            channel.attr(AUTH_STATUS_ATTRIBUTE_KEY).set(AuthStatus.NotAuth);
-            channels.add(channel);
-//            channel.eventLoop().schedule(new DelayRunnable(channel),10, TimeUnit.SECONDS);
-            userChannelExecutor.allocateThread(id(channel))
-                    .schedule(new DelayRunnable(channel),10, TimeUnit.SECONDS);
-        });
+        channelExecutorService(channel)
+                .execute(() -> {
+                    channel.attr(AUTH_STATUS_ATTRIBUTE_KEY).set(AuthStatus.NotAuth);
+                    channelExecutorService(channel)
+                            .schedule(new DelayRunnable(channel),10, TimeUnit.SECONDS);
+                });
     }
 
     @Override
@@ -80,12 +82,12 @@ public abstract class SessionManager<R extends Role<M>,M extends Room> implement
     }
 
     public void sessionInactive(Channel channel) {
-        channels.remove(channel);
+        // TODO: 2018/10/23 断线了
     }
 
     public void login(Channel channel, LoginRequest loginRequest) {
         LoginResponse.Builder builder = LoginResponse.newBuilder();
-        userChannelExecutor.allocateThread(id(channel)).execute(() -> {
+        channelExecutorService(channel).execute(() -> {
             try {
                 AuthStatus status = channel.attr(AUTH_STATUS_ATTRIBUTE_KEY).get();
                 if (status == AuthStatus.Authed) {
@@ -98,8 +100,9 @@ public abstract class SessionManager<R extends Role<M>,M extends Room> implement
                     log.warn("account:{},token:{}", account, token);
                     throw new RJException(ErrorData.LOGIN_PARAMS_NOT_BE_EMPTY);
                 }
-                if (!StringUtils.equals(serverInfo.getIp(), userRedisService.getIp(account))) {
-                    log.warn("连接到错误的服务器");
+                ServerInfo info = userRedisService.getServer(account);
+                if (!serverInfo.equals(info)) {
+                    log.warn("连接到错误的服务器{}",info);
                     throw new RJException(ErrorData.LOGIN_INVALID_CONNECTION);
                 }
                 User user = userRedisService.get(account);
@@ -149,18 +152,20 @@ public abstract class SessionManager<R extends Role<M>,M extends Room> implement
     }
 
     public void createRoom(Channel channel, Frame frame) {
-        userChannelExecutor.allocateThread(id(channel)).execute(() -> {
+        R role = getRole(channel);
+        CreateCardRoomResponse.Builder builder = CreateCardRoomResponse.newBuilder();
+        roleExecutorService(role).execute(() -> {
             try {
                 if (!isLogin(channel)) {
                     log.info("还没有登录");
                     throw new RJException(ErrorData.NOT_LOGGED_IN);
                 }
-                R role = getRole(channel);
-                M room = roomManager.startCreateRoom(role,frame);
+                M room = roomManager.createRoom(role,frame);
+                builder.setCode(0);
             }catch (RJException e){
-                CreateCardRoomResponse.Builder builder = CreateCardRoomResponse.newBuilder();
                 builder.setCode(e.getErrorData().getCode());
                 builder.setMsg(e.getErrorData().getMsg());
+                MessageUtil.send(channel,Action.CreateCarRoomRes,builder.build());
             }
         });
     }
