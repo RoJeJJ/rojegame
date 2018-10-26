@@ -6,7 +6,8 @@ import com.roje.game.core.exception.ErrorData;
 import com.roje.game.core.exception.RJException;
 import com.roje.game.core.manager.room.RoomManager;
 import com.roje.game.core.server.ServerInfo;
-import com.roje.game.core.service.redis.RoomRedisService;
+import com.roje.game.core.service.Service;
+import com.roje.game.core.redis.service.RoomRedisService;
 import com.roje.game.message.frame.Frame;
 import com.roje.game.message.nn.NiuNiuCardRoomConfig;
 import com.roje.game.niuniu.data.NNRole;
@@ -17,12 +18,13 @@ public class NNRoomManager extends RoomManager<NNRoom, NNRole> {
 
     public NNRoomManager(GameProperties properties,
                          RoomRedisService roomRedisService,
-                         ServerInfo serverInfo) {
-        super(properties, roomRedisService, serverInfo);
+                         ServerInfo serverInfo,
+                         Service service) {
+        super(properties, roomRedisService, serverInfo,service);
     }
 
     @Override
-    protected NNRoom create(NNRole role, Frame frame) throws RJException {
+    protected NNRoom newCardRoom(NNRole role, Frame frame) throws RJException {
         NiuNiuCardRoomConfig config;
         try {
             config = frame.getData().unpack(NiuNiuCardRoomConfig.class);

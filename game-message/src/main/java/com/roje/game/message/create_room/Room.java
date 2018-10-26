@@ -35,10 +35,10 @@ public final class Room {
     java.lang.String[] descriptorData = {
       "\n\nroom.proto\032\021include/any.proto\"M\n\025Creat" +
       "eCardRoomRequest\022\016\n\006gameId\030\001 \001(\005\022$\n\006conf" +
-      "ig\030\002 \001(\0132\024.google.protobuf.Any\"3\n\026Create" +
+      "ig\030\002 \001(\0132\024.google.protobuf.Any\"C\n\026Create" +
       "CardRoomResponse\022\014\n\004code\030\001 \001(\005\022\013\n\003msg\030\002 " +
-      "\001(\tB%\n!com.roje.game.message.create_room" +
-      "P\001b\006proto3"
+      "\001(\t\022\016\n\006roomId\030\003 \001(\005B%\n!com.roje.game.mes" +
+      "sage.create_roomP\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -64,7 +64,7 @@ public final class Room {
     internal_static_CreateCardRoomResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_CreateCardRoomResponse_descriptor,
-        new java.lang.String[] { "Code", "Msg", });
+        new java.lang.String[] { "Code", "Msg", "RoomId", });
     com.google.protobuf.AnyProto.getDescriptor();
   }
 

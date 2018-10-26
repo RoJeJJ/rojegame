@@ -41,6 +41,7 @@ spring:
 niuniu:
   max-create-count: 1
 thread-config:
+  single-thread-room-size: 5
   io-config:
     core-pool-size: 3
     maximum-pool-size: 10

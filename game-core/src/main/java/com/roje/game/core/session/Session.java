@@ -15,7 +15,7 @@ public abstract class Session {
     protected Channel channel;
     public Session(Channel channel){
         this.channel = channel;
-        id = channel.id().asShortText();
+        id = channel.id().asLongText();
     }
 
     public String id(){

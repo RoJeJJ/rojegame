@@ -12,13 +12,13 @@ public enum  ErrorData {
     CREATE_ROOM_CONFIG_ERROR(3,"房间配置出错"),
     LOGIN_LOGGED_ALREADY(4,"已经登录"),
     LOGIN_PARAMS_NOT_BE_EMPTY(5,"登录参数不能为空"),
-    LOGIN_INVALID_CONNECTION(6,"无效的连接"),
+//    LOGIN_INVALID_CONNECTION(6,"无效的连接"),
     LOGIN_BAD_USERNAME(7,"用户名不存在"),
     LOGIN_BAD_TOKEN(8,"token无效"),
     NOT_LOGGED_IN(9,"没有登录"),
     CREATE_ROOM_NOT_ENOUGH_CARD(10,"房卡不足"),
-    ;
-
+    LOGIN_OTHER_CONNECTION_ACTIVE(11,"正在连接另一个服务器"),
+    LOGIN_ALREADY_CONNECT_ANOTHER_SERVER(12,"已经登录到另一个服务器了"),;
     @Getter
     private int code;
     @Getter

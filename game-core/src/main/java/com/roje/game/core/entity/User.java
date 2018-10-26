@@ -28,8 +28,6 @@ public class User implements Serializable {
     //房卡
     private long card;
 
-    private boolean logged;
-
     @Override
     public String toString() {
         return "User:{id:"+id+",account:"+account+",nickname:"+nickname+"}";

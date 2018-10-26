@@ -22,12 +22,9 @@ public class ServerInfoReqProcessor extends MessageProcessor {
 
     private final ServerSessionManager serverManager;
 
-    private final Service service;
-
     @Autowired
-    public ServerInfoReqProcessor(ServerSessionManager serverManager, Service service) {
+    public ServerInfoReqProcessor(ServerSessionManager serverManager) {
         this.serverManager = serverManager;
-        this.service = service;
     }
 
     @Override

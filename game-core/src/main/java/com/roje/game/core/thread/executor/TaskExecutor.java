@@ -41,7 +41,7 @@ public class TaskExecutor {
     }
 
     public ScheduledExecutorService allocateThread(Object channelId) {
-        return executorServices.get(channelId.hashCode() % threadSize);
+        return executorServices.get(Math.abs(channelId.hashCode()) % threadSize);
     }
 
     public void shutDown(){

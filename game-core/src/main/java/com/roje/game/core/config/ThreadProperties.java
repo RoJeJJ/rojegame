@@ -15,6 +15,10 @@ public class ThreadProperties {
     private SyncConfig syncConfig = null;
     private List<CustomConfig> customConfigs = new ArrayList<>();
 
+    private int singleThreadRoomSize = 4;
+
+    public boolean createRoomExecutor = false;
+
     @Getter@Setter
     public static class CustomConfig {
         private int threadSize = 1;

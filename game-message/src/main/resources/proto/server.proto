@@ -23,7 +23,6 @@ message ServRegResponse {
 
 message ServInfoRequest {
     ServInfo servInfo = 1;
-
 }
 
 message ServInfoResponse {

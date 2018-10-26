@@ -1,21 +1,20 @@
 package com.roje.game.niuniu.manager;
 
 import com.roje.game.core.manager.session.SessionManager;
-import com.roje.game.core.server.ServerInfo;
-import com.roje.game.core.service.Service;
-import com.roje.game.core.service.redis.UserRedisService;
+import com.roje.game.core.redis.lock.AuthLock;
+import com.roje.game.core.redis.service.UserRedisService;
 import com.roje.game.niuniu.data.NNRole;
 import com.roje.game.niuniu.data.NNRoom;
+import org.redisson.api.RedissonClient;
 
 public class NNSessionManager extends SessionManager<NNRole, NNRoom> {
 
 
 
     public NNSessionManager(UserRedisService userRedisService,
-                            ServerInfo info,
-                            Service service,
-                            NNRoomManager roomManager) {
-        super(userRedisService, info, service, roomManager);
+                            NNRoomManager roomManager,
+                            AuthLock authLock) {
+        super(userRedisService, roomManager, authLock);
     }
 
     @Override

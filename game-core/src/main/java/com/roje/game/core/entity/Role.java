@@ -22,4 +22,6 @@ public abstract class Role<T extends Room> {
     protected List<T> createRooms = new ArrayList<>();
 
     protected Channel channel;
+
+    protected boolean cross;
 }

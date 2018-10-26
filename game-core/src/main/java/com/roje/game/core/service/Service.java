@@ -2,6 +2,7 @@ package com.roje.game.core.service;
 
 import com.roje.game.core.config.ThreadProperties;
 import com.roje.game.core.thread.ExecutorPool;
+import com.roje.game.core.thread.executor.RoomExecutor;
 import com.roje.game.core.thread.executor.TaskExecutor;
 import com.roje.game.core.thread.factory.IoThreadFactory;
 import com.roje.game.core.thread.ServerThread;
@@ -21,6 +22,8 @@ public class Service {
     private final Map<ThreadType,Executor> executorMap = new HashMap<>();
 
     private final Map<String,TaskExecutor> customExecutors = new HashMap<>();
+
+    private final RoomExecutor roomExecutor;
 
     public Service(ThreadProperties config){
         ThreadProperties.IoConfig ioConf = config.getIoConfig();
@@ -44,6 +47,10 @@ public class Service {
                 customExecutors.put(customConfig.getName(),executor);
             }
         }
+        if (config.createRoomExecutor){
+            roomExecutor = new RoomExecutor(config.getSingleThreadRoomSize());
+        }else
+            roomExecutor = null;
         Runtime.getRuntime().addShutdownHook(new Thread(this::shutDown));
     }
 
@@ -75,5 +82,9 @@ public class Service {
 
     public TaskExecutor getCustomExecutor(String name){
         return customExecutors.get(name);
+    }
+
+    public RoomExecutor getRoomExecutor(){
+        return roomExecutor;
     }
 }

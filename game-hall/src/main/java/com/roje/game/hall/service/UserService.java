@@ -2,9 +2,9 @@ package com.roje.game.hall.service;
 
 import com.google.gson.JsonObject;
 import com.roje.game.core.entity.User;
-import com.roje.game.core.service.redis.IdService;
-import com.roje.game.core.service.redis.UserRedisService;
-import com.roje.game.lobby.entity.WxUser;
+import com.roje.game.core.redis.service.IdService;
+import com.roje.game.core.redis.service.UserRedisService;
+import com.roje.game.login.entity.WxUser;
 import com.roje.game.hall.utils.WeChatUtil;
 import com.roje.game.message.login.LoginResponse;
 import lombok.extern.slf4j.Slf4j;

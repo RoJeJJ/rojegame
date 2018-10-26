@@ -15,14 +15,12 @@ public class DefaultGameUserInBoundHandler extends DefaultInBoundHandler {
     }
 
     @Override
-    public void channelActive(ChannelHandlerContext ctx) throws Exception {
+    public void channelActive(ChannelHandlerContext ctx) {
         sessionManager.sessionActive(ctx.channel());
-        super.channelActive(ctx);
     }
 
     @Override
-    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+    public void channelInactive(ChannelHandlerContext ctx) {
         sessionManager.sessionInactive(ctx.channel());
-        super.channelInactive(ctx);
     }
 }

@@ -18,6 +18,7 @@ private static final long serialVersionUID = 0L;
   private CreateCardRoomResponse() {
     code_ = 0;
     msg_ = "";
+    roomId_ = 0;
   }
 
   @java.lang.Override
@@ -53,6 +54,11 @@ private static final long serialVersionUID = 0L;
             java.lang.String s = input.readStringRequireUtf8();
 
             msg_ = s;
+            break;
+          }
+          case 24: {
+
+            roomId_ = input.readInt32();
             break;
           }
           default: {
@@ -130,6 +136,15 @@ private static final long serialVersionUID = 0L;
     }
   }
 
+  public static final int ROOMID_FIELD_NUMBER = 3;
+  private int roomId_;
+  /**
+   * <code>int32 roomId = 3;</code>
+   */
+  public int getRoomId() {
+    return roomId_;
+  }
+
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -150,6 +165,9 @@ private static final long serialVersionUID = 0L;
     if (!getMsgBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 2, msg_);
     }
+    if (roomId_ != 0) {
+      output.writeInt32(3, roomId_);
+    }
     unknownFields.writeTo(output);
   }
 
@@ -165,6 +183,10 @@ private static final long serialVersionUID = 0L;
     }
     if (!getMsgBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, msg_);
+    }
+    if (roomId_ != 0) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeInt32Size(3, roomId_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -186,6 +208,8 @@ private static final long serialVersionUID = 0L;
         == other.getCode());
     result = result && getMsg()
         .equals(other.getMsg());
+    result = result && (getRoomId()
+        == other.getRoomId());
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -201,6 +225,8 @@ private static final long serialVersionUID = 0L;
     hash = (53 * hash) + getCode();
     hash = (37 * hash) + MSG_FIELD_NUMBER;
     hash = (53 * hash) + getMsg().hashCode();
+    hash = (37 * hash) + ROOMID_FIELD_NUMBER;
+    hash = (53 * hash) + getRoomId();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -338,6 +364,8 @@ private static final long serialVersionUID = 0L;
 
       msg_ = "";
 
+      roomId_ = 0;
+
       return this;
     }
 
@@ -366,6 +394,7 @@ private static final long serialVersionUID = 0L;
       com.roje.game.message.create_room.CreateCardRoomResponse result = new com.roje.game.message.create_room.CreateCardRoomResponse(this);
       result.code_ = code_;
       result.msg_ = msg_;
+      result.roomId_ = roomId_;
       onBuilt();
       return result;
     }
@@ -420,6 +449,9 @@ private static final long serialVersionUID = 0L;
       if (!other.getMsg().isEmpty()) {
         msg_ = other.msg_;
         onChanged();
+      }
+      if (other.getRoomId() != 0) {
+        setRoomId(other.getRoomId());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -541,6 +573,32 @@ private static final long serialVersionUID = 0L;
   checkByteStringIsUtf8(value);
       
       msg_ = value;
+      onChanged();
+      return this;
+    }
+
+    private int roomId_ ;
+    /**
+     * <code>int32 roomId = 3;</code>
+     */
+    public int getRoomId() {
+      return roomId_;
+    }
+    /**
+     * <code>int32 roomId = 3;</code>
+     */
+    public Builder setRoomId(int value) {
+      
+      roomId_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>int32 roomId = 3;</code>
+     */
+    public Builder clearRoomId() {
+      
+      roomId_ = 0;
       onChanged();
       return this;
     }

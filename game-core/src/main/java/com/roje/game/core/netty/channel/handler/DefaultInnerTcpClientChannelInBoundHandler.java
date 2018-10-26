@@ -5,7 +5,9 @@ import com.roje.game.core.manager.session.ISessionManager;
 import com.roje.game.core.server.ServerInfo;
 import com.roje.game.core.util.MessageUtil;
 import com.roje.game.message.action.Action;
+import com.roje.game.message.server_info.ServInfo;
 import com.roje.game.message.server_info.ServInfoRequest;
+import com.roje.game.message.server_info.ServRegRequest;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.timeout.IdleStateEvent;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +30,7 @@ public class DefaultInnerTcpClientChannelInBoundHandler extends DefaultInBoundHa
     @Override
     public void channelActive(ChannelHandlerContext ctx) {
         log.info("向集群发送消息");
-        MessageUtil.send(ctx.channel(), Action.ServInfoReq,servInfo());
+        MessageUtil.send(ctx.channel(), Action.ServRegReq,serverReg());
     }
 
     @Override
@@ -41,7 +43,8 @@ public class DefaultInnerTcpClientChannelInBoundHandler extends DefaultInBoundHa
                     ctx.close();
                     break;
                 case ALL_IDLE:
-                    MessageUtil.send(ctx.channel(),Action.ServInfoReq,servInfo());
+                    if (serverInfo.getId() != 0)
+                        MessageUtil.send(ctx.channel(),Action.ServInfoReq,servInfo());
                     break;
             }
         }
@@ -53,15 +56,33 @@ public class DefaultInnerTcpClientChannelInBoundHandler extends DefaultInBoundHa
         ctx.close();
     }
 
+    private ServRegRequest serverReg(){
+        ServRegRequest.Builder builder = ServRegRequest.newBuilder();
+        ServInfo.Builder infoBuilder = ServInfo.newBuilder();
+        infoBuilder.setId(serverInfo.getId());
+        infoBuilder.setIp(serverInfo.getIp());
+        infoBuilder.setPort(serverInfo.getPort());
+        infoBuilder.setGameId(serverInfo.getGameId());
+        infoBuilder.setName(serverInfo.getName());
+        infoBuilder.setOnline(sessionManager.getOnlineCount());
+        infoBuilder.setMaxUserCount(serverInfo.getMaxUserCount());
+        infoBuilder.setRequireVersion(serverInfo.getRequireVersion());
+        builder.setServInfo(infoBuilder);
+        return builder.build();
+    }
+
     private ServInfoRequest servInfo(){
         ServInfoRequest.Builder builder = ServInfoRequest.newBuilder();
-        builder.setIp(serverInfo.getIp());
-        builder.setPort(serverInfo.getPort());
-        builder.setGameId(serverInfo.getGameId());
-        builder.setName(serverInfo.getName());
-        builder.setOnline(sessionManager.getOnlineCount());
-        builder.setMaxUserCount(serverInfo.getMaxUserCount());
-        builder.setRequireVersion(serverInfo.getRequireVersion());
+        ServInfo.Builder infoBuilder = ServInfo.newBuilder();
+        infoBuilder.setId(serverInfo.getId());
+        infoBuilder.setIp(serverInfo.getIp());
+        infoBuilder.setPort(serverInfo.getPort());
+        infoBuilder.setGameId(serverInfo.getGameId());
+        infoBuilder.setName(serverInfo.getName());
+        infoBuilder.setOnline(sessionManager.getOnlineCount());
+        infoBuilder.setMaxUserCount(serverInfo.getMaxUserCount());
+        infoBuilder.setRequireVersion(serverInfo.getRequireVersion());
+        builder.setServInfo(infoBuilder);
         return builder.build();
     }
 }

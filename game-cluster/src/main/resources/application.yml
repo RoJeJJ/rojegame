@@ -24,7 +24,7 @@ cluster-server:
 server:
   port: 8008
   servlet:
-    context-path: /roje
+    context-path: /roje/cluster
 spring:
   application:
     name: cluster-server

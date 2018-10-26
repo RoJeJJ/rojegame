@@ -4,6 +4,7 @@ import com.roje.game.core.config.ClusterClientConfig;
 import com.roje.game.core.config.NettyServerConfig;
 import com.roje.game.core.config.ThreadProperties;
 import com.roje.game.core.dispatcher.MessageDispatcher;
+import com.roje.game.core.redis.lock.AuthLock;
 import com.roje.game.core.manager.session.ISessionManager;
 import com.roje.game.core.manager.session.SessionManager;
 import com.roje.game.core.netty.NettyClusterTcpClient;
@@ -12,33 +13,30 @@ import com.roje.game.core.netty.channel.initializer.ClusterClientChannelInitiali
 import com.roje.game.core.netty.channel.initializer.GameServerChannelInitializer;
 import com.roje.game.core.server.ServerInfo;
 import com.roje.game.core.service.Service;
-import com.roje.game.core.service.redis.RoomRedisService;
-import com.roje.game.core.service.redis.UserRedisService;
-import com.roje.game.core.util.SpringUtil;
+import com.roje.game.core.redis.service.RoomRedisService;
+import com.roje.game.core.redis.service.UserRedisService;
 import com.roje.game.niuniu.manager.NNRoomManager;
 import com.roje.game.niuniu.manager.NNSessionManager;
 import com.roje.game.niuniu.properties.NiuNiuProperties;
+import org.redisson.Redisson;
+import org.redisson.api.RedissonClient;
+import org.redisson.config.Config;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Import;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.redis.core.RedisTemplate;
 
+import java.io.IOException;
+
 @SpringBootApplication
-@Import(SpringUtil.class)
 public class AppNN {
     public static void main(String[] args) {
         SpringApplication app = new SpringApplication(AppNN.class);
         app.setWebApplicationType(WebApplicationType.NONE);
         app.run(args);
     }
-
-    @Bean
-    public ExecutorProperties executorProperties(){
-        return new ExecutorProperties();
-    }
-
 
     @Bean
     public RoomRedisService roomRedisService(RedisTemplate<Object,Object> redisTemplate){
@@ -59,7 +57,6 @@ public class AppNN {
         return new ServerInfo();
     }
 
-
     @Bean
     public ClusterClientChannelInitializer clusterClientChannelInitializer(
             ClusterClientConfig config,
@@ -68,7 +65,6 @@ public class AppNN {
             ServerInfo serverInfo){
         return new ClusterClientChannelInitializer(config,dispatcher,sessionManager,serverInfo);
     }
-
 
     @Bean
     public NettyClusterTcpClient clusterTcpClient(
@@ -80,8 +76,9 @@ public class AppNN {
     @Bean
     public NNRoomManager roomManager(NiuNiuProperties properties,
                                      RoomRedisService roomRedisService,
-                                     ServerInfo serverInfo){
-        return new NNRoomManager(properties,roomRedisService,serverInfo);
+                                     ServerInfo serverInfo,
+                                     Service service){
+        return new NNRoomManager(properties,roomRedisService,serverInfo,service);
     }
 
     @Bean
@@ -91,10 +88,9 @@ public class AppNN {
 
     @Bean
     public NNSessionManager sessionManager(UserRedisService userRedisService,
-                                           ServerInfo serverInfo,
-                                           Service service,
-                                           NNRoomManager roomManager){
-        return new NNSessionManager(userRedisService,serverInfo,service,roomManager);
+                                           NNRoomManager roomManager,
+                                           AuthLock authLock){
+        return new NNSessionManager(userRedisService,roomManager,authLock);
     }
 
     @Bean
@@ -118,6 +114,16 @@ public class AppNN {
             SessionManager sessionManager,
             MessageDispatcher dispatcher){
         return new GameServerChannelInitializer(config,service,sessionManager,dispatcher);
+    }
+
+    @Bean(destroyMethod="shutdown")
+    public RedissonClient redisson() throws IOException {
+        return Redisson.create(Config.fromYAML(new ClassPathResource("redisson.yml").getInputStream()));
+    }
+
+    @Bean
+    public AuthLock lock(RedissonClient client){
+        return new AuthLock(client);
     }
 
     @Bean

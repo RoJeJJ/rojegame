@@ -21,4 +21,9 @@ public interface CreateCardRoomResponseOrBuilder extends
    */
   com.google.protobuf.ByteString
       getMsgBytes();
+
+  /**
+   * <code>int32 roomId = 3;</code>
+   */
+  int getRoomId();
 }

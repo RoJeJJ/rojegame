@@ -27,4 +27,9 @@ public class CuServerInfo {
         info.setPort(port);
         return info;
     }
+
+    @Override
+    public String toString() {
+        return "server{id:"+id+",ip:"+ip+",port:"+port+",gameId:"+gameId+",name:"+name+"}";
+    }
 }

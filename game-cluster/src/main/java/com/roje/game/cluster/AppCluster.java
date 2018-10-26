@@ -6,7 +6,7 @@ import com.roje.game.core.dispatcher.MessageDispatcher;
 import com.roje.game.cluster.manager.ServerSessionManager;
 import com.roje.game.core.netty.NettyTcpServer;
 import com.roje.game.core.service.Service;
-import com.roje.game.core.service.redis.UserRedisService;
+import com.roje.game.core.redis.service.UserRedisService;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.socket.SocketChannel;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -33,9 +33,9 @@ public class AppCluster {
     }
 
     @Bean
-    public ServerSessionManager serverManager(UserRedisService userRedisService,
-                                              Service service){
-        return new ServerSessionManager(userRedisService, service);
+    public ServerSessionManager serverManager(Service service,
+                                              UserRedisService userRedisService){
+        return new ServerSessionManager(service, userRedisService);
     }
 
     @Bean
