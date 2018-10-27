@@ -1,6 +1,7 @@
 package com.roje.game.login.controller;
 
 
+import com.roje.game.core.redis.service.UserRedisService;
 import com.roje.game.login.redis.RedisReceiver;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +21,15 @@ public class RoomController {
 
     private final RedisTemplate<Object,Object> redisTemplate;
 
+    private final UserRedisService userRedisService;
+
     @Autowired
     public RoomController(RedisReceiver redisReceiver,
-                          RedisTemplate<Object,Object> redisTemplate) {
+                          RedisTemplate<Object, Object> redisTemplate,
+                          UserRedisService userRedisService) {
         this.redisReceiver = redisReceiver;
         this.redisTemplate = redisTemplate;
+        this.userRedisService = userRedisService;
     }
 
     @PostMapping(value = "/create",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
