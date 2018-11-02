@@ -2,6 +2,7 @@ package com.roje.game.login;
 
 import com.roje.game.core.config.ThreadProperties;
 import com.roje.game.core.redis.lock.LoginLock;
+import com.roje.game.core.server.ServerInfo;
 import com.roje.game.core.service.Service;
 import com.roje.game.core.redis.service.IdService;
 import com.roje.game.core.redis.service.UserRedisService;
@@ -11,6 +12,7 @@ import org.redisson.config.Config;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -18,6 +20,9 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import java.io.IOException;
 
 @SpringBootApplication
+@Import(value = {
+        ServerInfo.class
+})
 public class AppLogin {
     public static void main(String[] args) {
         SpringApplication.run(AppLogin.class);

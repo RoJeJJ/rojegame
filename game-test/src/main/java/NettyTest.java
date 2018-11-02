@@ -83,7 +83,7 @@ public class NettyTest implements Runnable{
 //            for (int i=0;i<10;i++){
                 LoginRequest.Builder builder = LoginRequest.newBuilder();
                 builder.setAccount("wuli");
-                builder.setPassword("123456");
+                builder.setGameToken("123456");
                 builder.setLoginType(LoginType.WeChat);
                 builder.setVersion(1);
                 Frame.Builder fb = Frame.newBuilder();

@@ -18,7 +18,8 @@ private static final long serialVersionUID = 0L;
   private CreateCardRoomResponse() {
     code_ = 0;
     msg_ = "";
-    roomId_ = 0;
+    account_ = "";
+    type_ = 0;
   }
 
   @java.lang.Override
@@ -56,9 +57,28 @@ private static final long serialVersionUID = 0L;
             msg_ = s;
             break;
           }
-          case 24: {
+          case 26: {
+            com.google.protobuf.Any.Builder subBuilder = null;
+            if (responseData_ != null) {
+              subBuilder = responseData_.toBuilder();
+            }
+            responseData_ = input.readMessage(com.google.protobuf.Any.parser(), extensionRegistry);
+            if (subBuilder != null) {
+              subBuilder.mergeFrom(responseData_);
+              responseData_ = subBuilder.buildPartial();
+            }
 
-            roomId_ = input.readInt32();
+            break;
+          }
+          case 34: {
+            java.lang.String s = input.readStringRequireUtf8();
+
+            account_ = s;
+            break;
+          }
+          case 40: {
+
+            type_ = input.readInt32();
             break;
           }
           default: {
@@ -136,13 +156,68 @@ private static final long serialVersionUID = 0L;
     }
   }
 
-  public static final int ROOMID_FIELD_NUMBER = 3;
-  private int roomId_;
+  public static final int RESPONSEDATA_FIELD_NUMBER = 3;
+  private com.google.protobuf.Any responseData_;
   /**
-   * <code>int32 roomId = 3;</code>
+   * <code>.google.protobuf.Any responseData = 3;</code>
    */
-  public int getRoomId() {
-    return roomId_;
+  public boolean hasResponseData() {
+    return responseData_ != null;
+  }
+  /**
+   * <code>.google.protobuf.Any responseData = 3;</code>
+   */
+  public com.google.protobuf.Any getResponseData() {
+    return responseData_ == null ? com.google.protobuf.Any.getDefaultInstance() : responseData_;
+  }
+  /**
+   * <code>.google.protobuf.Any responseData = 3;</code>
+   */
+  public com.google.protobuf.AnyOrBuilder getResponseDataOrBuilder() {
+    return getResponseData();
+  }
+
+  public static final int ACCOUNT_FIELD_NUMBER = 4;
+  private volatile java.lang.Object account_;
+  /**
+   * <code>string account = 4;</code>
+   */
+  public java.lang.String getAccount() {
+    java.lang.Object ref = account_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      account_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string account = 4;</code>
+   */
+  public com.google.protobuf.ByteString
+      getAccountBytes() {
+    java.lang.Object ref = account_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      account_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
+  public static final int TYPE_FIELD_NUMBER = 5;
+  private int type_;
+  /**
+   * <code>int32 type = 5;</code>
+   */
+  public int getType() {
+    return type_;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -165,8 +240,14 @@ private static final long serialVersionUID = 0L;
     if (!getMsgBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 2, msg_);
     }
-    if (roomId_ != 0) {
-      output.writeInt32(3, roomId_);
+    if (responseData_ != null) {
+      output.writeMessage(3, getResponseData());
+    }
+    if (!getAccountBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 4, account_);
+    }
+    if (type_ != 0) {
+      output.writeInt32(5, type_);
     }
     unknownFields.writeTo(output);
   }
@@ -184,9 +265,16 @@ private static final long serialVersionUID = 0L;
     if (!getMsgBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, msg_);
     }
-    if (roomId_ != 0) {
+    if (responseData_ != null) {
       size += com.google.protobuf.CodedOutputStream
-        .computeInt32Size(3, roomId_);
+        .computeMessageSize(3, getResponseData());
+    }
+    if (!getAccountBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, account_);
+    }
+    if (type_ != 0) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeInt32Size(5, type_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -208,8 +296,15 @@ private static final long serialVersionUID = 0L;
         == other.getCode());
     result = result && getMsg()
         .equals(other.getMsg());
-    result = result && (getRoomId()
-        == other.getRoomId());
+    result = result && (hasResponseData() == other.hasResponseData());
+    if (hasResponseData()) {
+      result = result && getResponseData()
+          .equals(other.getResponseData());
+    }
+    result = result && getAccount()
+        .equals(other.getAccount());
+    result = result && (getType()
+        == other.getType());
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -225,8 +320,14 @@ private static final long serialVersionUID = 0L;
     hash = (53 * hash) + getCode();
     hash = (37 * hash) + MSG_FIELD_NUMBER;
     hash = (53 * hash) + getMsg().hashCode();
-    hash = (37 * hash) + ROOMID_FIELD_NUMBER;
-    hash = (53 * hash) + getRoomId();
+    if (hasResponseData()) {
+      hash = (37 * hash) + RESPONSEDATA_FIELD_NUMBER;
+      hash = (53 * hash) + getResponseData().hashCode();
+    }
+    hash = (37 * hash) + ACCOUNT_FIELD_NUMBER;
+    hash = (53 * hash) + getAccount().hashCode();
+    hash = (37 * hash) + TYPE_FIELD_NUMBER;
+    hash = (53 * hash) + getType();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -364,7 +465,15 @@ private static final long serialVersionUID = 0L;
 
       msg_ = "";
 
-      roomId_ = 0;
+      if (responseDataBuilder_ == null) {
+        responseData_ = null;
+      } else {
+        responseData_ = null;
+        responseDataBuilder_ = null;
+      }
+      account_ = "";
+
+      type_ = 0;
 
       return this;
     }
@@ -394,7 +503,13 @@ private static final long serialVersionUID = 0L;
       com.roje.game.message.create_room.CreateCardRoomResponse result = new com.roje.game.message.create_room.CreateCardRoomResponse(this);
       result.code_ = code_;
       result.msg_ = msg_;
-      result.roomId_ = roomId_;
+      if (responseDataBuilder_ == null) {
+        result.responseData_ = responseData_;
+      } else {
+        result.responseData_ = responseDataBuilder_.build();
+      }
+      result.account_ = account_;
+      result.type_ = type_;
       onBuilt();
       return result;
     }
@@ -450,8 +565,15 @@ private static final long serialVersionUID = 0L;
         msg_ = other.msg_;
         onChanged();
       }
-      if (other.getRoomId() != 0) {
-        setRoomId(other.getRoomId());
+      if (other.hasResponseData()) {
+        mergeResponseData(other.getResponseData());
+      }
+      if (!other.getAccount().isEmpty()) {
+        account_ = other.account_;
+        onChanged();
+      }
+      if (other.getType() != 0) {
+        setType(other.getType());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -577,28 +699,214 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private int roomId_ ;
+    private com.google.protobuf.Any responseData_ = null;
+    private com.google.protobuf.SingleFieldBuilderV3<
+        com.google.protobuf.Any, com.google.protobuf.Any.Builder, com.google.protobuf.AnyOrBuilder> responseDataBuilder_;
     /**
-     * <code>int32 roomId = 3;</code>
+     * <code>.google.protobuf.Any responseData = 3;</code>
      */
-    public int getRoomId() {
-      return roomId_;
+    public boolean hasResponseData() {
+      return responseDataBuilder_ != null || responseData_ != null;
     }
     /**
-     * <code>int32 roomId = 3;</code>
+     * <code>.google.protobuf.Any responseData = 3;</code>
      */
-    public Builder setRoomId(int value) {
+    public com.google.protobuf.Any getResponseData() {
+      if (responseDataBuilder_ == null) {
+        return responseData_ == null ? com.google.protobuf.Any.getDefaultInstance() : responseData_;
+      } else {
+        return responseDataBuilder_.getMessage();
+      }
+    }
+    /**
+     * <code>.google.protobuf.Any responseData = 3;</code>
+     */
+    public Builder setResponseData(com.google.protobuf.Any value) {
+      if (responseDataBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        responseData_ = value;
+        onChanged();
+      } else {
+        responseDataBuilder_.setMessage(value);
+      }
+
+      return this;
+    }
+    /**
+     * <code>.google.protobuf.Any responseData = 3;</code>
+     */
+    public Builder setResponseData(
+        com.google.protobuf.Any.Builder builderForValue) {
+      if (responseDataBuilder_ == null) {
+        responseData_ = builderForValue.build();
+        onChanged();
+      } else {
+        responseDataBuilder_.setMessage(builderForValue.build());
+      }
+
+      return this;
+    }
+    /**
+     * <code>.google.protobuf.Any responseData = 3;</code>
+     */
+    public Builder mergeResponseData(com.google.protobuf.Any value) {
+      if (responseDataBuilder_ == null) {
+        if (responseData_ != null) {
+          responseData_ =
+            com.google.protobuf.Any.newBuilder(responseData_).mergeFrom(value).buildPartial();
+        } else {
+          responseData_ = value;
+        }
+        onChanged();
+      } else {
+        responseDataBuilder_.mergeFrom(value);
+      }
+
+      return this;
+    }
+    /**
+     * <code>.google.protobuf.Any responseData = 3;</code>
+     */
+    public Builder clearResponseData() {
+      if (responseDataBuilder_ == null) {
+        responseData_ = null;
+        onChanged();
+      } else {
+        responseData_ = null;
+        responseDataBuilder_ = null;
+      }
+
+      return this;
+    }
+    /**
+     * <code>.google.protobuf.Any responseData = 3;</code>
+     */
+    public com.google.protobuf.Any.Builder getResponseDataBuilder() {
       
-      roomId_ = value;
+      onChanged();
+      return getResponseDataFieldBuilder().getBuilder();
+    }
+    /**
+     * <code>.google.protobuf.Any responseData = 3;</code>
+     */
+    public com.google.protobuf.AnyOrBuilder getResponseDataOrBuilder() {
+      if (responseDataBuilder_ != null) {
+        return responseDataBuilder_.getMessageOrBuilder();
+      } else {
+        return responseData_ == null ?
+            com.google.protobuf.Any.getDefaultInstance() : responseData_;
+      }
+    }
+    /**
+     * <code>.google.protobuf.Any responseData = 3;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+        com.google.protobuf.Any, com.google.protobuf.Any.Builder, com.google.protobuf.AnyOrBuilder> 
+        getResponseDataFieldBuilder() {
+      if (responseDataBuilder_ == null) {
+        responseDataBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            com.google.protobuf.Any, com.google.protobuf.Any.Builder, com.google.protobuf.AnyOrBuilder>(
+                getResponseData(),
+                getParentForChildren(),
+                isClean());
+        responseData_ = null;
+      }
+      return responseDataBuilder_;
+    }
+
+    private java.lang.Object account_ = "";
+    /**
+     * <code>string account = 4;</code>
+     */
+    public java.lang.String getAccount() {
+      java.lang.Object ref = account_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        account_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>string account = 4;</code>
+     */
+    public com.google.protobuf.ByteString
+        getAccountBytes() {
+      java.lang.Object ref = account_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        account_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string account = 4;</code>
+     */
+    public Builder setAccount(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      account_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>int32 roomId = 3;</code>
+     * <code>string account = 4;</code>
      */
-    public Builder clearRoomId() {
+    public Builder clearAccount() {
       
-      roomId_ = 0;
+      account_ = getDefaultInstance().getAccount();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string account = 4;</code>
+     */
+    public Builder setAccountBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      
+      account_ = value;
+      onChanged();
+      return this;
+    }
+
+    private int type_ ;
+    /**
+     * <code>int32 type = 5;</code>
+     */
+    public int getType() {
+      return type_;
+    }
+    /**
+     * <code>int32 type = 5;</code>
+     */
+    public Builder setType(int value) {
+      
+      type_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>int32 type = 5;</code>
+     */
+    public Builder clearType() {
+      
+      type_ = 0;
       onChanged();
       return this;
     }

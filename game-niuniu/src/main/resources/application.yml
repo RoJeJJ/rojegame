@@ -11,14 +11,15 @@ client:
     port: 8007
 serverInfo:
   ip: 127.0.0.1
-  port: 7001
-  game-id: 1
+  port: 9001
+  type: 101
   max-user-count: 1000
   name: 牛牛
   require-version: 0
+  id: 100
 game-server:
   config:
-    port: 7000
+    port: ${serverInfo.port}
     so-back-log: 1024
     so-keep-alive: true
     tcp-no-delay: true
@@ -38,8 +39,6 @@ spring:
         max-active: 8
         max-wait: -1ms
         min-idle: 0
-niuniu:
-  max-create-count: 1
 thread-config:
   single-thread-room-size: 5
   io-config:
@@ -52,5 +51,8 @@ thread-config:
   custom-configs:
     - name: channel
       thread-size: 3
-    - name: role
+    - name: account
       thread-size: 3
+room:
+  user-max-create-count: 0
+  max-room-size: 100

@@ -1,25 +1,21 @@
 package com.roje.game.core.manager.session;
 
 import com.roje.game.core.entity.Role;
-import com.roje.game.core.entity.Room;
-import com.roje.game.core.entity.User;
 import com.roje.game.core.exception.ErrorData;
 import com.roje.game.core.exception.RJException;
+import com.roje.game.core.manager.room.RoomHelper;
 import com.roje.game.core.redis.lock.AuthLock;
-import com.roje.game.core.manager.room.RoomManager;
+import com.roje.game.core.redis.service.UserRedisService;
 import com.roje.game.core.server.AuthStatus;
 import com.roje.game.core.server.ServerInfo;
-import com.roje.game.core.redis.service.UserRedisService;
+import com.roje.game.core.service.Service;
 import com.roje.game.core.util.MessageUtil;
 import com.roje.game.message.action.Action;
-import com.roje.game.message.create_room.CreateCardRoomResponse;
-import com.roje.game.message.frame.Frame;
-import com.roje.game.message.login.LoginRequest;
+import com.roje.game.message.create_room.CreateCardRoomRequest;
 import com.roje.game.message.login.LoginResponse;
 import io.netty.channel.Channel;
 import io.netty.util.AttributeKey;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.redisson.api.RLock;
 
 import java.util.Map;
@@ -28,7 +24,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
-public abstract class SessionManager<R extends Role<M>, M extends Room> implements ISessionManager {
+public abstract class SessionManager<R extends Role,M> implements ISessionManager<R,M> {
 
     private final AttributeKey<AuthStatus> AUTH_STATUS_ATTRIBUTE_KEY = AttributeKey.newInstance("netty.channel.login");
 
@@ -39,30 +35,39 @@ public abstract class SessionManager<R extends Role<M>, M extends Room> implemen
 
     private final UserRedisService userRedisService;
 
-    private final RoomManager<M, R> roomManager;
+    private final RoomHelper<R,M> roomHelper;
 
     private final AuthLock authLock;
 
+    private final ServerInfo serverInfo;
+
+    private final Service service;
+
     public SessionManager(UserRedisService userRedisService,
-                          RoomManager<M, R> roomManager, AuthLock authLock) {
+                          RoomHelper<R,M> roomHelper,
+                          AuthLock authLock, ServerInfo serverInfo, Service service) {
         this.userRedisService = userRedisService;
-        this.roomManager = roomManager;
+        this.roomHelper = roomHelper;
         this.authLock = authLock;
+        this.serverInfo = serverInfo;
+        this.service = service;
     }
+
 
     private ScheduledExecutorService channelExecutorService(Channel channel) {
-        return roomManager.getService().getCustomExecutor("channel").allocateThread(id(channel));
+        return service.getCustomExecutor("channel").allocateThread(id(channel));
     }
 
-    private ScheduledExecutorService roleExecutorService(R role) {
-        return roomManager.getService().getCustomExecutor("role").allocateThread(role.getAccount());
+    private ScheduledExecutorService accountExecutorService(String account) {
+        return service.getCustomExecutor("account").allocateThread(account);
     }
 
     public String id(Channel channel) {
         return channel.id().asLongText();
     }
 
-    public void sessionActive(Channel channel) {
+    @Override
+    public void sessionOpen(Channel channel) {
         channelExecutorService(channel)
                 .execute(() -> {
                     channel.attr(AUTH_STATUS_ATTRIBUTE_KEY).set(AuthStatus.NotAuth);
@@ -76,28 +81,14 @@ public abstract class SessionManager<R extends Role<M>, M extends Room> implemen
         return accRolesMap.size();
     }
 
-    public void sessionInactive(Channel channel) {
+    @Override
+    public void sessionClose(Channel channel) {
         // TODO: 2018/10/23 断线了
     }
 
-    public void login(Channel channel, LoginRequest loginRequest) throws RJException{
+    @Override
+    public void login(Channel channel, String account) {
         LoginResponse.Builder builder = LoginResponse.newBuilder();
-        String account = loginRequest.getAccount();
-        String token = loginRequest.getGameToken();
-        if (StringUtils.isBlank(account) || StringUtils.isBlank(token)) {
-            log.info("account:{},token:{}", account, token);
-            throw new RJException(ErrorData.LOGIN_PARAMS_NOT_BE_EMPTY);
-        }
-        User user = userRedisService.get(account);
-        if (user == null) {
-            log.info("用户:{}不存在", account);
-            throw new RJException(ErrorData.LOGIN_BAD_USERNAME);
-        }
-        String userToken = userRedisService.getToken(account);
-        if (!StringUtils.equals(token, userToken)) {
-            log.info("user's token:{},system token:{}", token, userToken);
-            throw new RJException(ErrorData.LOGIN_BAD_TOKEN);
-        }
         channelExecutorService(channel).execute(() -> {
             RLock aLock = null;
             R role;
@@ -105,41 +96,37 @@ public abstract class SessionManager<R extends Role<M>, M extends Room> implemen
                 AuthStatus status = channel.attr(AUTH_STATUS_ATTRIBUTE_KEY).get();
                 if (status == AuthStatus.Authed) {
                     log.info("already logged");
-                    throw new RJException(ErrorData.LOGIN_LOGGED_ALREADY);
+                    throw new RJException(ErrorData.LOGIN_LOGGED);
                 }
                 aLock = authLock.getLock(account);
                 if (!aLock.tryLock()) {
                     log.info("正在登录另一台服务器");
-                    throw new RJException(ErrorData.LOGIN_OTHER_CONNECTION_ACTIVE);
+                    throw new RJException(ErrorData.LOGIN_ANOTHER_SERVER);
                 }
                 ServerInfo loggedServerInfo = userRedisService.getLoggedServer(account);
                 if (loggedServerInfo != null) {
-                    if (loggedServerInfo.getId() != roomManager.getServerInfo().getId()) {
+                    if (loggedServerInfo.getId() != serverInfo.getId()) {
                         log.info("已经登录到另一台服务器了");
-                        throw new RJException(ErrorData.LOGIN_ALREADY_CONNECT_ANOTHER_SERVER);
+                        throw new RJException(ErrorData.LOGIN_LOGGED_ANOTHER_SERVER);
                     }
                 }
-                ServerInfo allocServerInfo = userRedisService.getAllocateServer(account);
-
-                //玩家跨服
-                boolean cross = false;
-                if (allocServerInfo.getId() != roomManager.getServerInfo().getId()) {
-                    cross = true;
-                }
+//                ServerInfo allocServerInfo = userRedisService.getAllocateServer(account);
+//
+//                //玩家跨服
+//                boolean cross = false;
+//                if (allocServerInfo.getId() != getServerInfo().getId()) {
+//                    cross = true;
+//                }
                 synchronized (account.intern()) {
                     role = accRolesMap.get(account);
-                    if (role == null) {
-                        role = createRole();
-                        accRolesMap.put(account, role);
-                    } else if (role.isOnline()) {
-                        // TODO: 2018/10/22 如果role在线,踢下线
+                    if (role != null){
+                        kickRole(role);
                     }
-                    role.setAccount(user.getAccount());
-                    role.setOnline(true);
+                    role = createRole(account);
+                    accRolesMap.put(account,role);
                     role.setChannel(channel);
-                    role.setCross(cross);
                 }
-                userRedisService.bindLoggedServer(account, roomManager.getServerInfo());
+                userRedisService.bindLoggedServer(account, serverInfo);
                 channel.attr(ROLE_ATTRIBUTE_KEY).set(role);
                 channel.attr(AUTH_STATUS_ATTRIBUTE_KEY).set(AuthStatus.Authed);
                 builder.setCode(0);
@@ -154,10 +141,17 @@ public abstract class SessionManager<R extends Role<M>, M extends Room> implemen
         });
     }
 
-    public abstract R createRole();
+    protected abstract void kickRole(R role);
 
-    private R getRole(Channel channel) {
+    public abstract R createRole(String account);
+
+    public R getRole(Channel channel) {
         return channel.attr(ROLE_ATTRIBUTE_KEY).get();
+    }
+
+    @Override
+    public R getRole(String account) {
+        return accRolesMap.get(account);
     }
 
     public boolean isLogin(Channel channel) {
@@ -165,28 +159,9 @@ public abstract class SessionManager<R extends Role<M>, M extends Room> implemen
         return status == AuthStatus.Authed;
     }
 
-    public void createCardRoom(Channel channel, Frame frame) throws RJException {
-        CreateCardRoomResponse.Builder builder = CreateCardRoomResponse.newBuilder();
-        R role = getRole(channel);
-        if (role == null) {
-            throw new RJException(ErrorData.NOT_LOGGED_IN);
-        }
-        roleExecutorService(role).execute(() -> {
-            try {
-//                if (!isLogin(channel)) {
-//                    log.info("还没有登录");
-//                    throw new RJException(ErrorData.NOT_LOGGED_IN);
-//                }
-                M room = roomManager.createCardRoom(role, frame);
-                builder.setCode(0);
-                builder.setRoomId(room.getId());
-            } catch (RJException e) {
-                builder.setCode(e.getErrorData().getCode());
-                builder.setMsg(e.getErrorData().getMsg());
-            } finally {
-                MessageUtil.send(channel, Action.CreateCardRoomRes, builder.build());
-            }
-        });
+    @Override
+    public M createRoom(CreateCardRoomRequest request) throws RJException{
+        return roomHelper.createRoom(request);
     }
 
     private class DelayRunnable implements Runnable {

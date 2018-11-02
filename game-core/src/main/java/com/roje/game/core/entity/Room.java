@@ -1,16 +1,9 @@
 package com.roje.game.core.entity;
 
-import com.roje.game.core.thread.RoomScheduledExecutorService;
-import lombok.Getter;
-import lombok.Setter;
 
-import java.io.Serializable;
+public class IRoom {
 
-@Getter@Setter
-public class Room implements Serializable {
-    private static final long serialVersionUID = -1871955572775979409L;
+    protected long id;
 
-    private transient RoomScheduledExecutorService executor;
-
-    private int id;
+    protected String owner;
 }

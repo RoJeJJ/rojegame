@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.async.DeferredResult;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 public class UserController {
 
     private final ServerSessionManager serverManager;
@@ -18,15 +18,13 @@ public class UserController {
     }
 
 
-    @PostMapping(value = "/game/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public DeferredResult<String> allocate(
-            @PathVariable("id") int gameId,
-            @RequestParam("version") int version,
-            @RequestParam("account") String account) {
+    @PostMapping(value = "/game/allocate")
+    public DeferredResult<String> allocate(@RequestParam("version") int version,
+                                           @RequestParam("account") String account) {
         final DeferredResult<String> deferredResult = new DeferredResult<>();
         serverManager.accountExecutorService(account)
                 .execute(() -> {
-                    String result = serverManager.allocateServer(account,gameId,version);
+                    String result = serverManager.allocateServer(account,version);
                     deferredResult.setResult(result);
                 });
         return deferredResult;

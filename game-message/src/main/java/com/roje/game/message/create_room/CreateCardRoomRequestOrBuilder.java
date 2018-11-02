@@ -8,20 +8,30 @@ public interface CreateCardRoomRequestOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>int32 gameId = 1;</code>
+   * <code>int32 type = 1;</code>
    */
-  int getGameId();
+  int getType();
 
   /**
-   * <code>.google.protobuf.Any config = 2;</code>
+   * <code>string account = 2;</code>
+   */
+  java.lang.String getAccount();
+  /**
+   * <code>string account = 2;</code>
+   */
+  com.google.protobuf.ByteString
+      getAccountBytes();
+
+  /**
+   * <code>.google.protobuf.Any config = 3;</code>
    */
   boolean hasConfig();
   /**
-   * <code>.google.protobuf.Any config = 2;</code>
+   * <code>.google.protobuf.Any config = 3;</code>
    */
   com.google.protobuf.Any getConfig();
   /**
-   * <code>.google.protobuf.Any config = 2;</code>
+   * <code>.google.protobuf.Any config = 3;</code>
    */
   com.google.protobuf.AnyOrBuilder getConfigOrBuilder();
 }

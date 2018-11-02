@@ -1,5 +1,8 @@
 package com.roje.game.cluster;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.roje.game.core.config.NettyServerConfig;
 import com.roje.game.core.config.ThreadProperties;
 import com.roje.game.core.dispatcher.MessageDispatcher;
@@ -14,7 +17,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 
 @SpringBootApplication
 public class AppCluster {
@@ -25,6 +30,19 @@ public class AppCluster {
     @Bean
     public UserRedisService userRedisService(RedisTemplate<Object,Object> redisTemplate){
         return new UserRedisService(redisTemplate);
+    }
+
+    @Bean
+    public RedisTemplate<Object,Object> redisTemplate(RedisConnectionFactory factory){
+        RedisTemplate<Object,Object> redisTemplate = new RedisTemplate<>();
+        redisTemplate.setConnectionFactory(factory);
+
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
+        mapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
+
+        redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer(mapper));
+        return redisTemplate;
     }
 
     @Bean

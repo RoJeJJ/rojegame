@@ -1,31 +1,40 @@
 package com.roje.game.hall;
 
 import com.roje.game.core.config.ClusterClientConfig;
-import com.roje.game.core.config.NettyConnGateClientConfig;
+import com.roje.game.core.config.NettyServerConfig;
 import com.roje.game.core.config.ThreadProperties;
 import com.roje.game.core.dispatcher.MessageDispatcher;
 import com.roje.game.core.manager.session.ISessionManager;
+import com.roje.game.core.manager.session.SessionManager;
 import com.roje.game.core.netty.NettyClusterTcpClient;
-import com.roje.game.core.netty.NettyGateTcpClient;
+import com.roje.game.core.netty.NettyTcpServer;
 import com.roje.game.core.netty.channel.initializer.ClusterClientChannelInitializer;
-import com.roje.game.core.service.Service;
-import com.roje.game.core.redis.service.IdService;
+import com.roje.game.core.netty.channel.initializer.GameServerChannelInitializer;
+import com.roje.game.core.processor.req.LoginReqProcessor;
+import com.roje.game.core.redis.lock.AuthLock;
 import com.roje.game.core.redis.service.UserRedisService;
-import com.roje.game.core.thread.executor.RJExecutor;
-import com.roje.game.hall.manager.HallUserManager;
-import com.roje.game.hall.service.UserService;
-import io.netty.channel.ChannelInitializer;
-import io.netty.channel.socket.SocketChannel;
-import org.springframework.beans.factory.annotation.Qualifier;
+import com.roje.game.core.server.ServerInfo;
+import com.roje.game.core.service.Service;
+import org.redisson.Redisson;
+import org.redisson.api.RedissonClient;
+import org.redisson.config.Config;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
+
+import java.io.IOException;
 
 @SpringBootApplication
+@Import(value = {
+        MessageDispatcher.class,
+        ServerInfo.class,
+        ClusterClientConfig.class,
+        ThreadProperties.class
+})
 public class AppHall {
     public static void main(String[] args) {
         SpringApplication app = new SpringApplication(AppHall.class);
@@ -34,56 +43,8 @@ public class AppHall {
     }
 
     @Bean
-    @ConfigurationProperties(prefix = "thread-config")
-    public ThreadProperties threadConfig() {
-        return new ThreadProperties();
-    }
-
-    @Bean
-    public BaseInfo hallInfo() {
-        return new BaseInfo();
-    }
-
-    @Bean
-    public ClusterClientConfig hallClusterClientConfig() {
-        return new ClusterClientConfig();
-    }
-
-    @Bean
-    public NettyConnGateClientConfig nettyConnGateClientConfig() {
-        return new NettyConnGateClientConfig();
-    }
-
-    @Bean
-    public Service hallGateExecutorService(ThreadProperties config) {
-        return new Service(config);
-    }
-
-    @Bean
-    public HallUserManager hallUserManager(
-            UserService userService) {
-        return new HallUserManager(userService, idService);
-    }
-
-
-    @Bean
-    public MessageDispatcher messageDispatcher() {
-        return new MessageDispatcher();
-    }
-
-    @Bean("hallClusterClientChannelInitializer")
-    public ClusterClientChannelInitializer hallClusterClientChannelInitializer(ClusterClientConfig clusterClientConfig,
-                                                                               MessageDispatcher dispatcher,
-                                                                               ISessionManager ISessionManager,
-                                                                               BaseInfo baseInfo) {
-        return new ClusterClientChannelInitializer(clusterClientConfig, dispatcher, ISessionManager, baseInfo);
-    }
-
-    @Bean
-    public NettyClusterTcpClient hallClusterTcpClient(
-            ClusterClientConfig clusterClientConfig,
-            @Qualifier("hallClusterClientChannelInitializer") ChannelInitializer<SocketChannel> channelInitializer) {
-        return new NettyClusterTcpClient(clusterClientConfig, channelInitializer);
+    public Service service(ThreadProperties properties){
+        return new Service(properties);
     }
 
     @Bean
@@ -91,23 +52,56 @@ public class AppHall {
         return new UserRedisService(redisTemplate);
     }
 
-    @Bean public IdService idService(
-            StringRedisTemplate stringRedisTemplate){
-        return new IdService(stringRedisTemplate);
+    @Bean(destroyMethod="shutdown")
+    public RedissonClient redisson() throws IOException {
+        return Redisson.create(Config.fromYAML(new ClassPathResource("redisson.yml").getInputStream()));
     }
 
     @Bean
-    public NettyGateTcpClient hallGateTcpClient(
-            NettyConnGateClientConfig nettyConnGateClientConfig,
-            Service service,
+    public AuthLock AuthLock(RedissonClient client){
+        return new AuthLock(client);
+    }
+
+    @Bean
+    public ClusterClientChannelInitializer clusterClientChannelInitializer(
+            ClusterClientConfig config,
             MessageDispatcher dispatcher,
             ISessionManager sessionManager,
-            BaseInfo hallInfo){
-        return new NettyGateTcpClient(nettyConnGateClientConfig,service,dispatcher,sessionManager,hallInfo);
+            ServerInfo serverInfo){
+        return new ClusterClientChannelInitializer(config,dispatcher,sessionManager,serverInfo);
     }
 
     @Bean
-    public RJExecutor userExecutor(){
-        return new RJExecutor(3,"user");
+    public NettyClusterTcpClient clusterTcpClient(
+            ClusterClientConfig config,
+            ClusterClientChannelInitializer channelInitializer) {
+        return new NettyClusterTcpClient(config, channelInitializer);
+    }
+
+    @Bean
+    public NettyServerConfig nettyTcpServerConfig(){
+        return new NettyServerConfig();
+    }
+
+    @Bean
+    public GameServerChannelInitializer gameServerChannelInitializer(
+            NettyServerConfig config,
+            Service service,
+            SessionManager sessionManager,
+            MessageDispatcher dispatcher){
+        return new GameServerChannelInitializer(config,service,sessionManager,dispatcher);
+    }
+
+    @Bean
+    public NettyTcpServer userTcpServer(
+            GameServerChannelInitializer channelInitializer,
+            NettyServerConfig nettyServerConfig){
+        return new NettyTcpServer(channelInitializer,nettyServerConfig);
+    }
+
+    @Bean public LoginReqProcessor loginReqProcessor(
+            ISessionManager sessionManager,
+            UserRedisService userRedisService){
+        return new LoginReqProcessor(sessionManager,userRedisService);
     }
 }

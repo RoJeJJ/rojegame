@@ -36,9 +36,9 @@ public interface ServInfoOrBuilder extends
   int getPort();
 
   /**
-   * <code>int32 gameId = 4;</code>
+   * <code>int32 type = 4;</code>
    */
-  int getGameId();
+  int getType();
 
   /**
    * <pre>

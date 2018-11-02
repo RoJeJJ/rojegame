@@ -1,12 +1,13 @@
 package com.roje.game.cluster.utils;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.roje.game.core.server.ServerInfo;
 import lombok.Getter;
 
 public class ResponseUtil {
     public enum ResponseData{
-        SUCESS(0,"ok"),
+        SUCCESS(0,"ok"),
         USER_NOT_EXIST(0,"用户不存在"),
         USER_NAME_NOT_EMPTY(1,"用户名不能为空"),
         USER_NAME_ERROR(2,"用户名错误"),
@@ -31,10 +32,10 @@ public class ResponseUtil {
         return object.toString();
     }
 
-    public static String success(ServerInfo info){
+    public static String success(JsonElement data){
         JsonObject object = new JsonObject();
-        object.addProperty("code",ResponseData.SUCESS.getCode());
-        object.add("data",info.json());
+        object.addProperty("code",ResponseData.SUCCESS.getCode());
+        object.add("data",data);
         return object.toString();
     }
 }

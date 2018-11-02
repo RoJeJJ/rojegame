@@ -1,5 +1,6 @@
 package com.roje.game.cluster.server;
 
+import com.google.gson.annotations.Expose;
 import com.roje.game.core.server.ServerInfo;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,26 +11,30 @@ public class CuServerInfo {
     private int id;
     private String ip;
     private int port;
-    private int gameId;
-    private int maxUserCount;
+    private int type;
+    @Expose private int maxUserCount;
     private String name;
-    private int requireVersion;
-    private int online;
+    @Expose private int requireVersion;
+    @Expose private int online;
 
-    public ServerInfo toServerInfo(){
-        ServerInfo info = new ServerInfo();
-        info.setId(id);
-        info.setName(name);
-        info.setRequireVersion(requireVersion);
-        info.setMaxUserCount(maxUserCount);
-        info.setGameId(gameId);
-        info.setIp(ip);
-        info.setPort(port);
-        return info;
+    public ServerInfo serverInfo(){
+        ServerInfo serverInfo = new ServerInfo();
+        serverInfo.setId(id);
+        serverInfo.setIp(ip);
+        serverInfo.setPort(port);
+        serverInfo.setType(type);
+        serverInfo.setMaxUserCount(maxUserCount);
+        serverInfo.setName(name);
+        serverInfo.setRequireVersion(requireVersion);
+        return serverInfo;
+    }
+
+    public void increaseOnline(){
+        online++;
     }
 
     @Override
     public String toString() {
-        return "server{id:"+id+",ip:"+ip+",port:"+port+",gameId:"+gameId+",name:"+name+"}";
+        return "server{id:"+id+",ip:"+ip+",port:"+port+",type:"+ type +",name:"+name+"}";
     }
 }

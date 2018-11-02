@@ -5,7 +5,8 @@ import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @Getter@Setter
-@ConfigurationProperties
-public class GameProperties {
-    protected int maxCreateCount;
+@ConfigurationProperties(prefix = "room")
+public class RoomProperties {
+    protected int userMaxCreateCount;
+    protected int maxRoomSize;
 }

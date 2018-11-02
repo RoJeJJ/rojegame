@@ -30,7 +30,16 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "User:{id:"+id+",account:"+account+",nickname:"+nickname+"}";
+        return "User{" +
+                "id=" + id +
+                ", account='" + account + '\'' +
+                ", password='" + password + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", headimg='" + headimg + '\'' +
+                ", sex=" + sex +
+                ", gold=" + gold +
+                ", card=" + card +
+                '}';
     }
 
     public JsonObject userInfo(){

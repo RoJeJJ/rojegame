@@ -19,7 +19,7 @@ private static final long serialVersionUID = 0L;
     id_ = 0;
     ip_ = "";
     port_ = 0;
-    gameId_ = 0;
+    type_ = 0;
     online_ = 0;
     maxUserCount_ = 0;
     name_ = "";
@@ -68,7 +68,7 @@ private static final long serialVersionUID = 0L;
           }
           case 32: {
 
-            gameId_ = input.readInt32();
+            type_ = input.readInt32();
             break;
           }
           case 40: {
@@ -184,13 +184,13 @@ private static final long serialVersionUID = 0L;
     return port_;
   }
 
-  public static final int GAMEID_FIELD_NUMBER = 4;
-  private int gameId_;
+  public static final int TYPE_FIELD_NUMBER = 4;
+  private int type_;
   /**
-   * <code>int32 gameId = 4;</code>
+   * <code>int32 type = 4;</code>
    */
-  public int getGameId() {
-    return gameId_;
+  public int getType() {
+    return type_;
   }
 
   public static final int ONLINE_FIELD_NUMBER = 5;
@@ -293,8 +293,8 @@ private static final long serialVersionUID = 0L;
     if (port_ != 0) {
       output.writeInt32(3, port_);
     }
-    if (gameId_ != 0) {
-      output.writeInt32(4, gameId_);
+    if (type_ != 0) {
+      output.writeInt32(4, type_);
     }
     if (online_ != 0) {
       output.writeInt32(5, online_);
@@ -328,9 +328,9 @@ private static final long serialVersionUID = 0L;
       size += com.google.protobuf.CodedOutputStream
         .computeInt32Size(3, port_);
     }
-    if (gameId_ != 0) {
+    if (type_ != 0) {
       size += com.google.protobuf.CodedOutputStream
-        .computeInt32Size(4, gameId_);
+        .computeInt32Size(4, type_);
     }
     if (online_ != 0) {
       size += com.google.protobuf.CodedOutputStream
@@ -369,8 +369,8 @@ private static final long serialVersionUID = 0L;
         .equals(other.getIp());
     result = result && (getPort()
         == other.getPort());
-    result = result && (getGameId()
-        == other.getGameId());
+    result = result && (getType()
+        == other.getType());
     result = result && (getOnline()
         == other.getOnline());
     result = result && (getMaxUserCount()
@@ -396,8 +396,8 @@ private static final long serialVersionUID = 0L;
     hash = (53 * hash) + getIp().hashCode();
     hash = (37 * hash) + PORT_FIELD_NUMBER;
     hash = (53 * hash) + getPort();
-    hash = (37 * hash) + GAMEID_FIELD_NUMBER;
-    hash = (53 * hash) + getGameId();
+    hash = (37 * hash) + TYPE_FIELD_NUMBER;
+    hash = (53 * hash) + getType();
     hash = (37 * hash) + ONLINE_FIELD_NUMBER;
     hash = (53 * hash) + getOnline();
     hash = (37 * hash) + MAXUSERCOUNT_FIELD_NUMBER;
@@ -545,7 +545,7 @@ private static final long serialVersionUID = 0L;
 
       port_ = 0;
 
-      gameId_ = 0;
+      type_ = 0;
 
       online_ = 0;
 
@@ -584,7 +584,7 @@ private static final long serialVersionUID = 0L;
       result.id_ = id_;
       result.ip_ = ip_;
       result.port_ = port_;
-      result.gameId_ = gameId_;
+      result.type_ = type_;
       result.online_ = online_;
       result.maxUserCount_ = maxUserCount_;
       result.name_ = name_;
@@ -647,8 +647,8 @@ private static final long serialVersionUID = 0L;
       if (other.getPort() != 0) {
         setPort(other.getPort());
       }
-      if (other.getGameId() != 0) {
-        setGameId(other.getGameId());
+      if (other.getType() != 0) {
+        setType(other.getType());
       }
       if (other.getOnline() != 0) {
         setOnline(other.getOnline());
@@ -833,28 +833,28 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private int gameId_ ;
+    private int type_ ;
     /**
-     * <code>int32 gameId = 4;</code>
+     * <code>int32 type = 4;</code>
      */
-    public int getGameId() {
-      return gameId_;
+    public int getType() {
+      return type_;
     }
     /**
-     * <code>int32 gameId = 4;</code>
+     * <code>int32 type = 4;</code>
      */
-    public Builder setGameId(int value) {
+    public Builder setType(int value) {
       
-      gameId_ = value;
+      type_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>int32 gameId = 4;</code>
+     * <code>int32 type = 4;</code>
      */
-    public Builder clearGameId() {
+    public Builder clearType() {
       
-      gameId_ = 0;
+      type_ = 0;
       onChanged();
       return this;
     }

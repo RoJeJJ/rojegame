@@ -10,6 +10,6 @@ public class LoginLock {
     }
 
     public RLock getLock(String account){
-        return redissonClient.getLock("lock-login-"+account);
+        return redissonClient.getLock("lock-"+account);
     }
 }

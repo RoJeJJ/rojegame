@@ -45,6 +45,14 @@ public enum Action
    */
   CreateCardRoomRes(20002),
   /**
+   * <code>EntryRoomReq = 20003;</code>
+   */
+  EntryRoomReq(20003),
+  /**
+   * <code>EntryRoomRes = 20004;</code>
+   */
+  EntryRoomRes(20004),
+  /**
    * <code>ErrorResponse = 30001;</code>
    */
   ErrorResponse(30001),
@@ -88,6 +96,14 @@ public enum Action
    */
   public static final int CreateCardRoomRes_VALUE = 20002;
   /**
+   * <code>EntryRoomReq = 20003;</code>
+   */
+  public static final int EntryRoomReq_VALUE = 20003;
+  /**
+   * <code>EntryRoomRes = 20004;</code>
+   */
+  public static final int EntryRoomRes_VALUE = 20004;
+  /**
    * <code>ErrorResponse = 30001;</code>
    */
   public static final int ErrorResponse_VALUE = 30001;
@@ -120,6 +136,8 @@ public enum Action
       case 10002: return loginRes;
       case 20001: return CreateCardRoomReq;
       case 20002: return CreateCardRoomRes;
+      case 20003: return EntryRoomReq;
+      case 20004: return EntryRoomRes;
       case 30001: return ErrorResponse;
       default: return null;
     }

@@ -4,12 +4,23 @@ option java_package = "com.roje.game.message.create_room";
 option java_multiple_files = true;
 
 message CreateCardRoomRequest{
-    int32 gameId = 1;
-    google.protobuf.Any config = 2;
+    int32 type = 1;
+    string account = 2;
+    google.protobuf.Any config = 3;
 }
 
 message CreateCardRoomResponse{
     int32 code = 1;
     string msg = 2;
-    int32 roomId = 3;
+    google.protobuf.Any responseData = 3;
+    string account = 4;
+    int32 type = 5;
+}
+
+message EntryRoomRequest {
+    int64 roomId = 1;
+}
+
+message EntryRoomResponse {
+
 }

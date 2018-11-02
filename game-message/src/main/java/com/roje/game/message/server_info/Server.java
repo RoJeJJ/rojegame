@@ -48,17 +48,17 @@ public final class Server {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\014server.proto\"\214\001\n\010ServInfo\022\n\n\002id\030\001 \001(\005\022" +
-      "\n\n\002ip\030\002 \001(\t\022\014\n\004port\030\003 \001(\005\022\016\n\006gameId\030\004 \001(" +
-      "\005\022\016\n\006online\030\005 \001(\005\022\024\n\014maxUserCount\030\006 \001(\005\022" +
-      "\014\n\004name\030\007 \001(\t\022\026\n\016requireVersion\030\010 \001(\005\"-\n" +
-      "\016ServRegRequest\022\033\n\010servInfo\030\001 \001(\0132\t.Serv" +
-      "Info\";\n\017ServRegResponse\022\017\n\007success\030\001 \001(\010" +
-      "\022\013\n\003msg\030\002 \001(\t\022\n\n\002id\030\003 \001(\005\".\n\017ServInfoReq" +
-      "uest\022\033\n\010servInfo\030\001 \001(\0132\t.ServInfo\"0\n\020Ser" +
-      "vInfoResponse\022\017\n\007success\030\001 \001(\010\022\013\n\003msg\030\002 " +
-      "\001(\tB%\n!com.roje.game.message.server_info" +
-      "P\001b\006proto3"
+      "\n\014server.proto\"\212\001\n\010ServInfo\022\n\n\002id\030\001 \001(\005\022" +
+      "\n\n\002ip\030\002 \001(\t\022\014\n\004port\030\003 \001(\005\022\014\n\004type\030\004 \001(\005\022" +
+      "\016\n\006online\030\005 \001(\005\022\024\n\014maxUserCount\030\006 \001(\005\022\014\n" +
+      "\004name\030\007 \001(\t\022\026\n\016requireVersion\030\010 \001(\005\"-\n\016S" +
+      "ervRegRequest\022\033\n\010servInfo\030\001 \001(\0132\t.ServIn" +
+      "fo\";\n\017ServRegResponse\022\017\n\007success\030\001 \001(\010\022\013" +
+      "\n\003msg\030\002 \001(\t\022\n\n\002id\030\003 \001(\005\".\n\017ServInfoReque" +
+      "st\022\033\n\010servInfo\030\001 \001(\0132\t.ServInfo\"0\n\020ServI" +
+      "nfoResponse\022\017\n\007success\030\001 \001(\010\022\013\n\003msg\030\002 \001(" +
+      "\tB%\n!com.roje.game.message.server_infoP\001" +
+      "b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -77,7 +77,7 @@ public final class Server {
     internal_static_ServInfo_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_ServInfo_descriptor,
-        new java.lang.String[] { "Id", "Ip", "Port", "GameId", "Online", "MaxUserCount", "Name", "RequireVersion", });
+        new java.lang.String[] { "Id", "Ip", "Port", "Type", "Online", "MaxUserCount", "Name", "RequireVersion", });
     internal_static_ServRegRequest_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_ServRegRequest_fieldAccessorTable = new

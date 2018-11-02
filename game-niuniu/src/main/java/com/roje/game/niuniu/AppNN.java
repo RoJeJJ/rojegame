@@ -2,22 +2,20 @@ package com.roje.game.niuniu;
 
 import com.roje.game.core.config.ClusterClientConfig;
 import com.roje.game.core.config.NettyServerConfig;
+import com.roje.game.core.config.RoomProperties;
 import com.roje.game.core.config.ThreadProperties;
 import com.roje.game.core.dispatcher.MessageDispatcher;
-import com.roje.game.core.redis.lock.AuthLock;
 import com.roje.game.core.manager.session.ISessionManager;
 import com.roje.game.core.manager.session.SessionManager;
 import com.roje.game.core.netty.NettyClusterTcpClient;
 import com.roje.game.core.netty.NettyTcpServer;
 import com.roje.game.core.netty.channel.initializer.ClusterClientChannelInitializer;
 import com.roje.game.core.netty.channel.initializer.GameServerChannelInitializer;
-import com.roje.game.core.server.ServerInfo;
-import com.roje.game.core.service.Service;
+import com.roje.game.core.redis.lock.AuthLock;
 import com.roje.game.core.redis.service.RoomRedisService;
 import com.roje.game.core.redis.service.UserRedisService;
-import com.roje.game.niuniu.manager.NNRoomManager;
-import com.roje.game.niuniu.manager.NNSessionManager;
-import com.roje.game.niuniu.properties.NiuNiuProperties;
+import com.roje.game.core.server.ServerInfo;
+import com.roje.game.core.service.Service;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;
@@ -57,6 +55,10 @@ public class AppNN {
         return new ServerInfo();
     }
 
+    @Bean public RoomProperties roomProperties(){
+        return new RoomProperties();
+    }
+
     @Bean
     public ClusterClientChannelInitializer clusterClientChannelInitializer(
             ClusterClientConfig config,
@@ -74,24 +76,10 @@ public class AppNN {
     }
 
     @Bean
-    public NNRoomManager roomManager(NiuNiuProperties properties,
-                                     RoomRedisService roomRedisService,
-                                     ServerInfo serverInfo,
-                                     Service service){
-        return new NNRoomManager(properties,roomRedisService,serverInfo,service);
-    }
-
-    @Bean
     public UserRedisService userRedisService(RedisTemplate<Object,Object> redisTemplate){
         return new UserRedisService(redisTemplate);
     }
 
-    @Bean
-    public NNSessionManager sessionManager(UserRedisService userRedisService,
-                                           NNRoomManager roomManager,
-                                           AuthLock authLock){
-        return new NNSessionManager(userRedisService,roomManager,authLock);
-    }
 
     @Bean
     public ThreadProperties threadConfig(){

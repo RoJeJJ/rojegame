@@ -4,6 +4,7 @@ import com.roje.game.core.entity.Room;
 import com.roje.game.core.server.ServerInfo;
 import org.springframework.data.redis.core.RedisTemplate;
 
+import java.util.Map;
 import java.util.Random;
 
 public class RoomRedisService {
@@ -15,14 +16,12 @@ public class RoomRedisService {
         this.redisTemplate = redisTemplate;
     }
 
-    public synchronized <T extends Room> int generate(ServerInfo serverInfo, T room){
-        Random random = new Random();
-        int id = random.nextInt(100000)+serverInfo.getId()*100000;
-        while (redisTemplate.opsForHash().hasKey(ROOM_REDIS,id)){
-            id = random.nextInt(100000)+serverInfo.getId()*100000;
-        }
-        redisTemplate.opsForHash().put(ROOM_REDIS,id,room);
-        return id;
+    public <T extends Room> void save(T room){
+        redisTemplate.opsForHash().put(ROOM_REDIS,room.getId(),room);
+    }
+
+    public Map<Object, Object> getRooms(){
+        return redisTemplate.opsForHash().entries(ROOM_REDIS);
     }
 
 

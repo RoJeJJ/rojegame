@@ -20,3 +20,7 @@ thread-config:
   custom-configs:
     - name: account
       thread-size: 3
+server-info:
+  ip: localhost
+  port: ${server.port}
+  id: 100

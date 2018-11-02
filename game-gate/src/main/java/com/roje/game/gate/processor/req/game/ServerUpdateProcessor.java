@@ -4,8 +4,6 @@ import com.roje.game.core.processor.MessageProcessor;
 import com.roje.game.core.processor.Processor;
 import com.roje.game.message.action.Action;
 import com.roje.game.message.frame.Frame;
-import com.roje.game.message.server_info.ServerInfo;
-import com.roje.game.message.server_update.ServerUpdateRequest;
 import io.netty.channel.Channel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

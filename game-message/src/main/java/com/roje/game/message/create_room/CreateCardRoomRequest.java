@@ -16,7 +16,8 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private CreateCardRoomRequest() {
-    gameId_ = 0;
+    type_ = 0;
+    account_ = "";
   }
 
   @java.lang.Override
@@ -45,10 +46,16 @@ private static final long serialVersionUID = 0L;
             break;
           case 8: {
 
-            gameId_ = input.readInt32();
+            type_ = input.readInt32();
             break;
           }
           case 18: {
+            java.lang.String s = input.readStringRequireUtf8();
+
+            account_ = s;
+            break;
+          }
+          case 26: {
             com.google.protobuf.Any.Builder subBuilder = null;
             if (config_ != null) {
               subBuilder = config_.toBuilder();
@@ -93,31 +100,65 @@ private static final long serialVersionUID = 0L;
             com.roje.game.message.create_room.CreateCardRoomRequest.class, com.roje.game.message.create_room.CreateCardRoomRequest.Builder.class);
   }
 
-  public static final int GAMEID_FIELD_NUMBER = 1;
-  private int gameId_;
+  public static final int TYPE_FIELD_NUMBER = 1;
+  private int type_;
   /**
-   * <code>int32 gameId = 1;</code>
+   * <code>int32 type = 1;</code>
    */
-  public int getGameId() {
-    return gameId_;
+  public int getType() {
+    return type_;
   }
 
-  public static final int CONFIG_FIELD_NUMBER = 2;
+  public static final int ACCOUNT_FIELD_NUMBER = 2;
+  private volatile java.lang.Object account_;
+  /**
+   * <code>string account = 2;</code>
+   */
+  public java.lang.String getAccount() {
+    java.lang.Object ref = account_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      account_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string account = 2;</code>
+   */
+  public com.google.protobuf.ByteString
+      getAccountBytes() {
+    java.lang.Object ref = account_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      account_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
+  public static final int CONFIG_FIELD_NUMBER = 3;
   private com.google.protobuf.Any config_;
   /**
-   * <code>.google.protobuf.Any config = 2;</code>
+   * <code>.google.protobuf.Any config = 3;</code>
    */
   public boolean hasConfig() {
     return config_ != null;
   }
   /**
-   * <code>.google.protobuf.Any config = 2;</code>
+   * <code>.google.protobuf.Any config = 3;</code>
    */
   public com.google.protobuf.Any getConfig() {
     return config_ == null ? com.google.protobuf.Any.getDefaultInstance() : config_;
   }
   /**
-   * <code>.google.protobuf.Any config = 2;</code>
+   * <code>.google.protobuf.Any config = 3;</code>
    */
   public com.google.protobuf.AnyOrBuilder getConfigOrBuilder() {
     return getConfig();
@@ -137,11 +178,14 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (gameId_ != 0) {
-      output.writeInt32(1, gameId_);
+    if (type_ != 0) {
+      output.writeInt32(1, type_);
+    }
+    if (!getAccountBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, account_);
     }
     if (config_ != null) {
-      output.writeMessage(2, getConfig());
+      output.writeMessage(3, getConfig());
     }
     unknownFields.writeTo(output);
   }
@@ -152,13 +196,16 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (gameId_ != 0) {
+    if (type_ != 0) {
       size += com.google.protobuf.CodedOutputStream
-        .computeInt32Size(1, gameId_);
+        .computeInt32Size(1, type_);
+    }
+    if (!getAccountBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, account_);
     }
     if (config_ != null) {
       size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(2, getConfig());
+        .computeMessageSize(3, getConfig());
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -176,8 +223,10 @@ private static final long serialVersionUID = 0L;
     com.roje.game.message.create_room.CreateCardRoomRequest other = (com.roje.game.message.create_room.CreateCardRoomRequest) obj;
 
     boolean result = true;
-    result = result && (getGameId()
-        == other.getGameId());
+    result = result && (getType()
+        == other.getType());
+    result = result && getAccount()
+        .equals(other.getAccount());
     result = result && (hasConfig() == other.hasConfig());
     if (hasConfig()) {
       result = result && getConfig()
@@ -194,8 +243,10 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + GAMEID_FIELD_NUMBER;
-    hash = (53 * hash) + getGameId();
+    hash = (37 * hash) + TYPE_FIELD_NUMBER;
+    hash = (53 * hash) + getType();
+    hash = (37 * hash) + ACCOUNT_FIELD_NUMBER;
+    hash = (53 * hash) + getAccount().hashCode();
     if (hasConfig()) {
       hash = (37 * hash) + CONFIG_FIELD_NUMBER;
       hash = (53 * hash) + getConfig().hashCode();
@@ -333,7 +384,9 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      gameId_ = 0;
+      type_ = 0;
+
+      account_ = "";
 
       if (configBuilder_ == null) {
         config_ = null;
@@ -367,7 +420,8 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public com.roje.game.message.create_room.CreateCardRoomRequest buildPartial() {
       com.roje.game.message.create_room.CreateCardRoomRequest result = new com.roje.game.message.create_room.CreateCardRoomRequest(this);
-      result.gameId_ = gameId_;
+      result.type_ = type_;
+      result.account_ = account_;
       if (configBuilder_ == null) {
         result.config_ = config_;
       } else {
@@ -421,8 +475,12 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(com.roje.game.message.create_room.CreateCardRoomRequest other) {
       if (other == com.roje.game.message.create_room.CreateCardRoomRequest.getDefaultInstance()) return this;
-      if (other.getGameId() != 0) {
-        setGameId(other.getGameId());
+      if (other.getType() != 0) {
+        setType(other.getType());
+      }
+      if (!other.getAccount().isEmpty()) {
+        account_ = other.account_;
+        onChanged();
       }
       if (other.hasConfig()) {
         mergeConfig(other.getConfig());
@@ -456,28 +514,97 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private int gameId_ ;
+    private int type_ ;
     /**
-     * <code>int32 gameId = 1;</code>
+     * <code>int32 type = 1;</code>
      */
-    public int getGameId() {
-      return gameId_;
+    public int getType() {
+      return type_;
     }
     /**
-     * <code>int32 gameId = 1;</code>
+     * <code>int32 type = 1;</code>
      */
-    public Builder setGameId(int value) {
+    public Builder setType(int value) {
       
-      gameId_ = value;
+      type_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>int32 gameId = 1;</code>
+     * <code>int32 type = 1;</code>
      */
-    public Builder clearGameId() {
+    public Builder clearType() {
       
-      gameId_ = 0;
+      type_ = 0;
+      onChanged();
+      return this;
+    }
+
+    private java.lang.Object account_ = "";
+    /**
+     * <code>string account = 2;</code>
+     */
+    public java.lang.String getAccount() {
+      java.lang.Object ref = account_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        account_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>string account = 2;</code>
+     */
+    public com.google.protobuf.ByteString
+        getAccountBytes() {
+      java.lang.Object ref = account_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        account_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string account = 2;</code>
+     */
+    public Builder setAccount(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      account_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string account = 2;</code>
+     */
+    public Builder clearAccount() {
+      
+      account_ = getDefaultInstance().getAccount();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string account = 2;</code>
+     */
+    public Builder setAccountBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      
+      account_ = value;
       onChanged();
       return this;
     }
@@ -486,13 +613,13 @@ private static final long serialVersionUID = 0L;
     private com.google.protobuf.SingleFieldBuilderV3<
         com.google.protobuf.Any, com.google.protobuf.Any.Builder, com.google.protobuf.AnyOrBuilder> configBuilder_;
     /**
-     * <code>.google.protobuf.Any config = 2;</code>
+     * <code>.google.protobuf.Any config = 3;</code>
      */
     public boolean hasConfig() {
       return configBuilder_ != null || config_ != null;
     }
     /**
-     * <code>.google.protobuf.Any config = 2;</code>
+     * <code>.google.protobuf.Any config = 3;</code>
      */
     public com.google.protobuf.Any getConfig() {
       if (configBuilder_ == null) {
@@ -502,7 +629,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>.google.protobuf.Any config = 2;</code>
+     * <code>.google.protobuf.Any config = 3;</code>
      */
     public Builder setConfig(com.google.protobuf.Any value) {
       if (configBuilder_ == null) {
@@ -518,7 +645,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>.google.protobuf.Any config = 2;</code>
+     * <code>.google.protobuf.Any config = 3;</code>
      */
     public Builder setConfig(
         com.google.protobuf.Any.Builder builderForValue) {
@@ -532,7 +659,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>.google.protobuf.Any config = 2;</code>
+     * <code>.google.protobuf.Any config = 3;</code>
      */
     public Builder mergeConfig(com.google.protobuf.Any value) {
       if (configBuilder_ == null) {
@@ -550,7 +677,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>.google.protobuf.Any config = 2;</code>
+     * <code>.google.protobuf.Any config = 3;</code>
      */
     public Builder clearConfig() {
       if (configBuilder_ == null) {
@@ -564,7 +691,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>.google.protobuf.Any config = 2;</code>
+     * <code>.google.protobuf.Any config = 3;</code>
      */
     public com.google.protobuf.Any.Builder getConfigBuilder() {
       
@@ -572,7 +699,7 @@ private static final long serialVersionUID = 0L;
       return getConfigFieldBuilder().getBuilder();
     }
     /**
-     * <code>.google.protobuf.Any config = 2;</code>
+     * <code>.google.protobuf.Any config = 3;</code>
      */
     public com.google.protobuf.AnyOrBuilder getConfigOrBuilder() {
       if (configBuilder_ != null) {
@@ -583,7 +710,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>.google.protobuf.Any config = 2;</code>
+     * <code>.google.protobuf.Any config = 3;</code>
      */
     private com.google.protobuf.SingleFieldBuilderV3<
         com.google.protobuf.Any, com.google.protobuf.Any.Builder, com.google.protobuf.AnyOrBuilder> 

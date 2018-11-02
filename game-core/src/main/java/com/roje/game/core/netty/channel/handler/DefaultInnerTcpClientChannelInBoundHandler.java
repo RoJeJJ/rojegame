@@ -62,7 +62,7 @@ public class DefaultInnerTcpClientChannelInBoundHandler extends DefaultInBoundHa
         infoBuilder.setId(serverInfo.getId());
         infoBuilder.setIp(serverInfo.getIp());
         infoBuilder.setPort(serverInfo.getPort());
-        infoBuilder.setGameId(serverInfo.getGameId());
+        infoBuilder.setType(serverInfo.getType());
         infoBuilder.setName(serverInfo.getName());
         infoBuilder.setOnline(sessionManager.getOnlineCount());
         infoBuilder.setMaxUserCount(serverInfo.getMaxUserCount());
@@ -77,7 +77,7 @@ public class DefaultInnerTcpClientChannelInBoundHandler extends DefaultInBoundHa
         infoBuilder.setId(serverInfo.getId());
         infoBuilder.setIp(serverInfo.getIp());
         infoBuilder.setPort(serverInfo.getPort());
-        infoBuilder.setGameId(serverInfo.getGameId());
+        infoBuilder.setType(serverInfo.getType());
         infoBuilder.setName(serverInfo.getName());
         infoBuilder.setOnline(sessionManager.getOnlineCount());
         infoBuilder.setMaxUserCount(serverInfo.getMaxUserCount());

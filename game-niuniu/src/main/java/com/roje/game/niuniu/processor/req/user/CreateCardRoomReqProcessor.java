@@ -27,13 +27,6 @@ public class CreateCardRoomReqProcessor extends MessageProcessor {
 
     @Override
     public void handler(Channel channel, Frame frame) {
-        try {
-            sessionManager.createCardRoom(channel,frame);
-        } catch (RJException e) {
-            CreateCardRoomResponse.Builder builder = CreateCardRoomResponse.newBuilder();
-            builder.setCode(e.getErrorData().getCode());
-            builder.setMsg(e.getErrorData().getMsg());
-            MessageUtil.send(channel,Action.CreateCardRoomRes,builder.build());
-        }
+
     }
 }

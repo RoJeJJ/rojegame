@@ -16,11 +16,11 @@ public class DefaultGameUserInBoundHandler extends DefaultInBoundHandler {
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) {
-        sessionManager.sessionActive(ctx.channel());
+        sessionManager.sessionOpen(ctx.channel());
     }
 
     @Override
     public void channelInactive(ChannelHandlerContext ctx) {
-        sessionManager.sessionInactive(ctx.channel());
+        sessionManager.sessionClose(ctx.channel());
     }
 }

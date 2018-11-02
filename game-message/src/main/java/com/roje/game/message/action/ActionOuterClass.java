@@ -23,11 +23,12 @@ public final class ActionOuterClass {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\014action.proto*\275\001\n\006Action\022\010\n\004snap\020\000\022\017\n\nS" +
+      "\n\014action.proto*\345\001\n\006Action\022\010\n\004snap\020\000\022\017\n\nS" +
       "ervRegReq\020\351\007\022\017\n\nServRegRes\020\352\007\022\020\n\013ServInf" +
       "oReq\020\353\007\022\020\n\013ServInfoRes\020\354\007\022\r\n\010LoginReq\020\221N" +
       "\022\r\n\010loginRes\020\222N\022\027\n\021CreateCardRoomReq\020\241\234\001" +
-      "\022\027\n\021CreateCardRoomRes\020\242\234\001\022\023\n\rErrorRespon" +
+      "\022\027\n\021CreateCardRoomRes\020\242\234\001\022\022\n\014EntryRoomRe" +
+      "q\020\243\234\001\022\022\n\014EntryRoomRes\020\244\234\001\022\023\n\rErrorRespon" +
       "se\020\261\352\001B \n\034com.roje.game.message.actionP\001" +
       "b\006proto3"
     };

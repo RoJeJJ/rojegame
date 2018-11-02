@@ -1,49 +1,57 @@
-
-thread-config:
-  io-corePoolSize: 10
-  io-maximumPoolSize: 100
-  io-keepAliveTime: 30
-  io-capacity: 100000
-  sync-name: sync
-  sync-timeInterval: 0
-  sync-commandSize: 100000
-netty-conn-cluster-client:
-  so-linger: 0
-  reader-idle-time: 20
-  writer-idle-time: 10
-  all-idle-time: 10
-  tcp-no-delay: true
-  reconnect-time: 5
-  connect-timeout: 10
-  cluster-ip: 127.0.0.1
-  cluster-port: 7000
-server:
-  info:
-    name: hall-server
+client:
+  cluster:
+    so-linger: 0
+    reader-idle-time: 20
+    writer-idle-time: 10
+    all-idle-time: 10
+    tcp-no-delay: true
+    reconnect-time: 5
+    connect-timeout: 2000
     ip: 127.0.0.1
-    http-port: 8087
-    state: normal
-    max-user-count: 1000
-    type: hall
-    version-code: 1
-    client-version-code: 0
-netty-conn-gate-client:
-  so-linger: 0
-  tcp-no-delay: true
-  connect-timeout: 5
-  reader-idle-time: 20
-  all-idle-time: 10
-  writer-idle-time: 10
+    port: 8007
+serverInfo:
+  id: 1
+  ip: 127.0.0.1
+  port: 7001
+  type: 1
+  max-user-count: 1000
+  name: 大厅服务器${serverInfo.id}
+  require-version: 0
+
+game-server:
+  config:
+    port: 7000
+    so-back-log: 1024
+    so-keep-alive: true
+    tcp-no-delay: true
+    so-linger: 0
+    reader-idle-time: 0
+    writer-idle-time: 0
+    all-idle-time: 0
 spring:
   redis:
     database: 0
     port: 6379
     host: 127.0.0.1
-    timeout: 2s
+    timeout: 3s
     jedis:
       pool:
-        max-wait: -1ms
-        max-active: 8
         max-idle: 8
+        max-active: 8
+        max-wait: -1ms
         min-idle: 0
+thread-config:
+  single-thread-room-size: 5
+  io-config:
+    core-pool-size: 3
+    maximum-pool-size: 10
+    keep-alive-time: 30
+    capacity: 100000
+  sync-config:
+    command-size: 100000
+  custom-configs:
+  - name: channel
+    thread-size: 3
+  - name: account
+    thread-size: 3
 

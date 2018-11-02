@@ -5,7 +5,7 @@ message ServInfo {
     int32 id = 1;
     string ip = 2; // ip地址
     int32 port = 3;
-    int32 gameId = 4;
+    int32 type = 4;
     int32 online = 5; // 在线人数
     int32 maxUserCount = 6; // 最大在线人数
     string name = 7; //名字

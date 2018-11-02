@@ -23,7 +23,30 @@ public interface CreateCardRoomResponseOrBuilder extends
       getMsgBytes();
 
   /**
-   * <code>int32 roomId = 3;</code>
+   * <code>.google.protobuf.Any responseData = 3;</code>
    */
-  int getRoomId();
+  boolean hasResponseData();
+  /**
+   * <code>.google.protobuf.Any responseData = 3;</code>
+   */
+  com.google.protobuf.Any getResponseData();
+  /**
+   * <code>.google.protobuf.Any responseData = 3;</code>
+   */
+  com.google.protobuf.AnyOrBuilder getResponseDataOrBuilder();
+
+  /**
+   * <code>string account = 4;</code>
+   */
+  java.lang.String getAccount();
+  /**
+   * <code>string account = 4;</code>
+   */
+  com.google.protobuf.ByteString
+      getAccountBytes();
+
+  /**
+   * <code>int32 type = 5;</code>
+   */
+  int getType();
 }

@@ -24,6 +24,16 @@ public final class Room {
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_CreateCardRoomResponse_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_EntryRoomRequest_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_EntryRoomRequest_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_EntryRoomResponse_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_EntryRoomResponse_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -33,12 +43,15 @@ public final class Room {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\nroom.proto\032\021include/any.proto\"M\n\025Creat" +
-      "eCardRoomRequest\022\016\n\006gameId\030\001 \001(\005\022$\n\006conf" +
-      "ig\030\002 \001(\0132\024.google.protobuf.Any\"C\n\026Create" +
-      "CardRoomResponse\022\014\n\004code\030\001 \001(\005\022\013\n\003msg\030\002 " +
-      "\001(\t\022\016\n\006roomId\030\003 \001(\005B%\n!com.roje.game.mes" +
-      "sage.create_roomP\001b\006proto3"
+      "\n\nroom.proto\032\021include/any.proto\"\\\n\025Creat" +
+      "eCardRoomRequest\022\014\n\004type\030\001 \001(\005\022\017\n\007accoun" +
+      "t\030\002 \001(\t\022$\n\006config\030\003 \001(\0132\024.google.protobu" +
+      "f.Any\"~\n\026CreateCardRoomResponse\022\014\n\004code\030" +
+      "\001 \001(\005\022\013\n\003msg\030\002 \001(\t\022*\n\014responseData\030\003 \001(\013" +
+      "2\024.google.protobuf.Any\022\017\n\007account\030\004 \001(\t\022" +
+      "\014\n\004type\030\005 \001(\005\"\"\n\020EntryRoomRequest\022\016\n\006roo" +
+      "mId\030\001 \001(\003\"\023\n\021EntryRoomResponseB%\n!com.ro" +
+      "je.game.message.create_roomP\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -58,13 +71,25 @@ public final class Room {
     internal_static_CreateCardRoomRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_CreateCardRoomRequest_descriptor,
-        new java.lang.String[] { "GameId", "Config", });
+        new java.lang.String[] { "Type", "Account", "Config", });
     internal_static_CreateCardRoomResponse_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_CreateCardRoomResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_CreateCardRoomResponse_descriptor,
-        new java.lang.String[] { "Code", "Msg", "RoomId", });
+        new java.lang.String[] { "Code", "Msg", "ResponseData", "Account", "Type", });
+    internal_static_EntryRoomRequest_descriptor =
+      getDescriptor().getMessageTypes().get(2);
+    internal_static_EntryRoomRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_EntryRoomRequest_descriptor,
+        new java.lang.String[] { "RoomId", });
+    internal_static_EntryRoomResponse_descriptor =
+      getDescriptor().getMessageTypes().get(3);
+    internal_static_EntryRoomResponse_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_EntryRoomResponse_descriptor,
+        new java.lang.String[] { });
     com.google.protobuf.AnyProto.getDescriptor();
   }
 

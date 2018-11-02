@@ -1,11 +1,11 @@
 package com.roje.game.cluster.manager;
 
+import com.google.gson.JsonArray;
 import com.roje.game.cluster.server.CuServerInfo;
-import com.roje.game.cluster.utils.ResponseUtil;
 import com.roje.game.core.netty.ChannelStatus;
+import com.roje.game.core.redis.service.UserRedisService;
 import com.roje.game.core.server.ServerInfo;
 import com.roje.game.core.service.Service;
-import com.roje.game.core.redis.service.UserRedisService;
 import com.roje.game.core.util.MessageUtil;
 import com.roje.game.message.action.Action;
 import com.roje.game.message.server_info.ServInfo;
@@ -17,27 +17,24 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 
 
 @Slf4j
 public class ServerSessionManager {
-
-    private static final AtomicInteger COUNTER = new AtomicInteger(1);
-
     @Getter
     private final Service service;
 
     private static final AttributeKey<ChannelStatus> CHANNEL_STATUS_ATTRIBUTE_KEY = AttributeKey.newInstance("netty-channel-status");
 
     private Map<String, CuServerInfo> serverInfoMap = new ConcurrentHashMap<>();
+
+    private Map<Integer, CuServerInfo> serverIds = new ConcurrentHashMap<>();
+
+    private Map<Integer, List<CuServerInfo>> typeIds = new ConcurrentHashMap<>();
 
     private final UserRedisService userRedisService;
 
@@ -57,7 +54,7 @@ public class ServerSessionManager {
         return service.getCustomExecutor("channel").allocateThread(id(channel));
     }
 
-    public ScheduledExecutorService accountExecutorService(String account){
+    public ScheduledExecutorService accountExecutorService(String account) {
         return service.getCustomExecutor("account").allocateThread(account);
     }
 
@@ -71,7 +68,15 @@ public class ServerSessionManager {
     }
 
     public void channelInactive(Channel channel) {
-        serverInfoMap.remove(channel.id().asLongText());
+        CuServerInfo info = serverInfoMap.remove(channel.id().asLongText());
+        if (info != null){
+            serverIds.remove(info.getId());
+            synchronized (Integer.toString(info.getType()).intern()) {
+                List<CuServerInfo> list = typeIds.get(info.getType());
+                if (list != null)
+                    list.remove(info);
+            }
+        }
     }
 
     public void serverInfo(Channel channel, ServInfo info) {
@@ -87,8 +92,8 @@ public class ServerSessionManager {
                     }
                     cuServerInfo.setIp(info.getIp());
                     cuServerInfo.setPort(info.getPort());
-                    cuServerInfo.setGameId(info.getGameId());
-                    cuServerInfo.setOnline(info.getOnline());
+                    cuServerInfo.setType(info.getType());
+//                    cuServerInfo.setOnline(info.getOnline());
                     cuServerInfo.setMaxUserCount(info.getMaxUserCount());
                     cuServerInfo.setName(info.getName());
                     cuServerInfo.setRequireVersion(info.getRequireVersion());
@@ -100,27 +105,31 @@ public class ServerSessionManager {
                 });
     }
 
-    public String allocateServer(String account, int gameId, int version) {
-        ServerInfo info = userRedisService.getAllocateServer(account);
-        if (info == null) {
-            List<CuServerInfo> cuServerInfos = serverInfoMap.values().stream()
-                    .filter(cuServerInfo -> cuServerInfo.getGameId() == gameId)
-                    .collect(Collectors.toList());
-            if (cuServerInfos.size() == 0) {
-                return ResponseUtil.error(ResponseUtil.ResponseData.NO_SUCH_GAME);
+    public String allocateServer(String account, int version) {
+        Iterator<Map.Entry<Integer, List<CuServerInfo>>>
+                it = typeIds.entrySet().iterator();
+        JsonArray array = new JsonArray();
+        while (it.hasNext()) {
+            Map.Entry<Integer, List<CuServerInfo>> entry = it.next();
+            int gameId = entry.getKey();
+            ServerInfo info = userRedisService.getAllocateServer(account, gameId);
+            if (info != null) {
+                array.add(info.json());
+            } else {
+                Optional<CuServerInfo> optional =
+                        entry.getValue().stream()
+                                .filter(cuServerInfo -> cuServerInfo.getRequireVersion() >= version)
+                                .min(Comparator.comparingInt(CuServerInfo::getOnline));
+                optional.ifPresent(cuServerInfo -> {
+                            cuServerInfo.increaseOnline();
+                            ServerInfo serverInfo = cuServerInfo.serverInfo();
+                            array.add(serverInfo.json());
+                            userRedisService.allocateServer(account,serverInfo);
+                        }
+                );
             }
-            cuServerInfos = cuServerInfos.stream()
-                    .filter(cuServerInfo -> cuServerInfo.getRequireVersion() >= version)
-                    .collect(Collectors.toList());
-            if (cuServerInfos.size() == 0) {
-                return ResponseUtil.error(ResponseUtil.ResponseData.UNSUPPORTED_VERSION);
-            }
-            CuServerInfo cuServerInfo = cuServerInfos.stream()
-                    .min(Comparator.comparingInt(CuServerInfo::getOnline)).get();
-            info = cuServerInfo.toServerInfo();
-            userRedisService.allocateServer(account,info);
         }
-        return ResponseUtil.success(info);
+        return array.toString();
     }
 
     public void register(Channel channel, ServInfo servInfo) {
@@ -134,17 +143,29 @@ public class ServerSessionManager {
                         builder.setMsg("已经注册过了");
                         return;
                     }
-                    info = new CuServerInfo();
-                    info.setIp(servInfo.getIp());
-                    info.setPort(servInfo.getPort());
-                    info.setGameId(servInfo.getGameId());
-                    info.setMaxUserCount(servInfo.getMaxUserCount());
-                    info.setName(servInfo.getName());
-                    info.setOnline(servInfo.getOnline());
-                    info.setOnline(servInfo.getRequireVersion());
-                    info.setId(COUNTER.getAndIncrement());
+                    synchronized (Integer.toString(servInfo.getId()).intern()) {
+                        CuServerInfo info2 = serverIds.get(servInfo.getId());
+                        if (info2 != null) {
+                            log.info("id:{}已被注册", servInfo.getId());
+                            builder.setSuccess(false);
+                            builder.setMsg("id:" + servInfo.getId() + "已被注册");
+                            return;
+                        }
+                        info = new CuServerInfo();
+                        info.setIp(servInfo.getIp());
+                        info.setPort(servInfo.getPort());
+                        info.setType(servInfo.getType());
+                        info.setMaxUserCount(servInfo.getMaxUserCount());
+                        info.setName(servInfo.getName());
+//                        info.setOnline(servInfo.getOnline());
+                        info.setOnline(servInfo.getRequireVersion());
+                        info.setId(servInfo.getId());
 
-                    serverInfoMap.put(id(channel), info);
+                        serverInfoMap.put(id(channel), info);
+                        serverIds.put(info.getId(), info);
+                        List<CuServerInfo> list = typeIds.computeIfAbsent(servInfo.getType(), integer -> new ArrayList<>());
+                        list.add(info);
+                    }
 
                     ChannelStatus status = channel.attr(CHANNEL_STATUS_ATTRIBUTE_KEY).get();
                     if (status != ChannelStatus.success)

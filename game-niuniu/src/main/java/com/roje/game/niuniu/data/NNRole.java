@@ -5,5 +5,5 @@ import lombok.extern.slf4j.Slf4j;
 
 
 @Slf4j
-public class NNRole extends Role<NNRoom> {
+public class NNRole extends Role {
 }

@@ -14,7 +14,7 @@ public class UserRedisService {
 
     private static final String USER_CONNECTION_SERVER = "user_connection_server";
 
-    private static final String USER_ALLOCATION_SERVER = "user_allocation_server";
+    private static final String USER_ALLOCATION_SERVER_SUFFIX = "_allocation_server";
 
     private final RedisTemplate<Object,Object> userRedisTemplate;
 
@@ -41,7 +41,7 @@ public class UserRedisService {
     }
 
     public String getToken(String account){
-        return (String) userRedisTemplate.opsForHash().get(USER_REDIS,account);
+        return (String) userRedisTemplate.opsForHash().get(GAME_TOKEN,account);
     }
 
     public void bindLoggedServer(String account, ServerInfo info){
@@ -53,10 +53,10 @@ public class UserRedisService {
     }
 
     public void allocateServer(String account, ServerInfo info) {
-        userRedisTemplate.opsForHash().put(USER_ALLOCATION_SERVER, account, info);
+        userRedisTemplate.opsForHash().put(account+USER_ALLOCATION_SERVER_SUFFIX, info.getType(), info);
     }
 
-    public ServerInfo getAllocateServer(String account) {
-        return (ServerInfo) userRedisTemplate.opsForHash().get(USER_ALLOCATION_SERVER, account);
+    public ServerInfo getAllocateServer(String account,int gameId) {
+        return (ServerInfo) userRedisTemplate.opsForHash().get(account+USER_ALLOCATION_SERVER_SUFFIX, gameId);
     }
 }
