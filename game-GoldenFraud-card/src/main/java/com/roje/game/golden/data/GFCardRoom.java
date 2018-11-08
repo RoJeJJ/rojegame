@@ -1,30 +1,29 @@
 package com.roje.game.golden.data;
 
 import com.google.protobuf.Message;
-import com.roje.game.core.entity.room.impl.AbsCardRoom;
+import com.roje.game.core.entity.role.impl.RoomRole;
+import com.roje.game.core.entity.room.impl.CardRoom;
+import com.roje.game.core.exception.RJException;
 import com.roje.game.message.nn.GFCardRoomConfig;
 
-public class GFCardRoom extends AbsCardRoom<GFRole> {
+public class GFCardRoom extends CardRoom {
 
-    public GFCardRoom(long id,
-                      GFRole creator,
-                      int roomMaxRoles,
-                      Class<GFRole> roleType, GFCardRoomConfig config) {
-        super(id, creator, config.getRound(), config.getPayment(), config.getPerson(), roomMaxRoles, roleType);
+    public <R extends RoomRole> GFCardRoom(long id, R role, int maxRoomRoles,GFCardRoomConfig config) {
+        super(id, role, config.getPerson(), maxRoomRoles);
     }
 
     @Override
-    protected void onSit(GFRole role, int seat) {
-
-    }
-
-    @Override
-    public Message createResponse() {
+    protected <R extends RoomRole> Message roomInfo(R role) {
         return null;
     }
 
     @Override
-    public Message roomInfo(GFRole role) {
-        return null;
+    protected <R extends RoomRole> void enter0(R role) throws RJException {
+
+    }
+
+    @Override
+    protected <R extends RoomRole> void onSit(R role) {
+
     }
 }

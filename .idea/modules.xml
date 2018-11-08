@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/game-GoldenFraud-card/game-GoldenFraud-card.iml" filepath="$PROJECT_DIR$/game-GoldenFraud-card/game-GoldenFraud-card.iml" />
+      <module fileurl="file://$PROJECT_DIR$/game-cluster/game-cluster.iml" filepath="$PROJECT_DIR$/game-cluster/game-cluster.iml" />
+      <module fileurl="file://$PROJECT_DIR$/game-core/game-core.iml" filepath="$PROJECT_DIR$/game-core/game-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/game-gate/game-gate.iml" filepath="$PROJECT_DIR$/game-gate/game-gate.iml" />
+      <module fileurl="file://$PROJECT_DIR$/game-hall/game-hall.iml" filepath="$PROJECT_DIR$/game-hall/game-hall.iml" />
+      <module fileurl="file://$PROJECT_DIR$/game-message/game-message.iml" filepath="$PROJECT_DIR$/game-message/game-message.iml" />
+      <module fileurl="file://$PROJECT_DIR$/game-model/game-model.iml" filepath="$PROJECT_DIR$/game-model/game-model.iml" />
+      <module fileurl="file://$PROJECT_DIR$/game-niuniu-card/game-niuniu-card.iml" filepath="$PROJECT_DIR$/game-niuniu-card/game-niuniu-card.iml" />
+      <module fileurl="file://$PROJECT_DIR$/game-test/game-test.iml" filepath="$PROJECT_DIR$/game-test/game-test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/login-server/lobby-server.iml" filepath="$PROJECT_DIR$/login-server/lobby-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/rojegame.iml" filepath="$PROJECT_DIR$/.idea/rojegame.iml" />
+    </modules>
+  </component>
+</project>

@@ -3,7 +3,6 @@ package com.roje.game.core.redis.sub;
 import com.google.protobuf.Any;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.Message;
-import com.roje.game.core.entity.room.CardRoom;
 import com.roje.game.core.exception.RJException;
 import com.roje.game.core.redis.message.RedisMessage;
 import com.roje.game.core.redis.message.RedisMessageDispatcher;

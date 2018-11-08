@@ -32,8 +32,8 @@ public enum  ErrorData {
     ENTER_ROOM_NOT_ALLOW_JOIN_HALLWAY(206,"不允许中途加入"),
 
     SIT_DOWN_SEAT_ERROR(301,"座位号错误"),
-    SIT_DOWN_GAME_START(302,"游戏已经开始不能换位置"),
-    SIT_DOWN_SEAT_HAS_PERSON(303,"位置已经有人了"),;
+    SIT_DOWN_ALREADY_SIT(302,"已经坐下了"),
+    SIT_DOWN_SEAT_HOLD(303,"位置已经有人了"),;
     @Getter
     private int code;
     @Getter

@@ -1,5 +1,6 @@
 package com.roje.game.core.manager.session;
 
+import com.roje.game.core.entity.role.Role;
 import com.roje.game.core.exception.ErrorData;
 import com.roje.game.core.exception.RJException;
 import com.roje.game.core.redis.lock.AuthLock;
@@ -19,14 +20,14 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
-public abstract class SessionManager<R extends Role> implements ISessionManager<R> {
+public abstract class SessionManager implements ISessionManager {
 
     private final AttributeKey<AuthStatus> AUTH_STATUS_ATTRIBUTE_KEY = AttributeKey.newInstance("netty.channel.login");
 
-    private final AttributeKey<R> ROLE_ATTRIBUTE_KEY = AttributeKey.newInstance("roje.channel.role");
+    private final AttributeKey<Role> ROLE_ATTRIBUTE_KEY = AttributeKey.newInstance("roje.channel.role");
 
 
-    private Map<String, R> accRolesMap = new ConcurrentHashMap<>();
+    private Map<String, Role> accRolesMap = new ConcurrentHashMap<>();
 
     private final UserRedisService userRedisService;
 
@@ -69,7 +70,7 @@ public abstract class SessionManager<R extends Role> implements ISessionManager<
     public void login(Channel channel, String account) {
         channel.eventLoop().execute(() -> {
             RLock aLock = null;
-            R role;
+            Role role;
             try {
                 AuthStatus status = channel.attr(AUTH_STATUS_ATTRIBUTE_KEY).get();
                 if (status == AuthStatus.Authed) {
@@ -120,17 +121,19 @@ public abstract class SessionManager<R extends Role> implements ISessionManager<
         });
     }
 
-    protected abstract void kickRole(R role);
+    protected abstract <R extends Role> void kickRole(R role);
 
-    public abstract R createRole(String account);
+    protected abstract <R extends Role> R createRole(String account);
 
-    public R getRole(Channel channel) {
-        return channel.attr(ROLE_ATTRIBUTE_KEY).get();
+    @SuppressWarnings("unchecked")
+    public <R extends Role> R getRole(Channel channel) {
+        return (R) channel.attr(ROLE_ATTRIBUTE_KEY).get();
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public R getRole(String account) {
-        return accRolesMap.get(account);
+    public <R extends Role> R getRole(String account) {
+        return (R) accRolesMap.get(account);
     }
 
     private class DelayRunnable implements Runnable {

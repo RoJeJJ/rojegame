@@ -1,6 +1,5 @@
 package com.roje.game.core.util;
 
-import com.roje.game.core.entity.role.RoomRole;
 import lombok.Getter;
 
 @Getter

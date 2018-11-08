@@ -1,6 +1,6 @@
 package com.roje.game.core.thread;
 
-import com.roje.game.core.entity.room.impl.Room;
+import com.roje.game.core.entity.room.Room;
 import com.roje.game.core.thread.factory.NamedThreadFactory;
 import lombok.Getter;
 import lombok.Setter;

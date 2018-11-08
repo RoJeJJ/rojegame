@@ -6,17 +6,17 @@ import com.roje.game.core.processor.TcpProcessor;
 import com.roje.game.core.processor.dispatcher.MessageDispatcher;
 import com.roje.game.core.processor.impl.DefaultCardRoomSitReqProcessor;
 import com.roje.game.golden.data.GFCardRoom;
-import com.roje.game.golden.data.GFRole;
+import com.roje.game.golden.data.GFCardRole;
 import com.roje.game.message.action.Action;
 import org.springframework.stereotype.Component;
 
 @Component
 @TcpProcessor(action = Action.SitReq)
-public class SitReqProcessor extends DefaultCardRoomSitReqProcessor<GFRole, GFCardRoom> {
+public class SitReqProcessor extends DefaultCardRoomSitReqProcessor<GFCardRole, GFCardRoom> {
 
     protected SitReqProcessor(MessageDispatcher dispatcher,
-                              ISessionManager<GFRole> sessionManager,
-                              CardRoomManager<GFRole, GFCardRoom> roomManager) {
+                              ISessionManager<GFCardRole> sessionManager,
+                              CardRoomManager<GFCardRole, GFCardRoom> roomManager) {
         super(dispatcher, sessionManager, roomManager);
     }
 }

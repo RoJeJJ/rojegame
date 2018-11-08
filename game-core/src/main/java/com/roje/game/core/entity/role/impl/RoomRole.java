@@ -1,6 +1,7 @@
 package com.roje.game.core.entity.role.impl;
 
-import com.roje.game.core.entity.room.impl.Room;
+import com.roje.game.core.entity.role.Role;
+import com.roje.game.core.entity.room.Room;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -9,7 +9,6 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>game-core</module>
-        <module>game-core</module>
         <module>game-gate</module>
         <module>game-model</module>
         <module>game-message</module>
@@ -17,8 +16,8 @@
         <module>game-test</module>
         <module>game-hall</module>
         <module>login-server</module>
-        <module>game-niuniu</module>
-        <module>game-GoldenFraud</module>
+        <module>game-niuniu-card</module>
+        <module>game-GoldenFraud-card</module>
     </modules>
     <packaging>pom</packaging>
     <name>roje-game</name>

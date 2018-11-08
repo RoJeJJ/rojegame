@@ -1,6 +1,6 @@
 package com.roje.game.core.redis.service;
 
-import com.roje.game.core.entity.room.impl.Room;
+import com.roje.game.core.entity.room.Room;
 import org.springframework.data.redis.core.RedisTemplate;
 
 import java.util.Map;

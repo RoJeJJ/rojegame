@@ -1,26 +1,27 @@
 package com.roje.game.core.processor;
 
+import com.roje.game.core.entity.role.Role;
 import com.roje.game.core.processor.dispatcher.MessageDispatcher;
 import com.roje.game.core.manager.session.ISessionManager;
 import com.roje.game.message.frame.Frame;
 import io.netty.channel.Channel;
 
 
-public abstract class RoleMessageProcessor<R extends Role> extends AbsMessageProcessor{
+public abstract class RoleMessageProcessor extends AbsMessageProcessor{
 
-    protected final ISessionManager<R> sessionManager;
+    protected final ISessionManager sessionManager;
 
     protected RoleMessageProcessor(MessageDispatcher dispatcher,
-                                   ISessionManager<R> sessionManager) {
+                                   ISessionManager sessionManager) {
         super(dispatcher);
         this.sessionManager = sessionManager;
     }
 
     @Override
     public void handler(Channel channel, Frame frame) throws Exception {
-        R role = sessionManager.getRole(channel);
+        Role role = sessionManager.getRole(channel);
         handlerRoleMessage(role,frame);
     }
 
-    public abstract void handlerRoleMessage(R role,Frame frame) throws Exception;
+    protected abstract <R extends Role> void handlerRoleMessage(R role,Frame frame) throws Exception;
 }

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="game-cluster" />
+        <module name="game-core" />
+        <module name="game-gate" />
+        <module name="game-GoldenFraud-card" />
+        <module name="game-hall" />
+        <module name="game-message" />
+        <module name="game-model" />
+        <module name="game-niuniu-card" />
+        <module name="game-test" />
+        <module name="lobby-server" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="game-cluster" target="1.8" />
+      <module name="game-core" target="1.8" />
+      <module name="game-gate" target="1.8" />
+      <module name="game-GoldenFraud-card" target="1.8" />
+      <module name="game-hall" target="1.8" />
+      <module name="game-message" target="1.8" />
+      <module name="game-model" target="1.8" />
+      <module name="game-niuniu-card" target="1.8" />
+      <module name="game-test" target="1.8" />
+      <module name="lobby-server" target="1.8" />
+      <module name="login-server" target="1.8" />
+      <module name="rojegame" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
