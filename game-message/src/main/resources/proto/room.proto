@@ -22,5 +22,19 @@ message EntryRoomRequest {
 }
 
 message EntryRoomResponse {
+    int32 code = 1;
+    string msg = 2;
+    google.protobuf.Any data = 3;
+}
 
+message SitRequest {
+    int32 seat = 1;
+}
+
+message SitResponse {
+    int32 seat = 1;
+}
+
+message ChangePosRequest {
+    int64 applicantId = 1;
 }

@@ -3,13 +3,12 @@ package com.roje.game.core.redis.sub;
 import com.google.protobuf.Any;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.Message;
-import com.roje.game.core.entity.Role;
-import com.roje.game.core.entity.Room;
+import com.roje.game.core.entity.room.CardRoom;
 import com.roje.game.core.exception.RJException;
-import com.roje.game.core.manager.session.ISessionManager;
 import com.roje.game.core.redis.message.RedisMessage;
 import com.roje.game.core.redis.message.RedisMessageDispatcher;
 import com.roje.game.core.redis.message.RedisMessageHandler;
+import com.roje.game.core.redis.service.UserRedisService;
 import com.roje.game.core.server.ServerInfo;
 import com.roje.game.message.create_room.CreateCardRoomRequest;
 import com.roje.game.message.create_room.CreateCardRoomResponse;
@@ -17,22 +16,26 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 
 @Slf4j
-public abstract class CreateRoomReqHandler<M extends Room> extends RedisMessageHandler {
-
-    protected final ISessionManager<? extends Role,M> sessionManager;
+public abstract class CreateRoomReqHandler<M extends CardRoom> extends RedisMessageHandler {
 
     protected final RedisTemplate<Object,Object> redisTemplate;
 
+    protected final UserRedisService userRedisService;
+
     protected final ServerInfo serverInfo;
 
+    private final RoomHelper<M> roomHelper;
+
     public CreateRoomReqHandler(RedisMessageDispatcher dispatcher,
-                                ISessionManager<? extends Role, M> sessionManager,
                                 RedisTemplate<Object, Object> redisTemplate,
-                                ServerInfo serverInfo) {
+                                UserRedisService userRedisService,
+                                ServerInfo serverInfo,
+                                RoomHelper<M> roomHelper) {
         super(dispatcher);
-        this.sessionManager = sessionManager;
         this.redisTemplate = redisTemplate;
+        this.userRedisService = userRedisService;
         this.serverInfo = serverInfo;
+        this.roomHelper = roomHelper;
     }
 
     @Override
@@ -40,7 +43,7 @@ public abstract class CreateRoomReqHandler<M extends Room> extends RedisMessageH
         CreateCardRoomRequest request = null;
         try {
             request = CreateCardRoomRequest.parseFrom(data);
-            M room = sessionManager.createRoom(request);
+            M room = roomHelper.createRoom(request);
             CreateCardRoomResponse.Builder builder = CreateCardRoomResponse.newBuilder();
             builder.setCode(0);
             builder.setType(request.getType());

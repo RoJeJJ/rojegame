@@ -22,7 +22,18 @@ public enum  ErrorData {
     LOGIN_INVALID_TOKEN(101,"无效的token"),
     LOGIN_LOGGED(102,"重复登录"),
     LOGIN_ANOTHER_SERVER(103,"正在登录其他服务器"),
-    LOGIN_LOGGED_ANOTHER_SERVER(104,"已经登录其他服务器"),;
+    LOGIN_LOGGED_ANOTHER_SERVER(104,"已经登录其他服务器"),
+
+    ENTER_ROOM_ROOM_FULL(201,"房间满了"),
+    ENTER_ROOM_NO_SUCH_ROOM(202,"房间不存在"),
+    ENTER_ROOM_JOINED_ANOTHER_ROOM(203,"已经加入了其他的房间"),
+    ENTER_ROOM_ALREADY_JOIN(204,"已经在房间中了"),
+    ENTER_ROOM_ERROR(205,"进入房间失败"),
+    ENTER_ROOM_NOT_ALLOW_JOIN_HALLWAY(206,"不允许中途加入"),
+
+    SIT_DOWN_SEAT_ERROR(301,"座位号错误"),
+    SIT_DOWN_GAME_START(302,"游戏已经开始不能换位置"),
+    SIT_DOWN_SEAT_HAS_PERSON(303,"位置已经有人了"),;
     @Getter
     private int code;
     @Getter

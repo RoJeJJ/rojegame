@@ -1,6 +1,6 @@
 package com.roje.game.core.netty.channel.handler;
 
-import com.roje.game.core.dispatcher.MessageDispatcher;
+import com.roje.game.core.processor.dispatcher.MessageDispatcher;
 import com.roje.game.core.manager.session.ISessionManager;
 import com.roje.game.core.server.ServerInfo;
 import com.roje.game.core.util.MessageUtil;

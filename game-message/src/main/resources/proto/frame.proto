@@ -11,3 +11,8 @@ message Frame{
     google.protobuf.Any data = 2;
 
 }
+
+message ErrorMessage{
+    int32 code = 1;
+    string msg = 2;
+}

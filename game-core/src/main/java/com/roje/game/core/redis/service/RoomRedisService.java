@@ -1,11 +1,9 @@
 package com.roje.game.core.redis.service;
 
-import com.roje.game.core.entity.Room;
-import com.roje.game.core.server.ServerInfo;
+import com.roje.game.core.entity.room.impl.Room;
 import org.springframework.data.redis.core.RedisTemplate;
 
 import java.util.Map;
-import java.util.Random;
 
 public class RoomRedisService {
     private static final String ROOM_REDIS = "room-redis";
@@ -17,7 +15,7 @@ public class RoomRedisService {
     }
 
     public <T extends Room> void save(T room){
-        redisTemplate.opsForHash().put(ROOM_REDIS,room.getId(),room);
+        redisTemplate.opsForHash().put(ROOM_REDIS,room.id(),room);
     }
 
     public Map<Object, Object> getRooms(){

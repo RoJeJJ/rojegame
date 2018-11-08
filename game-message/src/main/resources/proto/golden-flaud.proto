@@ -1,0 +1,9 @@
+syntax = "proto3";
+option java_package = "com.roje.game.message.nn";
+option java_multiple_files = true;
+
+message GFCardRoomConfig {
+    int32 round = 1;
+    int32 payment = 2;
+    int32 person = 3;
+}

@@ -1,6 +1,6 @@
 package com.roje.game.core.thread.executor;
 
-import com.roje.game.core.entity.Room;
+import com.roje.game.core.entity.room.impl.Room;
 import com.roje.game.core.thread.RoomScheduledExecutorService;
 
 import java.util.HashMap;

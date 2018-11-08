@@ -15,10 +15,10 @@ public final class Nn {
         (com.google.protobuf.ExtensionRegistryLite) registry);
   }
   static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_NiuNiuCardRoomConfig_descriptor;
+    internal_static_NNCardRoomConfig_descriptor;
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_NiuNiuCardRoomConfig_fieldAccessorTable;
+      internal_static_NNCardRoomConfig_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -28,17 +28,17 @@ public final class Nn {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\010nn.proto\"\352\002\n\024NiuNiuCardRoomConfig\022\014\n\004m" +
-      "ode\030\001 \001(\005\022\021\n\tbaseScore\030\002 \001(\005\022\r\n\005round\030\003 " +
-      "\001(\005\022\017\n\007payMode\030\004 \001(\005\022\021\n\tstartMode\030\005 \001(\005\022" +
-      "\016\n\006maxTui\030\006 \001(\005\022\020\n\010maxQiang\030\007 \001(\005\022\024\n\014dou" +
-      "blingMode\030\010 \001(\005\022\013\n\003szn\030\t \001(\010\022\013\n\003whn\030\n \001(" +
-      "\010\022\013\n\003thn\030\013 \001(\010\022\013\n\003hln\030\014 \001(\010\022\013\n\003zdn\030\r \001(\010" +
-      "\022\013\n\003wxn\030\016 \001(\010\022\013\n\003ths\030\017 \001(\010\022\027\n\017fb_enterHa" +
-      "lfWay\030\020 \001(\010\022\016\n\006fb_rub\030\021 \001(\010\022\n\n\002ma\030\022 \001(\010\022" +
-      "\024\n\014bet_doubling\030\023 \001(\010\022\021\n\tbet_limit\030\024 \001(\010" +
-      "\022\r\n\005joker\030\025 \001(\010B\034\n\030com.roje.game.message" +
-      ".nnP\001b\006proto3"
+      "\n\010nn.proto\"\366\002\n\020NNCardRoomConfig\022\014\n\004mode\030" +
+      "\001 \001(\005\022\021\n\tbaseScore\030\002 \001(\005\022\r\n\005round\030\003 \001(\005\022" +
+      "\017\n\007payment\030\004 \001(\005\022\021\n\tstartMode\030\005 \001(\005\022\016\n\006m" +
+      "axTui\030\006 \001(\005\022\020\n\010maxQiang\030\007 \001(\005\022\024\n\014doublin" +
+      "gMode\030\010 \001(\005\022\013\n\003szn\030\t \001(\010\022\013\n\003whn\030\n \001(\010\022\013\n" +
+      "\003thn\030\013 \001(\010\022\013\n\003hln\030\014 \001(\010\022\013\n\003zdn\030\r \001(\010\022\013\n\003" +
+      "wxn\030\016 \001(\010\022\013\n\003ths\030\017 \001(\010\022\027\n\017fb_enterHalfWa" +
+      "y\030\020 \001(\010\022\016\n\006fb_rub\030\021 \001(\010\022\n\n\002ma\030\022 \001(\010\022\024\n\014b" +
+      "et_doubling\030\023 \001(\010\022\021\n\tbet_limit\030\024 \001(\010\022\r\n\005" +
+      "joker\030\025 \001(\010\022\016\n\006person\030\026 \001(\005B\034\n\030com.roje." +
+      "game.message.nnP\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -52,12 +52,12 @@ public final class Nn {
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
         }, assigner);
-    internal_static_NiuNiuCardRoomConfig_descriptor =
+    internal_static_NNCardRoomConfig_descriptor =
       getDescriptor().getMessageTypes().get(0);
-    internal_static_NiuNiuCardRoomConfig_fieldAccessorTable = new
+    internal_static_NNCardRoomConfig_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_NiuNiuCardRoomConfig_descriptor,
-        new java.lang.String[] { "Mode", "BaseScore", "Round", "PayMode", "StartMode", "MaxTui", "MaxQiang", "DoublingMode", "Szn", "Whn", "Thn", "Hln", "Zdn", "Wxn", "Ths", "FbEnterHalfWay", "FbRub", "Ma", "BetDoubling", "BetLimit", "Joker", });
+        internal_static_NNCardRoomConfig_descriptor,
+        new java.lang.String[] { "Mode", "BaseScore", "Round", "Payment", "StartMode", "MaxTui", "MaxQiang", "DoublingMode", "Szn", "Whn", "Thn", "Hln", "Zdn", "Wxn", "Ths", "FbEnterHalfWay", "FbRub", "Ma", "BetDoubling", "BetLimit", "Joker", "Person", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

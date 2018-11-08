@@ -1,7 +1,6 @@
 package com.roje.game.hall.redis.sub;
 
 import com.google.protobuf.InvalidProtocolBufferException;
-import com.roje.game.core.entity.Role;
 import com.roje.game.core.manager.session.ISessionManager;
 import com.roje.game.core.redis.message.RedisMessageDispatcher;
 import com.roje.game.core.redis.message.RedisMessageHandler;

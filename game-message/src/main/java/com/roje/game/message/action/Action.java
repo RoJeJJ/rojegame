@@ -53,9 +53,25 @@ public enum Action
    */
   EntryRoomRes(20004),
   /**
-   * <code>ErrorResponse = 30001;</code>
+   * <code>SitReq = 20005;</code>
    */
-  ErrorResponse(30001),
+  SitReq(20005),
+  /**
+   * <code>SitRes = 20006;</code>
+   */
+  SitRes(20006),
+  /**
+   * <code>ChangePosReq = 20007;</code>
+   */
+  ChangePosReq(20007),
+  /**
+   * <code>ChangePosRes = 20008;</code>
+   */
+  ChangePosRes(20008),
+  /**
+   * <code>ErrorRes = 30001;</code>
+   */
+  ErrorRes(30001),
   UNRECOGNIZED(-1),
   ;
 
@@ -104,9 +120,25 @@ public enum Action
    */
   public static final int EntryRoomRes_VALUE = 20004;
   /**
-   * <code>ErrorResponse = 30001;</code>
+   * <code>SitReq = 20005;</code>
    */
-  public static final int ErrorResponse_VALUE = 30001;
+  public static final int SitReq_VALUE = 20005;
+  /**
+   * <code>SitRes = 20006;</code>
+   */
+  public static final int SitRes_VALUE = 20006;
+  /**
+   * <code>ChangePosReq = 20007;</code>
+   */
+  public static final int ChangePosReq_VALUE = 20007;
+  /**
+   * <code>ChangePosRes = 20008;</code>
+   */
+  public static final int ChangePosRes_VALUE = 20008;
+  /**
+   * <code>ErrorRes = 30001;</code>
+   */
+  public static final int ErrorRes_VALUE = 30001;
 
 
   public final int getNumber() {
@@ -138,7 +170,11 @@ public enum Action
       case 20002: return CreateCardRoomRes;
       case 20003: return EntryRoomReq;
       case 20004: return EntryRoomRes;
-      case 30001: return ErrorResponse;
+      case 20005: return SitReq;
+      case 20006: return SitRes;
+      case 20007: return ChangePosReq;
+      case 20008: return ChangePosRes;
+      case 30001: return ErrorRes;
       default: return null;
     }
   }

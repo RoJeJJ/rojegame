@@ -49,9 +49,4 @@ thread-config:
     capacity: 100000
   sync-config:
     command-size: 100000
-  custom-configs:
-  - name: channel
-    thread-size: 3
-  - name: account
-    thread-size: 3
 

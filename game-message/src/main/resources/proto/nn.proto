@@ -2,11 +2,11 @@ syntax = "proto3";
 option java_package = "com.roje.game.message.nn";
 option java_multiple_files = true;
 
-message NiuNiuCardRoomConfig{
+message NNCardRoomConfig{
     int32 mode = 1;
     int32 baseScore = 2;
     int32 round = 3;
-    int32 payMode = 4;
+    int32 payment = 4;
     int32 startMode = 5;
     int32 maxTui = 6;
     int32 maxQiang = 7;
@@ -24,4 +24,6 @@ message NiuNiuCardRoomConfig{
     bool bet_doubling = 19;
     bool bet_limit = 20;
     bool joker = 21;
+    int32 person = 22;
 }
+

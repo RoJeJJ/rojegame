@@ -7,6 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Getter@Setter
 @ConfigurationProperties(prefix = "room")
 public class RoomProperties {
-    protected int userMaxCreateCount;
+    protected int userMaxCreateRoomCount;
     protected int maxRoomSize;
+    protected int roomMaxRole;
 }

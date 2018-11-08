@@ -1,9 +1,9 @@
 package com.roje.game.cluster.processor.req.server;
 
 import com.roje.game.cluster.manager.ServerSessionManager;
-import com.roje.game.core.processor.MessageProcessor;
-import com.roje.game.core.processor.Processor;
-import com.roje.game.core.service.Service;
+import com.roje.game.core.processor.AbsMessageProcessor;
+import com.roje.game.core.processor.dispatcher.MessageDispatcher;
+import com.roje.game.core.processor.TcpProcessor;
 import com.roje.game.core.thread.ThreadType;
 import com.roje.game.message.action.Action;
 import com.roje.game.message.frame.Frame;
@@ -13,17 +13,17 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.concurrent.ScheduledExecutorService;
-
 @Slf4j
 @Component
-@Processor(action = Action.ServInfoReq,thread = ThreadType.def)
-public class ServerInfoReqProcessor extends MessageProcessor {
+@TcpProcessor(action = Action.ServInfoReq,thread = ThreadType.def)
+public class ServerInfoReqProcessor extends AbsMessageProcessor {
 
     private final ServerSessionManager serverManager;
 
     @Autowired
-    public ServerInfoReqProcessor(ServerSessionManager serverManager) {
+    public ServerInfoReqProcessor(MessageDispatcher dispatcher,
+                                  ServerSessionManager serverManager) {
+        super(dispatcher);
         this.serverManager = serverManager;
     }
 

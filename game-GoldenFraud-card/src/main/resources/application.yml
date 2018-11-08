@@ -1,0 +1,54 @@
+serverInfo:
+  ip: 127.0.0.1
+  port: 9001
+  type: 100
+  max-user-count: 1000
+  name: 扎金花
+  require-version: 0
+  id: 101
+thread-config:
+  single-thread-room-size: 5
+  io-config:
+    core-pool-size: 3
+    maximum-pool-size: 10
+    keep-alive-time: 30
+    capacity: 100000
+  sync-config:
+    command-size: 100000
+client:
+  cluster:
+    so-linger: 0
+    reader-idle-time: 20
+    writer-idle-time: 10
+    all-idle-time: 10
+    tcp-no-delay: true
+    reconnect-time: 5
+    connect-timeout: 2000
+    ip: 127.0.0.1
+    port: 8007
+game-server:
+  config:
+    port: ${serverInfo.port}
+    so-back-log: 1024
+    so-keep-alive: true
+    tcp-no-delay: true
+    so-linger: 0
+    reader-idle-time: 0
+    writer-idle-time: 0
+    all-idle-time: 0
+room:
+  user-max-create-count: 0
+  max-room-size: 100
+  room-max-role: 100
+spring:
+  redis:
+    database: 0
+    port: 6379
+    host: 127.0.0.1
+    timeout: 3s
+    jedis:
+      pool:
+        max-idle: 8
+        max-active: 8
+        max-wait: -1ms
+        min-idle: 0

@@ -2,17 +2,15 @@ package com.roje.game.hall.manager;
 
 import com.roje.game.core.exception.ErrorData;
 import com.roje.game.core.exception.RJException;
-import com.roje.game.core.manager.room.RoomHelper;
 import com.roje.game.core.redis.message.RedisMessage;
 import com.roje.game.core.redis.service.UserRedisService;
 import com.roje.game.core.server.ServerInfo;
-import com.roje.game.hall.entity.HRole;
 import com.roje.game.message.create_room.CreateCardRoomRequest;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
-public class HallRoomHelper implements RoomHelper<HRole,Void> {
+public class HallRoomHelper implements RoomHelper<Void> {
 
     private final UserRedisService userRedisService;
 

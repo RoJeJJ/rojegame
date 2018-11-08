@@ -1,7 +1,7 @@
 package com.roje.game.core.netty;
 
 import com.roje.game.core.config.NettyConnGateClientConfig;
-import com.roje.game.core.dispatcher.MessageDispatcher;
+import com.roje.game.core.processor.dispatcher.MessageDispatcher;
 import com.roje.game.core.manager.session.ISessionManager;
 import com.roje.game.core.netty.channel.handler.DefaultInnerTcpClientChannelInBoundHandler;
 import com.roje.game.core.netty.channel.initializer.DefaultChannelInitializer;

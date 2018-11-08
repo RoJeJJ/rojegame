@@ -1,8 +1,8 @@
 package com.roje.game.core.netty.channel.handler;
 
-import com.roje.game.core.dispatcher.MessageDispatcher;
 import com.roje.game.core.processor.MessageProcessor;
-import com.roje.game.core.processor.Processor;
+import com.roje.game.core.processor.dispatcher.MessageDispatcher;
+import com.roje.game.core.processor.TcpProcessor;
 import com.roje.game.core.service.Service;
 import com.roje.game.message.frame.Frame;
 import com.sun.istack.internal.NotNull;
@@ -28,13 +28,13 @@ public class DefaultInBoundHandler extends SimpleChannelInboundHandler<Frame> {
 
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, Frame frame) throws Exception {
-        MessageProcessor handler = dispatcher.getMessageHandler(frame.getAction());
+        MessageProcessor handler = dispatcher.getTcpMessageHandler(frame.getAction());
         boolean execute = true;
         if (handler != null) {
             if (service != null) {
-                Processor processor = handler.getClass().getAnnotation(Processor.class);
-                if (processor != null) {
-                    Executor executor = service.getExecutor(processor.thread());
+                TcpProcessor tcpProcessor = handler.getClass().getAnnotation(TcpProcessor.class);
+                if (tcpProcessor != null) {
+                    Executor executor = service.getExecutor(tcpProcessor.thread());
                     if (executor != null) {
                         execute = false;
                         executor.execute(() -> {

@@ -13,17 +13,10 @@ import java.util.List;
 public class ThreadProperties {
     private IoConfig ioConfig = null;
     private SyncConfig syncConfig = null;
-    private List<CustomConfig> customConfigs = new ArrayList<>();
 
     private int singleThreadRoomSize = 4;
 
     public boolean createRoomExecutor = false;
-
-    @Getter@Setter
-    public static class CustomConfig {
-        private int threadSize = 1;
-        private String name;
-    }
 
     @Getter@Setter
     public static class IoConfig {

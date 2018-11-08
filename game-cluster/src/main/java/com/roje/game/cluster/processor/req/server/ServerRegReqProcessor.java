@@ -1,8 +1,10 @@
 package com.roje.game.cluster.processor.req.server;
 
 import com.roje.game.cluster.manager.ServerSessionManager;
-import com.roje.game.core.processor.MessageProcessor;
-import com.roje.game.core.processor.Processor;
+import com.roje.game.core.processor.AbsMessageProcessor;
+import com.roje.game.core.processor.dispatcher.MessageDispatcher;
+import com.roje.game.core.processor.TcpProcessor;
+import com.roje.game.core.thread.ThreadType;
 import com.roje.game.message.action.Action;
 import com.roje.game.message.frame.Frame;
 import com.roje.game.message.server_info.ServInfo;
@@ -14,12 +16,14 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-@Processor(action = Action.ServRegReq)
-public class ServerRegReqProcessor extends MessageProcessor {
+@TcpProcessor(action = Action.ServRegReq,thread = ThreadType.def)
+public class ServerRegReqProcessor extends AbsMessageProcessor {
     private final ServerSessionManager serverManager;
 
     @Autowired
-    public ServerRegReqProcessor(ServerSessionManager serverManager) {
+    public ServerRegReqProcessor(MessageDispatcher dispatcher,
+                                 ServerSessionManager serverManager) {
+        super(dispatcher);
         this.serverManager = serverManager;
     }
 

@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.roje.game.core.redis.message.RedisMessageDispatcher;
 import com.roje.game.core.redis.sub.RedisReceiver;
 import com.roje.game.core.server.ServerInfo;
+import com.roje.game.core.service.Service;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -51,7 +52,8 @@ public class RedisConfig {
             RedisMessageDispatcher dispatcher,
             StringRedisSerializer stringRedisSerializer,
             GenericJackson2JsonRedisSerializer jsonRedisSerializer,
-            ServerInfo serverInfo){
+            ServerInfo serverInfo,
+            Service service){
         return new RedisReceiver(dispatcher,stringRedisSerializer,jsonRedisSerializer,serverInfo, service);
     }
 

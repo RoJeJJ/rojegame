@@ -21,16 +21,10 @@ public class LoginController {
 
     private final UserService userService;
 
-    private final Service service;
     @Autowired
     public LoginController(UserService userService,
                            Service service) {
         this.userService = userService;
-        this.service = service;
-    }
-
-    private ScheduledExecutorService getAccountExecutor(String account){
-        return service.getCustomExecutor("account").allocateThread(account);
     }
 
     @PostMapping(value = "/login/wechat")

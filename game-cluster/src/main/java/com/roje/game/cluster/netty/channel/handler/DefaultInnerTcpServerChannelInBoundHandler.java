@@ -1,6 +1,6 @@
 package com.roje.game.cluster.netty.channel.handler;
 
-import com.roje.game.core.dispatcher.MessageDispatcher;
+import com.roje.game.core.processor.dispatcher.MessageDispatcher;
 import com.roje.game.cluster.manager.ServerSessionManager;
 import com.roje.game.core.netty.channel.handler.DefaultInBoundHandler;
 import com.roje.game.core.service.Service;

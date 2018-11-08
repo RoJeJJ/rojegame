@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.roje.game.core.config.NettyServerConfig;
 import com.roje.game.core.config.ThreadProperties;
-import com.roje.game.core.dispatcher.MessageDispatcher;
+import com.roje.game.core.processor.dispatcher.MessageDispatcher;
 import com.roje.game.cluster.manager.ServerSessionManager;
 import com.roje.game.core.netty.NettyTcpServer;
 import com.roje.game.core.service.Service;

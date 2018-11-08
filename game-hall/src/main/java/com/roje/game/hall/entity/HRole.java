@@ -1,7 +1,8 @@
 package com.roje.game.hall.entity;
 
-import com.roje.game.core.entity.Role;
+public class HRole extends AbsRole {
 
-public class HRole extends Role {
-
+    public HRole(long id, String account) {
+        super(id, account);
+    }
 }

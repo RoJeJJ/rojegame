@@ -1,7 +1,5 @@
 package com.roje.game.hall.manager;
 
-import com.roje.game.core.entity.Role;
-import com.roje.game.core.manager.room.RoomHelper;
 import com.roje.game.core.manager.session.SessionManager;
 import com.roje.game.core.redis.lock.AuthLock;
 import com.roje.game.core.redis.service.UserRedisService;
@@ -14,14 +12,13 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-public class HallSessionManager extends SessionManager<HRole,Void> {
+public class HallSessionManager extends SessionManager<HRole> {
 
     public HallSessionManager(UserRedisService userRedisService,
-                              RoomHelper<HRole,Void> roomManager,
                               AuthLock authLock,
                               ServerInfo serverInfo,
                               Service service) {
-        super(userRedisService, roomManager, authLock, serverInfo, service);
+        super(userRedisService,  authLock, serverInfo, service);
     }
 
     @Override

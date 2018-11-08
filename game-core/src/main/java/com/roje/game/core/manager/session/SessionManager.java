@@ -1,17 +1,13 @@
 package com.roje.game.core.manager.session;
 
-import com.roje.game.core.entity.Role;
 import com.roje.game.core.exception.ErrorData;
 import com.roje.game.core.exception.RJException;
-import com.roje.game.core.manager.room.RoomHelper;
 import com.roje.game.core.redis.lock.AuthLock;
 import com.roje.game.core.redis.service.UserRedisService;
 import com.roje.game.core.server.AuthStatus;
 import com.roje.game.core.server.ServerInfo;
-import com.roje.game.core.service.Service;
 import com.roje.game.core.util.MessageUtil;
 import com.roje.game.message.action.Action;
-import com.roje.game.message.create_room.CreateCardRoomRequest;
 import com.roje.game.message.login.LoginResponse;
 import io.netty.channel.Channel;
 import io.netty.util.AttributeKey;
@@ -20,11 +16,10 @@ import org.redisson.api.RLock;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
-public abstract class SessionManager<R extends Role,M> implements ISessionManager<R,M> {
+public abstract class SessionManager<R extends Role> implements ISessionManager<R> {
 
     private final AttributeKey<AuthStatus> AUTH_STATUS_ATTRIBUTE_KEY = AttributeKey.newInstance("netty.channel.login");
 
@@ -35,31 +30,16 @@ public abstract class SessionManager<R extends Role,M> implements ISessionManage
 
     private final UserRedisService userRedisService;
 
-    private final RoomHelper<R,M> roomHelper;
-
     private final AuthLock authLock;
 
     private final ServerInfo serverInfo;
 
-    private final Service service;
 
     public SessionManager(UserRedisService userRedisService,
-                          RoomHelper<R,M> roomHelper,
-                          AuthLock authLock, ServerInfo serverInfo, Service service) {
+                          AuthLock authLock, ServerInfo serverInfo) {
         this.userRedisService = userRedisService;
-        this.roomHelper = roomHelper;
         this.authLock = authLock;
         this.serverInfo = serverInfo;
-        this.service = service;
-    }
-
-
-    private ScheduledExecutorService channelExecutorService(Channel channel) {
-        return service.getCustomExecutor("channel").allocateThread(id(channel));
-    }
-
-    private ScheduledExecutorService accountExecutorService(String account) {
-        return service.getCustomExecutor("account").allocateThread(account);
     }
 
     public String id(Channel channel) {
@@ -68,12 +48,11 @@ public abstract class SessionManager<R extends Role,M> implements ISessionManage
 
     @Override
     public void sessionOpen(Channel channel) {
-        channelExecutorService(channel)
-                .execute(() -> {
-                    channel.attr(AUTH_STATUS_ATTRIBUTE_KEY).set(AuthStatus.NotAuth);
-                    channelExecutorService(channel)
-                            .schedule(new DelayRunnable(channel), 10, TimeUnit.SECONDS);
-                });
+        channel.eventLoop().execute(() -> {
+            channel.attr(AUTH_STATUS_ATTRIBUTE_KEY).set(AuthStatus.NotAuth);
+            channel.eventLoop()
+                    .schedule(new DelayRunnable(channel), 10, TimeUnit.SECONDS);
+        });
     }
 
     @Override
@@ -88,8 +67,7 @@ public abstract class SessionManager<R extends Role,M> implements ISessionManage
 
     @Override
     public void login(Channel channel, String account) {
-        LoginResponse.Builder builder = LoginResponse.newBuilder();
-        channelExecutorService(channel).execute(() -> {
+        channel.eventLoop().execute(() -> {
             RLock aLock = null;
             R role;
             try {
@@ -121,6 +99,7 @@ public abstract class SessionManager<R extends Role,M> implements ISessionManage
                     role = accRolesMap.get(account);
                     if (role != null){
                         kickRole(role);
+                        channel.close();
                     }
                     role = createRole(account);
                     accRolesMap.put(account,role);
@@ -129,12 +108,12 @@ public abstract class SessionManager<R extends Role,M> implements ISessionManage
                 userRedisService.bindLoggedServer(account, serverInfo);
                 channel.attr(ROLE_ATTRIBUTE_KEY).set(role);
                 channel.attr(AUTH_STATUS_ATTRIBUTE_KEY).set(AuthStatus.Authed);
+                LoginResponse.Builder builder = LoginResponse.newBuilder();
                 builder.setCode(0);
-            } catch (RJException e) {
-                builder.setCode(e.getErrorData().getCode());
-                builder.setMsg(e.getErrorData().getMsg());
-            } finally {
                 MessageUtil.send(channel, Action.loginRes, builder.build());
+            } catch (RJException e) {
+                MessageUtil.sendErrorData(channel,e.getErrorData());
+            } finally {
                 if (aLock != null)
                     aLock.unlock();
             }
@@ -152,16 +131,6 @@ public abstract class SessionManager<R extends Role,M> implements ISessionManage
     @Override
     public R getRole(String account) {
         return accRolesMap.get(account);
-    }
-
-    public boolean isLogin(Channel channel) {
-        AuthStatus status = channel.attr(AUTH_STATUS_ATTRIBUTE_KEY).get();
-        return status == AuthStatus.Authed;
-    }
-
-    @Override
-    public M createRoom(CreateCardRoomRequest request) throws RJException{
-        return roomHelper.createRoom(request);
     }
 
     private class DelayRunnable implements Runnable {

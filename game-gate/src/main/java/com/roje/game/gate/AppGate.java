@@ -3,7 +3,7 @@ package com.roje.game.gate;
 
 import com.roje.game.core.config.ClusterClientConfig;
 import com.roje.game.core.config.ThreadProperties;
-import com.roje.game.core.dispatcher.MessageDispatcher;
+import com.roje.game.core.processor.dispatcher.MessageDispatcher;
 import com.roje.game.core.manager.session.SessionManager;
 import com.roje.game.core.netty.NettyClusterTcpClient;
 import com.roje.game.core.netty.NettyTcpServer;

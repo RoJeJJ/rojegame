@@ -3,14 +3,13 @@ package com.roje.game.hall;
 import com.roje.game.core.config.ClusterClientConfig;
 import com.roje.game.core.config.NettyServerConfig;
 import com.roje.game.core.config.ThreadProperties;
-import com.roje.game.core.dispatcher.MessageDispatcher;
+import com.roje.game.core.processor.dispatcher.MessageDispatcher;
 import com.roje.game.core.manager.session.ISessionManager;
 import com.roje.game.core.manager.session.SessionManager;
 import com.roje.game.core.netty.NettyClusterTcpClient;
 import com.roje.game.core.netty.NettyTcpServer;
 import com.roje.game.core.netty.channel.initializer.ClusterClientChannelInitializer;
 import com.roje.game.core.netty.channel.initializer.GameServerChannelInitializer;
-import com.roje.game.core.processor.req.LoginReqProcessor;
 import com.roje.game.core.redis.lock.AuthLock;
 import com.roje.game.core.redis.service.UserRedisService;
 import com.roje.game.core.server.ServerInfo;
@@ -43,22 +42,22 @@ public class AppHall {
     }
 
     @Bean
-    public Service service(ThreadProperties properties){
+    public Service service(ThreadProperties properties) {
         return new Service(properties);
     }
 
     @Bean
-    public UserRedisService userRedisService(RedisTemplate<Object,Object> redisTemplate){
+    public UserRedisService userRedisService(RedisTemplate<Object, Object> redisTemplate) {
         return new UserRedisService(redisTemplate);
     }
 
-    @Bean(destroyMethod="shutdown")
+    @Bean(destroyMethod = "shutdown")
     public RedissonClient redisson() throws IOException {
         return Redisson.create(Config.fromYAML(new ClassPathResource("redisson.yml").getInputStream()));
     }
 
     @Bean
-    public AuthLock AuthLock(RedissonClient client){
+    public AuthLock AuthLock(RedissonClient client) {
         return new AuthLock(client);
     }
 
@@ -67,8 +66,8 @@ public class AppHall {
             ClusterClientConfig config,
             MessageDispatcher dispatcher,
             ISessionManager sessionManager,
-            ServerInfo serverInfo){
-        return new ClusterClientChannelInitializer(config,dispatcher,sessionManager,serverInfo);
+            ServerInfo serverInfo) {
+        return new ClusterClientChannelInitializer(config, dispatcher, sessionManager, serverInfo);
     }
 
     @Bean
@@ -79,7 +78,7 @@ public class AppHall {
     }
 
     @Bean
-    public NettyServerConfig nettyTcpServerConfig(){
+    public NettyServerConfig nettyTcpServerConfig() {
         return new NettyServerConfig();
     }
 
@@ -88,20 +87,14 @@ public class AppHall {
             NettyServerConfig config,
             Service service,
             SessionManager sessionManager,
-            MessageDispatcher dispatcher){
-        return new GameServerChannelInitializer(config,service,sessionManager,dispatcher);
+            MessageDispatcher dispatcher) {
+        return new GameServerChannelInitializer(config, service, sessionManager, dispatcher);
     }
 
     @Bean
     public NettyTcpServer userTcpServer(
             GameServerChannelInitializer channelInitializer,
-            NettyServerConfig nettyServerConfig){
-        return new NettyTcpServer(channelInitializer,nettyServerConfig);
-    }
-
-    @Bean public LoginReqProcessor loginReqProcessor(
-            ISessionManager sessionManager,
-            UserRedisService userRedisService){
-        return new LoginReqProcessor(sessionManager,userRedisService);
+            NettyServerConfig nettyServerConfig) {
+        return new NettyTcpServer(channelInitializer, nettyServerConfig);
     }
 }

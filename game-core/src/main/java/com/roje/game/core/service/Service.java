@@ -21,8 +21,6 @@ public class Service {
      */
     private final Map<ThreadType,Executor> executorMap = new HashMap<>();
 
-    private final Map<String,TaskExecutor> customExecutors = new HashMap<>();
-
     private final RoomExecutor roomExecutor;
 
     public Service(ThreadProperties config){
@@ -39,13 +37,6 @@ public class Service {
                     /*config.getSyncTimeInterval(),*/syncConf.getCommandSize());
             syncThread.start();
             executorMap.put(ThreadType.sync,syncThread);
-        }
-        List<ThreadProperties.CustomConfig> customConfs = config.getCustomConfigs();
-        if (customConfs != null && customConfs.size() > 0){
-            for (ThreadProperties.CustomConfig customConfig: customConfs){
-                TaskExecutor executor = new TaskExecutor(customConfig.getName(),customConfig.getThreadSize());
-                customExecutors.put(customConfig.getName(),executor);
-            }
         }
         if (config.createRoomExecutor){
             roomExecutor = new RoomExecutor(config.getSingleThreadRoomSize());
@@ -72,16 +63,11 @@ public class Service {
                 log.error("关闭线程异常",e);
             }
         });
-        customExecutors.values().forEach(TaskExecutor::shutDown);
     }
 
     @SuppressWarnings("unchecked")
     public <T extends Executor>T getExecutor(ThreadType type){
         return (T) executorMap.get(type);
-    }
-
-    public TaskExecutor getCustomExecutor(String name){
-        return customExecutors.get(name);
     }
 
     public RoomExecutor getRoomExecutor(){

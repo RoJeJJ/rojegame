@@ -18,6 +18,7 @@
         <module>game-hall</module>
         <module>login-server</module>
         <module>game-niuniu</module>
+        <module>game-GoldenFraud</module>
     </modules>
     <packaging>pom</packaging>
     <name>roje-game</name>
