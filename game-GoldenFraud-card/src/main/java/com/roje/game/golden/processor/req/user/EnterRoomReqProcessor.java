@@ -13,6 +13,6 @@ import org.springframework.stereotype.Component;
 public class EnterRoomReqProcessor extends DefaultEnterCardRoomReqProcessor<GFCardRole> {
     protected EnterRoomReqProcessor(MessageDispatcher dispatcher,
                                     ISessionManager sessionManager) {
-        super(dispatcher, sessionManager);
+        super(dispatcher, sessionManager, roomManager);
     }
 }

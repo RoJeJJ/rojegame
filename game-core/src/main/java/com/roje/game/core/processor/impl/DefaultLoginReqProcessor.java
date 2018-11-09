@@ -1,5 +1,6 @@
 package com.roje.game.core.processor.impl;
 
+import com.roje.game.core.entity.role.Role;
 import com.roje.game.core.exception.ErrorData;
 import com.roje.game.core.manager.session.ISessionManager;
 import com.roje.game.core.processor.AbsMessageProcessor;
@@ -12,14 +13,14 @@ import io.netty.channel.Channel;
 import org.apache.commons.lang3.StringUtils;
 
 
-public class DefaultLoginReqProcessor extends AbsMessageProcessor {
+public class DefaultLoginReqProcessor<R extends Role> extends AbsMessageProcessor {
 
     private final UserRedisService userRedisService;
 
-    private final ISessionManager sessionManager;
+    private final ISessionManager<R> sessionManager;
 
     public DefaultLoginReqProcessor(MessageDispatcher dispatcher,
-                                    ISessionManager sessionManager,
+                                    ISessionManager<R> sessionManager,
                                     UserRedisService userRedisService) {
         super(dispatcher);
         this.sessionManager = sessionManager;

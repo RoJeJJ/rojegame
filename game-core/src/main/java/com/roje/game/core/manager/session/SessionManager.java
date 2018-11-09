@@ -20,14 +20,14 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
-public abstract class SessionManager implements ISessionManager {
+public abstract class SessionManager<R extends Role> implements ISessionManager {
 
     private final AttributeKey<AuthStatus> AUTH_STATUS_ATTRIBUTE_KEY = AttributeKey.newInstance("netty.channel.login");
 
-    private final AttributeKey<Role> ROLE_ATTRIBUTE_KEY = AttributeKey.newInstance("roje.channel.role");
+    private final AttributeKey<R> ROLE_ATTRIBUTE_KEY = AttributeKey.newInstance("roje.channel.role");
 
 
-    private Map<String, Role> accRolesMap = new ConcurrentHashMap<>();
+    private Map<String, R> accRolesMap = new ConcurrentHashMap<>();
 
     private final UserRedisService userRedisService;
 
@@ -70,7 +70,7 @@ public abstract class SessionManager implements ISessionManager {
     public void login(Channel channel, String account) {
         channel.eventLoop().execute(() -> {
             RLock aLock = null;
-            Role role;
+            R role;
             try {
                 AuthStatus status = channel.attr(AUTH_STATUS_ATTRIBUTE_KEY).get();
                 if (status == AuthStatus.Authed) {
@@ -129,19 +129,17 @@ public abstract class SessionManager implements ISessionManager {
         });
     }
 
-    protected abstract void kickRole(Role role);
+    protected abstract void kickRole(R role);
 
-    protected abstract Role createRole(User user);
+    protected abstract R createRole(User user);
 
-    @SuppressWarnings("unchecked")
-    public <R extends Role> R getRole(Channel channel) {
-        return (R) channel.attr(ROLE_ATTRIBUTE_KEY).get();
+    public R getRole(Channel channel) {
+        return channel.attr(ROLE_ATTRIBUTE_KEY).get();
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    public <R extends Role> R getRole(String account) {
-        return (R) accRolesMap.get(account);
+    public R getRole(String account) {
+        return accRolesMap.get(account);
     }
 
     private class DelayRunnable implements Runnable {

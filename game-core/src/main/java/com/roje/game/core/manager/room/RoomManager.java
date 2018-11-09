@@ -1,6 +1,7 @@
 package com.roje.game.core.manager.room;
 
 import com.roje.game.core.config.RoomProperties;
+import com.roje.game.core.entity.role.impl.RoomRole;
 import com.roje.game.core.entity.room.Room;
 import com.roje.game.core.server.ServerInfo;
 
@@ -9,10 +10,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Consumer;
 
-public abstract class RoomManager implements Room.RoomListener {
+public abstract class RoomManager<R extends RoomRole,M extends Room> implements Room.RoomListener<M> {
 
-    protected final Map<Long, Room> roomIds = new ConcurrentHashMap<>();
+    protected final Map<Long, M> roomIds = new ConcurrentHashMap<>();
+
+    protected final Map<R,M> joinedRoomMap = new ConcurrentHashMap<>();
 
     private final RoomProperties properties;
 
@@ -35,25 +39,34 @@ public abstract class RoomManager implements Room.RoomListener {
         roomIdPool.add(id);
     }
 
-    @SuppressWarnings("unchecked")
-    public <M extends Room> M getRoom(long roomId) {
-        return (M) roomIds.get(roomId);
+    protected M getRoom(long roomId) {
+        return roomIds.get(roomId);
     }
 
-    public int getMaxRoomSize() {
+    protected int getMaxRoomSize() {
         return properties.getMaxRoomSize();
     }
 
-    public int getRoomMaxRoles(){
+    protected int getRoomMaxRoles(){
         return properties.getRoomMaxRole();
     }
 
-    public int getUserMaxCreateRoomCount() {
+    protected int getUserMaxCreateRoomCount() {
         return properties.getUserMaxCreateRoomCount();
     }
 
     @Override
-    public void roomDestroy(Room room) {
+    public void roomDestroy(M room) {
         roomIds.remove(room.id());
+    }
+
+    public M getJoinedRoom(R role){
+        return joinedRoomMap.get(role);
+    }
+
+    public void roomExecute(R role,Consumer<M> consumer){
+        M room = getJoinedRoom(role);
+        if (room != null)
+            room.getExecutor().getExecutorService().execute(() -> consumer.accept(room));
     }
 }

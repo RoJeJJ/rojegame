@@ -16,7 +16,7 @@
         <module name="game-model" />
         <module name="game-niuniu-card" />
         <module name="game-test" />
-        <module name="lobby-server" />
+        <module name="login-server" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

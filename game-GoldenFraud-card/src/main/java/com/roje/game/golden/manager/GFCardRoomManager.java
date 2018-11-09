@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-public class GFCardRoomManager extends CardRoomManager<GFCardRoom> {
+public class GFCardRoomManager extends CardRoomManager<GFCardRole,GFCardRoom> {
 
 
     public GFCardRoomManager(RoomProperties properties,
@@ -27,9 +27,14 @@ public class GFCardRoomManager extends CardRoomManager<GFCardRoom> {
     }
 
     @Override
+    protected GFCardRoom createRoom0(long id, GFCardRole role, int roomMaxRole, Any any) {
+        return null;
+    }
+
+    @Override
     protected <R extends RoomRole> GFCardRoom createRoom0(long id, R role, int roomMaxRole, Any any) {
         try {
-            GFCardRoomConfig config = any.unpack(GFCardRoomConfig.class);
+//            GFCardRoomConfig config = any.unpack(GFCardRoomConfig.class);
             return new GFCardRoom(id,(GFCardRole) role,roomMaxRole, config);
         }catch (InvalidProtocolBufferException e){
             log.warn("解析扎金花房卡配置消息异常",e);

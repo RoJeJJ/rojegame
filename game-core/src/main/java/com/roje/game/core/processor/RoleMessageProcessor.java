@@ -9,10 +9,10 @@ import io.netty.channel.Channel;
 
 public abstract class RoleMessageProcessor<R extends Role> extends AbsMessageProcessor{
 
-    protected final ISessionManager sessionManager;
+    protected final ISessionManager<R> sessionManager;
 
     protected RoleMessageProcessor(MessageDispatcher dispatcher,
-                                   ISessionManager sessionManager) {
+                                   ISessionManager<R> sessionManager) {
         super(dispatcher);
         this.sessionManager = sessionManager;
     }

@@ -1,20 +1,26 @@
 package com.roje.game.core.processor.impl;
 
 import com.roje.game.core.entity.role.impl.CardRole;
+import com.roje.game.core.entity.room.impl.CardRoom;
+import com.roje.game.core.manager.room.impl.CardRoomManager;
 import com.roje.game.core.manager.session.ISessionManager;
 import com.roje.game.core.processor.RoleMessageProcessor;
 import com.roje.game.core.processor.dispatcher.MessageDispatcher;
 import com.roje.game.message.frame.Frame;
 
 public class DefaultCreateCardRoomReqProcessor<R extends CardRole> extends RoleMessageProcessor<R> {
+
+    private final CardRoomManager<R,? extends CardRoom> roomManager;
     protected DefaultCreateCardRoomReqProcessor(MessageDispatcher dispatcher,
-                                                ISessionManager sessionManager) {
+                                                ISessionManager<R> sessionManager,
+                                                CardRoomManager<R,? extends CardRoom> roomManager) {
         super(dispatcher, sessionManager);
+        this.roomManager = roomManager;
     }
 
 
     @Override
     public void handlerRoleMessage(R role, Frame frame) {
-        role.createCardRoom(frame.getData());
+        roomManager.createRoom(role,frame.getData());
     }
 }

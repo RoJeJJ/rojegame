@@ -26,12 +26,6 @@ public abstract class RoomRole extends Role {
         super(id, account, nickname, avatar, card, gold);
     }
 
-    public void roomExecute(Consumer<Room> consumer){
-        if (joinedRoom != null)
-            joinedRoom.getExecutor().getExecutorService()
-                    .execute(()->consumer.accept(joinedRoom));
-    }
-
     public final void initStart(){
         inGame = true;
         initStart0();

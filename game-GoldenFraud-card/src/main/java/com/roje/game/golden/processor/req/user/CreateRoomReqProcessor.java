@@ -12,6 +12,6 @@ import org.springframework.stereotype.Component;
 public class CreateRoomReqProcessor extends DefaultCreateCardRoomReqProcessor {
     protected CreateRoomReqProcessor(MessageDispatcher dispatcher,
                                      ISessionManager sessionManager) {
-        super(dispatcher, sessionManager);
+        super(dispatcher, sessionManager, roomManager);
     }
 }
