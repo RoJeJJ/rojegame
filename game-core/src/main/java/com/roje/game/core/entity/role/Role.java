@@ -4,19 +4,19 @@ import io.netty.channel.Channel;
 
 public class Role {
 
-    protected final long id;
+    private final long id;
 
-    protected final String account;
+    private final String account;
 
-    protected String nickname;
+    private String nickname;
 
-    protected String avatar;
+    private String avatar;
 
-    protected long card;
+    private long card;
 
-    protected long gold;
+    private long gold;
 
-    protected Channel channel;
+    private Channel channel;
 
     public Role(long id, String account, String nickname, String avatar, long card, long gold){
         this.id = id;

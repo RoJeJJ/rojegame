@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" version="4">
+  <component name="ExternalSystem" externalSystem="Maven" />
   <component name="FacetManager">
+    <facet type="Spring" name="Spring">
+      <configuration />
+    </facet>
     <facet type="Spring" name="Spring">
       <configuration />
     </facet>
@@ -16,9 +20,6 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="game-core" />
-    <orderEntry type="module" module-name="game-model" />
-    <orderEntry type="module" module-name="game-message" />
     <orderEntry type="module" module-name="game-core" />
     <orderEntry type="module" module-name="game-model" />
     <orderEntry type="module" module-name="game-message" />

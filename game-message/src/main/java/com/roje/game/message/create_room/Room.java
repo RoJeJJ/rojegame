@@ -45,10 +45,10 @@ public final class Room {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_SitResponse_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_ChangePosRequest_descriptor;
+    internal_static_GameStart_descriptor;
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_ChangePosRequest_fieldAccessorTable;
+      internal_static_GameStart_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -68,9 +68,9 @@ public final class Room {
       "mId\030\001 \001(\003\"R\n\021EntryRoomResponse\022\014\n\004code\030\001" +
       " \001(\005\022\013\n\003msg\030\002 \001(\t\022\"\n\004data\030\003 \001(\0132\024.google" +
       ".protobuf.Any\"\032\n\nSitRequest\022\014\n\004seat\030\001 \001(" +
-      "\005\"\033\n\013SitResponse\022\014\n\004seat\030\001 \001(\005\"\'\n\020Change" +
-      "PosRequest\022\023\n\013applicantId\030\001 \001(\003B%\n!com.r" +
-      "oje.game.message.create_roomP\001b\006proto3"
+      "\005\"\033\n\013SitResponse\022\014\n\004seat\030\001 \001(\005\"\013\n\tGameSt" +
+      "artB%\n!com.roje.game.message.create_room" +
+      "P\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -121,12 +121,12 @@ public final class Room {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_SitResponse_descriptor,
         new java.lang.String[] { "Seat", });
-    internal_static_ChangePosRequest_descriptor =
+    internal_static_GameStart_descriptor =
       getDescriptor().getMessageTypes().get(6);
-    internal_static_ChangePosRequest_fieldAccessorTable = new
+    internal_static_GameStart_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_ChangePosRequest_descriptor,
-        new java.lang.String[] { "ApplicantId", });
+        internal_static_GameStart_descriptor,
+        new java.lang.String[] { });
     com.google.protobuf.AnyProto.getDescriptor();
   }
 

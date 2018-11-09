@@ -12,14 +12,14 @@ import io.netty.channel.Channel;
 import org.apache.commons.lang3.StringUtils;
 
 
-public class DefaultLoginReqProcessor<R extends Role> extends AbsMessageProcessor {
+public class DefaultLoginReqProcessor extends AbsMessageProcessor {
 
     private final UserRedisService userRedisService;
 
-    private final ISessionManager<R> sessionManager;
+    private final ISessionManager sessionManager;
 
     public DefaultLoginReqProcessor(MessageDispatcher dispatcher,
-                                    ISessionManager<R> sessionManager,
+                                    ISessionManager sessionManager,
                                     UserRedisService userRedisService) {
         super(dispatcher);
         this.sessionManager = sessionManager;

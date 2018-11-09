@@ -35,6 +35,5 @@ message SitResponse {
     int32 seat = 1;
 }
 
-message ChangePosRequest {
-    int64 applicantId = 1;
+message GameStart {
 }

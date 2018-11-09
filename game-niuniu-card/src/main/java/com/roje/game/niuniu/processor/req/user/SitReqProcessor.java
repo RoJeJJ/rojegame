@@ -1,7 +1,6 @@
 package com.roje.game.niuniu.processor.req.user;
 
 import com.roje.game.core.manager.room.CardRoomManager;
-import com.roje.game.core.processor.RoleCardRoomMessageProcessor;
 import com.roje.game.core.processor.dispatcher.MessageDispatcher;
 import com.roje.game.core.manager.session.ISessionManager;
 import com.roje.game.core.processor.TcpProcessor;

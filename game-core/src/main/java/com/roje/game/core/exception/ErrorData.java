@@ -21,6 +21,7 @@ public enum  ErrorData {
     LOGIN_ACCOUNT_IS_NULL(100,"用户名不能为空"),
     LOGIN_INVALID_TOKEN(101,"无效的token"),
     LOGIN_LOGGED(102,"重复登录"),
+    LOGIN_USER_NOT_FOUND(103,"用户不存在"),
     LOGIN_ANOTHER_SERVER(103,"正在登录其他服务器"),
     LOGIN_LOGGED_ANOTHER_SERVER(104,"已经登录其他服务器"),
 

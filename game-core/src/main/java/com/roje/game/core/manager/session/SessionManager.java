@@ -1,8 +1,8 @@
 package com.roje.game.core.manager.session;
 
+import com.roje.game.core.entity.User;
 import com.roje.game.core.entity.role.Role;
 import com.roje.game.core.exception.ErrorData;
-import com.roje.game.core.exception.RJException;
 import com.roje.game.core.redis.lock.AuthLock;
 import com.roje.game.core.redis.service.UserRedisService;
 import com.roje.game.core.server.AuthStatus;
@@ -35,9 +35,9 @@ public abstract class SessionManager implements ISessionManager {
 
     private final ServerInfo serverInfo;
 
-
     public SessionManager(UserRedisService userRedisService,
-                          AuthLock authLock, ServerInfo serverInfo) {
+                          AuthLock authLock,
+                          ServerInfo serverInfo) {
         this.userRedisService = userRedisService;
         this.authLock = authLock;
         this.serverInfo = serverInfo;
@@ -75,18 +75,27 @@ public abstract class SessionManager implements ISessionManager {
                 AuthStatus status = channel.attr(AUTH_STATUS_ATTRIBUTE_KEY).get();
                 if (status == AuthStatus.Authed) {
                     log.info("already logged");
-                    throw new RJException(ErrorData.LOGIN_LOGGED);
+                    MessageUtil.sendErrorData(channel,ErrorData.LOGIN_LOGGED);
+                    return;
+                }
+                User user = userRedisService.get(account);
+                if (user == null) {
+                    log.info("用户{}不存在",account);
+                    MessageUtil.sendErrorData(channel,ErrorData.LOGIN_USER_NOT_FOUND);
+                    return;
                 }
                 aLock = authLock.getLock(account);
                 if (!aLock.tryLock()) {
                     log.info("正在登录另一台服务器");
-                    throw new RJException(ErrorData.LOGIN_ANOTHER_SERVER);
+                    MessageUtil.sendErrorData(channel,ErrorData.LOGIN_ANOTHER_SERVER);
+                    return;
                 }
                 ServerInfo loggedServerInfo = userRedisService.getLoggedServer(account);
                 if (loggedServerInfo != null) {
                     if (loggedServerInfo.getId() != serverInfo.getId()) {
                         log.info("已经登录到另一台服务器了");
-                        throw new RJException(ErrorData.LOGIN_LOGGED_ANOTHER_SERVER);
+                        MessageUtil.sendErrorData(channel,ErrorData.LOGIN_LOGGED_ANOTHER_SERVER);
+                        return;
                     }
                 }
 //                ServerInfo allocServerInfo = userRedisService.getAllocateServer(account);
@@ -101,8 +110,9 @@ public abstract class SessionManager implements ISessionManager {
                     if (role != null){
                         kickRole(role);
                         channel.close();
+                    }else {
+                        role = createRole(user);
                     }
-                    role = createRole(account);
                     accRolesMap.put(account,role);
                     role.setChannel(channel);
                 }
@@ -112,18 +122,16 @@ public abstract class SessionManager implements ISessionManager {
                 LoginResponse.Builder builder = LoginResponse.newBuilder();
                 builder.setCode(0);
                 MessageUtil.send(channel, Action.loginRes, builder.build());
-            } catch (RJException e) {
-                MessageUtil.sendErrorData(channel,e.getErrorData());
-            } finally {
+            }  finally {
                 if (aLock != null)
                     aLock.unlock();
             }
         });
     }
 
-    protected abstract <R extends Role> void kickRole(R role);
+    protected abstract void kickRole(Role role);
 
-    protected abstract <R extends Role> R createRole(String account);
+    protected abstract Role createRole(User user);
 
     @SuppressWarnings("unchecked")
     public <R extends Role> R getRole(Channel channel) {

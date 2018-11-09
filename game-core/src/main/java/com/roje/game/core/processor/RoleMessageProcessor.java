@@ -7,7 +7,7 @@ import com.roje.game.message.frame.Frame;
 import io.netty.channel.Channel;
 
 
-public abstract class RoleMessageProcessor extends AbsMessageProcessor{
+public abstract class RoleMessageProcessor<R extends Role> extends AbsMessageProcessor{
 
     protected final ISessionManager sessionManager;
 
@@ -19,9 +19,9 @@ public abstract class RoleMessageProcessor extends AbsMessageProcessor{
 
     @Override
     public void handler(Channel channel, Frame frame) throws Exception {
-        Role role = sessionManager.getRole(channel);
+        R role = sessionManager.getRole(channel);
         handlerRoleMessage(role,frame);
     }
 
-    protected abstract <R extends Role> void handlerRoleMessage(R role,Frame frame) throws Exception;
+    protected abstract void handlerRoleMessage(R role,Frame frame) throws Exception;
 }

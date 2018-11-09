@@ -10,23 +10,27 @@ import com.roje.game.core.util.MessageUtil;
 import com.roje.game.message.action.Action;
 import com.roje.game.message.create_room.EntryRoomResponse;
 
+
 public abstract class CardRoom extends Room {
 
     private final RoomRole creator;
 
-    public RoomRole creator(){
-        return creator;
-    }
+    private int round;
 
-    public <R extends RoomRole> CardRoom(long id,R role, int person,int maxRoomRoles) {
+    private boolean roundStart;
+
+    public CardRoom(long id,RoomRole role, int person,int maxRoomRoles,
+                                         int round) {
         super(id, person,maxRoomRoles);
         this.creator = role;
+        this.round = round;
+        this.roundStart = false;
     }
 
-    public <R extends RoomRole> boolean enter(R role) {
-        if (lock)
+    public boolean enter(RoomRole role) {
+        if (isLock())
             return false;
-        if (roomRoles.size() >= maxRoomRoles) {
+        if (roomRoleSize() >= maxRoomRoles) {
             MessageUtil.sendErrorData(role.getChannel(), ErrorData.ENTER_ROOM_ROOM_FULL);
             return false;
         }
@@ -36,7 +40,7 @@ public abstract class CardRoom extends Room {
             MessageUtil.sendErrorData(role.getChannel(),e.getErrorData());
             return false;
         }
-        roomRoles.add(role);
+        inRoom(role);
         EntryRoomResponse.Builder builder = EntryRoomResponse.newBuilder();
         Message message = roomInfo(role);
         builder.setData(Any.pack(message));
@@ -47,8 +51,20 @@ public abstract class CardRoom extends Room {
     /**
      * 自定义加入房间逻辑,如果不允许加入,抛出{@link RJException}
      * @param role 加入房卡房间的玩家
-     * @param <R> 房卡房玩家
      * @throws RJException 自定义异常,用于返回客户端错误消息
      */
-    protected <R extends RoomRole> void enter0(R role) throws RJException {}
+    protected void enter0(RoomRole role) throws RJException {}
+
+    @Override
+    protected void initStart() {
+        if (!roundStart)
+            roundStart = true;
+        round--;
+        initStart0();
+    }
+
+    /**
+     * 开始游戏后调用,这个方法用于初始化房间自定义数据和逻辑
+     */
+    protected abstract void initStart0();
 }

@@ -11,7 +11,7 @@
       <module fileurl="file://$PROJECT_DIR$/game-model/game-model.iml" filepath="$PROJECT_DIR$/game-model/game-model.iml" />
       <module fileurl="file://$PROJECT_DIR$/game-niuniu-card/game-niuniu-card.iml" filepath="$PROJECT_DIR$/game-niuniu-card/game-niuniu-card.iml" />
       <module fileurl="file://$PROJECT_DIR$/game-test/game-test.iml" filepath="$PROJECT_DIR$/game-test/game-test.iml" />
-      <module fileurl="file://$PROJECT_DIR$/login-server/lobby-server.iml" filepath="$PROJECT_DIR$/login-server/lobby-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/login-server/login-server.iml" filepath="$PROJECT_DIR$/login-server/login-server.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/rojegame.iml" filepath="$PROJECT_DIR$/.idea/rojegame.iml" />
     </modules>
   </component>

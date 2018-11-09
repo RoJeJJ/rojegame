@@ -13,7 +13,7 @@ public class NNSessionManager extends SessionManager<NNRole> {
     public NNSessionManager(UserRedisService userRedisService,
                             AuthLock authLock,
                             ServerInfo serverInfo) {
-        super(userRedisService, authLock, serverInfo);
+        super(userRedisService, authLock, serverInfo, idService);
     }
 
     @Override

@@ -18,8 +18,7 @@ enum Action{
     EntryRoomRes = 20004;
     SitReq = 20005;
     SitRes = 20006;
-    ChangePosReq = 20007;
-    ChangePosRes = 20008;
+    GameStartNotice = 20007;
 
 
     ErrorRes = 30001;

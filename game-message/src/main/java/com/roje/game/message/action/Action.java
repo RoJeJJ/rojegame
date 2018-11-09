@@ -61,13 +61,9 @@ public enum Action
    */
   SitRes(20006),
   /**
-   * <code>ChangePosReq = 20007;</code>
+   * <code>GameStartNotice = 20007;</code>
    */
-  ChangePosReq(20007),
-  /**
-   * <code>ChangePosRes = 20008;</code>
-   */
-  ChangePosRes(20008),
+  GameStartNotice(20007),
   /**
    * <code>ErrorRes = 30001;</code>
    */
@@ -128,13 +124,9 @@ public enum Action
    */
   public static final int SitRes_VALUE = 20006;
   /**
-   * <code>ChangePosReq = 20007;</code>
+   * <code>GameStartNotice = 20007;</code>
    */
-  public static final int ChangePosReq_VALUE = 20007;
-  /**
-   * <code>ChangePosRes = 20008;</code>
-   */
-  public static final int ChangePosRes_VALUE = 20008;
+  public static final int GameStartNotice_VALUE = 20007;
   /**
    * <code>ErrorRes = 30001;</code>
    */
@@ -172,8 +164,7 @@ public enum Action
       case 20004: return EntryRoomRes;
       case 20005: return SitReq;
       case 20006: return SitRes;
-      case 20007: return ChangePosReq;
-      case 20008: return ChangePosRes;
+      case 20007: return GameStartNotice;
       case 30001: return ErrorRes;
       default: return null;
     }
