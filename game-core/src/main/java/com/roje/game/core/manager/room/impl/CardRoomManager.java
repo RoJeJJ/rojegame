@@ -21,7 +21,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 @Slf4j
-public abstract class CardRoomManager<R extends CardRole,M extends CardRoom> extends RoomManager<R,M> {
+public abstract class CardRoomManager<R extends CardRole,M extends CardRoom<R>> extends RoomManager<R,M> {
 
     private final Service service;
 

@@ -8,13 +8,9 @@ public interface FrameOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>.Action action = 1;</code>
+   * <code>int32 action = 1;</code>
    */
-  int getActionValue();
-  /**
-   * <code>.Action action = 1;</code>
-   */
-  com.roje.game.message.action.Action getAction();
+  int getAction();
 
   /**
    * <code>.google.protobuf.Any data = 2;</code>

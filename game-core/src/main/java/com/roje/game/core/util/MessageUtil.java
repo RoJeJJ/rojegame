@@ -11,7 +11,6 @@ import io.netty.channel.Channel;
 import io.netty.channel.group.ChannelGroup;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.List;
 
 
 @Slf4j
@@ -19,7 +18,7 @@ public class MessageUtil {
     public static <T extends Message> void send(Channel channel, Action action, T message){
         if (channel != null && channel.isActive()){
             Frame.Builder builder = Frame.newBuilder();
-            builder.setAction(action);
+            builder.setAction(action.getNumber());
             builder.setData(Any.pack(message));
             channel.writeAndFlush(builder.build());
         }else
@@ -28,7 +27,7 @@ public class MessageUtil {
 
     public static <T extends Message> void send(ChannelGroup channels, Action action, T message){
         Frame.Builder builder = Frame.newBuilder();
-        builder.setAction(action);
+        builder.setAction(action.getNumber());
         builder.setData(Any.pack(message));
         channels.writeAndFlush(builder.build());
     }
@@ -40,24 +39,10 @@ public class MessageUtil {
             builder.setMsg(errorData.getMsg());
 
             Frame.Builder fb = Frame.newBuilder();
-            fb.setAction(Action.ErrorRes);
+            fb.setAction(Action.ErrorRes_VALUE);
             fb.setData(Any.pack(builder.build()));
             channel.writeAndFlush(fb.build());
         }
-    }
-
-
-
-    public static void send(Channel channel, long uid, Frame frame){
-        if (channel != null && channel.isActive()) {
-            Frame.Builder frameBuilder = frame.toBuilder();
-            InnerMessage.Builder builder = InnerMessage.newBuilder();
-            builder.setUid(uid);
-            builder.setData(frameBuilder.getData());
-            frameBuilder.setData(Any.pack(builder.build()));
-            channel.writeAndFlush(frameBuilder.build());
-        }else
-            log.warn("session消息发送失败");
     }
 
     public static void send(Channel channel,Frame frame){
@@ -65,5 +50,9 @@ public class MessageUtil {
             channel.writeAndFlush(frame);
         else
             log.warn("session消息发送失败");
+    }
+
+    public static void send(ChannelGroup channels,Frame frame){
+        channels.writeAndFlush(frame);
     }
 }

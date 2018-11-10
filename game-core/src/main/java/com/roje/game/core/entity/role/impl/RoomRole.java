@@ -1,21 +1,13 @@
 package com.roje.game.core.entity.role.impl;
 
 import com.roje.game.core.entity.role.Role;
-import com.roje.game.core.entity.room.Room;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.function.Consumer;
 
 
 @Getter@Setter
 public abstract class RoomRole extends Role {
-
-    protected Room joinedRoom;
-
-    protected int seat;
-
-    protected boolean inGame;
 
     public RoomRole(long id,
                     String account,
@@ -27,7 +19,6 @@ public abstract class RoomRole extends Role {
     }
 
     public final void initStart(){
-        inGame = true;
         initStart0();
     }
 

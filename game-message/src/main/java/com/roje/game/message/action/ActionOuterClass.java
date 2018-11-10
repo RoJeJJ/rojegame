@@ -23,15 +23,15 @@ public final class ActionOuterClass {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\014action.proto*\223\002\n\006Action\022\010\n\004snap\020\000\022\017\n\nS" +
+      "\n\014action.proto*\242\002\n\006Action\022\010\n\004snap\020\000\022\017\n\nS" +
       "ervRegReq\020\351\007\022\017\n\nServRegRes\020\352\007\022\020\n\013ServInf" +
-      "oReq\020\353\007\022\020\n\013ServInfoRes\020\354\007\022\r\n\010LoginReq\020\221N" +
-      "\022\r\n\010loginRes\020\222N\022\027\n\021CreateCardRoomReq\020\241\234\001" +
-      "\022\027\n\021CreateCardRoomRes\020\242\234\001\022\022\n\014EntryRoomRe" +
-      "q\020\243\234\001\022\022\n\014EntryRoomRes\020\244\234\001\022\014\n\006SitReq\020\245\234\001\022" +
-      "\014\n\006SitRes\020\246\234\001\022\025\n\017GameStartNotice\020\247\234\001\022\016\n\010" +
-      "ErrorRes\020\261\352\001B \n\034com.roje.game.message.ac" +
-      "tionP\001b\006proto3"
+      "oReq\020\353\007\022\020\n\013ServInfoRes\020\354\007\022\r\n\010LoginReq\020\321\017" +
+      "\022\r\n\010loginRes\020\322\017\022\026\n\021CreateCardRoomReq\020\323\017\022" +
+      "\026\n\021CreateCardRoomRes\020\324\017\022\021\n\014EntryRoomReq\020" +
+      "\325\017\022\021\n\014EntryRoomRes\020\326\017\022\013\n\006SitReq\020\327\017\022\013\n\006Si" +
+      "tRes\020\330\017\022\024\n\017GameStartNotice\020\331\017\022\024\n\017BetNoti" +
+      "ceAction\020\271\027\022\016\n\010ErrorRes\020\261\352\001B \n\034com.roje." +
+      "game.message.actionP\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {

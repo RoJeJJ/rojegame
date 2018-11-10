@@ -33,11 +33,11 @@ public final class FrameOuterClass {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\013frame.proto\032\021include/any.proto\032\014action" +
-      ".proto\"D\n\005Frame\022\027\n\006action\030\001 \001(\0162\007.Action" +
-      "\022\"\n\004data\030\002 \001(\0132\024.google.protobuf.Any\")\n\014" +
-      "ErrorMessage\022\014\n\004code\030\001 \001(\005\022\013\n\003msg\030\002 \001(\tB" +
-      "\037\n\033com.roje.game.message.frameP\001b\006proto3"
+      "\n\013frame.proto\032\021include/any.proto\";\n\005Fram" +
+      "e\022\016\n\006action\030\001 \001(\005\022\"\n\004data\030\002 \001(\0132\024.google" +
+      ".protobuf.Any\")\n\014ErrorMessage\022\014\n\004code\030\001 " +
+      "\001(\005\022\013\n\003msg\030\002 \001(\tB\037\n\033com.roje.game.messag" +
+      "e.frameP\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -51,7 +51,6 @@ public final class FrameOuterClass {
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
           com.google.protobuf.AnyProto.getDescriptor(),
-          com.roje.game.message.action.ActionOuterClass.getDescriptor(),
         }, assigner);
     internal_static_Frame_descriptor =
       getDescriptor().getMessageTypes().get(0);
@@ -66,7 +65,6 @@ public final class FrameOuterClass {
         internal_static_ErrorMessage_descriptor,
         new java.lang.String[] { "Code", "Msg", });
     com.google.protobuf.AnyProto.getDescriptor();
-    com.roje.game.message.action.ActionOuterClass.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

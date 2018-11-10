@@ -6,6 +6,7 @@ import com.roje.game.core.exception.ErrorData;
 import com.roje.game.core.thread.RoomScheduledExecutorService;
 import com.roje.game.core.util.MessageUtil;
 import com.roje.game.message.action.Action;
+import com.roje.game.message.frame.Frame;
 import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.util.concurrent.GlobalEventExecutor;
@@ -14,11 +15,10 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
 
 @Slf4j
-public abstract class Room {
+public abstract class Room<R extends RoomRole> {
 
     public interface RoomListener<M extends Room> {
         void roomDestroy(M room);
@@ -28,15 +28,19 @@ public abstract class Room {
 
     protected final int maxRoomRoles;
 
-    private final RoomRole[] sitRoles;
+    protected final Map<Integer,R> sitRoles;
+
+    private final Map<R,Integer> seatMap;
+
+    protected final List<R> gamer;
 
     private boolean gameStart;
 
-    private boolean lock;
+    protected boolean lock;
 
     private RoomListener roomListener;
 
-    private final List<RoomRole> roomRoles;
+    protected final List<R> roomRoles;
 
     private RoomScheduledExecutorService executor;
 
@@ -44,11 +48,14 @@ public abstract class Room {
 
     private ChannelGroup roomChannels;
 
+    private int person;
 
-    @SuppressWarnings("unchecked")
     public Room(long id, int person, int maxRoomRoles) {
         this.id = id;
-        sitRoles = new RoomRole[person];
+        this.person = person;
+        sitRoles = new HashMap<>();
+        seatMap = new HashMap<>();
+        gamer = new ArrayList<>();
         gameStart = false;
         lock = false;
         this.maxRoomRoles = maxRoomRoles;
@@ -57,13 +64,9 @@ public abstract class Room {
         roomChannels = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
     }
 
-    protected <R extends RoomRole>void inRoom(R role){
+    protected void inRoom(R role){
         roomRoles.add(role);
         roomChannels.add(role.getChannel());
-    }
-
-    protected void sendAll(Action action,Message message){
-        MessageUtil.send(roomChannels,action,message);
     }
 
     public long id() {
@@ -78,31 +81,18 @@ public abstract class Room {
         return lock;
     }
 
-    public int curHead(){
-        return curHead;
-    }
-
-    @SuppressWarnings("unchecked")
-    protected  <R extends RoomRole> List<R> sitRoles(){
-        return Arrays.stream(sitRoles).map(roomRole -> (R) roomRole).collect(Collectors.toList());
-    }
-
-    protected int roomRoleSize(){
-        return roomRoles.size();
-    }
-
     /**
      * 使用protobuf 封装的房间信息,用于发送给加入房间的用户
      * @param role 接受消息的玩家
      * @return protobuf{@link Message}
      */
-    protected abstract Message roomInfo(RoomRole role);
+    protected abstract Message roomInfo(R role);
 
     /**
      * 当玩家坐下后被调用,用于坐下后的自定义逻辑,例如自动开始游戏
      * @param role 坐下的玩家
      */
-    protected abstract void onSit(RoomRole role);
+    protected abstract void onSit(R role);
 
     public void setRoomListener(RoomListener roomListener) {
         this.roomListener = roomListener;
@@ -121,24 +111,28 @@ public abstract class Room {
      * @param role 请求坐下的玩
      * @param seat 请求坐入的座位
      */
-    public <R extends RoomRole> void sit(R role,int seat){
-        if (seat < 1 || seat > sitRoles.length) {
+    public void sit(R role,int seat){
+        if (lock)
+            return;
+        if (seat < 1 || seat > person) {
             log.info("请求坐入的座位号错误,{}",seat);
             MessageUtil.sendErrorData(role.getChannel(), ErrorData.SIT_DOWN_SEAT_ERROR);
             return;
         }
-        if (role.getSeat() != 0){
-            log.info("已经坐入座位中,座位号{}",role.getSeat());
+        Integer s = seatMap.get(role);
+        if (s != null){
+            log.info("已经坐入座位中,座位号{}",s);
             MessageUtil.sendErrorData(role.getChannel(),ErrorData.SIT_DOWN_ALREADY_SIT);
             return;
         }
-        if (sitRoles[seat] != null){
-            log.info("这个座位已经有玩家:{}",sitRoles[seat].nickname());
+        R temp = sitRoles.get(seat);
+        if (temp != null){
+            log.info("这个座位已经有玩家:{}",temp.nickname());
             MessageUtil.sendErrorData(role.getChannel(),ErrorData.SIT_DOWN_SEAT_HOLD);
             return;
         }
-        sitRoles[seat] = role;
-        role.setSeat(seat);
+        sitRoles.put(seat,role);
+        seatMap.put(role,seat);
         curHead++;
         // TODO: 2018/11/8 通知房间内所有人有人坐下了
 
@@ -168,9 +162,13 @@ public abstract class Room {
         if (gameStart)
             return;
         gameStart = true;
-        for (RoomRole role:roomRoles) {
-            if (role != null)
+        gamer.clear();
+        for (int i=1;i<=sitRoles.size();i++){
+            R role = sitRoles.get(i);
+            if (role != null) {
                 role.initStart();
+                gamer.add(role);
+            }
         }
         initStart();
     }

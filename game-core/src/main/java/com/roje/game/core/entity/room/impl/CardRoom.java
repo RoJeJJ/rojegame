@@ -2,7 +2,7 @@ package com.roje.game.core.entity.room.impl;
 
 import com.google.protobuf.Any;
 import com.google.protobuf.Message;
-import com.roje.game.core.entity.role.impl.RoomRole;
+import com.roje.game.core.entity.role.impl.CardRole;
 import com.roje.game.core.entity.room.Room;
 import com.roje.game.core.exception.ErrorData;
 import com.roje.game.core.exception.RJException;
@@ -11,15 +11,15 @@ import com.roje.game.message.action.Action;
 import com.roje.game.message.create_room.EntryRoomResponse;
 
 
-public abstract class CardRoom extends Room {
+public abstract class CardRoom<R extends CardRole> extends Room<R> {
 
-    private final RoomRole creator;
+    protected final R creator;
 
     private int round;
 
     private boolean roundStart;
 
-    public CardRoom(long id,RoomRole role, int person,int maxRoomRoles,
+    public CardRoom(long id,R role, int person,int maxRoomRoles,
                                          int round) {
         super(id, person,maxRoomRoles);
         this.creator = role;
@@ -27,10 +27,10 @@ public abstract class CardRoom extends Room {
         this.roundStart = false;
     }
 
-    public boolean enter(RoomRole role) {
-        if (isLock())
+    public boolean enter(R role) {
+        if (lock)
             return false;
-        if (roomRoleSize() >= maxRoomRoles) {
+        if ( roomRoles.size() >= maxRoomRoles) {
             MessageUtil.sendErrorData(role.getChannel(), ErrorData.ENTER_ROOM_ROOM_FULL);
             return false;
         }
@@ -53,7 +53,7 @@ public abstract class CardRoom extends Room {
      * @param role 加入房卡房间的玩家
      * @throws RJException 自定义异常,用于返回客户端错误消息
      */
-    protected void enter0(RoomRole role) throws RJException {}
+    protected void enter0(R role) throws RJException {}
 
     @Override
     protected void initStart() {

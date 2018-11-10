@@ -7,13 +7,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MessageDispatcher {
-    private Map<Action, MessageProcessor> handlerMap = new HashMap<>();
+    private Map<Integer, MessageProcessor> handlerMap = new HashMap<>();
     private Map<String, MessageProcessor> httpHandlerMap = new HashMap<>();
 
     public void register(MessageProcessor handler) {
         TcpProcessor tcpProcessor = handler.getClass().getAnnotation(TcpProcessor.class);
         if (tcpProcessor != null) {
-            Action action = tcpProcessor.action();
+            int action = tcpProcessor.action();
             handlerMap.put(action, handler);
         }
         HttpProcessor httpProcessor = handler.getClass().getAnnotation(HttpProcessor.class);
@@ -22,7 +22,7 @@ public class MessageDispatcher {
 
     }
 
-    public MessageProcessor getTcpMessageHandler(Action action) {
+    public MessageProcessor getTcpMessageHandler(int action) {
         return handlerMap.get(action);
     }
 

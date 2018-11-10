@@ -44,9 +44,8 @@ private static final long serialVersionUID = 0L;
             done = true;
             break;
           case 8: {
-            int rawValue = input.readEnum();
 
-            action_ = rawValue;
+            action_ = input.readInt32();
             break;
           }
           case 18: {
@@ -97,18 +96,10 @@ private static final long serialVersionUID = 0L;
   public static final int ACTION_FIELD_NUMBER = 1;
   private int action_;
   /**
-   * <code>.Action action = 1;</code>
+   * <code>int32 action = 1;</code>
    */
-  public int getActionValue() {
+  public int getAction() {
     return action_;
-  }
-  /**
-   * <code>.Action action = 1;</code>
-   */
-  public com.roje.game.message.action.Action getAction() {
-    @SuppressWarnings("deprecation")
-    com.roje.game.message.action.Action result = com.roje.game.message.action.Action.valueOf(action_);
-    return result == null ? com.roje.game.message.action.Action.UNRECOGNIZED : result;
   }
 
   public static final int DATA_FIELD_NUMBER = 2;
@@ -146,8 +137,8 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (action_ != com.roje.game.message.action.Action.snap.getNumber()) {
-      output.writeEnum(1, action_);
+    if (action_ != 0) {
+      output.writeInt32(1, action_);
     }
     if (data_ != null) {
       output.writeMessage(2, getData());
@@ -161,9 +152,9 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (action_ != com.roje.game.message.action.Action.snap.getNumber()) {
+    if (action_ != 0) {
       size += com.google.protobuf.CodedOutputStream
-        .computeEnumSize(1, action_);
+        .computeInt32Size(1, action_);
     }
     if (data_ != null) {
       size += com.google.protobuf.CodedOutputStream
@@ -185,7 +176,8 @@ private static final long serialVersionUID = 0L;
     com.roje.game.message.frame.Frame other = (com.roje.game.message.frame.Frame) obj;
 
     boolean result = true;
-    result = result && action_ == other.action_;
+    result = result && (getAction()
+        == other.getAction());
     result = result && (hasData() == other.hasData());
     if (hasData()) {
       result = result && getData()
@@ -203,7 +195,7 @@ private static final long serialVersionUID = 0L;
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
     hash = (37 * hash) + ACTION_FIELD_NUMBER;
-    hash = (53 * hash) + action_;
+    hash = (53 * hash) + getAction();
     if (hasData()) {
       hash = (37 * hash) + DATA_FIELD_NUMBER;
       hash = (53 * hash) + getData().hashCode();
@@ -429,8 +421,8 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(com.roje.game.message.frame.Frame other) {
       if (other == com.roje.game.message.frame.Frame.getDefaultInstance()) return this;
-      if (other.action_ != 0) {
-        setActionValue(other.getActionValue());
+      if (other.getAction() != 0) {
+        setAction(other.getAction());
       }
       if (other.hasData()) {
         mergeData(other.getData());
@@ -464,43 +456,24 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private int action_ = 0;
+    private int action_ ;
     /**
-     * <code>.Action action = 1;</code>
+     * <code>int32 action = 1;</code>
      */
-    public int getActionValue() {
+    public int getAction() {
       return action_;
     }
     /**
-     * <code>.Action action = 1;</code>
+     * <code>int32 action = 1;</code>
      */
-    public Builder setActionValue(int value) {
+    public Builder setAction(int value) {
+      
       action_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>.Action action = 1;</code>
-     */
-    public com.roje.game.message.action.Action getAction() {
-      @SuppressWarnings("deprecation")
-      com.roje.game.message.action.Action result = com.roje.game.message.action.Action.valueOf(action_);
-      return result == null ? com.roje.game.message.action.Action.UNRECOGNIZED : result;
-    }
-    /**
-     * <code>.Action action = 1;</code>
-     */
-    public Builder setAction(com.roje.game.message.action.Action value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      
-      action_ = value.getNumber();
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>.Action action = 1;</code>
+     * <code>int32 action = 1;</code>
      */
     public Builder clearAction() {
       

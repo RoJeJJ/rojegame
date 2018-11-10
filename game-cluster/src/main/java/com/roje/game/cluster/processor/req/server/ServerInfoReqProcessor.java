@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-@TcpProcessor(action = Action.ServInfoReq,thread = ThreadType.def)
+@TcpProcessor(action = Action.ServInfoReq_VALUE,thread = ThreadType.def)
 public class ServerInfoReqProcessor extends AbsMessageProcessor {
 
     private final ServerSessionManager serverManager;

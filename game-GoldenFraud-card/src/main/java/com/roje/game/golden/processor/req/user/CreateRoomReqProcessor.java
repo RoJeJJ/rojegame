@@ -8,7 +8,7 @@ import com.roje.game.message.action.Action;
 import org.springframework.stereotype.Component;
 
 @Component
-@TcpProcessor(action = Action.CreateCardRoomReq)
+@TcpProcessor(action = Action.CreateCardRoomReq_VALUE)
 public class CreateRoomReqProcessor extends DefaultCreateCardRoomReqProcessor {
     protected CreateRoomReqProcessor(MessageDispatcher dispatcher,
                                      ISessionManager sessionManager) {

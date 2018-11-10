@@ -9,7 +9,7 @@ import com.roje.game.message.action.Action;
 import org.springframework.stereotype.Component;
 
 @Component
-@TcpProcessor(action = Action.EntryRoomReq)
+@TcpProcessor(action = Action.EntryRoomReq_VALUE)
 public class EnterRoomReqProcessor extends DefaultEnterCardRoomReqProcessor<GFCardRole> {
     protected EnterRoomReqProcessor(MessageDispatcher dispatcher,
                                     ISessionManager sessionManager) {

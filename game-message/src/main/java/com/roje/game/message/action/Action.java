@@ -29,41 +29,49 @@ public enum Action
    */
   ServInfoRes(1004),
   /**
-   * <code>LoginReq = 10001;</code>
+   * <code>LoginReq = 2001;</code>
    */
-  LoginReq(10001),
+  LoginReq(2001),
   /**
-   * <code>loginRes = 10002;</code>
+   * <code>loginRes = 2002;</code>
    */
-  loginRes(10002),
+  loginRes(2002),
   /**
-   * <code>CreateCardRoomReq = 20001;</code>
+   * <code>CreateCardRoomReq = 2003;</code>
    */
-  CreateCardRoomReq(20001),
+  CreateCardRoomReq(2003),
   /**
-   * <code>CreateCardRoomRes = 20002;</code>
+   * <code>CreateCardRoomRes = 2004;</code>
    */
-  CreateCardRoomRes(20002),
+  CreateCardRoomRes(2004),
   /**
-   * <code>EntryRoomReq = 20003;</code>
+   * <code>EntryRoomReq = 2005;</code>
    */
-  EntryRoomReq(20003),
+  EntryRoomReq(2005),
   /**
-   * <code>EntryRoomRes = 20004;</code>
+   * <code>EntryRoomRes = 2006;</code>
    */
-  EntryRoomRes(20004),
+  EntryRoomRes(2006),
   /**
-   * <code>SitReq = 20005;</code>
+   * <code>SitReq = 2007;</code>
    */
-  SitReq(20005),
+  SitReq(2007),
   /**
-   * <code>SitRes = 20006;</code>
+   * <code>SitRes = 2008;</code>
    */
-  SitRes(20006),
+  SitRes(2008),
   /**
-   * <code>GameStartNotice = 20007;</code>
+   * <code>GameStartNotice = 2009;</code>
    */
-  GameStartNotice(20007),
+  GameStartNotice(2009),
+  /**
+   * <pre>
+   *扎金花/3001-3999
+   * </pre>
+   *
+   * <code>BetNoticeAction = 3001;</code>
+   */
+  BetNoticeAction(3001),
   /**
    * <code>ErrorRes = 30001;</code>
    */
@@ -92,41 +100,49 @@ public enum Action
    */
   public static final int ServInfoRes_VALUE = 1004;
   /**
-   * <code>LoginReq = 10001;</code>
+   * <code>LoginReq = 2001;</code>
    */
-  public static final int LoginReq_VALUE = 10001;
+  public static final int LoginReq_VALUE = 2001;
   /**
-   * <code>loginRes = 10002;</code>
+   * <code>loginRes = 2002;</code>
    */
-  public static final int loginRes_VALUE = 10002;
+  public static final int loginRes_VALUE = 2002;
   /**
-   * <code>CreateCardRoomReq = 20001;</code>
+   * <code>CreateCardRoomReq = 2003;</code>
    */
-  public static final int CreateCardRoomReq_VALUE = 20001;
+  public static final int CreateCardRoomReq_VALUE = 2003;
   /**
-   * <code>CreateCardRoomRes = 20002;</code>
+   * <code>CreateCardRoomRes = 2004;</code>
    */
-  public static final int CreateCardRoomRes_VALUE = 20002;
+  public static final int CreateCardRoomRes_VALUE = 2004;
   /**
-   * <code>EntryRoomReq = 20003;</code>
+   * <code>EntryRoomReq = 2005;</code>
    */
-  public static final int EntryRoomReq_VALUE = 20003;
+  public static final int EntryRoomReq_VALUE = 2005;
   /**
-   * <code>EntryRoomRes = 20004;</code>
+   * <code>EntryRoomRes = 2006;</code>
    */
-  public static final int EntryRoomRes_VALUE = 20004;
+  public static final int EntryRoomRes_VALUE = 2006;
   /**
-   * <code>SitReq = 20005;</code>
+   * <code>SitReq = 2007;</code>
    */
-  public static final int SitReq_VALUE = 20005;
+  public static final int SitReq_VALUE = 2007;
   /**
-   * <code>SitRes = 20006;</code>
+   * <code>SitRes = 2008;</code>
    */
-  public static final int SitRes_VALUE = 20006;
+  public static final int SitRes_VALUE = 2008;
   /**
-   * <code>GameStartNotice = 20007;</code>
+   * <code>GameStartNotice = 2009;</code>
    */
-  public static final int GameStartNotice_VALUE = 20007;
+  public static final int GameStartNotice_VALUE = 2009;
+  /**
+   * <pre>
+   *扎金花/3001-3999
+   * </pre>
+   *
+   * <code>BetNoticeAction = 3001;</code>
+   */
+  public static final int BetNoticeAction_VALUE = 3001;
   /**
    * <code>ErrorRes = 30001;</code>
    */
@@ -156,15 +172,16 @@ public enum Action
       case 1002: return ServRegRes;
       case 1003: return ServInfoReq;
       case 1004: return ServInfoRes;
-      case 10001: return LoginReq;
-      case 10002: return loginRes;
-      case 20001: return CreateCardRoomReq;
-      case 20002: return CreateCardRoomRes;
-      case 20003: return EntryRoomReq;
-      case 20004: return EntryRoomRes;
-      case 20005: return SitReq;
-      case 20006: return SitRes;
-      case 20007: return GameStartNotice;
+      case 2001: return LoginReq;
+      case 2002: return loginRes;
+      case 2003: return CreateCardRoomReq;
+      case 2004: return CreateCardRoomRes;
+      case 2005: return EntryRoomReq;
+      case 2006: return EntryRoomRes;
+      case 2007: return SitReq;
+      case 2008: return SitRes;
+      case 2009: return GameStartNotice;
+      case 3001: return BetNoticeAction;
       case 30001: return ErrorRes;
       default: return null;
     }
